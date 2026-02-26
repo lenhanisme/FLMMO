@@ -58,7 +58,7 @@
             <div class="px-6 mt-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Dữ liệu</div>
             <ul>
                 <li><a href="#" id="menu-servers" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('servers')"><i class="fa-solid fa-server w-6 text-gray-400"></i> Quản lý Máy Chủ</a></li>
-                <li><a href="#" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition"><i class="fa-solid fa-users w-6 text-gray-400"></i> Quản lý Users</a></li>
+                <li><a href="#" id="menu-users" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('users')"><i class="fa-solid fa-users w-6 text-gray-400"></i> Quản lý Users</a></li>
             </ul>
         </div>
         
@@ -173,11 +173,33 @@
                     <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 mb-6">Thêm Máy Chủ Mới</h2>
                     <form id="form-add-server" class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Chuyên mục dịch vụ MỚI THÊM -->
+                            <div class="lg:col-span-1">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Chuyên mục Dịch vụ <span class="text-red-500">*</span></label>
+                                <select id="srv-category" required class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                    <optgroup label="Facebook">
+                                        <option value="Facebook - Tăng Bình Luận">Tăng Bình Luận</option>
+                                        <option value="Facebook - Tăng Like / Cảm Xúc">Tăng Like / Cảm Xúc</option>
+                                        <option value="Facebook - Tăng Follow/Sub">Tăng Follow/Sub</option>
+                                    </optgroup>
+                                    <optgroup label="TikTok">
+                                        <option value="TikTok - Tăng Tim">Tăng Tim</option>
+                                        <option value="TikTok - Tăng View">Tăng View Video</option>
+                                        <option value="TikTok - Tăng Follow">Tăng Follow</option>
+                                    </optgroup>
+                                    <optgroup label="Instagram">
+                                        <option value="Instagram - Tăng Tim">Tăng Tim Ảnh/Reels</option>
+                                        <option value="Instagram - Tăng Theo Dõi">Tăng Người Theo Dõi</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Mã Server <span class="text-red-500">*</span></label>
                                 <input type="text" id="srv-code" required placeholder="VD: sv1, sv2..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
                             </div>
-                            <div class="lg:col-span-2">
+                            
+                            <div class="lg:col-span-3">
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Tên Dịch Vụ / Mô tả <span class="text-red-500">*</span></label>
                                 <input type="text" id="srv-name" required placeholder="VD: Tăng Like Facebook - Lên nhanh - Bảo hành 30 ngày..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
                             </div>
@@ -223,7 +245,7 @@
                         <table class="min-w-full text-sm text-left border-y border-gray-200">
                             <thead class="text-xs text-gray-600 uppercase bg-gray-50">
                                 <tr>
-                                    <th class="px-4 py-3">Mã</th>
+                                    <th class="px-4 py-3">Mã / Chuyên mục</th>
                                     <th class="px-4 py-3 min-w-[250px]">Tên / Mô tả Server</th>
                                     <th class="px-4 py-3">Giá (VNĐ)</th>
                                     <th class="px-4 py-3">Giới hạn (Min-Max)</th>
@@ -232,6 +254,34 @@
                                 </tr>
                             </thead>
                             <tbody id="admin-servers-table">
+                                <tr><td colspan="6" class="text-center py-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-2xl"></i></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 5: QUẢN LÝ NGƯỜI DÙNG (USERS) MỚI THÊM -->
+            <div id="view-users" class="view-section max-w-7xl mx-auto space-y-6">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Danh Sách Người Dùng</h2>
+                        <button onclick="fetchUsers()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm text-left border-y border-gray-200">
+                            <thead class="text-xs text-gray-600 uppercase bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3">User UID / Email</th>
+                                    <th class="px-4 py-3">Tên hiển thị</th>
+                                    <th class="px-4 py-3">Số dư (VNĐ)</th>
+                                    <th class="px-4 py-3">Cấp bậc</th>
+                                    <th class="px-4 py-3">Trạng thái</th>
+                                    <th class="px-4 py-3 text-right">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-users-table">
                                 <tr><td colspan="6" class="text-center py-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-2xl"></i></td></tr>
                             </tbody>
                         </table>
@@ -262,7 +312,8 @@
                 'dashboard': 'Tổng Quan Hệ Thống', 
                 'deposits': 'Quản Lý Nạp Tiền', 
                 'orders': 'Quản Lý Đơn Dịch Vụ',
-                'servers': 'Quản Lý Máy Chủ (Servers)'
+                'servers': 'Quản Lý Máy Chủ (Servers)',
+                'users': 'Quản Lý Người Dùng'
             };
             document.getElementById('header-title').innerText = titles[viewName];
 
@@ -307,7 +358,8 @@
                         // Load dữ liệu ban đầu
                         fetchDashboardStats();
                         fetchDeposits();
-                        fetchServers(); // Load dữ liệu server
+                        fetchServers(); 
+                        fetchUsers(); // Load dữ liệu users
                     } else {
                         // Không phải Admin
                         alert("Bạn không có quyền truy cập khu vực Quản Trị!");
@@ -434,12 +486,12 @@
         // KHU VỰC: QUẢN LÝ MÁY CHỦ (SERVERS)
         // ==========================================
 
-        // Thêm Server mới
         document.getElementById('form-add-server').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-add-server');
             const msg = document.getElementById('srv-msg');
             
+            const category = document.getElementById('srv-category').value;
             const code = document.getElementById('srv-code').value;
             const name = document.getElementById('srv-name').value;
             const rate = parseFloat(document.getElementById('srv-rate').value);
@@ -456,6 +508,7 @@
 
             try {
                 await addDoc(collection(db, "servers"), {
+                    category: category,
                     code: code,
                     name: name,
                     rate: rate,
@@ -468,8 +521,7 @@
                 msg.className = "text-sm font-medium p-3 rounded-lg bg-green-50 text-green-700 mt-2 block";
                 msg.innerHTML = "<i class='fa-solid fa-check mr-1'></i> Đã thêm máy chủ thành công!";
                 document.getElementById('form-add-server').reset();
-                fetchServers(); // Tải lại bảng
-                
+                fetchServers(); 
                 setTimeout(() => msg.classList.add('hidden'), 3000);
             } catch (error) {
                 msg.className = "text-sm font-medium p-3 rounded-lg bg-red-50 text-red-700 mt-2 block";
@@ -480,7 +532,6 @@
             }
         });
 
-        // Tải danh sách Servers
         window.fetchServers = async function() {
             const tbody = document.getElementById('admin-servers-table');
             tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải danh sách...</td></tr>';
@@ -490,7 +541,6 @@
                 let servers = [];
                 snapshot.forEach(doc => servers.push({ id: doc.id, ...doc.data() }));
                 
-                // Sắp xếp theo tên mã code
                 servers.sort((a, b) => a.code.localeCompare(b.code));
 
                 if(servers.length === 0) {
@@ -500,7 +550,6 @@
 
                 tbody.innerHTML = '';
                 servers.forEach(s => {
-                    // Render Status Badge
                     let badgeClass = "bg-gray-100 text-gray-700";
                     let icon = "";
                     if(s.status === "Hoạt động") { badgeClass = "bg-green-100 text-green-700"; icon = "fa-circle-check"; }
@@ -510,11 +559,9 @@
 
                     const statusHtml = `<span class="${badgeClass} px-2 py-1 rounded text-xs font-bold border border-opacity-50 inline-flex items-center"><i class="fa-solid ${icon} mr-1"></i> ${s.status}</span>`;
                     
-                    // Render Min/Max limit
                     const minText = s.minOrder ? s.minOrder.toLocaleString() : "0";
                     const maxText = s.maxOrder ? s.maxOrder.toLocaleString() : "Vô cực";
                     
-                    // Select Box để đổi trạng thái nhanh
                     const selectStatusHtml = `
                         <select onchange="updateServerStatus('${s.id}', this.value)" class="text-xs border border-gray-300 rounded p-1 outline-none mt-2 w-full max-w-[130px] bg-gray-50 focus:bg-white">
                             <option value="Hoạt động" ${s.status === 'Hoạt động' ? 'selected' : ''}>Hoạt động</option>
@@ -526,7 +573,10 @@
 
                     tbody.innerHTML += `
                         <tr class="border-b hover:bg-gray-50">
-                            <td class="px-4 py-3 font-bold text-gray-800 uppercase">${s.code}</td>
+                            <td class="px-4 py-3">
+                                <div class="font-bold text-gray-800 uppercase">${s.code}</div>
+                                <div class="text-[10px] text-brand-600 font-medium mt-0.5 bg-blue-50 px-1.5 py-0.5 rounded inline-block">${s.category || 'Mặc định'}</div>
+                            </td>
                             <td class="px-4 py-3 text-sm text-gray-600 leading-snug">${s.name}</td>
                             <td class="px-4 py-3 font-bold text-brand-600">${s.rate} đ</td>
                             <td class="px-4 py-3 text-xs text-gray-500">${minText} - ${maxText}</td>
@@ -545,29 +595,119 @@
             }
         }
 
-        // Cập nhật trạng thái Server (Đổi trong ô Select)
         window.updateServerStatus = async function(serverId, newStatus) {
             try {
-                await updateDoc(doc(db, "servers", serverId), { 
-                    status: newStatus,
-                    updatedAt: new Date().toISOString()
-                });
-                // Alert nhẹ nhàng hoặc fetch lại
+                await updateDoc(doc(db, "servers", serverId), { status: newStatus, updatedAt: new Date().toISOString() });
                 fetchServers();
             } catch(e) {
                 alert("Lỗi khi cập nhật trạng thái: " + e.message);
-                fetchServers(); // Reset UI
+                fetchServers(); 
             }
         }
 
-        // Xóa Server
         window.deleteServer = async function(serverId, serverCode) {
             if(!confirm(`Xác nhận XÓA vĩnh viễn máy chủ [${serverCode}]? Người dùng sẽ không thể đặt hàng dịch vụ này nữa.`)) return;
             try {
                 await deleteDoc(doc(db, "servers", serverId));
-                fetchServers(); // Tải lại bảng
+                fetchServers(); 
+            } catch(e) { alert("Lỗi xóa server: " + e.message); }
+        }
+
+        // ==========================================
+        // KHU VỰC: QUẢN LÝ NGƯỜI DÙNG (USERS)
+        // ==========================================
+
+        window.fetchUsers = async function() {
+            const tbody = document.getElementById('admin-users-table');
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải người dùng...</td></tr>';
+            
+            try {
+                const snapshot = await getDocs(collection(db, "users"));
+                let users = [];
+                snapshot.forEach(doc => {
+                    users.push({ uid: doc.id, ...doc.data() });
+                });
+
+                if(users.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500">Chưa có người dùng nào đăng ký.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                users.forEach(u => {
+                    const uCoin = u.coin || 0;
+                    const uStatus = u.status || "Kích hoạt";
+                    const roleBadge = u.role === "admin" 
+                        ? '<span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs font-bold border border-purple-200"><i class="fa-solid fa-crown mr-1"></i> Admin</span>' 
+                        : '<span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-xs font-medium border border-gray-200">Khách</span>';
+                    
+                    const statusBadge = uStatus === "Kích hoạt"
+                        ? '<span class="text-green-600 text-xs font-medium"><i class="fa-solid fa-circle-check"></i> Hoạt động</span>'
+                        : '<span class="text-red-600 text-xs font-medium"><i class="fa-solid fa-lock"></i> Đã khóa</span>';
+
+                    // Cột thao tác (Ban/Unban, Edit Coin, Promote Admin)
+                    const actionHtml = `
+                        <div class="flex items-center justify-end gap-1">
+                            <button onclick="editUserCoin('${u.uid}', ${uCoin})" class="bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white p-1.5 rounded transition tooltip" title="Chỉnh sửa số dư">
+                                <i class="fa-solid fa-coins"></i>
+                            </button>
+                            <button onclick="toggleUserStatus('${u.uid}', '${uStatus}')" class="${uStatus === 'Kích hoạt' ? 'bg-yellow-50 text-yellow-600 hover:bg-yellow-500' : 'bg-green-50 text-green-600 hover:bg-green-500'} hover:text-white p-1.5 rounded transition tooltip" title="${uStatus === 'Kích hoạt' ? 'Khóa tài khoản' : 'Mở khóa tài khoản'}">
+                                <i class="fa-solid ${uStatus === 'Kích hoạt' ? 'fa-ban' : 'fa-unlock'}"></i>
+                            </button>
+                            <button onclick="updateUserRole('${u.uid}', '${u.role}')" class="bg-gray-100 text-gray-500 hover:bg-purple-500 hover:text-white p-1.5 rounded transition tooltip" title="Đổi quyền Admin/User">
+                                <i class="fa-solid fa-user-shield"></i>
+                            </button>
+                        </div>
+                    `;
+
+                    tbody.innerHTML += `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-4 py-3">
+                                <div class="font-mono text-xs text-brand-600 mb-1" title="${u.uid}">${u.uid.substring(0,8)}...</div>
+                                <div class="text-xs text-gray-500"><i class="fa-regular fa-envelope"></i> ${u.email || 'Không có'}</div>
+                            </td>
+                            <td class="px-4 py-3 text-sm font-bold text-gray-800">${u.fullname || 'User'}</td>
+                            <td class="px-4 py-3 font-bold text-green-600">${uCoin.toLocaleString('vi-VN')} đ</td>
+                            <td class="px-4 py-3">${roleBadge}</td>
+                            <td class="px-4 py-3">${statusBadge}</td>
+                            <td class="px-4 py-3">${actionHtml}</td>
+                        </tr>
+                    `;
+                });
             } catch(e) {
-                alert("Lỗi xóa server: " + e.message);
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-500">Lỗi lấy danh sách User: ${e.message}</td></tr>`;
+            }
+        }
+
+        window.editUserCoin = async function(uid, currentCoin) {
+            let newVal = prompt(`Nhập SỐ DƯ MỚI cho người dùng này (VNĐ):\nLưu ý: Số này sẽ thay thế số dư hiện tại đang là ${currentCoin.toLocaleString()}đ`, currentCoin);
+            if(newVal !== null && newVal !== "" && !isNaN(newVal)) {
+                try {
+                    await updateDoc(doc(db, "users", uid), { coin: Number(newVal) });
+                    fetchUsers();
+                } catch(e) { alert("Lỗi khi cập nhật tiền: " + e.message); }
+            }
+        }
+
+        window.toggleUserStatus = async function(uid, currentStatus) {
+            let newStatus = currentStatus === "Kích hoạt" ? "Bị Khóa" : "Kích hoạt";
+            let warningMsg = currentStatus === "Kích hoạt" ? "KHÓA tài khoản này? Người dùng sẽ không thể sử dụng dịch vụ." : "MỞ KHÓA tài khoản này?";
+            
+            if(confirm(`Xác nhận ${warningMsg}`)) {
+                try {
+                    await updateDoc(doc(db, "users", uid), { status: newStatus });
+                    fetchUsers();
+                } catch(e) { alert("Lỗi cập nhật trạng thái: " + e.message); }
+            }
+        }
+
+        window.updateUserRole = async function(uid, currentRole) {
+            let newRole = currentRole === "admin" ? "user" : "admin";
+            if(confirm(`Bạn muốn chuyển quyền người dùng này thành: [${newRole.toUpperCase()}]?`)) {
+                try {
+                    await updateDoc(doc(db, "users", uid), { role: newRole });
+                    fetchUsers();
+                } catch(e) { alert("Lỗi cập nhật quyền: " + e.message); }
             }
         }
 
