@@ -36,8 +36,11 @@
 </head>
 <body class="flex h-screen overflow-hidden text-gray-800 relative">
 
+    <!-- MOBILE OVERLAY -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
+
     <!-- SIDEBAR -->
-    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col z-20 transition-all duration-300">
+    <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-64 bg-white border-r border-gray-200 flex flex-col z-40 transition-transform duration-300 ease-in-out">
         <!-- Favicon/Logo Area -->
         <div class="h-16 flex items-center justify-center border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition" onclick="switchView('order')">
             <span class="text-2xl font-bold tracking-tight text-gray-900">
@@ -74,8 +77,13 @@
     <div class="flex-1 flex flex-col h-screen overflow-hidden bg-[#f4f7fb]">
         
         <!-- HEADER -->
-        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 z-10 shadow-sm">
-            <h1 id="header-title" class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Khởi Tạo Đơn Dịch Vụ</h1>
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 z-10 shadow-sm shrink-0">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="toggleSidebar()" class="md:hidden text-gray-500 hover:text-gray-800 p-1">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h1 id="header-title" class="text-base sm:text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 truncate max-w-[160px] sm:max-w-none">Khởi Tạo Đơn Dịch Vụ</h1>
+            </div>
             <div class="flex items-center gap-4">
                 <div class="text-sm text-gray-500 hidden sm:block"><i class="fa-solid fa-circle text-[8px] text-brand-500 animate-pulse mr-1"></i> Hệ thống ổn định</div>
                 <button onclick="toggleModal('modal-profile')" class="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold text-sm shadow cursor-pointer hover:scale-105 transition" id="ui-avatar-small" title="Thông tin tài khoản">
@@ -298,6 +306,19 @@
 
     <!-- UI JAVASCRIPT & LOGIC -->
     <script>
+        // Toggle Sidebar Mobile
+        window.toggleSidebar = function() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
         // Copy STK
         window.copySTK = function() {
             const tempInput = document.createElement('input');
@@ -347,6 +368,12 @@
                 'deposit': 'Nạp Tiền Vào Tài Khoản'
             };
             document.getElementById('header-title').innerText = titles[viewName];
+
+            // Tự động đóng sidebar trên mobile khi chuyển tab
+            if(window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+                document.getElementById('sidebar-overlay').classList.add('hidden');
+            }
         }
     </script>
 
