@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - FLMMO.VN</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { brand: { 500: '#22c55e', 600: '#16a34a', 700: '#15803d' } } } }
+        }
+    </script>
+    <style>
+        body { background-color: #f3f4f6; }
+        .bg-pattern { background-image: radial-gradient(#e5e7eb 1px, transparent 1px); background-size: 20px 20px; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-pattern p-4">
+
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+        <div class="bg-gray-50 px-8 py-6 border-b border-gray-100 text-center">
+            <div class="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-brand-500 to-blue-600 rounded-xl text-white shadow-lg mb-4">
+                <i class="fa-solid fa-rocket text-2xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-1">Chào mừng trở lại!</h2>
+            <p class="text-sm text-gray-500">Đăng nhập để tiếp tục sử dụng FLMMO</p>
+        </div>
+
+        <div class="p-8">
+            <form id="login-form" class="space-y-5">
+                <div id="error-message" class="hidden bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-center">
+                    <i class="fa-solid fa-circle-exclamation mr-2"></i>
+                    <span id="error-text">Email hoặc mật khẩu không đúng!</span>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email của bạn</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" id="email" class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none" placeholder="name@example.com" required>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <label class="block text-sm font-medium text-gray-700">Mật khẩu</label>
+                        <a href="#" class="text-xs font-medium text-brand-600 hover:text-brand-700">Quên mật khẩu?</a>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" id="password" class="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none" placeholder="••••••••" required>
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-400 hover:text-gray-600" onclick="document.getElementById('password').type = document.getElementById('password').type === 'password' ? 'text' : 'password'">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-login" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center">
+                    <span>Đăng Nhập</span>
+                    <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-sm text-gray-600 border-t border-gray-100 pt-6">
+                Chưa có tài khoản? <a href="dangky.html" class="font-bold text-brand-600 hover:text-brand-700">Đăng ký ngay</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
+            authDomain: "flmmo-a4e53.firebaseapp.com",
+            projectId: "flmmo-a4e53",
+            storageBucket: "flmmo-a4e53.firebasestorage.app",
+            messagingSenderId: "973070510202",
+            appId: "1:973070510202:web:9eea3a002c0d03d0fbb3c3",
+            measurementId: "G-C060Q5CW1E"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('btn-login');
+            const errorMsg = document.getElementById('error-message');
+            
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>'; 
+            btn.disabled = true;
+            errorMsg.classList.add('hidden');
+            
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    window.location.href = 'index.html'; // Tới trang khách hàng
+                })
+                .catch((error) => {
+                    errorMsg.classList.remove('hidden');
+                    document.getElementById('error-text').innerText = "Tài khoản hoặc mật khẩu không đúng!";
+                    btn.innerHTML = '<span>Đăng Nhập</span><i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>';
+                    btn.disabled = false;
+                });
+        });
+    </script>
+</body>
+</html>
