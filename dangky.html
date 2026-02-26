@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký - FLMMO.VN</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: { 500: '#22c55e', 600: '#16a34a', 700: '#15803d' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #f3f4f6; }
+        .bg-pattern {
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-pattern p-4 py-10">
+
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+        <!-- Header Form -->
+        <div class="bg-gray-50 px-8 py-6 border-b border-gray-100 text-center">
+            <h2 class="text-2xl font-bold text-gray-900 mb-1">Tạo tài khoản mới</h2>
+            <p class="text-sm text-gray-500">Tham gia hệ thống SMM hàng đầu ngay hôm nay</p>
+        </div>
+
+        <!-- Form Đăng Ký -->
+        <div class="p-8">
+            <form id="register-form" class="space-y-4">
+                <!-- Thông báo -->
+                <div id="status-message" class="hidden p-3 rounded-lg text-sm flex items-start">
+                    <i id="status-icon" class="fa-solid mt-0.5 mr-2"></i>
+                    <span id="status-text"></span>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tên hiển thị</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-user text-gray-400"></i>
+                        </div>
+                        <input type="text" id="fullname" class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none" placeholder="Nguyễn Văn A" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" id="email" class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none" placeholder="name@example.com" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" id="password" class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none" placeholder="Tối thiểu 6 ký tự" required minlength="6">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Xác nhận mật khẩu</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-lock text-gray-400"></i>
+                        </div>
+                        <input type="password" id="re-password" class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none" placeholder="Nhập lại mật khẩu" required>
+                    </div>
+                </div>
+
+                <div class="flex items-start mt-2">
+                    <input id="terms" type="checkbox" class="mt-1 h-4 w-4 text-brand-600 focus:ring-brand-500 border-gray-300 rounded" required>
+                    <label for="terms" class="ml-2 block text-sm text-gray-600">
+                        Tôi đồng ý với <a href="#" class="text-brand-600 font-medium">Điều khoản dịch vụ</a>
+                    </label>
+                </div>
+
+                <button type="submit" id="btn-register" class="w-full mt-4 bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300">
+                    Đăng Ký Tài Khoản
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-sm text-gray-600 border-t border-gray-100 pt-6">
+                Đã có tài khoản? <a href="dangnhap.html" class="font-bold text-brand-600 hover:text-brand-700">Đăng nhập ngay</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
+            authDomain: "flmmo-a4e53.firebaseapp.com",
+            projectId: "flmmo-a4e53",
+            storageBucket: "flmmo-a4e53.firebasestorage.app",
+            messagingSenderId: "973070510202",
+            appId: "1:973070510202:web:9eea3a002c0d03d0fbb3c3",
+            measurementId: "G-C060Q5CW1E"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        document.getElementById('register-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rePassword = document.getElementById('re-password').value;
+            const statusMsg = document.getElementById('status-message');
+            const statusText = document.getElementById('status-text');
+            const statusIcon = document.getElementById('status-icon');
+            const btn = document.getElementById('btn-register');
+
+            if(password !== rePassword) {
+                statusMsg.className = "bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-start mb-4";
+                statusIcon.className = "fa-solid fa-circle-exclamation mt-0.5 mr-2";
+                statusText.innerText = "Mật khẩu xác nhận không khớp!";
+                return;
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang xử lý...';
+            btn.disabled = true;
+            
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(async (userCredential) => {
+                    const user = userCredential.user;
+                    await updateProfile(user, { displayName: fullname });
+                    
+                    // Lưu profile vào Firestore (Mặc định 0 coin)
+                    await setDoc(doc(db, "users", user.uid), {
+                        uid: user.uid,
+                        fullname: fullname,
+                        email: email,
+                        coin: 0,
+                        role: "user",
+                        createdAt: new Date().toISOString()
+                    });
+
+                    statusMsg.className = "bg-green-50 text-green-700 p-3 rounded-lg text-sm flex items-start mb-4";
+                    statusIcon.className = "fa-solid fa-check-circle mt-0.5 mr-2";
+                    statusText.innerText = "Đăng ký thành công! Đang chuyển hướng...";
+                    
+                    setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+                })
+                .catch((error) => {
+                    statusMsg.className = "bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-start mb-4";
+                    statusIcon.className = "fa-solid fa-circle-exclamation mt-0.5 mr-2";
+                    statusText.innerText = "Lỗi: " + (error.code === 'auth/email-already-in-use' ? 'Email này đã được sử dụng!' : error.message);
+                    btn.innerHTML = 'Đăng Ký Tài Khoản';
+                    btn.disabled = false;
+                });
+        });
+    </script>
+</body>
+</html>
