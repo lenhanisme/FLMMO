@@ -57,8 +57,8 @@
 
             <div class="px-6 mt-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Dữ liệu</div>
             <ul>
+                <li><a href="#" id="menu-servers" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('servers')"><i class="fa-solid fa-server w-6 text-gray-400"></i> Quản lý Máy Chủ</a></li>
                 <li><a href="#" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition"><i class="fa-solid fa-users w-6 text-gray-400"></i> Quản lý Users</a></li>
-                <li><a href="#" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition"><i class="fa-solid fa-server w-6 text-gray-400"></i> Cấu hình Dịch vụ</a></li>
             </ul>
         </div>
         
@@ -166,6 +166,79 @@
                 </div>
             </div>
 
+            <!-- VIEW 4: QUẢN LÝ MÁY CHỦ (SERVERS) -->
+            <div id="view-servers" class="view-section max-w-7xl mx-auto space-y-6">
+                <!-- Card Thêm Máy Chủ Mới -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 mb-6">Thêm Máy Chủ Mới</h2>
+                    <form id="form-add-server" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Mã Server <span class="text-red-500">*</span></label>
+                                <input type="text" id="srv-code" required placeholder="VD: sv1, sv2..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                            <div class="lg:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Tên Dịch Vụ / Mô tả <span class="text-red-500">*</span></label>
+                                <input type="text" id="srv-name" required placeholder="VD: Tăng Like Facebook - Lên nhanh - Bảo hành 30 ngày..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Giá / 1 Đơn vị (VNĐ) <span class="text-red-500">*</span></label>
+                                <input type="number" step="0.01" id="srv-rate" required placeholder="VD: 50.5" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Tối thiểu mua</label>
+                                <input type="number" id="srv-min" placeholder="Bỏ trống nếu không giới hạn" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Tối đa mua</label>
+                                <input type="number" id="srv-max" placeholder="Bỏ trống nếu không giới hạn" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                            <div class="lg:col-span-3 border-t border-gray-100 pt-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                                <div class="w-full md:w-1/3">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Trạng thái khởi tạo</label>
+                                    <select id="srv-status" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                        <option value="Hoạt động">Hoạt động (Bình thường)</option>
+                                        <option value="Tạm ngưng">Tạm ngưng (Bảo trì)</option>
+                                        <option value="Hết tài nguyên">Hết tài nguyên (Sold out)</option>
+                                        <option value="Nghẽn dịch vụ">Nghẽn dịch vụ (Delay)</option>
+                                    </select>
+                                </div>
+                                <button type="submit" id="btn-add-server" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-6 rounded-lg shadow-md transition whitespace-nowrap">
+                                    <i class="fa-solid fa-plus mr-1"></i> Tạo Máy Chủ
+                                </button>
+                            </div>
+                        </div>
+                        <div id="srv-msg" class="hidden text-sm font-medium p-3 rounded-lg"></div>
+                    </form>
+                </div>
+
+                <!-- Bảng Danh Sách Máy Chủ -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-lg font-bold text-gray-800">Danh Sách Máy Chủ Đang Có</h2>
+                        <button onclick="fetchServers()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm text-left border-y border-gray-200">
+                            <thead class="text-xs text-gray-600 uppercase bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3">Mã</th>
+                                    <th class="px-4 py-3 min-w-[250px]">Tên / Mô tả Server</th>
+                                    <th class="px-4 py-3">Giá (VNĐ)</th>
+                                    <th class="px-4 py-3">Giới hạn (Min-Max)</th>
+                                    <th class="px-4 py-3 text-center">Trạng thái</th>
+                                    <th class="px-4 py-3 text-right">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-servers-table">
+                                <tr><td colspan="6" class="text-center py-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-2xl"></i></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -185,7 +258,12 @@
             document.querySelectorAll('.admin-menu-item').forEach(el => el.classList.remove('active'));
             document.getElementById('menu-' + viewName).classList.add('active');
             
-            const titles = { 'dashboard': 'Tổng Quan Hệ Thống', 'deposits': 'Quản Lý Nạp Tiền', 'orders': 'Quản Lý Đơn Dịch Vụ' };
+            const titles = { 
+                'dashboard': 'Tổng Quan Hệ Thống', 
+                'deposits': 'Quản Lý Nạp Tiền', 
+                'orders': 'Quản Lý Đơn Dịch Vụ',
+                'servers': 'Quản Lý Máy Chủ (Servers)'
+            };
             document.getElementById('header-title').innerText = titles[viewName];
 
             if(window.innerWidth < 768) {
@@ -199,7 +277,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, collection, getDocs, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, getDocs, updateDoc, increment, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Sử dụng chung 1 config như bên home.html
         const firebaseConfig = {
@@ -226,9 +304,10 @@
                         document.getElementById('admin-body').classList.remove('hidden');
                         document.getElementById('admin-name').innerText = userDoc.data().fullname || "Admin";
                         
-                        // Load dữ liệu
+                        // Load dữ liệu ban đầu
                         fetchDashboardStats();
                         fetchDeposits();
+                        fetchServers(); // Load dữ liệu server
                     } else {
                         // Không phải Admin
                         alert("Bạn không có quyền truy cập khu vực Quản Trị!");
@@ -250,7 +329,10 @@
             signOut(auth).then(() => { window.location.href = "dangnhap.html"; });
         });
 
-        // 2. TẢI THỐNG KÊ DASHBOARD
+        // ==========================================
+        // KHU VỰC: DASHBOARD & DEPOSITS (Giữ nguyên)
+        // ==========================================
+
         async function fetchDashboardStats() {
             try {
                 const usersSnap = await getDocs(collection(db, "users"));
@@ -269,7 +351,6 @@
                 document.getElementById('stat-deposits').innerText = totalIncome.toLocaleString('vi-VN') + " đ";
                 document.getElementById('stat-pending').innerText = pendingCount;
                 
-                // Cập nhật thẻ số lượng chờ duyệt ở menu
                 const badge = document.getElementById('badge-pending');
                 if(pendingCount > 0) {
                     badge.innerText = pendingCount;
@@ -280,17 +361,13 @@
             } catch (e) { console.error("Lỗi tải thống kê", e); }
         }
 
-        // 3. TẢI VÀ HIỂN THỊ DANH SÁCH NẠP TIỀN
         window.fetchDeposits = async function() {
             const tbody = document.getElementById('admin-deposits-table');
-            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải...</td></tr>';
-            
             try {
                 const snapshot = await getDocs(collection(db, "deposits"));
                 let deposits = [];
                 snapshot.forEach(doc => deposits.push({ id: doc.id, ...doc.data() }));
                 
-                // Sắp xếp ưu tiên: Chờ duyệt lên đầu, sau đó xếp theo thời gian mới nhất
                 deposits.sort((a, b) => {
                     if(a.status === "Chờ Duyệt" && b.status !== "Chờ Duyệt") return -1;
                     if(a.status !== "Chờ Duyệt" && b.status === "Chờ Duyệt") return 1;
@@ -305,10 +382,7 @@
                 tbody.innerHTML = '';
                 deposits.forEach(d => {
                     const date = new Date(d.createdAt).toLocaleString('vi-VN');
-                    
-                    // Render UI trạng thái
-                    let statusHtml = '';
-                    let actionHtml = '';
+                    let statusHtml = ''; let actionHtml = '';
                     
                     if (d.status === 'Chờ Duyệt') {
                         statusHtml = '<span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">Chờ Duyệt</span>';
@@ -326,10 +400,7 @@
 
                     tbody.innerHTML += `
                         <tr class="border-b hover:bg-gray-50">
-                            <td class="px-4 py-3">
-                                <div class="font-mono text-xs text-gray-500 mb-1">#${d.id.substring(0,8)}</div>
-                                <div class="text-xs">${date}</div>
-                            </td>
+                            <td class="px-4 py-3"><div class="font-mono text-xs text-gray-500 mb-1">#${d.id.substring(0,8)}</div><div class="text-xs">${date}</div></td>
                             <td class="px-4 py-3 text-xs font-mono text-brand-600 cursor-help" title="${d.uid}">${d.uid.substring(0,10)}...</td>
                             <td class="px-4 py-3 text-sm font-mono text-gray-800">${d.transId || '<i class="text-gray-400">Trống</i>'}</td>
                             <td class="px-4 py-3 font-bold text-gray-800">${Number(d.amount).toLocaleString('en-US')} đ</td>
@@ -338,52 +409,165 @@
                         </tr>
                     `;
                 });
-            } catch(e) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-500">Lỗi: ${e.message}</td></tr>`;
-            }
+            } catch(e) { console.error(e); }
         }
 
-        // 4. HÀNH ĐỘNG: CHẤP NHẬN NẠP TIỀN
         window.approveDeposit = async function(depositId, uid, amount) {
             if(!confirm(`Xác nhận CỘNG ${amount.toLocaleString()} đ cho User UID: ${uid}?`)) return;
+            try {
+                await updateDoc(doc(db, "deposits", depositId), { status: "Chấp Nhận", updatedAt: new Date().toISOString() });
+                await updateDoc(doc(db, "users", uid), { coin: increment(amount) });
+                fetchDeposits(); fetchDashboardStats();
+            } catch (e) { alert("Lỗi khi duyệt tiền: " + e.message); }
+        }
+
+        window.rejectDeposit = async function(depositId) {
+            const reason = prompt("Vui lòng nhập lý do từ chối (User sẽ thấy lý do này):", "Sai nội dung chuyển khoản");
+            if(reason === null) return; 
+            try {
+                await updateDoc(doc(db, "deposits", depositId), { status: "Từ Chối", reason: reason || "Từ chối bởi Admin", updatedAt: new Date().toISOString() });
+                fetchDeposits(); fetchDashboardStats();
+            } catch (e) { alert("Lỗi khi hủy đơn: " + e.message); }
+        }
+
+        // ==========================================
+        // KHU VỰC: QUẢN LÝ MÁY CHỦ (SERVERS)
+        // ==========================================
+
+        // Thêm Server mới
+        document.getElementById('form-add-server').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-add-server');
+            const msg = document.getElementById('srv-msg');
+            
+            const code = document.getElementById('srv-code').value;
+            const name = document.getElementById('srv-name').value;
+            const rate = parseFloat(document.getElementById('srv-rate').value);
+            const minStr = document.getElementById('srv-min').value;
+            const maxStr = document.getElementById('srv-max').value;
+            const status = document.getElementById('srv-status').value;
+
+            // Xử lý giá trị trống của min/max
+            const minLimit = minStr === "" ? null : parseInt(minStr);
+            const maxLimit = maxStr === "" ? null : parseInt(maxStr);
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+            btn.disabled = true;
+
+            try {
+                await addDoc(collection(db, "servers"), {
+                    code: code,
+                    name: name,
+                    rate: rate,
+                    minOrder: minLimit,
+                    maxOrder: maxLimit,
+                    status: status,
+                    createdAt: new Date().toISOString()
+                });
+                
+                msg.className = "text-sm font-medium p-3 rounded-lg bg-green-50 text-green-700 mt-2 block";
+                msg.innerHTML = "<i class='fa-solid fa-check mr-1'></i> Đã thêm máy chủ thành công!";
+                document.getElementById('form-add-server').reset();
+                fetchServers(); // Tải lại bảng
+                
+                setTimeout(() => msg.classList.add('hidden'), 3000);
+            } catch (error) {
+                msg.className = "text-sm font-medium p-3 rounded-lg bg-red-50 text-red-700 mt-2 block";
+                msg.innerHTML = "<i class='fa-solid fa-triangle-exclamation mr-1'></i> Lỗi: " + error.message;
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-plus mr-1"></i> Tạo Máy Chủ';
+                btn.disabled = false;
+            }
+        });
+
+        // Tải danh sách Servers
+        window.fetchServers = async function() {
+            const tbody = document.getElementById('admin-servers-table');
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải danh sách...</td></tr>';
             
             try {
-                // 1. Đổi trạng thái đơn nạp thành "Chấp Nhận"
-                const depositRef = doc(db, "deposits", depositId);
-                await updateDoc(depositRef, { status: "Chấp Nhận", updatedAt: new Date().toISOString() });
+                const snapshot = await getDocs(collection(db, "servers"));
+                let servers = [];
+                snapshot.forEach(doc => servers.push({ id: doc.id, ...doc.data() }));
                 
-                // 2. Cộng tiền vào số dư (Coin) của tài khoản User đó
-                const userRef = doc(db, "users", uid);
-                await updateDoc(userRef, { coin: increment(amount) });
-                
-                // Refresh bảng & Stats
-                fetchDeposits();
-                fetchDashboardStats();
-                alert("Đã duyệt thành công và cộng tiền cho User!");
-            } catch (e) {
-                console.error(e);
-                alert("Lỗi khi duyệt tiền: " + e.message);
+                // Sắp xếp theo tên mã code
+                servers.sort((a, b) => a.code.localeCompare(b.code));
+
+                if(servers.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500">Hệ thống chưa có máy chủ nào. Hãy thêm mới ở trên.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                servers.forEach(s => {
+                    // Render Status Badge
+                    let badgeClass = "bg-gray-100 text-gray-700";
+                    let icon = "";
+                    if(s.status === "Hoạt động") { badgeClass = "bg-green-100 text-green-700"; icon = "fa-circle-check"; }
+                    else if(s.status === "Tạm ngưng") { badgeClass = "bg-gray-200 text-gray-600"; icon = "fa-pause"; }
+                    else if(s.status === "Hết tài nguyên") { badgeClass = "bg-yellow-100 text-yellow-700"; icon = "fa-battery-empty"; }
+                    else if(s.status === "Nghẽn dịch vụ") { badgeClass = "bg-red-100 text-red-700"; icon = "fa-traffic-cone"; }
+
+                    const statusHtml = `<span class="${badgeClass} px-2 py-1 rounded text-xs font-bold border border-opacity-50 inline-flex items-center"><i class="fa-solid ${icon} mr-1"></i> ${s.status}</span>`;
+                    
+                    // Render Min/Max limit
+                    const minText = s.minOrder ? s.minOrder.toLocaleString() : "0";
+                    const maxText = s.maxOrder ? s.maxOrder.toLocaleString() : "Vô cực";
+                    
+                    // Select Box để đổi trạng thái nhanh
+                    const selectStatusHtml = `
+                        <select onchange="updateServerStatus('${s.id}', this.value)" class="text-xs border border-gray-300 rounded p-1 outline-none mt-2 w-full max-w-[130px] bg-gray-50 focus:bg-white">
+                            <option value="Hoạt động" ${s.status === 'Hoạt động' ? 'selected' : ''}>Hoạt động</option>
+                            <option value="Tạm ngưng" ${s.status === 'Tạm ngưng' ? 'selected' : ''}>Tạm ngưng</option>
+                            <option value="Hết tài nguyên" ${s.status === 'Hết tài nguyên' ? 'selected' : ''}>Hết tài nguyên</option>
+                            <option value="Nghẽn dịch vụ" ${s.status === 'Nghẽn dịch vụ' ? 'selected' : ''}>Nghẽn dịch vụ</option>
+                        </select>
+                    `;
+
+                    tbody.innerHTML += `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-4 py-3 font-bold text-gray-800 uppercase">${s.code}</td>
+                            <td class="px-4 py-3 text-sm text-gray-600 leading-snug">${s.name}</td>
+                            <td class="px-4 py-3 font-bold text-brand-600">${s.rate} đ</td>
+                            <td class="px-4 py-3 text-xs text-gray-500">${minText} - ${maxText}</td>
+                            <td class="px-4 py-3 text-center">
+                                ${statusHtml}
+                                ${selectStatusHtml}
+                            </td>
+                            <td class="px-4 py-3 text-right">
+                                <button onclick="deleteServer('${s.id}', '${s.code}')" class="text-red-500 hover:text-red-700 p-2 bg-red-50 hover:bg-red-100 rounded transition" title="Xóa Server"><i class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch(e) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-500">Lỗi lấy dữ liệu: ${e.message}</td></tr>`;
             }
         }
 
-        // 5. HÀNH ĐỘNG: TỪ CHỐI NẠP TIỀN
-        window.rejectDeposit = async function(depositId) {
-            const reason = prompt("Vui lòng nhập lý do từ chối (User sẽ thấy lý do này):", "Sai nội dung chuyển khoản / Không nhận được tiền");
-            if(reason === null) return; // Bấm Cancel
-            
+        // Cập nhật trạng thái Server (Đổi trong ô Select)
+        window.updateServerStatus = async function(serverId, newStatus) {
             try {
-                const depositRef = doc(db, "deposits", depositId);
-                await updateDoc(depositRef, { 
-                    status: "Từ Chối", 
-                    reason: reason || "Từ chối bởi Admin",
-                    updatedAt: new Date().toISOString() 
+                await updateDoc(doc(db, "servers", serverId), { 
+                    status: newStatus,
+                    updatedAt: new Date().toISOString()
                 });
-                
-                fetchDeposits();
-                fetchDashboardStats();
-            } catch (e) {
-                console.error(e);
-                alert("Lỗi khi hủy đơn: " + e.message);
+                // Alert nhẹ nhàng hoặc fetch lại
+                fetchServers();
+            } catch(e) {
+                alert("Lỗi khi cập nhật trạng thái: " + e.message);
+                fetchServers(); // Reset UI
+            }
+        }
+
+        // Xóa Server
+        window.deleteServer = async function(serverId, serverCode) {
+            if(!confirm(`Xác nhận XÓA vĩnh viễn máy chủ [${serverCode}]? Người dùng sẽ không thể đặt hàng dịch vụ này nữa.`)) return;
+            try {
+                await deleteDoc(doc(db, "servers", serverId));
+                fetchServers(); // Tải lại bảng
+            } catch(e) {
+                alert("Lỗi xóa server: " + e.message);
             }
         }
 
