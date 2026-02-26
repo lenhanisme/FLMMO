@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - FLMMO.VN</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { admin: { 800: '#1e293b', 900: '#0f172a' }, brand: { 500: '#3b82f6', 600: '#2563eb' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .admin-menu-item.active { background-color: #334155; color: white; border-left: 4px solid #3b82f6; }
+        .view-section { display: none; }
+        .view-section.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden text-gray-800 hidden" id="admin-body">
+
+    <!-- OVERLAY MOBILE -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
+
+    <!-- SIDEBAR ADMIN -->
+    <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-64 bg-admin-900 text-gray-300 flex flex-col z-40 transition-transform duration-300 ease-in-out">
+        <div class="h-16 flex items-center justify-center border-b border-gray-800 bg-admin-800">
+            <span class="text-xl font-bold tracking-tight text-white flex items-center">
+                <i class="fa-solid fa-shield-halved text-brand-500 mr-2 text-2xl"></i> ADMIN PANEL
+            </span>
+        </div>
+
+        <div class="flex-1 overflow-y-auto py-4">
+            <div class="px-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Hệ thống</div>
+            <ul>
+                <li><a href="#" id="menu-dashboard" class="admin-menu-item active flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('dashboard')"><i class="fa-solid fa-chart-pie w-6 text-gray-400"></i> Tổng Quan</a></li>
+                <li><a href="#" id="menu-deposits" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('deposits')"><i class="fa-solid fa-money-bill-transfer w-6 text-gray-400"></i> Duyệt Tiền Nạp <span id="badge-pending" class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full hidden">0</span></a></li>
+                <li><a href="#" id="menu-orders" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('orders')"><i class="fa-solid fa-cart-shopping w-6 text-gray-400"></i> Đơn Hàng Dịch Vụ</a></li>
+            </ul>
+
+            <div class="px-6 mt-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Dữ liệu</div>
+            <ul>
+                <li><a href="#" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition"><i class="fa-solid fa-users w-6 text-gray-400"></i> Quản lý Users</a></li>
+                <li><a href="#" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition"><i class="fa-solid fa-server w-6 text-gray-400"></i> Cấu hình Dịch vụ</a></li>
+            </ul>
+        </div>
+        
+        <div class="p-4 bg-admin-800 border-t border-gray-700 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center text-white font-bold text-sm">A</div>
+                <div class="text-sm font-semibold text-white truncate max-w-[100px]" id="admin-name">Admin</div>
+            </div>
+            <button id="btn-logout" class="text-gray-400 hover:text-red-400 transition" title="Đăng xuất"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 flex flex-col h-screen overflow-hidden">
+        
+        <!-- HEADER -->
+        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 z-10 shadow-sm shrink-0">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleSidebar()" class="md:hidden text-gray-500 hover:text-gray-800 p-1">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h1 id="header-title" class="text-lg font-bold text-gray-800">Tổng Quan Hệ Thống</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="home.html" target="_blank" class="text-sm text-brand-600 hover:underline font-medium"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Xem trang khách</a>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6">
+            
+            <!-- VIEW 1: DASHBOARD -->
+            <div id="view-dashboard" class="view-section active max-w-7xl mx-auto space-y-6">
+                <!-- Thẻ thống kê -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 flex items-center justify-between">
+                        <div>
+                            <div class="text-sm text-gray-500 font-medium mb-1">Tổng User</div>
+                            <div class="text-2xl font-bold text-gray-800" id="stat-users">0</div>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-xl"><i class="fa-solid fa-users"></i></div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 flex items-center justify-between">
+                        <div>
+                            <div class="text-sm text-gray-500 font-medium mb-1">Tổng Nạp Tiền</div>
+                            <div class="text-2xl font-bold text-gray-800" id="stat-deposits">0 đ</div>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-green-50 text-green-500 flex items-center justify-center text-xl"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 flex items-center justify-between">
+                        <div>
+                            <div class="text-sm text-gray-500 font-medium mb-1">Đơn Chờ Duyệt</div>
+                            <div class="text-2xl font-bold text-red-500" id="stat-pending">0</div>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-red-50 text-red-500 flex items-center justify-center text-xl"><i class="fa-solid fa-bell-concierge"></i></div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 flex items-center justify-between">
+                        <div>
+                            <div class="text-sm text-gray-500 font-medium mb-1">Đơn Dịch Vụ</div>
+                            <div class="text-2xl font-bold text-gray-800">0</div>
+                        </div>
+                        <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center text-xl"><i class="fa-solid fa-cart-flatbed"></i></div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center text-gray-500 py-20">
+                    <i class="fa-solid fa-chart-line text-5xl text-gray-300 mb-4"></i>
+                    <p>Tính năng vẽ biểu đồ doanh thu đang được cập nhật...</p>
+                </div>
+            </div>
+
+            <!-- VIEW 2: QUẢN LÝ NẠP TIỀN -->
+            <div id="view-deposits" class="view-section max-w-7xl mx-auto">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Xét Duyệt Tiền Nạp</h2>
+                        <button onclick="fetchDeposits()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"><i class="fa-solid fa-rotate mr-1"></i> Tải lại</button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm text-left border-y border-gray-200">
+                            <thead class="text-xs text-gray-600 uppercase bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3">Mã GD / Ngày</th>
+                                    <th class="px-4 py-3">User UID</th>
+                                    <th class="px-4 py-3">Mã NH</th>
+                                    <th class="px-4 py-3">Số tiền nạp</th>
+                                    <th class="px-4 py-3">Trạng thái</th>
+                                    <th class="px-4 py-3 text-center">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-deposits-table">
+                                <tr><td colspan="6" class="text-center py-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-2xl"></i></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: QUẢN LÝ ĐƠN HÀNG -->
+            <div id="view-orders" class="view-section max-w-7xl mx-auto">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center py-20">
+                    <i class="fa-solid fa-screwdriver-wrench text-5xl text-gray-300 mb-4"></i>
+                    <h3 class="text-xl font-bold text-gray-700 mb-2">Đang xây dựng</h3>
+                    <p class="text-gray-500">Khu vực quản lý các đơn hàng dịch vụ mạng xã hội.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- SCRIPT CHUYỂN TAB UI -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        function switchView(viewName) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-' + viewName).classList.add('active');
+            
+            document.querySelectorAll('.admin-menu-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('menu-' + viewName).classList.add('active');
+            
+            const titles = { 'dashboard': 'Tổng Quan Hệ Thống', 'deposits': 'Quản Lý Nạp Tiền', 'orders': 'Quản Lý Đơn Dịch Vụ' };
+            document.getElementById('header-title').innerText = titles[viewName];
+
+            if(window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+                document.getElementById('sidebar-overlay').classList.add('hidden');
+            }
+        }
+    </script>
+
+    <!-- FIREBASE ADMIN LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, collection, getDocs, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Sử dụng chung 1 config như bên home.html
+        const firebaseConfig = {
+            apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
+            authDomain: "flmmo-a4e53.firebaseapp.com",
+            projectId: "flmmo-a4e53",
+            storageBucket: "flmmo-a4e53.firebasestorage.app",
+            messagingSenderId: "973070510202",
+            appId: "1:973070510202:web:9eea3a002c0d03d0fbb3c3",
+            measurementId: "G-C060Q5CW1E"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // 1. KIỂM TRA QUYỀN ADMIN (BẢO MẬT)
+        onAuthStateChanged(auth, async (user) => {
+            if (user && !user.isAnonymous) {
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists() && userDoc.data().role === "admin") {
+                        // Là Admin -> Hiện giao diện
+                        document.getElementById('admin-body').classList.remove('hidden');
+                        document.getElementById('admin-name').innerText = userDoc.data().fullname || "Admin";
+                        
+                        // Load dữ liệu
+                        fetchDashboardStats();
+                        fetchDeposits();
+                    } else {
+                        // Không phải Admin
+                        alert("Bạn không có quyền truy cập khu vực Quản Trị!");
+                        window.location.href = "home.html";
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert("Lỗi xác thực quyền Admin!");
+                    window.location.href = "home.html";
+                }
+            } else {
+                // Chưa đăng nhập
+                window.location.href = "dangnhap.html";
+            }
+        });
+
+        // Nút Đăng xuất
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            signOut(auth).then(() => { window.location.href = "dangnhap.html"; });
+        });
+
+        // 2. TẢI THỐNG KÊ DASHBOARD
+        async function fetchDashboardStats() {
+            try {
+                const usersSnap = await getDocs(collection(db, "users"));
+                document.getElementById('stat-users').innerText = usersSnap.size;
+
+                const depositsSnap = await getDocs(collection(db, "deposits"));
+                let totalIncome = 0;
+                let pendingCount = 0;
+                
+                depositsSnap.forEach(doc => {
+                    const data = doc.data();
+                    if (data.status === "Chấp Nhận") totalIncome += Number(data.amount || 0);
+                    if (data.status === "Chờ Duyệt") pendingCount++;
+                });
+
+                document.getElementById('stat-deposits').innerText = totalIncome.toLocaleString('vi-VN') + " đ";
+                document.getElementById('stat-pending').innerText = pendingCount;
+                
+                // Cập nhật thẻ số lượng chờ duyệt ở menu
+                const badge = document.getElementById('badge-pending');
+                if(pendingCount > 0) {
+                    badge.innerText = pendingCount;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            } catch (e) { console.error("Lỗi tải thống kê", e); }
+        }
+
+        // 3. TẢI VÀ HIỂN THỊ DANH SÁCH NẠP TIỀN
+        window.fetchDeposits = async function() {
+            const tbody = document.getElementById('admin-deposits-table');
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải...</td></tr>';
+            
+            try {
+                const snapshot = await getDocs(collection(db, "deposits"));
+                let deposits = [];
+                snapshot.forEach(doc => deposits.push({ id: doc.id, ...doc.data() }));
+                
+                // Sắp xếp ưu tiên: Chờ duyệt lên đầu, sau đó xếp theo thời gian mới nhất
+                deposits.sort((a, b) => {
+                    if(a.status === "Chờ Duyệt" && b.status !== "Chờ Duyệt") return -1;
+                    if(a.status !== "Chờ Duyệt" && b.status === "Chờ Duyệt") return 1;
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                });
+
+                if(deposits.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500">Chưa có dữ liệu nạp tiền</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                deposits.forEach(d => {
+                    const date = new Date(d.createdAt).toLocaleString('vi-VN');
+                    
+                    // Render UI trạng thái
+                    let statusHtml = '';
+                    let actionHtml = '';
+                    
+                    if (d.status === 'Chờ Duyệt') {
+                        statusHtml = '<span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">Chờ Duyệt</span>';
+                        actionHtml = `
+                            <button onclick="approveDeposit('${d.id}', '${d.uid}', ${d.amount})" class="bg-green-500 hover:bg-green-600 text-white w-8 h-8 rounded shadow-sm mr-1 transition tooltip" title="Chấp nhận cộng tiền"><i class="fa-solid fa-check"></i></button>
+                            <button onclick="rejectDeposit('${d.id}')" class="bg-red-500 hover:bg-red-600 text-white w-8 h-8 rounded shadow-sm transition tooltip" title="Từ chối/Hủy"><i class="fa-solid fa-xmark"></i></button>
+                        `;
+                    } else if (d.status === 'Chấp Nhận') {
+                        statusHtml = '<span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold">Hoàn thành</span>';
+                        actionHtml = '<span class="text-gray-400 text-xs">-</span>';
+                    } else {
+                        statusHtml = `<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold">Từ chối</span><br><span class="text-[10px] text-gray-500 mt-1 block max-w-[150px] truncate" title="${d.reason}">Lý do: ${d.reason}</span>`;
+                        actionHtml = '<span class="text-gray-400 text-xs">-</span>';
+                    }
+
+                    tbody.innerHTML += `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-4 py-3">
+                                <div class="font-mono text-xs text-gray-500 mb-1">#${d.id.substring(0,8)}</div>
+                                <div class="text-xs">${date}</div>
+                            </td>
+                            <td class="px-4 py-3 text-xs font-mono text-brand-600 cursor-help" title="${d.uid}">${d.uid.substring(0,10)}...</td>
+                            <td class="px-4 py-3 text-sm font-mono text-gray-800">${d.transId || '<i class="text-gray-400">Trống</i>'}</td>
+                            <td class="px-4 py-3 font-bold text-gray-800">${Number(d.amount).toLocaleString('en-US')} đ</td>
+                            <td class="px-4 py-3">${statusHtml}</td>
+                            <td class="px-4 py-3 text-center">${actionHtml}</td>
+                        </tr>
+                    `;
+                });
+            } catch(e) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-500">Lỗi: ${e.message}</td></tr>`;
+            }
+        }
+
+        // 4. HÀNH ĐỘNG: CHẤP NHẬN NẠP TIỀN
+        window.approveDeposit = async function(depositId, uid, amount) {
+            if(!confirm(`Xác nhận CỘNG ${amount.toLocaleString()} đ cho User UID: ${uid}?`)) return;
+            
+            try {
+                // 1. Đổi trạng thái đơn nạp thành "Chấp Nhận"
+                const depositRef = doc(db, "deposits", depositId);
+                await updateDoc(depositRef, { status: "Chấp Nhận", updatedAt: new Date().toISOString() });
+                
+                // 2. Cộng tiền vào số dư (Coin) của tài khoản User đó
+                const userRef = doc(db, "users", uid);
+                await updateDoc(userRef, { coin: increment(amount) });
+                
+                // Refresh bảng & Stats
+                fetchDeposits();
+                fetchDashboardStats();
+                alert("Đã duyệt thành công và cộng tiền cho User!");
+            } catch (e) {
+                console.error(e);
+                alert("Lỗi khi duyệt tiền: " + e.message);
+            }
+        }
+
+        // 5. HÀNH ĐỘNG: TỪ CHỐI NẠP TIỀN
+        window.rejectDeposit = async function(depositId) {
+            const reason = prompt("Vui lòng nhập lý do từ chối (User sẽ thấy lý do này):", "Sai nội dung chuyển khoản / Không nhận được tiền");
+            if(reason === null) return; // Bấm Cancel
+            
+            try {
+                const depositRef = doc(db, "deposits", depositId);
+                await updateDoc(depositRef, { 
+                    status: "Từ Chối", 
+                    reason: reason || "Từ chối bởi Admin",
+                    updatedAt: new Date().toISOString() 
+                });
+                
+                fetchDeposits();
+                fetchDashboardStats();
+            } catch (e) {
+                console.error(e);
+                alert("Lỗi khi hủy đơn: " + e.message);
+            }
+        }
+
+    </script>
+</body>
+</html>
