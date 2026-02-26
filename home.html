@@ -51,9 +51,9 @@
         <!-- User Profile Card -->
         <div class="p-4 border-t border-gray-100 bg-green-50/50 m-2 rounded-xl">
             <div class="flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center text-green-700 font-bold mb-2">U</div>
-                <div class="text-sm font-semibold text-gray-800">User</div>
-                <div class="bg-white px-3 py-1 mt-2 rounded-full text-xs font-bold text-green-600 shadow-sm">0 Coin</div>
+                <div class="w-10 h-10 rounded-full bg-green-200 flex items-center justify-center text-green-700 font-bold mb-2" id="ui-avatar">U</div>
+                <div class="text-sm font-semibold text-gray-800" id="ui-fullname">Đang tải...</div>
+                <div class="bg-white px-3 py-1 mt-2 rounded-full text-xs font-bold text-green-600 shadow-sm" id="ui-coin">... Coin</div>
             </div>
         </div>
     </aside>
@@ -63,10 +63,10 @@
         <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 z-10 shadow-sm">
             <h1 class="text-lg font-medium text-gray-800">Tăng Bình Luận | Facebook</h1>
             <div class="flex items-center gap-4">
-                <div class="hidden md:flex items-center bg-gray-100 rounded-lg p-1">
-                    <button class="px-3 py-1 text-sm rounded shadow bg-white text-gray-800 font-medium">Khách Hàng</button>
-                </div>
-                <div class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center text-white font-bold text-sm">U</div>
+                <button id="btn-logout" class="px-3 py-1 text-sm rounded border border-red-200 text-red-500 hover:bg-red-50 font-medium transition flex items-center">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Đăng xuất
+                </button>
+                <div class="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center text-white font-bold text-sm" id="ui-avatar-small">U</div>
             </div>
         </header>
 
@@ -124,6 +124,68 @@
         
         // Cập nhật giá khởi điểm là 0
         calcPrice(0);
+    </script>
+
+    <!-- FIREBASE & LOGIC BẢO VỆ TRANG -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Cấu hình Firebase của bạn
+        const firebaseConfig = {
+            apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
+            authDomain: "flmmo-a4e53.firebaseapp.com",
+            projectId: "flmmo-a4e53",
+            storageBucket: "flmmo-a4e53.firebasestorage.app",
+            messagingSenderId: "973070510202",
+            appId: "1:973070510202:web:9eea3a002c0d03d0fbb3c3",
+            measurementId: "G-C060Q5CW1E"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Kiểm tra đăng nhập
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Lấy thông tin từ Firestore
+                const userDocRef = doc(db, "users", user.uid);
+                const userDocSnap = await getDoc(userDocRef);
+                
+                let displayName = user.displayName || "User";
+                let coin = 0;
+
+                if (userDocSnap.exists()) {
+                    const data = userDocSnap.data();
+                    displayName = data.fullname || displayName;
+                    coin = data.coin || 0;
+                }
+
+                // Render giao diện
+                document.getElementById('ui-fullname').innerText = displayName;
+                document.getElementById('ui-coin').innerText = coin.toLocaleString() + " Coin";
+                
+                const initial = displayName.charAt(0).toUpperCase();
+                document.getElementById('ui-avatar').innerText = initial;
+                document.getElementById('ui-avatar-small').innerText = initial;
+                document.getElementById('ui-avatar-small').className = "w-8 h-8 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold text-sm";
+            } else {
+                // Nếu chưa đăng nhập thì tự động đá sang dangnhap.html
+                window.location.href = "dangnhap.html";
+            }
+        });
+
+        // Xử lý nút Đăng Xuất
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href = "dangnhap.html";
+            }).catch((error) => {
+                console.error("Lỗi đăng xuất:", error);
+                alert("Không thể đăng xuất. Vui lòng thử lại!");
+            });
+        });
     </script>
 </body>
 </html>
