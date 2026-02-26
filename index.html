@@ -83,10 +83,10 @@
                     <a href="#bang-gia" class="text-gray-600 hover:text-brand-600 font-medium transition">Bảng giá</a>
                 </nav>
 
-                <!-- Auth Buttons -->
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="index.html" class="text-gray-600 hover:text-gray-900 font-medium transition">Đăng nhập</a>
-                    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full font-medium transition shadow-md shadow-brand-500/30">
+                <!-- Auth Buttons (Desktop) -->
+                <div id="desktop-auth-buttons" class="hidden md:flex items-center space-x-4">
+                    <a href="dangnhap.html" class="text-gray-600 hover:text-gray-900 font-medium transition">Đăng nhập</a>
+                    <a href="dangky.html" class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full font-medium transition shadow-md shadow-brand-500/30">
                         Bắt đầu ngay <i class="fa-solid fa-arrow-right ml-1 text-sm"></i>
                     </a>
                 </div>
@@ -106,9 +106,11 @@
                     <a href="#tinh-nang" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Tính năng</a>
                     <a href="#dich-vu" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Dịch vụ</a>
                     <a href="#bang-gia" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Bảng giá</a>
-                    <div class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3 px-3">
-                        <a href="index.html" class="text-center text-gray-600 hover:text-brand-600 font-medium py-2 border border-gray-200 rounded-full">Đăng nhập</a>
-                        <a href="index.html" class="text-center bg-brand-600 hover:bg-brand-700 text-white px-5 py-3 rounded-full font-medium shadow-md">Bắt đầu ngay</a>
+                    
+                    <!-- Auth Buttons (Mobile) -->
+                    <div id="mobile-auth-buttons" class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3 px-3">
+                        <a href="dangnhap.html" class="text-center text-gray-600 hover:text-brand-600 font-medium py-2 border border-gray-200 rounded-full">Đăng nhập</a>
+                        <a href="dangky.html" class="text-center bg-brand-600 hover:bg-brand-700 text-white px-5 py-3 rounded-full font-medium shadow-md">Bắt đầu ngay</a>
                     </div>
                 </div>
             </div>
@@ -140,8 +142,8 @@
                     FLMMO cung cấp giải pháp toàn diện giúp bạn buff Like, Share, Comment, Follow với 100% tài khoản thật. Tự động hóa hoàn toàn, chi phí cực rẻ và an toàn tuyệt đối.
                 </p>
                 
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-full font-bold text-lg transition shadow-xl shadow-brand-500/20 flex items-center justify-center">
+                <div id="hero-auth-buttons" class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="dangky.html" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-full font-bold text-lg transition shadow-xl shadow-brand-500/20 flex items-center justify-center">
                         <i class="fa-solid fa-user-plus mr-2"></i> Đăng Ký Trải Nghiệm
                     </a>
                     <a href="#dich-vu" class="bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-8 py-4 rounded-full font-bold text-lg transition shadow-sm flex items-center justify-center">
@@ -227,7 +229,7 @@
                         <h3 class="text-3xl md:text-4xl font-bold mb-4">Đa Dạng Dịch Vụ Mạng Xã Hội</h3>
                         <p class="text-gray-400 text-lg">Cung cấp tất cả những gì bạn cần để xây dựng thương hiệu cá nhân hoặc doanh nghiệp trên môi trường số.</p>
                     </div>
-                    <a href="index.html" class="hidden md:flex mt-4 md:mt-0 text-brand-400 hover:text-white font-medium transition items-center">
+                    <a href="#dich-vu" class="hidden md:flex mt-4 md:mt-0 text-brand-400 hover:text-white font-medium transition items-center">
                         Xem tất cả dịch vụ <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
                 </div>
@@ -294,7 +296,7 @@
                     <p class="text-lg md:text-xl text-brand-100 mb-10 max-w-2xl mx-auto relative z-10">
                         Hàng ngàn khách hàng đã và đang sử dụng hệ thống của chúng tôi để gia tăng uy tín và tiếp cận khách hàng tiềm năng.
                     </p>
-                    <a href="index.html" class="inline-block bg-white text-brand-600 font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-gray-50 hover:scale-105 transition-all duration-300 relative z-10">
+                    <a href="dangky.html" class="inline-block bg-white text-brand-600 font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-gray-50 hover:scale-105 transition-all duration-300 relative z-10">
                         Tạo Tài Khoản Ngay Miễn Phí
                     </a>
                 </div>
@@ -408,6 +410,66 @@
                     icon.classList.add('fa-bars');
                 });
             });
+        });
+    </script>
+
+    <!-- FIREBASE BẢO VỆ VÀ CHUYỂN HƯỚNG -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
+            authDomain: "flmmo-a4e53.firebaseapp.com",
+            projectId: "flmmo-a4e53",
+            storageBucket: "flmmo-a4e53.firebasestorage.app",
+            messagingSenderId: "973070510202",
+            appId: "1:973070510202:web:9eea3a002c0d03d0fbb3c3",
+            measurementId: "G-C060Q5CW1E"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Kiểm tra xem user có đang đăng nhập không
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Nếu đã đăng nhập, đổi các nút Đăng Ký/Đăng Nhập thành nút "Vào Dashboard"
+                
+                const desktopAuth = document.getElementById('desktop-auth-buttons');
+                const mobileAuth = document.getElementById('mobile-auth-buttons');
+                const heroAuth = document.getElementById('hero-auth-buttons');
+
+                const initial = (user.displayName || "User").charAt(0).toUpperCase();
+
+                if (desktopAuth) {
+                    desktopAuth.innerHTML = `
+                        <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full font-medium transition shadow-md shadow-brand-500/30 flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-white text-brand-600 flex items-center justify-center text-xs font-bold mr-2">${initial}</div>
+                            Vào Dashboard <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    `;
+                }
+
+                if (mobileAuth) {
+                    mobileAuth.innerHTML = `
+                        <a href="index.html" class="text-center bg-brand-600 hover:bg-brand-700 text-white px-5 py-3 rounded-full font-medium shadow-md">
+                            Vào Dashboard
+                        </a>
+                    `;
+                }
+
+                if (heroAuth) {
+                    heroAuth.innerHTML = `
+                        <a href="index.html" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-full font-bold text-lg transition shadow-xl shadow-brand-500/20 flex items-center justify-center">
+                            <i class="fa-solid fa-chart-line mr-2"></i> Truy Cập Hệ Thống
+                        </a>
+                        <a href="#dich-vu" class="bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-8 py-4 rounded-full font-bold text-lg transition shadow-sm flex items-center justify-center">
+                            Xem Bảng Giá <i class="fa-solid fa-arrow-down ml-2"></i>
+                        </a>
+                    `;
+                }
+            }
         });
     </script>
 </body>
