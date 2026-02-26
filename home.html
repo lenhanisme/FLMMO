@@ -52,14 +52,24 @@
         <div class="flex-1 overflow-y-auto py-4">
             <div class="px-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Bảng Điều Khiển</div>
             <ul>
-                <li><a href="#" id="menu-order" class="menu-item active flex items-center px-6 py-3 text-sm hover:bg-gray-50 transition" onclick="switchView('order')"><i class="fa-solid fa-cart-plus w-6"></i> Đặt Đơn Mới</a></li>
+                <li><a href="#" id="menu-order" class="menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-50 transition" onclick="switchView('order')"><i class="fa-solid fa-cart-plus w-6"></i> Đặt Đơn Mới</a></li>
                 <li><a href="#" id="menu-history" class="menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-50 transition" onclick="switchView('history')"><i class="fa-solid fa-list-rotate w-6"></i> Lịch Sử Đơn</a></li>
                 <li><a href="#" id="menu-deposit" class="menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-50 transition" onclick="switchView('deposit')"><i class="fa-solid fa-wallet w-6"></i> Nạp Tiền <span class="ml-auto bg-red-100 text-red-600 text-[10px] px-2 py-0.5 rounded-full font-bold animate-pulse">HOT</span></a></li>
             </ul>
 
-            <div class="px-4 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Công Cụ</div>
+            <div class="px-4 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Dịch Vụ Của Bạn</div>
             <ul>
-                <li><a href="#" class="menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-50 text-gray-400 cursor-not-allowed"><i class="fa-solid fa-code w-6"></i> API Tích Hợp</a></li>
+                <li>
+                    <button class="w-full flex items-center justify-between px-6 py-3 text-sm text-brand-600 bg-green-50 font-medium border-l-2 border-brand-500">
+                        <span class="flex items-center"><i class="fa-brands fa-facebook w-6 text-blue-600"></i> Facebook</span>
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <ul class="bg-white py-1">
+                        <li><a href="#" class="flex items-center pl-12 pr-6 py-2.5 text-sm hover:text-brand-600 hover:bg-gray-50" onclick="loadServiceForm('Tăng Bình Luận FB')"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i> Tăng Bình Luận</a></li>
+                        <li><a href="#" class="flex items-center pl-12 pr-6 py-2.5 text-sm hover:text-brand-600 hover:bg-gray-50" onclick="loadServiceForm('Tăng Like FB')"><i class="fa-solid fa-thumbs-up text-blue-500 mr-2"></i> Tăng Like / Cảm Xúc</a></li>
+                        <li><a href="#" class="flex items-center pl-12 pr-6 py-2.5 text-sm hover:text-brand-600 hover:bg-gray-50" onclick="loadServiceForm('Tăng Follow FB')"><i class="fa-solid fa-user-plus text-green-500 mr-2"></i> Tăng Follow/Sub</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
 
@@ -82,7 +92,7 @@
                 <button onclick="toggleSidebar()" class="md:hidden text-gray-500 hover:text-gray-800 p-1">
                     <i class="fa-solid fa-bars text-xl"></i>
                 </button>
-                <h1 id="header-title" class="text-base sm:text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 truncate max-w-[160px] sm:max-w-none">Khởi Tạo Đơn Dịch Vụ</h1>
+                <h1 id="header-title" class="text-base sm:text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 truncate max-w-[160px] sm:max-w-none">Chào mừng trở lại!</h1>
             </div>
             <div class="flex items-center gap-4">
                 <div class="text-sm text-gray-500 hidden sm:block"><i class="fa-solid fa-circle text-[8px] text-brand-500 animate-pulse mr-1"></i> Hệ thống ổn định</div>
@@ -98,26 +108,34 @@
             <div id="view-order" class="view-section active max-w-7xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                        <div class="mb-5">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Link Hoặc UID cần tăng:</label>
-                            <input type="text" placeholder="Nhập link hoặc ID" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition" disabled>
-                        </div>
-                        <div class="mb-5">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Chọn máy chủ xử lý:</label>
-                            <div class="p-6 border border-dashed border-gray-300 rounded-lg text-center text-sm text-gray-500 bg-gray-50">
-                                <i class="fa-solid fa-server mb-3 text-gray-400 text-2xl"></i><br>
-                                Hiện chưa có dịch vụ nào hoạt động. Vui lòng quay lại sau!
+                        <form id="form-order">
+                            <div class="mb-5">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Link Hoặc UID cần tăng:</label>
+                                <input type="text" id="order-link" placeholder="Nhập link hoặc ID để chạy" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed" disabled required>
                             </div>
-                        </div>
-                        <div class="mb-5">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Số lượng cần tăng:</label>
-                            <input type="number" id="qty" value="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-400 cursor-not-allowed" disabled>
-                        </div>
-                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-5 flex justify-between items-center">
-                            <span class="text-gray-500 font-medium">Tổng thanh toán:</span>
-                            <span class="text-2xl font-bold text-gray-500">0 <span class="text-sm">VNĐ</span></span>
-                        </div>
-                        <button class="w-full bg-gray-300 text-white font-bold py-3 rounded-lg cursor-not-allowed" disabled>Tạo Đơn Hàng</button>
+                            <div class="mb-5">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Chọn máy chủ xử lý:</label>
+                                <!-- Khu vực render danh sách máy chủ -->
+                                <div id="server-list" class="space-y-3">
+                                    <div class="p-6 border border-dashed border-gray-300 rounded-lg text-center text-sm text-gray-500 bg-gray-50">
+                                        <i class="fa-solid fa-hand-pointer mb-3 text-gray-400 text-2xl"></i><br>
+                                        Vui lòng chọn một loại dịch vụ từ Menu bên trái <br>(VD: Tăng Bình Luận, Tăng Like...)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-5">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Số lượng cần tăng:</label>
+                                <input type="number" id="qty" value="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-800 disabled:text-gray-400 disabled:cursor-not-allowed outline-none focus:ring-2 focus:ring-brand-500" disabled required oninput="calcPrice()">
+                            </div>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-5 flex justify-between items-center">
+                                <span class="text-gray-500 font-medium">Tổng thanh toán:</span>
+                                <span id="total" class="text-2xl font-bold text-brand-600">0 <span class="text-sm text-gray-500">VNĐ</span></span>
+                            </div>
+                            <button type="submit" id="btn-create-order" class="w-full bg-gray-300 text-white font-bold py-3 rounded-lg cursor-not-allowed transition duration-300 flex justify-center items-center" disabled>
+                                <span>Tạo Đơn Hàng</span>
+                            </button>
+                            <div id="order-status-msg" class="hidden text-sm mt-3 text-center p-3 rounded font-medium"></div>
+                        </form>
                     </div>
 
                     <!-- Hướng dẫn Panel -->
@@ -139,9 +157,8 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
                         <h2 class="text-lg font-bold text-gray-800">Lịch Sử Mua Dịch Vụ</h2>
-                        <div class="mt-2 sm:mt-0 flex border border-gray-300 rounded-lg overflow-hidden">
-                            <input type="text" placeholder="Tìm mã đơn..." class="px-3 py-1.5 text-sm outline-none">
-                            <button class="bg-gray-100 px-3 py-1.5 text-gray-600 hover:bg-gray-200"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="loadOrderHistory()" class="text-sm text-gray-500 hover:text-brand-600 border border-gray-200 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
                         </div>
                     </div>
                     
@@ -150,15 +167,17 @@
                             <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-y border-gray-200">
                                 <tr>
                                     <th class="px-4 py-3">Mã đơn</th>
+                                    <th class="px-4 py-3">Loại dịch vụ</th>
+                                    <th class="px-4 py-3">Máy chủ</th>
                                     <th class="px-4 py-3">Link/UID</th>
-                                    <th class="px-4 py-3">Dịch vụ</th>
+                                    <th class="px-4 py-3">Số lượng</th>
+                                    <th class="px-4 py-3">Tổng tiền</th>
                                     <th class="px-4 py-3">Trạng thái</th>
-                                    <th class="px-4 py-3 text-right">Thời gian</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="order-history-body">
                                 <tr>
-                                    <td colspan="5" class="px-4 py-12 text-center text-gray-500">
+                                    <td colspan="7" class="px-4 py-12 text-center text-gray-500">
                                         <div class="flex flex-col items-center justify-center">
                                             <i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3"></i>
                                             <p>Chưa có giao dịch nào được ghi nhận</p>
@@ -238,7 +257,7 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-bold text-gray-800">Lịch Sử Nạp Tiền</h3>
-                        <button onclick="loadDepositHistory()" class="text-sm text-gray-500 hover:text-brand-600"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
+                        <button onclick="loadDepositHistory()" class="text-sm text-gray-500 hover:text-brand-600 border border-gray-200 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-sm text-left border-y border-gray-200">
@@ -304,8 +323,113 @@
         </div>
     </div>
 
-    <!-- UI JAVASCRIPT & LOGIC -->
+    <!-- UI JAVASCRIPT & LOGIC ĐẶT ĐƠN (FRONT-END) -->
     <script>
+        window.currentPrice = 0;
+        window.currentServer = null;
+        window.currentServiceCategory = "";
+
+        // 1. Tải danh sách Server theo loại Dịch vụ (Bấm từ menu trái)
+        window.loadServiceForm = function(serviceCategory) {
+            // Chuyển view sang Order
+            switchView('order');
+            document.getElementById('header-title').innerText = 'Khởi Tạo Đơn: ' + serviceCategory;
+            window.currentServiceCategory = serviceCategory;
+            
+            // Mở khóa ô nhập liệu
+            document.getElementById('order-link').disabled = false;
+            document.getElementById('qty').disabled = false;
+            
+            // ĐÂY LÀ CHỖ BẠN CÓ THỂ THÊM/SỬA CÁC MÁY CHỦ (MỤC ĐƠN)
+            let serversData = [];
+            if(serviceCategory === 'Tăng Bình Luận FB') {
+                serversData = [
+                    { id: 'sv14', name: 'Server 14 - Bình luận VN chất lượng cao', price: 1339.5, status: 'Ổn định', tag: 'Khuyên dùng' },
+                    { id: 'sv16', name: 'Server 16 - Bình luận VN ngẫu nhiên', price: 70.3, status: 'Hoạt động', tag: 'Giá rẻ' }
+                ];
+            } else if (serviceCategory === 'Tăng Like FB') {
+                 serversData = [
+                    { id: 'sv1', name: 'Server 1 - Like Việt siêu tốc (Lên ngay)', price: 15, status: 'Nhanh', tag: 'Bảo hành' },
+                    { id: 'sv2', name: 'Server 2 - Like Cảm Xúc (Tùy chọn)', price: 20, status: 'Hoạt động', tag: 'Mới' }
+                ];
+            } else if (serviceCategory === 'Tăng Follow FB') {
+                 serversData = [
+                    { id: 'sv10', name: 'Server 10 - Sub trang cá nhân thật', price: 120, status: 'Chậm', tag: 'Chất lượng' }
+                ];
+            }
+
+            const listEl = document.getElementById('server-list');
+            listEl.innerHTML = '';
+            
+            serversData.forEach((sv, index) => {
+                const isChecked = index === 0; // Mặc định chọn cái đầu tiên
+                if(isChecked) {
+                    window.currentPrice = sv.price;
+                    window.currentServer = sv;
+                }
+                
+                listEl.innerHTML += `
+                    <label class="flex items-start p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 transition relative ${isChecked ? 'ring-2 ring-brand-500 border-brand-500 bg-green-50' : 'bg-white'}" onclick="selectServer(${sv.price}, '${sv.id}', '${sv.name}', this)">
+                        <input type="radio" name="server" class="mt-1 text-brand-600 focus:ring-brand-500 h-4 w-4" ${isChecked ? 'checked' : ''}>
+                        <div class="ml-3 flex-1">
+                            <div class="text-sm font-bold text-gray-800">${sv.name} <span class="ml-2 bg-red-100 text-red-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">${sv.tag}</span></div>
+                            <div class="mt-2 text-sm">
+                                <span class="font-bold text-brand-600 bg-green-100 px-2 py-1 rounded border border-green-200">${sv.price} VNĐ</span>
+                                <span class="text-xs text-gray-500 ml-2"><i class="fa-solid fa-signal mr-1"></i>${sv.status}</span>
+                            </div>
+                        </div>
+                    </label>
+                `;
+            });
+            
+            // Xóa thông báo cũ
+            document.getElementById('order-status-msg').classList.add('hidden');
+            document.getElementById('qty').value = '';
+            calcPrice();
+            
+            // Đóng menu nếu ở Mobile
+            if(window.innerWidth < 768) toggleSidebar();
+        }
+
+        // 2. Logic khi click chọn máy chủ
+        window.selectServer = function(price, id, name, el) {
+            window.currentPrice = price;
+            window.currentServer = { id: id, name: name, price: price };
+            
+            // Đổi màu viền UI
+            document.querySelectorAll('#server-list label').forEach(label => {
+                label.classList.remove('ring-2', 'ring-brand-500', 'border-brand-500', 'bg-green-50');
+                label.classList.add('bg-white');
+            });
+            el.classList.add('ring-2', 'ring-brand-500', 'border-brand-500', 'bg-green-50');
+            el.classList.remove('bg-white');
+            
+            // Tính lại tiền
+            calcPrice();
+        }
+
+        // 3. Logic tính tiền và bật/tắt nút Đặt Hàng
+        window.calcPrice = function() {
+            const qtyStr = document.getElementById('qty').value;
+            const qty = parseInt(qtyStr) || 0;
+            const total = qty * window.currentPrice;
+            
+            // Hiển thị tiền
+            document.getElementById('total').innerHTML = `${total.toLocaleString('en-US')} <span class="text-sm text-gray-500">VNĐ</span>`;
+            
+            // Điều khiển nút
+            const btn = document.getElementById('btn-create-order');
+            if (qty > 0 && window.currentServer && qtyStr !== "") {
+                btn.disabled = false;
+                btn.classList.remove('bg-gray-300', 'cursor-not-allowed');
+                btn.classList.add('bg-brand-600', 'hover:bg-brand-700');
+            } else {
+                btn.disabled = true;
+                btn.classList.add('bg-gray-300', 'cursor-not-allowed');
+                btn.classList.remove('bg-brand-600', 'hover:bg-brand-700');
+            }
+        }
+
         // Toggle Sidebar Mobile
         window.toggleSidebar = function() {
             const sidebar = document.getElementById('sidebar');
@@ -356,18 +480,29 @@
 
         // Chuyển Tab Giao diện
         window.switchView = function(viewName) {
+            // Ngăn chặn chuyển view lịch sử/đặt đơn nếu menu không được highlight
+            if(viewName === 'order' && !window.currentServiceCategory) {
+                document.getElementById('header-title').innerText = 'Chọn Dịch Vụ';
+            }
+
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById('view-' + viewName).classList.add('active');
             
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-            document.getElementById('menu-' + viewName).classList.add('active');
+            const menuBtn = document.getElementById('menu-' + viewName);
+            if(menuBtn) menuBtn.classList.add('active');
             
             const titles = {
-                'order': 'Khởi Tạo Đơn Dịch Vụ',
+                'order': window.currentServiceCategory ? ('Khởi Tạo Đơn: ' + window.currentServiceCategory) : 'Khởi Tạo Đơn Dịch Vụ',
                 'history': 'Quản Lý Lịch Sử Đơn',
                 'deposit': 'Nạp Tiền Vào Tài Khoản'
             };
             document.getElementById('header-title').innerText = titles[viewName];
+
+            // Load dữ liệu khi vào tab Lịch Sử
+            if(viewName === 'history' && typeof window.loadOrderHistory === 'function') {
+                window.loadOrderHistory();
+            }
 
             // Tự động đóng sidebar trên mobile khi chuyển tab
             if(window.innerWidth < 768) {
@@ -381,7 +516,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInAnonymously, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, addDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
@@ -401,9 +536,9 @@
         const initAuth = async () => {
             onAuthStateChanged(auth, async (user) => {
                 if (!user) {
-                    // Tự động đăng nhập ẩn danh nếu chưa đăng nhập (để test UI)
                     await signInAnonymously(auth);
                 } else {
+                    window.currentUserBalance = 0; // Lưu tạm số dư để trừ khi đặt đơn
                     loadUserData(user);
                     loadDepositHistory();
                 }
@@ -437,6 +572,8 @@
                 displayName = "Khách lạ (Ẩn danh)";
             }
 
+            window.currentUserBalance = coin; // Gán vào biến global
+
             // Gắn lên UI Header & Sidebar
             document.getElementById('ui-fullname').innerText = displayName;
             document.getElementById('ui-coin').innerText = coin.toLocaleString() + " VNĐ";
@@ -458,7 +595,134 @@
             document.getElementById('profile-created').innerText = createdAt;
         }
 
-        // 2. Xử lý Nạp Tiền (Bấm Tôi Đã Chuyển)
+        // ==========================================
+        // KHU VỰC LOGIC FIREBASE CHO ĐẶT ĐƠN HÀNG
+        // ==========================================
+        document.getElementById('form-order').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser;
+            const btn = document.getElementById('btn-create-order');
+            const msg = document.getElementById('order-status-msg');
+            
+            if(!user || user.isAnonymous) {
+                msg.className = "text-sm mt-3 text-center p-3 rounded bg-yellow-50 text-yellow-700 font-medium border border-yellow-200 block";
+                msg.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Vui lòng Đăng Ký Tài Khoản chính thức để tạo đơn hàng!';
+                return;
+            }
+
+            const link = document.getElementById('order-link').value;
+            const qty = parseInt(document.getElementById('qty').value);
+            const totalCost = qty * window.currentPrice;
+
+            // Kiểm tra số dư (Tắt comment đoạn này nếu bạn muốn cho test thoải mái không cần tiền)
+            /*
+            if (window.currentUserBalance < totalCost) {
+                msg.className = "text-sm mt-3 text-center p-3 rounded bg-red-50 text-red-700 font-medium border border-red-200 block";
+                msg.innerHTML = '<i class="fa-solid fa-wallet mr-1"></i> Số dư của bạn không đủ để thanh toán. Vui lòng nạp thêm tiền!';
+                return;
+            }
+            */
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang xử lý...';
+            btn.disabled = true;
+
+            try {
+                // 1. Thêm Order vào Firestore collection "orders"
+                await addDoc(collection(db, "orders"), {
+                    uid: user.uid,
+                    category: window.currentServiceCategory,
+                    serverName: window.currentServer.name,
+                    serverId: window.currentServer.id,
+                    link: link,
+                    quantity: qty,
+                    price: window.currentPrice,
+                    total: totalCost,
+                    status: "Đang chạy",
+                    createdAt: new Date().toISOString()
+                });
+
+                // 2. Trừ tiền tài khoản (Mở comment ra nếu dùng thật)
+                /*
+                await updateDoc(doc(db, "users", user.uid), {
+                    coin: window.currentUserBalance - totalCost
+                });
+                loadUserData(user); // Tải lại số dư mới
+                */
+
+                msg.className = "text-sm mt-3 text-center p-3 rounded bg-green-50 text-green-700 font-bold border border-green-200 block";
+                msg.innerHTML = '<i class="fa-solid fa-check-circle mr-1"></i> Tạo đơn hàng thành công! Vui lòng kiểm tra tab Lịch Sử.';
+                
+                // Chuyển hướng sang trang lịch sử sau 2s
+                setTimeout(() => {
+                    document.getElementById('form-order').reset();
+                    msg.classList.add('hidden');
+                    window.calcPrice(); // reset price
+                    window.switchView('history');
+                }, 2000);
+
+            } catch (error) {
+                msg.className = "text-sm mt-3 text-center p-3 rounded bg-red-50 text-red-700 font-medium border border-red-200 block";
+                msg.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Lỗi: ' + error.message;
+            } finally {
+                btn.innerHTML = 'Tạo Đơn Hàng';
+                btn.disabled = false;
+            }
+        });
+
+        // ==========================================
+        // LẤY DỮ LIỆU BẢNG LỊCH SỬ ĐƠN
+        // ==========================================
+        window.loadOrderHistory = async function() {
+            const user = auth.currentUser;
+            if(!user) return;
+            const tbody = document.getElementById('order-history-body');
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center py-6"><i class="fa-solid fa-circle-notch fa-spin text-gray-400 text-2xl mb-2"></i><br>Đang tải đơn hàng...</td></tr>';
+            
+            try {
+                const snapshot = await getDocs(collection(db, "orders"));
+                let orders = [];
+                snapshot.forEach(doc => {
+                    if (doc.data().uid === user.uid) {
+                        orders.push({ id: doc.id, ...doc.data() });
+                    }
+                });
+                
+                // Sắp xếp mới nhất lên đầu
+                orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                if(orders.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center py-12 text-gray-500"><i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3"></i><p>Bạn chưa có đơn hàng nào</p></td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                orders.forEach(o => {
+                    let statusHtml = '';
+                    if (o.status === 'Đang xử lý' || o.status === 'Đang chạy') statusHtml = '<span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-medium border border-blue-200">' + o.status + '</span>';
+                    else if (o.status === 'Hoàn thành') statusHtml = '<span class="bg-brand-100 text-brand-700 px-2 py-1 rounded text-xs font-medium border border-brand-200">Hoàn thành</span>';
+                    else statusHtml = `<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-medium border border-red-200">${o.status}</span>`;
+
+                    tbody.innerHTML += `
+                        <tr class="border-b hover:bg-gray-50 transition text-gray-600">
+                            <td class="px-4 py-3 text-xs font-mono font-bold">#${o.id.substring(0,8).toUpperCase()}</td>
+                            <td class="px-4 py-3 font-medium text-gray-800">${o.category}</td>
+                            <td class="px-4 py-3 text-xs"><span class="bg-gray-200 px-2 py-1 rounded-md text-gray-700 font-bold">${o.serverId}</span></td>
+                            <td class="px-4 py-3 text-xs max-w-[150px] truncate text-blue-500 hover:text-blue-700 cursor-pointer" title="${o.link}">${o.link}</td>
+                            <td class="px-4 py-3 font-bold">${o.quantity.toLocaleString('en-US')}</td>
+                            <td class="px-4 py-3 font-bold text-brand-600">${o.total.toLocaleString('en-US')}đ</td>
+                            <td class="px-4 py-3">${statusHtml}</td>
+                        </tr>
+                    `;
+                });
+            } catch(e) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-red-500"><i class="fa-solid fa-triangle-exclamation mb-2 text-2xl"></i><br>Lỗi tải lịch sử đơn: ${e.message}</td></tr>`;
+            }
+        }
+
+        // ==========================================
+        // CÁC CHỨC NĂNG CŨ (NẠP TIỀN, ĐỔI MK) GIỮ NGUYÊN
+        // ==========================================
+
         document.getElementById('form-deposit').addEventListener('submit', async (e) => {
             e.preventDefault();
             const user = auth.currentUser;
@@ -488,7 +752,6 @@
                 document.getElementById('form-deposit').reset();
                 window.updateQR();
                 
-                // Refresh bảng
                 loadDepositHistory();
             } catch (error) {
                 msg.className = "text-sm mt-3 text-center p-3 rounded bg-red-50 text-red-700 font-medium border border-red-100";
@@ -500,30 +763,20 @@
             }
         });
 
-        // 3. Lấy Lịch Sử Nạp Tiền
         window.loadDepositHistory = async function() {
             const user = auth.currentUser;
             if(!user) return;
             const tbody = document.getElementById('deposit-history-body');
-            tbody.innerHTML = '<tr><td colspan="5" class="text-center py-6"><i class="fa-solid fa-circle-notch fa-spin text-gray-400 text-2xl mb-2"></i><br>Đang tải dữ liệu...</td></tr>';
             
             try {
                 const snapshot = await getDocs(collection(db, "deposits"));
                 let deposits = [];
                 snapshot.forEach(doc => {
-                    if (doc.data().uid === user.uid) {
-                        deposits.push({ id: doc.id, ...doc.data() });
-                    }
+                    if (doc.data().uid === user.uid) deposits.push({ id: doc.id, ...doc.data() });
                 });
-                
-                // Sắp xếp mới nhất lên đầu
                 deposits.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-                if(deposits.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" class="text-center py-12 text-gray-500"><i class="fa-solid fa-clock-rotate-left text-4xl text-gray-300 mb-3"></i><p>Bạn chưa có giao dịch nạp tiền nào</p></td></tr>';
-                    return;
-                }
-
+                if(deposits.length === 0) return;
                 tbody.innerHTML = '';
                 deposits.forEach(d => {
                     let statusHtml = '';
@@ -541,12 +794,9 @@
                         </tr>
                     `;
                 });
-            } catch(e) {
-                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-red-500"><i class="fa-solid fa-triangle-exclamation mb-2 text-2xl"></i><br>Lỗi khi tải lịch sử: ${e.message}</td></tr>`;
-            }
+            } catch(e) {}
         }
 
-        // 4. Đổi Mật Khẩu
         document.getElementById('form-change-password').addEventListener('submit', async (e) => {
             e.preventDefault();
             const user = auth.currentUser;
