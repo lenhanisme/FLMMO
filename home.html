@@ -58,17 +58,11 @@
             </ul>
 
             <div class="px-4 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Dịch Vụ Của Bạn</div>
-            <ul>
-                <li>
-                    <button class="w-full flex items-center justify-between px-6 py-3 text-sm text-brand-600 bg-green-50 font-medium border-l-2 border-brand-500">
-                        <span class="flex items-center"><i class="fa-brands fa-facebook w-6 text-blue-600"></i> Facebook</span>
-                        <i class="fa-solid fa-chevron-down text-xs"></i>
-                    </button>
-                    <ul class="bg-white py-1">
-                        <li><a href="#" class="flex items-center pl-12 pr-6 py-2.5 text-sm hover:text-brand-600 hover:bg-gray-50" onclick="loadServiceForm('Tăng Bình Luận FB')"><i class="fa-solid fa-bolt text-yellow-500 mr-2"></i> Tăng Bình Luận</a></li>
-                        <li><a href="#" class="flex items-center pl-12 pr-6 py-2.5 text-sm hover:text-brand-600 hover:bg-gray-50" onclick="loadServiceForm('Tăng Like FB')"><i class="fa-solid fa-thumbs-up text-blue-500 mr-2"></i> Tăng Like / Cảm Xúc</a></li>
-                        <li><a href="#" class="flex items-center pl-12 pr-6 py-2.5 text-sm hover:text-brand-600 hover:bg-gray-50" onclick="loadServiceForm('Tăng Follow FB')"><i class="fa-solid fa-user-plus text-green-500 mr-2"></i> Tăng Follow/Sub</a></li>
-                    </ul>
+            
+            <!-- MENU ĐỘNG TỪ FIREBASE ĐỔ VÀO ĐÂY -->
+            <ul id="dynamic-sidebar-menu">
+                <li class="px-6 py-3 text-sm text-gray-400 italic">
+                    <i class="fa-solid fa-circle-notch fa-spin mr-2 text-brand-500"></i> Đang tải dịch vụ...
                 </li>
             </ul>
         </div>
@@ -119,7 +113,7 @@
                                 <div id="server-list" class="space-y-3">
                                     <div class="p-6 border border-dashed border-gray-300 rounded-lg text-center text-sm text-gray-500 bg-gray-50">
                                         <i class="fa-solid fa-hand-pointer mb-3 text-gray-400 text-2xl"></i><br>
-                                        Vui lòng chọn một loại dịch vụ từ Menu bên trái <br>(VD: Tăng Bình Luận, Tăng Like...)
+                                        Vui lòng chọn một loại dịch vụ từ Menu bên trái <br>(VD: Facebook -> Tăng Bình Luận)
                                     </div>
                                 </div>
                             </div>
@@ -323,103 +317,190 @@
         </div>
     </div>
 
-    <!-- UI JAVASCRIPT & LOGIC ĐẶT ĐƠN (FRONT-END) -->
+    <!-- UI JAVASCRIPT & LOGIC FRONT-END -->
     <script>
+        // Mảng cấu trúc chứa toàn bộ server lấy từ Database
+        window.allServers = [];
         window.currentPrice = 0;
         window.currentServer = null;
         window.currentServiceCategory = "";
 
-        // 1. Tải danh sách Server theo loại Dịch vụ (Bấm từ menu trái)
+        // Function Toggle Submenu của Sidebar
+        window.toggleSubMenu = function(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if (el.style.display === 'none' || el.style.display === '') {
+                el.style.display = 'block';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                el.style.display = 'none';
+                icon.style.transform = 'rotate(-90deg)';
+            }
+        }
+
+        // Tải danh sách Server theo loại Dịch vụ (Bấm từ menu trái)
         window.loadServiceForm = function(serviceCategory) {
-            // Chuyển view sang Order
             switchView('order');
             document.getElementById('header-title').innerText = 'Khởi Tạo Đơn: ' + serviceCategory;
             window.currentServiceCategory = serviceCategory;
             
-            // Mở khóa ô nhập liệu
             document.getElementById('order-link').disabled = false;
             document.getElementById('qty').disabled = false;
             
-            // ĐÂY LÀ CHỖ BẠN CÓ THỂ THÊM/SỬA CÁC MÁY CHỦ (MỤC ĐƠN)
-            let serversData = [];
-            if(serviceCategory === 'Tăng Bình Luận FB') {
-                serversData = [
-                    { id: 'sv14', name: 'Server 14 - Bình luận VN chất lượng cao', price: 1339.5, status: 'Ổn định', tag: 'Khuyên dùng' },
-                    { id: 'sv16', name: 'Server 16 - Bình luận VN ngẫu nhiên', price: 70.3, status: 'Hoạt động', tag: 'Giá rẻ' }
-                ];
-            } else if (serviceCategory === 'Tăng Like FB') {
-                 serversData = [
-                    { id: 'sv1', name: 'Server 1 - Like Việt siêu tốc (Lên ngay)', price: 15, status: 'Nhanh', tag: 'Bảo hành' },
-                    { id: 'sv2', name: 'Server 2 - Like Cảm Xúc (Tùy chọn)', price: 20, status: 'Hoạt động', tag: 'Mới' }
-                ];
-            } else if (serviceCategory === 'Tăng Follow FB') {
-                 serversData = [
-                    { id: 'sv10', name: 'Server 10 - Sub trang cá nhân thật', price: 120, status: 'Chậm', tag: 'Chất lượng' }
-                ];
-            }
-
             const listEl = document.getElementById('server-list');
             listEl.innerHTML = '';
             
-            serversData.forEach((sv, index) => {
-                const isChecked = index === 0; // Mặc định chọn cái đầu tiên
-                if(isChecked) {
-                    window.currentPrice = sv.price;
+            // Lọc các server thuộc đúng Category được bấm
+            const serversData = window.allServers.filter(s => s.category === serviceCategory);
+            // Ưu tiên hiển thị server giá rẻ lên trên
+            serversData.sort((a,b) => a.rate - b.rate);
+
+            window.currentServer = null;
+            window.currentPrice = 0;
+
+            if (serversData.length === 0) {
+                listEl.innerHTML = `
+                    <div class="p-6 border border-dashed border-gray-300 rounded-lg text-center text-sm text-gray-500 bg-gray-50">
+                        <i class="fa-solid fa-server mb-3 text-gray-400 text-2xl"></i><br>
+                        Hiện chưa có máy chủ nào hoạt động cho dịch vụ này.
+                    </div>
+                `;
+                calcPrice();
+                return;
+            }
+
+            let firstAvailableSet = false;
+
+            serversData.forEach((sv) => {
+                const isAvailable = sv.status === 'Hoạt động' || sv.status === 'Nghẽn dịch vụ';
+                let isChecked = false;
+
+                // Tự động chọn server đầu tiên còn hoạt động
+                if (isAvailable && !firstAvailableSet) {
+                    isChecked = true;
+                    firstAvailableSet = true;
+                    window.currentPrice = sv.rate;
                     window.currentServer = sv;
                 }
-                
+
+                // Render Badge Trạng Thái
+                let badgeClass = "bg-gray-100 text-gray-700 border-gray-200";
+                if(sv.status === "Hoạt động") { badgeClass = "bg-green-100 text-green-700 border-green-200"; }
+                else if(sv.status === "Tạm ngưng") { badgeClass = "bg-gray-200 text-gray-600 border-gray-300"; }
+                else if(sv.status === "Hết tài nguyên") { badgeClass = "bg-yellow-100 text-yellow-700 border-yellow-200"; }
+                else if(sv.status === "Nghẽn dịch vụ") { badgeClass = "bg-red-100 text-red-700 border-red-200"; }
+
+                const statusHtml = `<span class="text-[10px] font-bold px-2 py-0.5 rounded border ${badgeClass} ml-2 whitespace-nowrap"><i class="fa-solid fa-signal mr-1"></i>${sv.status}</span>`;
+                const limitHtml = `<div class="text-xs text-gray-500 mt-1 mb-2">Giới hạn mua: <span class="font-bold text-gray-700">${sv.minOrder ? sv.minOrder.toLocaleString('en-US') : '0'}</span> - <span class="font-bold text-gray-700">${sv.maxOrder ? sv.maxOrder.toLocaleString('en-US') : 'Vô cực'}</span></div>`;
+
+                const checkedClass = isChecked ? 'ring-2 ring-brand-500 border-brand-500 bg-green-50' : 'bg-white';
+                const cursorClass = isAvailable ? 'cursor-pointer hover:bg-green-50 transition' : 'cursor-not-allowed opacity-60 bg-gray-50';
+
                 listEl.innerHTML += `
-                    <label class="flex items-start p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-green-50 transition relative ${isChecked ? 'ring-2 ring-brand-500 border-brand-500 bg-green-50' : 'bg-white'}" onclick="selectServer(${sv.price}, '${sv.id}', '${sv.name}', this)">
-                        <input type="radio" name="server" class="mt-1 text-brand-600 focus:ring-brand-500 h-4 w-4" ${isChecked ? 'checked' : ''}>
-                        <div class="ml-3 flex-1">
-                            <div class="text-sm font-bold text-gray-800">${sv.name} <span class="ml-2 bg-red-100 text-red-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase">${sv.tag}</span></div>
-                            <div class="mt-2 text-sm">
-                                <span class="font-bold text-brand-600 bg-green-100 px-2 py-1 rounded border border-green-200">${sv.price} VNĐ</span>
-                                <span class="text-xs text-gray-500 ml-2"><i class="fa-solid fa-signal mr-1"></i>${sv.status}</span>
+                    <label class="flex items-start p-4 border border-gray-200 rounded-lg relative server-item ${checkedClass} ${cursorClass}" ${isAvailable ? `onclick="selectServer('${sv.id}', this)"` : ''}>
+                        <input type="radio" name="server" class="mt-1 text-brand-600 focus:ring-brand-500 h-4 w-4" ${isChecked ? 'checked' : ''} ${!isAvailable ? 'disabled' : ''}>
+                        <div class="ml-3 flex-1 overflow-hidden">
+                            <div class="text-sm font-bold text-gray-800 break-words pr-4">
+                                <span class="bg-gray-800 text-white px-2 py-0.5 rounded text-xs mr-1 uppercase">${sv.code}</span>
+                                ${sv.name}
+                            </div>
+                            ${limitHtml}
+                            <div class="mt-1 text-sm flex items-center flex-wrap gap-y-2">
+                                <span class="font-bold text-brand-600 bg-green-100 px-2 py-1 rounded border border-green-200">${sv.rate} VNĐ</span>
+                                ${statusHtml}
                             </div>
                         </div>
                     </label>
                 `;
             });
-            
-            // Xóa thông báo cũ
+
+            // Set Min Max Limit cho Input Qty
+            updateQtyLimits();
+
             document.getElementById('order-status-msg').classList.add('hidden');
-            document.getElementById('qty').value = '';
+            document.getElementById('qty').value = window.currentServer ? (window.currentServer.minOrder || 0) : 0;
             calcPrice();
             
-            // Đóng menu nếu ở Mobile
             if(window.innerWidth < 768) toggleSidebar();
         }
 
-        // 2. Logic khi click chọn máy chủ
-        window.selectServer = function(price, id, name, el) {
-            window.currentPrice = price;
-            window.currentServer = { id: id, name: name, price: price };
+        // Logic khi click chọn máy chủ
+        window.selectServer = function(id, el) {
+            const sv = window.allServers.find(s => s.id === id);
+            if(!sv) return;
+
+            window.currentPrice = sv.rate;
+            window.currentServer = sv;
             
-            // Đổi màu viền UI
+            // Đổi màu UI của Radio
             document.querySelectorAll('#server-list label').forEach(label => {
-                label.classList.remove('ring-2', 'ring-brand-500', 'border-brand-500', 'bg-green-50');
-                label.classList.add('bg-white');
+                if(!label.classList.contains('cursor-not-allowed')) {
+                    label.classList.remove('ring-2', 'ring-brand-500', 'border-brand-500', 'bg-green-50');
+                    label.classList.add('bg-white');
+                    const radio = label.querySelector('input[type="radio"]');
+                    if(radio) radio.checked = false;
+                }
             });
             el.classList.add('ring-2', 'ring-brand-500', 'border-brand-500', 'bg-green-50');
             el.classList.remove('bg-white');
+            const radio = el.querySelector('input[type="radio"]');
+            if(radio) radio.checked = true;
             
-            // Tính lại tiền
+            // Đổi min-max
+            updateQtyLimits();
+            document.getElementById('qty').value = sv.minOrder || 0;
             calcPrice();
         }
 
-        // 3. Logic tính tiền và bật/tắt nút Đặt Hàng
+        // Cập nhật Min Max HTML Input
+        window.updateQtyLimits = function() {
+            const qtyInput = document.getElementById('qty');
+            if (window.currentServer) {
+                qtyInput.min = window.currentServer.minOrder || 0;
+                if (window.currentServer.maxOrder) {
+                    qtyInput.max = window.currentServer.maxOrder;
+                } else {
+                    qtyInput.removeAttribute('max');
+                }
+            }
+        }
+
+        // Logic tính tiền và bật/tắt nút Đặt Hàng
         window.calcPrice = function() {
             const qtyStr = document.getElementById('qty').value;
             const qty = parseInt(qtyStr) || 0;
             const total = qty * window.currentPrice;
             
-            // Hiển thị tiền
             document.getElementById('total').innerHTML = `${total.toLocaleString('en-US')} <span class="text-sm text-gray-500">VNĐ</span>`;
             
-            // Điều khiển nút
             const btn = document.getElementById('btn-create-order');
-            if (qty > 0 && window.currentServer && qtyStr !== "") {
+            const msg = document.getElementById('order-status-msg');
+
+            let isValid = true;
+            let warning = '';
+
+            if (!window.currentServer) {
+                isValid = false;
+            } else if (qty <= 0) {
+                isValid = false;
+            } else if (window.currentServer.minOrder && qty < window.currentServer.minOrder) {
+                isValid = false;
+                warning = `Số lượng tối thiểu phải là ${window.currentServer.minOrder.toLocaleString('en-US')}`;
+            } else if (window.currentServer.maxOrder && qty > window.currentServer.maxOrder) {
+                isValid = false;
+                warning = `Số lượng tối đa chỉ được ${window.currentServer.maxOrder.toLocaleString('en-US')}`;
+            }
+
+            // Hiện Cảnh báo Limit
+            if (warning && qtyStr !== "") {
+                msg.className = "text-sm mt-3 text-center p-3 rounded bg-yellow-50 text-yellow-700 font-medium border border-yellow-200 block";
+                msg.innerHTML = `<i class="fa-solid fa-circle-exclamation mr-1"></i> ${warning}`;
+            } else {
+                msg.classList.add('hidden');
+            }
+
+            // Mở khóa nút NẾU HỢP LỆ
+            if (isValid && qtyStr !== "") {
                 btn.disabled = false;
                 btn.classList.remove('bg-gray-300', 'cursor-not-allowed');
                 btn.classList.add('bg-brand-600', 'hover:bg-brand-700');
@@ -480,7 +561,6 @@
 
         // Chuyển Tab Giao diện
         window.switchView = function(viewName) {
-            // Ngăn chặn chuyển view lịch sử/đặt đơn nếu menu không được highlight
             if(viewName === 'order' && !window.currentServiceCategory) {
                 document.getElementById('header-title').innerText = 'Chọn Dịch Vụ';
             }
@@ -499,12 +579,10 @@
             };
             document.getElementById('header-title').innerText = titles[viewName];
 
-            // Load dữ liệu khi vào tab Lịch Sử
             if(viewName === 'history' && typeof window.loadOrderHistory === 'function') {
                 window.loadOrderHistory();
             }
 
-            // Tự động đóng sidebar trên mobile khi chuyển tab
             if(window.innerWidth < 768) {
                 document.getElementById('sidebar').classList.add('-translate-x-full');
                 document.getElementById('sidebar-overlay').classList.add('hidden');
@@ -538,15 +616,90 @@
                 if (!user) {
                     await signInAnonymously(auth);
                 } else {
-                    window.currentUserBalance = 0; // Lưu tạm số dư để trừ khi đặt đơn
+                    window.currentUserBalance = 0; 
                     loadUserData(user);
                     loadDepositHistory();
+                    fetchAndRenderServicesMenu(); // Khởi chạy việc tải Menu ngay khi mở trang
                 }
             });
         };
         initAuth();
 
-        // 1. Tải Dữ Liệu Profile User
+        // 1. TẢI VÀ RENDER MENU TỪ CÁC DỊCH VỤ ADMIN ĐÃ TẠO BÊN CƠ SỞ DỮ LIỆU
+        async function fetchAndRenderServicesMenu() {
+            try {
+                const snap = await getDocs(collection(db, "servers"));
+                window.allServers = [];
+                snap.forEach(doc => {
+                    window.allServers.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Phân loại data thành Cây thư mục
+                const menuTree = {};
+                window.allServers.forEach(s => {
+                    const cat = s.category || "Khác - Dịch Vụ Mặc Định";
+                    const parts = cat.split(" - ");
+                    const platform = parts[0].trim(); // VD: Facebook
+                    const serviceName = parts[1] ? parts[1].trim() : "Khác"; // VD: Tăng Like
+
+                    if (!menuTree[platform]) menuTree[platform] = new Set();
+                    menuTree[platform].add(cat); // Lưu toàn bộ tên Full category
+                });
+
+                const menuEl = document.getElementById('dynamic-sidebar-menu');
+                menuEl.innerHTML = '';
+
+                if(Object.keys(menuTree).length === 0) {
+                    menuEl.innerHTML = '<li class="px-6 py-3 text-sm text-gray-500"><i class="fa-solid fa-box-open mr-2"></i> Hệ thống chưa có dịch vụ nào</li>';
+                    return;
+                }
+
+                // Render HTML
+                for (const platform in menuTree) {
+                    // Cấu hình Icon và Màu cho nền tảng
+                    let pIcon = 'fa-solid fa-hashtag'; let pColor = 'text-gray-500';
+                    if (platform.toLowerCase().includes('facebook')) { pIcon = 'fa-brands fa-facebook'; pColor = 'text-blue-600'; }
+                    else if (platform.toLowerCase().includes('tiktok')) { pIcon = 'fa-brands fa-tiktok'; pColor = 'text-black'; }
+                    else if (platform.toLowerCase().includes('instagram')) { pIcon = 'fa-brands fa-instagram'; pColor = 'text-pink-500'; }
+                    else if (platform.toLowerCase().includes('youtube')) { pIcon = 'fa-brands fa-youtube'; pColor = 'text-red-500'; }
+
+                    let subHtml = '';
+                    menuTree[platform].forEach(fullCat => {
+                        const parts = fullCat.split(" - ");
+                        const subName = parts[1] ? parts[1].trim() : fullCat;
+
+                        // Cấu hình Icon cho dịch vụ nhỏ
+                        let sIcon = 'fa-solid fa-bolt text-yellow-500';
+                        if (subName.toLowerCase().includes('like') || subName.toLowerCase().includes('cảm xúc') || subName.toLowerCase().includes('tim')) sIcon = 'fa-solid fa-heart text-red-500';
+                        else if (subName.toLowerCase().includes('follow') || subName.toLowerCase().includes('sub') || subName.toLowerCase().includes('theo dõi')) sIcon = 'fa-solid fa-user-plus text-green-500';
+                        else if (subName.toLowerCase().includes('view') || subName.toLowerCase().includes('mắt') || subName.toLowerCase().includes('xem')) sIcon = 'fa-solid fa-eye text-blue-500';
+                        else if (subName.toLowerCase().includes('comment') || subName.toLowerCase().includes('bình luận')) sIcon = 'fa-solid fa-comment-dots text-purple-500';
+
+                        subHtml += `<li><a href="#" class="flex items-center pl-12 pr-6 py-2.5 text-sm hover:text-brand-600 hover:bg-green-50 transition" onclick="loadServiceForm('${fullCat}')"><i class="${sIcon} mr-2"></i> ${subName}</a></li>`;
+                    });
+
+                    const subMenuId = 'submenu-' + Math.random().toString(36).substr(2, 9);
+                    
+                    menuEl.innerHTML += `
+                        <li>
+                            <button class="w-full flex items-center justify-between px-6 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-brand-600 font-medium transition border-l-2 border-transparent focus:border-brand-500 focus:bg-green-50 focus:text-brand-600 group" onclick="toggleSubMenu('${subMenuId}')">
+                                <span class="flex items-center"><i class="${pIcon} w-6 ${pColor} group-hover:scale-110 transition-transform"></i> ${platform}</span>
+                                <i class="fa-solid fa-chevron-down text-[10px] transition-transform" id="icon-${subMenuId}"></i>
+                            </button>
+                            <ul class="bg-white py-1 transition-all duration-300 hidden" id="${subMenuId}">
+                                ${subHtml}
+                            </ul>
+                        </li>
+                    `;
+                }
+
+            } catch(e) {
+                console.error("Lỗi lấy danh sách Dịch vụ & Server:", e);
+                document.getElementById('dynamic-sidebar-menu').innerHTML = `<li class="px-6 py-3 text-sm text-red-500"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Lỗi kết nối CSDL</li>`;
+            }
+        }
+
+        // Tải Dữ Liệu Profile User
         async function loadUserData(user) {
             let displayName = user.displayName || "User";
             let coin = 0;
@@ -572,9 +725,8 @@
                 displayName = "Khách lạ (Ẩn danh)";
             }
 
-            window.currentUserBalance = coin; // Gán vào biến global
+            window.currentUserBalance = coin; 
 
-            // Gắn lên UI Header & Sidebar
             document.getElementById('ui-fullname').innerText = displayName;
             document.getElementById('ui-coin').innerText = coin.toLocaleString() + " VNĐ";
             
@@ -582,7 +734,6 @@
             document.getElementById('ui-avatar').innerText = initial;
             document.getElementById('ui-avatar-small').innerText = initial;
             
-            // Gắn lên Modal Profile
             document.getElementById('modal-avatar').innerText = initial;
             document.getElementById('modal-name').innerText = displayName;
             document.getElementById('modal-email').innerHTML = `<i class="fa-solid fa-envelope mr-1 text-xs"></i> ${user.email || 'Không có (Tài khoản ẩn danh)'}`;
@@ -611,17 +762,16 @@
             }
 
             const link = document.getElementById('order-link').value;
-            const qty = parseInt(document.getElementById('qty').value);
+            const qtyStr = document.getElementById('qty').value;
+            const qty = parseInt(qtyStr) || 0;
             const totalCost = qty * window.currentPrice;
 
-            // Kiểm tra số dư (Tắt comment đoạn này nếu bạn muốn cho test thoải mái không cần tiền)
-            /*
+            // Kiểm tra số dư 
             if (window.currentUserBalance < totalCost) {
                 msg.className = "text-sm mt-3 text-center p-3 rounded bg-red-50 text-red-700 font-medium border border-red-200 block";
                 msg.innerHTML = '<i class="fa-solid fa-wallet mr-1"></i> Số dư của bạn không đủ để thanh toán. Vui lòng nạp thêm tiền!';
                 return;
             }
-            */
 
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang xử lý...';
             btn.disabled = true;
@@ -632,31 +782,29 @@
                     uid: user.uid,
                     category: window.currentServiceCategory,
                     serverName: window.currentServer.name,
-                    serverId: window.currentServer.id,
+                    serverId: window.currentServer.code, // Lưu mã thay vì id tự sinh
                     link: link,
                     quantity: qty,
                     price: window.currentPrice,
                     total: totalCost,
-                    status: "Đang chạy",
+                    status: "Đang xử lý",
                     createdAt: new Date().toISOString()
                 });
 
-                // 2. Trừ tiền tài khoản (Mở comment ra nếu dùng thật)
-                /*
+                // 2. Trừ tiền tài khoản
                 await updateDoc(doc(db, "users", user.uid), {
-                    coin: window.currentUserBalance - totalCost
+                    coin: increment(-totalCost)
                 });
                 loadUserData(user); // Tải lại số dư mới
-                */
 
                 msg.className = "text-sm mt-3 text-center p-3 rounded bg-green-50 text-green-700 font-bold border border-green-200 block";
-                msg.innerHTML = '<i class="fa-solid fa-check-circle mr-1"></i> Tạo đơn hàng thành công! Vui lòng kiểm tra tab Lịch Sử.';
+                msg.innerHTML = '<i class="fa-solid fa-check-circle mr-1"></i> Tạo đơn hàng thành công! Xem lại tại tab Lịch Sử.';
                 
                 // Chuyển hướng sang trang lịch sử sau 2s
                 setTimeout(() => {
                     document.getElementById('form-order').reset();
                     msg.classList.add('hidden');
-                    window.calcPrice(); // reset price
+                    window.calcPrice(); 
                     window.switchView('history');
                 }, 2000);
 
@@ -687,7 +835,6 @@
                     }
                 });
                 
-                // Sắp xếp mới nhất lên đầu
                 orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
                 if(orders.length === 0) {
@@ -698,18 +845,24 @@
                 tbody.innerHTML = '';
                 orders.forEach(o => {
                     let statusHtml = '';
-                    if (o.status === 'Đang xử lý' || o.status === 'Đang chạy') statusHtml = '<span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-medium border border-blue-200">' + o.status + '</span>';
-                    else if (o.status === 'Hoàn thành') statusHtml = '<span class="bg-brand-100 text-brand-700 px-2 py-1 rounded text-xs font-medium border border-brand-200">Hoàn thành</span>';
-                    else statusHtml = `<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-medium border border-red-200">${o.status}</span>`;
+                    if (o.status === 'Đang xử lý' || o.status === 'Đang chạy') statusHtml = '<span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs font-bold border border-blue-200">' + o.status + '</span>';
+                    else if (o.status === 'Hoàn thành') statusHtml = '<span class="bg-brand-100 text-brand-700 px-2 py-1 rounded text-xs font-bold border border-brand-200">Hoàn thành</span>';
+                    else statusHtml = `<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold border border-red-200">${o.status}</span>`;
+
+                    const dt = new Date(o.createdAt);
+                    const formattedDate = `${dt.getHours()}:${dt.getMinutes()} ${dt.getDate()}/${dt.getMonth()+1}/${dt.getFullYear()}`;
 
                     tbody.innerHTML += `
                         <tr class="border-b hover:bg-gray-50 transition text-gray-600">
-                            <td class="px-4 py-3 text-xs font-mono font-bold">#${o.id.substring(0,8).toUpperCase()}</td>
-                            <td class="px-4 py-3 font-medium text-gray-800">${o.category}</td>
-                            <td class="px-4 py-3 text-xs"><span class="bg-gray-200 px-2 py-1 rounded-md text-gray-700 font-bold">${o.serverId}</span></td>
+                            <td class="px-4 py-3">
+                                <div class="text-xs font-mono font-bold text-gray-800">#${o.id.substring(0,8).toUpperCase()}</div>
+                                <div class="text-[10px] text-gray-400">${formattedDate}</div>
+                            </td>
+                            <td class="px-4 py-3 text-xs font-medium text-brand-600">${o.category || '-'}</td>
+                            <td class="px-4 py-3 text-xs"><span class="bg-gray-800 text-white px-2 py-0.5 rounded font-bold uppercase">${o.serverId || 'SV'}</span></td>
                             <td class="px-4 py-3 text-xs max-w-[150px] truncate text-blue-500 hover:text-blue-700 cursor-pointer" title="${o.link}">${o.link}</td>
                             <td class="px-4 py-3 font-bold">${o.quantity.toLocaleString('en-US')}</td>
-                            <td class="px-4 py-3 font-bold text-brand-600">${o.total.toLocaleString('en-US')}đ</td>
+                            <td class="px-4 py-3 font-bold text-gray-800">${o.total.toLocaleString('en-US')}đ</td>
                             <td class="px-4 py-3">${statusHtml}</td>
                         </tr>
                     `;
@@ -720,13 +873,17 @@
         }
 
         // ==========================================
-        // CÁC CHỨC NĂNG CŨ (NẠP TIỀN, ĐỔI MK) GIỮ NGUYÊN
+        // CÁC CHỨC NĂNG CŨ (NẠP TIỀN, ĐỔI MK)
         // ==========================================
 
         document.getElementById('form-deposit').addEventListener('submit', async (e) => {
             e.preventDefault();
             const user = auth.currentUser;
-            if(!user) return;
+            if(!user || user.isAnonymous) {
+                document.getElementById('deposit-status-msg').className = "text-sm mt-3 text-center p-3 rounded bg-yellow-50 text-yellow-700 font-medium border border-yellow-200 block";
+                document.getElementById('deposit-status-msg').innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Vui lòng Đăng Ký Tài Khoản trước khi nạp!';
+                return;
+            }
 
             const amount = document.getElementById('deposit-amount').value;
             const transId = document.getElementById('deposit-transId').value || '';
