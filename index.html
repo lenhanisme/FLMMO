@@ -80,7 +80,7 @@
                     <a href="#trang-chu" class="text-gray-600 hover:text-brand-600 font-medium transition">Trang chủ</a>
                     <a href="#tinh-nang" class="text-gray-600 hover:text-brand-600 font-medium transition">Tính năng</a>
                     <a href="#dich-vu" class="text-gray-600 hover:text-brand-600 font-medium transition">Dịch vụ</a>
-                    <a href="#bang-gia" class="text-gray-600 hover:text-brand-600 font-medium transition">Bảng giá</a>
+                    <a href="#lien-he" class="text-gray-600 hover:text-brand-600 font-medium transition">Gửi Yêu Cầu</a>
                 </nav>
 
                 <!-- Auth Buttons (Desktop) -->
@@ -105,7 +105,7 @@
                     <a href="#trang-chu" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Trang chủ</a>
                     <a href="#tinh-nang" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Tính năng</a>
                     <a href="#dich-vu" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Dịch vụ</a>
-                    <a href="#bang-gia" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Bảng giá</a>
+                    <a href="#lien-he" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Gửi Yêu Cầu</a>
                     
                     <!-- Auth Buttons (Mobile) -->
                     <div id="mobile-auth-buttons" class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3 px-3">
@@ -284,6 +284,43 @@
             </div>
         </section>
 
+        <!-- FORM LIÊN HỆ GỬI YÊU CẦU LÊN FIREBASE -->
+        <section id="lien-he" class="py-20 bg-gray-50 border-t border-gray-200">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-brand-600 font-semibold tracking-wide uppercase text-sm mb-2">Liên Hệ Trực Tiếp</h2>
+                    <h3 class="text-3xl font-bold text-gray-900">Gửi Yêu Cầu Hỗ Trợ</h3>
+                    <p class="mt-4 text-gray-600">Bạn muốn làm đại lý hoặc cần hỗ trợ nạp tiền? Hãy để lại thông tin, Admin sẽ xét duyệt sớm nhất.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+                    <form id="contact-form" class="space-y-6">
+                        <div id="contact-status" class="hidden p-4 rounded-lg text-sm font-medium"></div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Họ và tên</label>
+                                <input type="text" id="contact-name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition" placeholder="Nguyễn Văn A">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Số Zalo / Điện thoại</label>
+                                <input type="text" id="contact-phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition" placeholder="09xxxxxx">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nội dung yêu cầu</label>
+                            <textarea id="contact-message" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition" placeholder="Ví dụ: Mình cần đăng ký quyền làm đại lý SMM..."></textarea>
+                        </div>
+                        
+                        <button type="submit" id="btn-submit-contact" class="w-full bg-gray-900 hover:bg-black text-white font-bold py-4 px-4 rounded-lg transition duration-300 flex justify-center items-center">
+                            Gửi Yêu Cầu Tới Admin <i class="fa-solid fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
         <!-- CTA SECTION -->
         <section class="py-20 bg-white">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -342,7 +379,7 @@
                 <div>
                     <h4 class="text-white font-semibold mb-6 uppercase text-sm tracking-wider">Hỗ Trợ Khách Hàng</h4>
                     <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-brand-400 transition">Bảng Giá Dịch Vụ</a></li>
+                        <li><a href="#bang-gia" class="text-gray-400 hover:text-brand-400 transition">Bảng Giá Dịch Vụ</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-brand-400 transition">Câu Hỏi Thường Gặp (FAQ)</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-brand-400 transition">Quy Định Sử Dụng</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-brand-400 transition">Chính Sách Bảo Mật</a></li>
@@ -413,10 +450,11 @@
         });
     </script>
 
-    <!-- FIREBASE BẢO VỆ VÀ CHUYỂN HƯỚNG -->
+    <!-- FIREBASE BẢO VỆ CHUYỂN HƯỚNG VÀ XỬ LÝ FORM LIÊN HỆ -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
@@ -430,12 +468,11 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        // Kiểm tra xem user có đang đăng nhập không
+        // 1. Kiểm tra xem user có đang đăng nhập không để đổi UI Nút
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Nếu đã đăng nhập, đổi các nút Đăng Ký/Đăng Nhập thành nút "Vào Dashboard"
-                
                 const desktopAuth = document.getElementById('desktop-auth-buttons');
                 const mobileAuth = document.getElementById('mobile-auth-buttons');
                 const heroAuth = document.getElementById('hero-auth-buttons');
@@ -469,6 +506,50 @@
                         </a>
                     `;
                 }
+            }
+        });
+
+        // 2. Xử lý Gửi form Yêu cầu (Lưu lên Firestore collection: contact_requests)
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btn-submit-contact');
+            const status = document.getElementById('contact-status');
+            const name = document.getElementById('contact-name').value;
+            const phone = document.getElementById('contact-phone').value;
+            const message = document.getElementById('contact-message').value;
+
+            // Đổi trạng thái nút
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang gửi yêu cầu...';
+            btn.disabled = true;
+
+            try {
+                // Đẩy dữ liệu lên Firebase
+                await addDoc(collection(db, "contact_requests"), {
+                    name: name,
+                    phone: phone,
+                    message: message,
+                    status: "Chờ duyệt", // Trạng thái mặc định để admin xét duyệt
+                    createdAt: new Date().toISOString()
+                });
+
+                // Hiện thông báo thành công
+                status.className = "p-4 rounded-lg text-sm font-medium bg-green-50 text-green-700 mb-4";
+                status.innerText = "Gửi yêu cầu thành công! Admin sẽ sớm xem xét và liên hệ với bạn.";
+                status.classList.remove('hidden');
+                
+                // Reset form
+                document.getElementById('contact-form').reset();
+
+            } catch (error) {
+                // Hiện thông báo Lỗi
+                status.className = "p-4 rounded-lg text-sm font-medium bg-red-50 text-red-700 mb-4";
+                status.innerText = "Đã xảy ra lỗi: " + error.message + " (Vui lòng kiểm tra lại Rule Firebase cho collection 'contact_requests')";
+                status.classList.remove('hidden');
+            } finally {
+                // Trả lại nút
+                btn.innerHTML = 'Gửi Yêu Cầu Tới Admin <i class="fa-solid fa-paper-plane ml-2"></i>';
+                btn.disabled = false;
             }
         });
     </script>
