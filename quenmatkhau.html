@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khôi Phục Mật Khẩu - FLMMO.VN</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { brand: { 500: '#22c55e', 600: '#16a34a', 700: '#15803d' } } } }
+        }
+    </script>
+    <style>
+        body { background-color: #f3f4f6; }
+        .bg-pattern { background-image: radial-gradient(#e5e7eb 1px, transparent 1px); background-size: 20px 20px; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-pattern p-4">
+
+    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+        <div class="bg-gray-50 px-8 py-6 border-b border-gray-100 text-center">
+            <div class="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-brand-500 to-blue-600 rounded-xl text-white shadow-lg mb-4">
+                <i class="fa-solid fa-key text-2xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-1">Quên mật khẩu?</h2>
+            <p class="text-sm text-gray-500">Đừng lo! Vui lòng nhập email đăng ký tài khoản của bạn để nhận liên kết tạo mật khẩu mới.</p>
+        </div>
+
+        <div class="p-8">
+            <form id="reset-form" class="space-y-5">
+                <!-- Vùng hiển thị thông báo -->
+                <div id="status-message" class="hidden p-3 rounded-lg text-sm flex items-start">
+                    <i id="status-icon" class="fa-solid mt-0.5 mr-2"></i>
+                    <span id="status-text"></span>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Địa chỉ Email</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-envelope text-gray-400"></i>
+                        </div>
+                        <input type="email" id="email" class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition" placeholder="Nhập email của bạn..." required>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-reset" class="w-full bg-gray-900 hover:bg-black text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-300 flex items-center justify-center">
+                    <span>Gửi liên kết khôi phục</span>
+                    <i class="fa-solid fa-paper-plane ml-2"></i>
+                </button>
+            </form>
+
+            <div class="mt-6 text-center text-sm text-gray-600 border-t border-gray-100 pt-6">
+                <a href="dangnhap.html" class="font-bold text-gray-500 hover:text-brand-600 transition flex items-center justify-center">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Quay lại trang Đăng Nhập
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE XỬ LÝ QUÊN MẬT KHẨU -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
+            authDomain: "flmmo-a4e53.firebaseapp.com",
+            projectId: "flmmo-a4e53",
+            storageBucket: "flmmo-a4e53.firebasestorage.app",
+            messagingSenderId: "973070510202",
+            appId: "1:973070510202:web:9eea3a002c0d03d0fbb3c3",
+            measurementId: "G-C060Q5CW1E"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('reset-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const btn = document.getElementById('btn-reset');
+            const statusMsg = document.getElementById('status-message');
+            const statusText = document.getElementById('status-text');
+            const statusIcon = document.getElementById('status-icon');
+            
+            // UI Đang xử lý
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang gửi...'; 
+            btn.disabled = true;
+            statusMsg.classList.add('hidden');
+            
+            // Gửi email reset pass từ Firebase
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    statusMsg.className = "bg-green-50 text-green-700 border border-green-200 p-3 rounded-lg text-sm flex items-start mb-4";
+                    statusIcon.className = "fa-solid fa-circle-check mt-0.5 mr-2";
+                    statusText.innerHTML = `Đã gửi liên kết khôi phục thành công! Vui lòng kiểm tra hộp thư <b>${email}</b> (bao gồm cả thư mục Spam/Thư rác).`;
+                    
+                    document.getElementById('email').value = ''; // Xóa trắng ô email
+                })
+                .catch((error) => {
+                    statusMsg.className = "bg-red-50 text-red-600 border border-red-200 p-3 rounded-lg text-sm flex items-start mb-4";
+                    statusIcon.className = "fa-solid fa-circle-exclamation mt-0.5 mr-2";
+                    
+                    // Xử lý thông báo lỗi bằng tiếng Việt
+                    let errorMsg = error.message;
+                    if (error.code === 'auth/user-not-found') errorMsg = "Email này chưa được đăng ký trên hệ thống!";
+                    if (error.code === 'auth/invalid-email') errorMsg = "Định dạng email không hợp lệ!";
+                    
+                    statusText.innerText = errorMsg;
+                })
+                .finally(() => {
+                    btn.innerHTML = '<span>Gửi liên kết khôi phục</span><i class="fa-solid fa-paper-plane ml-2"></i>';
+                    btn.disabled = false;
+                });
+        });
+    </script>
+</body>
+</html>
