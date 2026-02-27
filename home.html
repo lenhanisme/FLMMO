@@ -36,255 +36,269 @@
 </head>
 <body class="flex h-screen overflow-hidden text-gray-800 relative">
 
-    <!-- MOBILE OVERLAY -->
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
+    <!-- MÀN HÌNH BẢO TRÌ (Chỉ hiện khi bị khóa) -->
+    <div id="maintenance-screen" class="fixed inset-0 bg-gray-900 z-[9999] flex flex-col items-center justify-center text-white hidden">
+        <i class="fa-solid fa-screwdriver-wrench text-6xl text-brand-500 mb-6 animate-pulse"></i>
+        <h1 class="text-3xl font-bold mb-2">Hệ Thống Đang Nâng Cấp</h1>
+        <p class="text-gray-400 max-w-md text-center mb-6">Xin lỗi bạn vì sự bất tiện này. Chúng tôi đang tiến hành bảo trì máy chủ và nâng cấp tài nguyên để phục vụ bạn tốt hơn. Vui lòng quay lại sau ít phút nhé!</p>
+        <button onclick="window.location.reload()" class="bg-brand-600 hover:bg-brand-500 px-6 py-2.5 rounded-full font-bold transition shadow-lg shadow-brand-500/30">
+            <i class="fa-solid fa-rotate-right mr-2"></i> Tải Lại Trang
+        </button>
+    </div>
 
-    <!-- SIDEBAR -->
-    <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-64 bg-white border-r border-gray-200 flex flex-col z-40 transition-transform duration-300 ease-in-out">
-        <!-- Favicon/Logo Area -->
-        <div class="h-16 flex items-center justify-center border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition" onclick="switchView('order')">
-            <span class="text-2xl font-bold tracking-tight text-gray-900">
-                FL<span class="text-brand-600">MMO.VN</span>
-            </span>
-        </div>
+    <!-- MAIN APP WRAPPER -->
+    <div id="main-app-content" class="flex w-full h-full">
 
-        <!-- Menu Navigation -->
-        <div class="flex-1 overflow-y-auto py-4">
-            <div class="px-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Bảng Điều Khiển</div>
-            <ul>
-                <li><a href="#" id="menu-order" class="menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-50 transition" onclick="switchView('order')"><i class="fa-solid fa-cart-plus w-6"></i> Đặt Đơn Mới</a></li>
-                <li><a href="#" id="menu-history" class="menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-50 transition" onclick="switchView('history')"><i class="fa-solid fa-list-rotate w-6"></i> Lịch Sử Đơn</a></li>
-                <li><a href="#" id="menu-deposit" class="menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-50 transition" onclick="switchView('deposit')"><i class="fa-solid fa-wallet w-6"></i> Nạp Tiền <span class="ml-auto bg-red-100 text-red-600 text-[10px] px-2 py-0.5 rounded-full font-bold animate-pulse">HOT</span></a></li>
-            </ul>
+        <!-- MOBILE OVERLAY -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
 
-            <div class="px-4 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Dịch Vụ Của Bạn</div>
-            
-            <!-- MENU ĐỘNG TỪ FIREBASE ĐỔ VÀO ĐÂY -->
-            <ul id="dynamic-sidebar-menu">
-                <li class="px-6 py-3 text-sm text-gray-400 italic">
-                    <i class="fa-solid fa-circle-notch fa-spin mr-2 text-brand-500"></i> Đang tải dịch vụ...
-                </li>
-            </ul>
-        </div>
-
-        <!-- User Profile Card Sidebar -->
-        <div class="p-4 border-t border-gray-100 bg-green-50/50 m-2 rounded-xl cursor-pointer hover:bg-green-100 transition" onclick="toggleModal('modal-profile')">
-            <div class="flex flex-col items-center">
-                <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold mb-2 shadow" id="ui-avatar">U</div>
-                <div class="text-sm font-semibold text-gray-800" id="ui-fullname">Đang tải...</div>
-                <div class="bg-white px-3 py-1 mt-2 rounded-full text-xs font-bold text-brand-600 shadow-sm border border-brand-100" id="ui-coin">... VNĐ</div>
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-64 bg-white border-r border-gray-200 flex flex-col z-40 transition-transform duration-300 ease-in-out">
+            <!-- Favicon/Logo Area -->
+            <div class="h-16 flex items-center justify-center border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition" onclick="switchView('order')">
+                <span class="text-2xl font-bold tracking-tight text-gray-900">
+                    FL<span class="text-brand-600">MMO.VN</span>
+                </span>
             </div>
-        </div>
-    </aside>
 
-    <!-- MAIN CONTENT -->
-    <div class="flex-1 flex flex-col h-screen overflow-hidden bg-[#f4f7fb]">
-        
-        <!-- HEADER -->
-        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 z-10 shadow-sm shrink-0">
-            <div class="flex items-center gap-2 sm:gap-3">
-                <button onclick="toggleSidebar()" class="md:hidden text-gray-500 hover:text-gray-800 p-1">
-                    <i class="fa-solid fa-bars text-xl"></i>
-                </button>
-                <h1 id="header-title" class="text-base sm:text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 truncate max-w-[160px] sm:max-w-none">Chào mừng trở lại!</h1>
+            <!-- Menu Navigation -->
+            <div class="flex-1 overflow-y-auto py-4">
+                <div class="px-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Bảng Điều Khiển</div>
+                <ul>
+                    <li><a href="#" id="menu-order" class="menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-50 transition" onclick="switchView('order')"><i class="fa-solid fa-cart-plus w-6"></i> Đặt Đơn Mới</a></li>
+                    <li><a href="#" id="menu-history" class="menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-50 transition" onclick="switchView('history')"><i class="fa-solid fa-list-rotate w-6"></i> Lịch Sử Đơn</a></li>
+                    <li><a href="#" id="menu-deposit" class="menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-50 transition" onclick="switchView('deposit')"><i class="fa-solid fa-wallet w-6"></i> Nạp Tiền <span class="ml-auto bg-red-100 text-red-600 text-[10px] px-2 py-0.5 rounded-full font-bold animate-pulse">HOT</span></a></li>
+                </ul>
+
+                <div class="px-4 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Dịch Vụ Của Bạn</div>
+                
+                <!-- MENU ĐỘNG TỪ FIREBASE ĐỔ VÀO ĐÂY -->
+                <ul id="dynamic-sidebar-menu">
+                    <li class="px-6 py-3 text-sm text-gray-400 italic">
+                        <i class="fa-solid fa-circle-notch fa-spin mr-2 text-brand-500"></i> Đang tải dịch vụ...
+                    </li>
+                </ul>
             </div>
-            <div class="flex items-center gap-4">
-                <div class="text-sm text-gray-500 hidden sm:block"><i class="fa-solid fa-circle text-[8px] text-brand-500 animate-pulse mr-1"></i> Hệ thống ổn định</div>
-                <button onclick="toggleModal('modal-profile')" class="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold text-sm shadow cursor-pointer hover:scale-105 transition" id="ui-avatar-small" title="Thông tin tài khoản">
-                    U
-                </button>
-            </div>
-        </header>
 
-        <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6">
-            
-            <!-- VIEW 1: ĐẶT ĐƠN (ORDER) -->
-            <div id="view-order" class="view-section active max-w-7xl mx-auto">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                        <form id="form-order">
-                            <div class="mb-5">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Link Hoặc UID cần tăng:</label>
-                                <input type="text" id="order-link" placeholder="Nhập link hoặc ID để chạy" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed" disabled required>
-                            </div>
-                            <div class="mb-5">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Chọn máy chủ xử lý:</label>
-                                <!-- Khu vực render danh sách máy chủ -->
-                                <div id="server-list" class="space-y-3">
-                                    <div class="p-6 border border-dashed border-gray-300 rounded-lg text-center text-sm text-gray-500 bg-gray-50">
-                                        <i class="fa-solid fa-hand-pointer mb-3 text-gray-400 text-2xl"></i><br>
-                                        Vui lòng chọn một loại dịch vụ từ Menu bên trái <br>(VD: Facebook -> Tăng Bình Luận)
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-5">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Số lượng cần tăng:</label>
-                                <input type="number" id="qty" value="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-800 disabled:text-gray-400 disabled:cursor-not-allowed outline-none focus:ring-2 focus:ring-brand-500" disabled required oninput="calcPrice()">
-                            </div>
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-5 flex justify-between items-center">
-                                <span class="text-gray-500 font-medium">Tổng thanh toán:</span>
-                                <span id="total" class="text-2xl font-bold text-brand-600">0 <span class="text-sm text-gray-500">VNĐ</span></span>
-                            </div>
-                            <button type="submit" id="btn-create-order" class="w-full bg-gray-300 text-white font-bold py-3 rounded-lg cursor-not-allowed transition duration-300 flex justify-center items-center" disabled>
-                                <span>Tạo Đơn Hàng</span>
-                            </button>
-                            <div id="order-status-msg" class="hidden text-sm mt-3 text-center p-3 rounded font-medium"></div>
-                        </form>
-                    </div>
-
-                    <!-- Hướng dẫn Panel -->
-                    <div class="space-y-6">
-                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl shadow-md p-6 text-sm">
-                            <h4 class="font-bold text-lg mb-4 flex items-center"><i class="fa-solid fa-circle-info mr-2"></i> Lưu ý quan trọng</h4>
-                            <ul class="space-y-3 opacity-90">
-                                <li><i class="fa-solid fa-caret-right mr-1"></i> Kiểm tra kỹ định dạng Link/UID trước khi lên đơn.</li>
-                                <li><i class="fa-solid fa-caret-right mr-1"></i> Đảm bảo tài khoản / bài viết ở chế độ công khai.</li>
-                                <li><i class="fa-solid fa-caret-right mr-1"></i> Không đặt 2 đơn cùng lúc cho 1 Link nếu đơn cũ chưa xong.</li>
-                            </ul>
-                        </div>
-                    </div>
+            <!-- User Profile Card Sidebar -->
+            <div class="p-4 border-t border-gray-100 bg-green-50/50 m-2 rounded-xl cursor-pointer hover:bg-green-100 transition" onclick="toggleModal('modal-profile')">
+                <div class="flex flex-col items-center">
+                    <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold mb-2 shadow" id="ui-avatar">U</div>
+                    <div class="text-sm font-semibold text-gray-800" id="ui-fullname">Đang tải...</div>
+                    <div class="bg-white px-3 py-1 mt-2 rounded-full text-xs font-bold text-brand-600 shadow-sm border border-brand-100" id="ui-coin">... VNĐ</div>
                 </div>
             </div>
+        </aside>
 
-            <!-- VIEW 2: LỊCH SỬ ĐƠN (HISTORY) -->
-            <div id="view-history" class="view-section max-w-7xl mx-auto">
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                    <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
-                        <h2 class="text-lg font-bold text-gray-800">Lịch Sử Mua Dịch Vụ</h2>
-                        <div class="flex items-center gap-2">
-                            <button onclick="loadOrderHistory()" class="text-sm text-gray-500 hover:text-brand-600 border border-gray-200 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
-                        </div>
-                    </div>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full text-sm text-left">
-                            <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-y border-gray-200">
-                                <tr>
-                                    <th class="px-4 py-3">Mã đơn</th>
-                                    <th class="px-4 py-3">Loại dịch vụ</th>
-                                    <th class="px-4 py-3">Máy chủ</th>
-                                    <th class="px-4 py-3">Link/UID</th>
-                                    <th class="px-4 py-3">Số lượng</th>
-                                    <th class="px-4 py-3">Tổng tiền</th>
-                                    <th class="px-4 py-3">Trạng thái</th>
-                                </tr>
-                            </thead>
-                            <tbody id="order-history-body">
-                                <tr>
-                                    <td colspan="7" class="px-4 py-12 text-center text-gray-500">
-                                        <div class="flex flex-col items-center justify-center">
-                                            <i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3"></i>
-                                            <p>Chưa có giao dịch nào được ghi nhận</p>
+        <!-- MAIN CONTENT -->
+        <div class="flex-1 flex flex-col h-screen overflow-hidden bg-[#f4f7fb]">
+            
+            <!-- HEADER -->
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 z-10 shadow-sm shrink-0">
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button onclick="toggleSidebar()" class="md:hidden text-gray-500 hover:text-gray-800 p-1">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <h1 id="header-title" class="text-base sm:text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 truncate max-w-[160px] sm:max-w-none">Chào mừng trở lại!</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div id="status-indicator" class="text-sm text-gray-500 hidden sm:block"><i class="fa-solid fa-circle text-[8px] text-brand-500 animate-pulse mr-1"></i> Hệ thống ổn định</div>
+                    <button onclick="toggleModal('modal-profile')" class="w-9 h-9 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold text-sm shadow cursor-pointer hover:scale-105 transition" id="ui-avatar-small" title="Thông tin tài khoản">
+                        U
+                    </button>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6">
+                
+                <!-- VIEW 1: ĐẶT ĐƠN (ORDER) -->
+                <div id="view-order" class="view-section active max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                            <form id="form-order">
+                                <div class="mb-5">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Link Hoặc UID cần tăng:</label>
+                                    <input type="text" id="order-link" placeholder="Nhập link hoặc ID để chạy" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition disabled:bg-gray-100 disabled:cursor-not-allowed" disabled required>
+                                </div>
+                                <div class="mb-5">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Chọn máy chủ xử lý:</label>
+                                    <!-- Khu vực render danh sách máy chủ -->
+                                    <div id="server-list" class="space-y-3">
+                                        <div class="p-6 border border-dashed border-gray-300 rounded-lg text-center text-sm text-gray-500 bg-gray-50">
+                                            <i class="fa-solid fa-hand-pointer mb-3 text-gray-400 text-2xl"></i><br>
+                                            Vui lòng chọn một loại dịch vụ từ Menu bên trái <br>(VD: Facebook -> Tăng Bình Luận)
                                         </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                    </div>
+                                </div>
+                                <div class="mb-5">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Số lượng cần tăng:</label>
+                                    <input type="number" id="qty" value="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-800 disabled:text-gray-400 disabled:cursor-not-allowed outline-none focus:ring-2 focus:ring-brand-500" disabled required oninput="calcPrice()">
+                                </div>
+                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-5 flex justify-between items-center">
+                                    <span class="text-gray-500 font-medium">Tổng thanh toán:</span>
+                                    <span id="total" class="text-2xl font-bold text-brand-600">0 <span class="text-sm text-gray-500">VNĐ</span></span>
+                                </div>
+                                <button type="submit" id="btn-create-order" class="w-full bg-gray-300 text-white font-bold py-3 rounded-lg cursor-not-allowed transition duration-300 flex justify-center items-center" disabled>
+                                    <span>Tạo Đơn Hàng</span>
+                                </button>
+                                <div id="order-status-msg" class="hidden text-sm mt-3 text-center p-3 rounded font-medium"></div>
+                            </form>
+                        </div>
+
+                        <!-- Hướng dẫn Panel -->
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl shadow-md p-6 text-sm">
+                                <h4 class="font-bold text-lg mb-4 flex items-center"><i class="fa-solid fa-circle-info mr-2"></i> Lưu ý quan trọng</h4>
+                                <ul class="space-y-3 opacity-90">
+                                    <li><i class="fa-solid fa-caret-right mr-1"></i> Kiểm tra kỹ định dạng Link/UID trước khi lên đơn.</li>
+                                    <li><i class="fa-solid fa-caret-right mr-1"></i> Đảm bảo tài khoản / bài viết ở chế độ công khai.</li>
+                                    <li><i class="fa-solid fa-caret-right mr-1"></i> Không đặt 2 đơn cùng lúc cho 1 Link nếu đơn cũ chưa xong.</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- VIEW 3: NẠP TIỀN (DEPOSIT) -->
-            <div id="view-deposit" class="view-section max-w-7xl mx-auto space-y-6">
-                <!-- Thông tin chuyển khoản -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col md:flex-row gap-8">
-                    <!-- Cột QR Code -->
-                    <div class="md:w-1/3 flex flex-col items-center bg-[#f8fafc] p-6 rounded-xl border border-dashed border-gray-300">
-                        <div class="bg-white p-2 rounded-xl shadow-sm border border-gray-100 mb-4">
-                            <img id="qr-image" src="https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=&des=&template=compact" class="w-full max-w-[220px] rounded-lg transition-all" alt="QR Code Nạp Tiền">
+                <!-- VIEW 2: LỊCH SỬ ĐƠN (HISTORY) -->
+                <div id="view-history" class="view-section max-w-7xl mx-auto">
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                        <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
+                            <h2 class="text-lg font-bold text-gray-800">Lịch Sử Mua Dịch Vụ</h2>
+                            <div class="flex items-center gap-2">
+                                <button onclick="loadOrderHistory()" class="text-sm text-gray-500 hover:text-brand-600 border border-gray-200 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
+                            </div>
                         </div>
-                        <p class="text-xs text-gray-500 text-center font-medium"><i class="fa-solid fa-qrcode mr-1"></i> Mở App Ngân hàng quét mã để chuyển nhanh</p>
-                    </div>
-
-                    <!-- Cột Chi tiết -->
-                    <div class="md:w-2/3 flex flex-col justify-center space-y-5">
-                        <h3 class="text-xl font-bold text-gray-800 border-l-4 border-brand-500 pl-3">Thông Tin Nhận Tiền</h3>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm">
-                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                                <p class="text-gray-500 mb-1 text-xs uppercase tracking-wider">Ngân hàng thụ hưởng</p>
-                                <div class="flex items-center font-bold text-gray-800 text-lg">
-                                    <img src="https://my.sepay.vn/assets/images/banklogo/mbbank-icon.png" class="h-6 w-auto mr-2" alt="MBBank Logo"> MBBANK
-                                </div>
-                            </div>
-                            
-                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
-                                <p class="text-gray-500 mb-1 text-xs uppercase tracking-wider">Chủ tài khoản</p>
-                                <div class="font-bold text-gray-800 text-lg uppercase tracking-wide">LE NGOC NHAN</div>
-                            </div>
-                            
-                            <div class="md:col-span-2 bg-blue-50/50 p-4 rounded-lg border border-blue-100">
-                                <p class="text-gray-500 mb-1 text-xs uppercase tracking-wider">Số tài khoản</p>
-                                <div class="flex items-center justify-between font-bold text-blue-700 text-2xl tracking-widest">
-                                    <span>4477040408</span>
-                                    <button onclick="copySTK()" class="text-blue-600 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 px-4 py-1.5 rounded shadow-sm text-sm transition flex items-center">
-                                        <span id="btn-copy-icon"><i class="fa-regular fa-copy mr-1"></i> Copy</span>
-                                    </button>
-                                </div>
-                            </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm text-left">
+                                <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-y border-gray-200">
+                                    <tr>
+                                        <th class="px-4 py-3">Mã đơn</th>
+                                        <th class="px-4 py-3">Loại dịch vụ</th>
+                                        <th class="px-4 py-3">Máy chủ</th>
+                                        <th class="px-4 py-3">Link/UID</th>
+                                        <th class="px-4 py-3">Số lượng</th>
+                                        <th class="px-4 py-3">Tổng tiền</th>
+                                        <th class="px-4 py-3">Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="order-history-body">
+                                    <tr>
+                                        <td colspan="7" class="px-4 py-12 text-center text-gray-500">
+                                            <div class="flex flex-col items-center justify-center">
+                                                <i class="fa-solid fa-folder-open text-4xl text-gray-300 mb-3"></i>
+                                                <p>Chưa có giao dịch nào được ghi nhận</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- Thêm ô Nội dung chuyển khoản ở đây -->
-                            <div class="md:col-span-2 bg-green-50/50 p-4 rounded-lg border border-green-100 mt-2">
-                                <p class="text-gray-500 mb-1 text-xs uppercase tracking-wider">Nội dung chuyển khoản (Bắt buộc)</p>
-                                <div class="flex items-center justify-between font-bold text-green-700 text-xl tracking-wide">
-                                    <span id="transfer-content-display">Đang tạo...</span>
-                                    <button onclick="copyTransferContent()" class="text-green-600 bg-white hover:bg-green-600 hover:text-white border border-green-200 px-4 py-1.5 rounded shadow-sm text-sm transition flex items-center">
-                                        <span id="btn-copy-content-icon"><i class="fa-regular fa-copy mr-1"></i> Copy</span>
-                                    </button>
-                                </div>
-                                <p class="text-xs text-green-600 mt-2 italic"><i class="fa-solid fa-circle-info"></i> Vui lòng ghi chính xác nội dung này để hệ thống tự động cộng tiền.</p>
+                <!-- VIEW 3: NẠP TIỀN (DEPOSIT) -->
+                <div id="view-deposit" class="view-section max-w-7xl mx-auto space-y-6">
+                    <!-- Thông tin chuyển khoản -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col md:flex-row gap-8">
+                        <!-- Cột QR Code -->
+                        <div class="md:w-1/3 flex flex-col items-center bg-[#f8fafc] p-6 rounded-xl border border-dashed border-gray-300">
+                            <div class="bg-white p-2 rounded-xl shadow-sm border border-gray-100 mb-4">
+                                <img id="qr-image" src="https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=&des=&template=compact" class="w-full max-w-[220px] rounded-lg transition-all" alt="QR Code Nạp Tiền">
                             </div>
+                            <p class="text-xs text-gray-500 text-center font-medium"><i class="fa-solid fa-qrcode mr-1"></i> Mở App Ngân hàng quét mã để chuyển nhanh</p>
                         </div>
 
-                        <!-- Form báo đã chuyển -->
-                        <div class="pt-4 border-t border-gray-100">
-                            <form id="form-deposit" class="space-y-4">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Số tiền bạn nạp (VNĐ) <span class="text-red-500">*</span></label>
-                                        <input type="number" id="deposit-amount" required min="10000" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-brand-500 outline-none transition bg-gray-50 focus:bg-white" placeholder="VD: 50000" oninput="updateQR()">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Mã giao dịch (Không bắt buộc)</label>
-                                        <input type="text" id="deposit-transId" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-brand-500 outline-none transition bg-gray-50 focus:bg-white" placeholder="VD: FT230620...">
+                        <!-- Cột Chi tiết -->
+                        <div class="md:w-2/3 flex flex-col justify-center space-y-5">
+                            <h3 class="text-xl font-bold text-gray-800 border-l-4 border-brand-500 pl-3">Thông Tin Nhận Tiền</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm">
+                                <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                    <p class="text-gray-500 mb-1 text-xs uppercase tracking-wider">Ngân hàng thụ hưởng</p>
+                                    <div class="flex items-center font-bold text-gray-800 text-lg">
+                                        <img src="https://my.sepay.vn/assets/images/banklogo/mbbank-icon.png" class="h-6 w-auto mr-2" alt="MBBank Logo"> MBBANK
                                     </div>
                                 </div>
                                 
-                                <button type="submit" id="btn-submit-deposit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-lg shadow-md transition duration-300 flex justify-center items-center">
-                                    Tôi đã chuyển tiền xong <i class="fa-solid fa-check-circle ml-2"></i>
-                                </button>
-                                <div id="deposit-status-msg" class="hidden text-sm mt-2 text-center p-2 rounded"></div>
-                            </form>
+                                <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                    <p class="text-gray-500 mb-1 text-xs uppercase tracking-wider">Chủ tài khoản</p>
+                                    <div class="font-bold text-gray-800 text-lg uppercase tracking-wide">LE NGOC NHAN</div>
+                                </div>
+                                
+                                <div class="md:col-span-2 bg-blue-50/50 p-4 rounded-lg border border-blue-100">
+                                    <p class="text-gray-500 mb-1 text-xs uppercase tracking-wider">Số tài khoản</p>
+                                    <div class="flex items-center justify-between font-bold text-blue-700 text-2xl tracking-widest">
+                                        <span>4477040408</span>
+                                        <button onclick="copySTK()" class="text-blue-600 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 px-4 py-1.5 rounded shadow-sm text-sm transition flex items-center">
+                                            <span id="btn-copy-icon"><i class="fa-regular fa-copy mr-1"></i> Copy</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Thêm ô Nội dung chuyển khoản ở đây -->
+                                <div class="md:col-span-2 bg-green-50/50 p-4 rounded-lg border border-green-100 mt-2">
+                                    <p class="text-gray-500 mb-1 text-xs uppercase tracking-wider">Nội dung chuyển khoản (Bắt buộc)</p>
+                                    <div class="flex items-center justify-between font-bold text-green-700 text-xl tracking-wide">
+                                        <span id="transfer-content-display">Đang tạo...</span>
+                                        <button onclick="copyTransferContent()" class="text-green-600 bg-white hover:bg-green-600 hover:text-white border border-green-200 px-4 py-1.5 rounded shadow-sm text-sm transition flex items-center">
+                                            <span id="btn-copy-content-icon"><i class="fa-regular fa-copy mr-1"></i> Copy</span>
+                                        </button>
+                                    </div>
+                                    <p class="text-xs text-green-600 mt-2 italic"><i class="fa-solid fa-circle-info"></i> Vui lòng ghi chính xác nội dung này để hệ thống tự động cộng tiền.</p>
+                                </div>
+                            </div>
+
+                            <!-- Form báo đã chuyển -->
+                            <div class="pt-4 border-t border-gray-100">
+                                <form id="form-deposit" class="space-y-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Số tiền bạn nạp (VNĐ) <span class="text-red-500">*</span></label>
+                                            <input type="number" id="deposit-amount" required min="10000" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-brand-500 outline-none transition bg-gray-50 focus:bg-white" placeholder="VD: 50000" oninput="updateQR()">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Mã giao dịch (Không bắt buộc)</label>
+                                            <input type="text" id="deposit-transId" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-brand-500 outline-none transition bg-gray-50 focus:bg-white" placeholder="VD: FT230620...">
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="submit" id="btn-submit-deposit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-lg shadow-md transition duration-300 flex justify-center items-center">
+                                        Tôi đã chuyển tiền xong <i class="fa-solid fa-check-circle ml-2"></i>
+                                    </button>
+                                    <div id="deposit-status-msg" class="hidden text-sm mt-2 text-center p-2 rounded"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bảng Lịch sử nạp -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-bold text-gray-800">Lịch Sử Nạp Tiền</h3>
+                            <button onclick="loadDepositHistory()" class="text-sm text-gray-500 hover:text-brand-600 border border-gray-200 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm text-left border-y border-gray-200">
+                                <thead class="text-xs text-gray-500 uppercase bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3">Mã GD Hệ Thống</th>
+                                        <th class="px-4 py-3">Số Tiền</th>
+                                        <th class="px-4 py-3">Mã GD Ngân Hàng</th>
+                                        <th class="px-4 py-3">Thời gian</th>
+                                        <th class="px-4 py-3">Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="deposit-history-body">
+                                    <tr><td colspan="5" class="text-center py-6"><i class="fa-solid fa-circle-notch fa-spin text-gray-400"></i> Đang tải dữ liệu...</td></tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- Bảng Lịch sử nạp -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold text-gray-800">Lịch Sử Nạp Tiền</h3>
-                        <button onclick="loadDepositHistory()" class="text-sm text-gray-500 hover:text-brand-600 border border-gray-200 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full text-sm text-left border-y border-gray-200">
-                            <thead class="text-xs text-gray-500 uppercase bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-3">Mã GD Hệ Thống</th>
-                                    <th class="px-4 py-3">Số Tiền</th>
-                                    <th class="px-4 py-3">Mã GD Ngân Hàng</th>
-                                    <th class="px-4 py-3">Thời gian</th>
-                                    <th class="px-4 py-3">Trạng thái</th>
-                                </tr>
-                            </thead>
-                            <tbody id="deposit-history-body">
-                                <tr><td colspan="5" class="text-center py-6"><i class="fa-solid fa-circle-notch fa-spin text-gray-400"></i> Đang tải dữ liệu...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-        </main>
+            </main>
+        </div>
     </div>
 
     <!-- MODAL HỒ SƠ TÀI KHOẢN -->
@@ -303,8 +317,8 @@
                 </div>
             </div>
             
-            <div class="p-6 space-y-5 bg-white">
-                <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-sm border-b border-gray-100 pb-5">
+            <div class="p-6 bg-white">
+                <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-sm border-b border-gray-100 pb-5 mb-5">
                     <div><span class="text-gray-500 text-xs block uppercase mb-0.5">SĐT Liên Hệ</span> <span class="font-medium text-gray-800" id="profile-phone">Chưa cập nhật</span></div>
                     <div><span class="text-gray-500 text-xs block uppercase mb-0.5">Bảo Mật 2FA</span> <span class="font-medium text-red-500 bg-red-50 px-2 py-0.5 rounded text-xs" id="profile-2fa"><i class="fa-solid fa-shield text-[10px]"></i> Tắt</span></div>
                     <div><span class="text-gray-500 text-xs block uppercase mb-0.5">Số Dư Khả Dụng</span> <span class="font-bold text-brand-600 text-base" id="profile-balance">0 đ</span></div>
@@ -325,6 +339,13 @@
                     <button type="submit" id="btn-change-pass" class="bg-gray-800 hover:bg-black text-white font-medium px-4 py-2.5 rounded-lg text-sm w-full transition shadow-md">Lưu Mật Khẩu</button>
                     <div id="pass-msg" class="text-center mt-2"></div>
                 </form>
+
+                <!-- NÚT ĐĂNG XUẤT -->
+                <div class="mt-6 border-t border-gray-100 pt-4">
+                    <button id="btn-logout" class="w-full bg-red-50 hover:bg-red-100 text-red-600 font-bold py-2.5 rounded-lg text-sm transition flex items-center justify-center">
+                        <i class="fa-solid fa-right-from-bracket mr-2"></i> Đăng Xuất Tài Khoản
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -624,8 +645,9 @@
 
     <!-- FIREBASE CẤU HÌNH VÀ DATA LOGIC -->
     <script type="module">
+        // Thêm signOut vào hàm import
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signInAnonymously, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signInAnonymously, EmailAuthProvider, reauthenticateWithCredential, updatePassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, collection, addDoc, getDocs, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -649,15 +671,98 @@
                     await signInAnonymously(auth);
                 } else {
                     window.currentUserBalance = 0; 
-                    loadUserData(user);
-                    loadDepositHistory();
-                    fetchAndRenderServicesMenu(); // Khởi chạy việc tải Menu ngay khi mở trang
+                    checkMaintenanceAndLoadUser(user);
                 }
             });
         };
         initAuth();
 
+        // Kiểm tra chế độ bảo trì + Load dữ liệu User
+        async function checkMaintenanceAndLoadUser(user) {
+            let role = "user";
+            let displayName = user.displayName || "User";
+            let coin = 0;
+            let phone = "Chưa cập nhật";
+            let twoFA = "Tắt";
+            let status = "Kích hoạt";
+            let createdAt = new Date().toLocaleDateString('vi-VN');
+
+            // 1. Fetch User Data
+            if (!user.isAnonymous) {
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        const data = userDoc.data();
+                        role = data.role || "user";
+                        displayName = data.fullname || displayName;
+                        coin = data.coin || 0;
+                        phone = data.phone || phone;
+                        twoFA = data.twoFA ? "Bật" : "Tắt";
+                        status = data.status || status;
+                        if(data.createdAt) createdAt = new Date(data.createdAt).toLocaleDateString('vi-VN');
+                    }
+                } catch(e) { console.warn("Lỗi fetch user:", e); }
+            } else {
+                displayName = "Khách lạ (Ẩn danh)";
+            }
+
+            // 2. Fetch System Settings (Maintenance Mode)
+            try {
+                const settingsDoc = await getDoc(doc(db, "settings", "system"));
+                if (settingsDoc.exists() && settingsDoc.data().maintenanceMode === true) {
+                    // Đang bảo trì
+                    if (role !== "admin") {
+                        // Khóa user/khách lạ ngoài màn hình bảo trì
+                        document.getElementById('maintenance-screen').classList.remove('hidden');
+                        document.getElementById('main-app-content').classList.add('hidden');
+                        return; // Ngừng load tiếp
+                    } else {
+                        // Admin vẫn cho vào, báo nhẹ trên Header
+                        document.getElementById('status-indicator').innerHTML = '<span class="bg-red-500 text-white px-2 py-0.5 rounded text-xs font-bold animate-pulse shadow-md">Web đang Bảo Trì (Mode Admin)</span>';
+                        document.getElementById('status-indicator').classList.remove('hidden');
+                    }
+                }
+            } catch(e) { console.warn("Không đọc được settings hệ thống"); }
+
+            // 3. Nếu qua ải (Không bảo trì HOẶC là Admin) -> Render bình thường
+            window.currentUserBalance = coin; 
+            
+            // XỬ LÝ NỘI DUNG CHUYỂN KHOẢN THEO TÊN
+            let cleanName = displayName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+            if(!cleanName || cleanName === "KHACHLAANDANH") cleanName = user.uid.substring(0,6).toUpperCase();
+            window.currentTransferContent = "FLMMO " + cleanName;
+
+            // Cập nhật lên UI
+            document.getElementById('ui-fullname').innerText = displayName;
+            document.getElementById('ui-coin').innerText = coin.toLocaleString() + " VNĐ";
+            
+            const transferDisplay = document.getElementById('transfer-content-display');
+            if(transferDisplay) transferDisplay.innerText = window.currentTransferContent;
+            window.updateQR(); 
+            
+            const initial = displayName.charAt(0).toUpperCase();
+            document.getElementById('ui-avatar').innerText = initial;
+            document.getElementById('ui-avatar-small').innerText = initial;
+            
+            document.getElementById('modal-avatar').innerText = initial;
+            document.getElementById('modal-name').innerText = displayName;
+            document.getElementById('modal-email').innerHTML = `<i class="fa-solid fa-envelope mr-1 text-xs"></i> ${user.email || 'Không có (Tài khoản ẩn danh)'}`;
+            document.getElementById('profile-phone').innerText = phone;
+            document.getElementById('profile-2fa').innerHTML = twoFA === "Bật" ? `<i class="fa-solid fa-shield text-[10px]"></i> Bật` : `<i class="fa-solid fa-shield text-[10px]"></i> Tắt`;
+            if(twoFA === "Bật") document.getElementById('profile-2fa').className = "font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded text-xs";
+            document.getElementById('profile-balance').innerText = coin.toLocaleString() + " VNĐ";
+            document.getElementById('profile-status').innerHTML = status === "Kích hoạt" ? `<i class="fa-solid fa-circle-check text-[10px]"></i> Kích hoạt` : `<i class="fa-solid fa-lock text-[10px]"></i> Bị Khóa`;
+            if(status !== "Kích hoạt") document.getElementById('profile-status').className = "font-medium text-red-600 bg-red-50 px-2 py-0.5 rounded text-xs";
+            document.getElementById('profile-created').innerText = createdAt;
+
+            // Load phần còn lại
+            loadDepositHistory();
+            fetchAndRenderServicesMenu();
+        }
+
+        // ==========================================
         // 1. TẢI VÀ RENDER MENU TỪ CÁC DỊCH VỤ ADMIN ĐÃ TẠO BÊN CƠ SỞ DỮ LIỆU
+        // ==========================================
         async function fetchAndRenderServicesMenu() {
             try {
                 const snap = await getDocs(collection(db, "servers"));
@@ -688,7 +793,6 @@
 
                 // Render HTML
                 for (const platform in menuTree) {
-                    // Cấu hình Icon và Màu cho nền tảng
                     let pIcon = 'fa-solid fa-hashtag'; let pColor = 'text-gray-500';
                     if (platform.toLowerCase().includes('facebook')) { pIcon = 'fa-brands fa-facebook'; pColor = 'text-blue-600'; }
                     else if (platform.toLowerCase().includes('tiktok')) { pIcon = 'fa-brands fa-tiktok'; pColor = 'text-black'; }
@@ -700,7 +804,6 @@
                         const parts = fullCat.split(" - ");
                         const subName = parts[1] ? parts[1].trim() : fullCat;
 
-                        // Cấu hình Icon cho dịch vụ nhỏ
                         let sIcon = 'fa-solid fa-bolt text-yellow-500';
                         if (subName.toLowerCase().includes('like') || subName.toLowerCase().includes('cảm xúc') || subName.toLowerCase().includes('tim')) sIcon = 'fa-solid fa-heart text-red-500';
                         else if (subName.toLowerCase().includes('follow') || subName.toLowerCase().includes('sub') || subName.toLowerCase().includes('theo dõi')) sIcon = 'fa-solid fa-user-plus text-green-500';
@@ -724,70 +827,12 @@
                         </li>
                     `;
                 }
-
             } catch(e) {
                 console.error("Lỗi lấy danh sách Dịch vụ & Server:", e);
                 document.getElementById('dynamic-sidebar-menu').innerHTML = `<li class="px-6 py-3 text-sm text-red-500"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Lỗi kết nối CSDL</li>`;
             }
         }
 
-        // Tải Dữ Liệu Profile User
-        async function loadUserData(user) {
-            let displayName = user.displayName || "User";
-            let coin = 0;
-            let phone = "Chưa cập nhật";
-            let twoFA = "Tắt";
-            let status = "Kích hoạt";
-            let createdAt = new Date().toLocaleDateString('vi-VN');
-
-            if (!user.isAnonymous) {
-                try {
-                    const userDoc = await getDoc(doc(db, "users", user.uid));
-                    if (userDoc.exists()) {
-                        const data = userDoc.data();
-                        displayName = data.fullname || displayName;
-                        coin = data.coin || 0;
-                        phone = data.phone || phone;
-                        twoFA = data.twoFA ? "Bật" : "Tắt";
-                        status = data.status || status;
-                        if(data.createdAt) createdAt = new Date(data.createdAt).toLocaleDateString('vi-VN');
-                    }
-                } catch(e) { console.warn("Không lấy được dữ liệu Firestore:", e); }
-            } else {
-                displayName = "Khách lạ (Ẩn danh)";
-            }
-
-            window.currentUserBalance = coin; 
-            
-            // XỬ LÝ NỘI DUNG CHUYỂN KHOẢN THEO TÊN (Username)
-            // Lọc bỏ dấu, khoảng trắng và ký tự đặc biệt để làm mã nạp đẹp
-            let cleanName = displayName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-            if(!cleanName || cleanName === "KHACHLAANDANH") cleanName = user.uid.substring(0,6).toUpperCase();
-            window.currentTransferContent = "FLMMO " + cleanName;
-
-            // Cập nhật lên UI
-            document.getElementById('ui-fullname').innerText = displayName;
-            document.getElementById('ui-coin').innerText = coin.toLocaleString() + " VNĐ";
-            
-            const transferDisplay = document.getElementById('transfer-content-display');
-            if(transferDisplay) transferDisplay.innerText = window.currentTransferContent;
-            window.updateQR(); // Gọi ngay cập nhật QR để đính kèm nội dung chuyển
-            
-            const initial = displayName.charAt(0).toUpperCase();
-            document.getElementById('ui-avatar').innerText = initial;
-            document.getElementById('ui-avatar-small').innerText = initial;
-            
-            document.getElementById('modal-avatar').innerText = initial;
-            document.getElementById('modal-name').innerText = displayName;
-            document.getElementById('modal-email').innerHTML = `<i class="fa-solid fa-envelope mr-1 text-xs"></i> ${user.email || 'Không có (Tài khoản ẩn danh)'}`;
-            document.getElementById('profile-phone').innerText = phone;
-            document.getElementById('profile-2fa').innerHTML = twoFA === "Bật" ? `<i class="fa-solid fa-shield text-[10px]"></i> Bật` : `<i class="fa-solid fa-shield text-[10px]"></i> Tắt`;
-            if(twoFA === "Bật") document.getElementById('profile-2fa').className = "font-medium text-green-600 bg-green-50 px-2 py-0.5 rounded text-xs";
-            document.getElementById('profile-balance').innerText = coin.toLocaleString() + " VNĐ";
-            document.getElementById('profile-status').innerHTML = status === "Kích hoạt" ? `<i class="fa-solid fa-circle-check text-[10px]"></i> Kích hoạt` : `<i class="fa-solid fa-lock text-[10px]"></i> Bị Khóa`;
-            if(status !== "Kích hoạt") document.getElementById('profile-status').className = "font-medium text-red-600 bg-red-50 px-2 py-0.5 rounded text-xs";
-            document.getElementById('profile-created').innerText = createdAt;
-        }
 
         // ==========================================
         // KHU VỰC LOGIC FIREBASE CHO ĐẶT ĐƠN HÀNG
@@ -825,7 +870,7 @@
                     uid: user.uid,
                     category: window.currentServiceCategory,
                     serverName: window.currentServer.name,
-                    serverId: window.currentServer.code, // Lưu mã thay vì id tự sinh
+                    serverId: window.currentServer.code,
                     link: link,
                     quantity: qty,
                     price: window.currentPrice,
@@ -838,7 +883,9 @@
                 await updateDoc(doc(db, "users", user.uid), {
                     coin: increment(-totalCost)
                 });
-                loadUserData(user); // Tải lại số dư mới
+                
+                // Cập nhật lại UI User ngay lập tức
+                checkMaintenanceAndLoadUser(user);
 
                 msg.className = "text-sm mt-3 text-center p-3 rounded bg-green-50 text-green-700 font-bold border border-green-200 block";
                 msg.innerHTML = '<i class="fa-solid fa-check-circle mr-1"></i> Tạo đơn hàng thành công! Xem lại tại tab Lịch Sử.';
@@ -916,7 +963,7 @@
         }
 
         // ==========================================
-        // CÁC CHỨC NĂNG CŨ (NẠP TIỀN, ĐỔI MK)
+        // CÁC CHỨC NĂNG CŨ (NẠP TIỀN, ĐỔI MK, ĐĂNG XUẤT)
         // ==========================================
 
         document.getElementById('form-deposit').addEventListener('submit', async (e) => {
@@ -1028,6 +1075,18 @@
             } finally {
                 btn.innerHTML = 'Lưu Mật Khẩu';
                 btn.disabled = false;
+            }
+        });
+
+        // XỬ LÝ SỰ KIỆN NÚT ĐĂNG XUẤT
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            if(confirm("Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?")) {
+                signOut(auth).then(() => {
+                    // Đăng xuất thành công, chuyển hướng về trang Đăng nhập
+                    window.location.href = "dangnhap.html";
+                }).catch((error) => {
+                    alert("Đã xảy ra lỗi khi đăng xuất: " + error.message);
+                });
             }
         });
 
