@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câu Hỏi Thường Gặp - FLMMO.VN</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { brand: { 500: '#22c55e', 600: '#16a34a' } } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-gray-800">
+
+    <!-- HEADER -->
+    <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="home.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="w-8 h-8 bg-brand-500 rounded flex items-center justify-center text-white shadow"><i class="fa-solid fa-rocket"></i></div>
+                <span class="font-bold text-xl tracking-tight">FL<span class="text-brand-600">MMO</span></span>
+            </a>
+            <nav class="hidden md:flex gap-6">
+                <a href="home.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">Trang chủ</a>
+                <a href="quydinh.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">Quy định chung</a>
+                <a href="api.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">API Đối tác</a>
+            </nav>
+            <a href="dangnhap.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow transition">Vào Hệ Thống</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Câu Hỏi Thường Gặp (FAQ)</h1>
+            <p class="text-gray-600">Tổng hợp các giải đáp nhanh về dịch vụ và cách sử dụng hệ thống FLMMO.</p>
+        </div>
+
+        <div class="space-y-4">
+            <!-- FAQ 1 -->
+            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-gray-50 hover:bg-gray-100 transition">
+                    <span class="font-semibold text-gray-800">1. Tại sao đơn hàng của tôi bị báo "Hủy" hoặc "Lỗi"?</span>
+                    <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                </button>
+                <div class="faq-answer bg-white px-6">
+                    <p class="py-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+                        Đơn hàng bị hủy thường do các nguyên nhân sau:<br>
+                        - Link tài khoản/bài viết đang để ở chế độ <b>Riêng tư (Private)</b> hoặc chặn người lạ tương tác.<br>
+                        - Bạn nhập sai định dạng Link hoặc UID (hệ thống không nhận diện được).<br>
+                        - Đặt 2 đơn cùng lúc cho 1 link khi đơn trước đó chưa hoàn thành.<br>
+                        *Hệ thống sẽ tự động hoàn lại tiền (Refund) vào số dư của bạn đối với các đơn bị Hủy do lỗi.*
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-gray-50 hover:bg-gray-100 transition">
+                    <span class="font-semibold text-gray-800">2. Thời gian bắt đầu và hoàn thành đơn hàng là bao lâu?</span>
+                    <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                </button>
+                <div class="faq-answer bg-white px-6">
+                    <p class="py-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+                        - Đa số các server sẽ bắt đầu chạy sau <b>1 - 15 phút</b> kể từ lúc tạo đơn thành công.<br>
+                        - Tuy nhiên, trong những thời điểm bão hòa hoặc Facebook/Tiktok update quét thuật toán, đơn có thể bị delay (chậm) từ 24h - 48h. Vui lòng kiên nhẫn chờ đợi, tốc độ xử lý phụ thuộc vào tình trạng của từng Server mà bạn chọn.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-gray-50 hover:bg-gray-100 transition">
+                    <span class="font-semibold text-gray-800">3. Dịch vụ có bị tụt (Drop) sau khi tăng không? Có bảo hành không?</span>
+                    <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                </button>
+                <div class="faq-answer bg-white px-6">
+                    <p class="py-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+                        Các nền tảng MXH luôn có cơ chế quét và xóa tài khoản ảo. Do đó, hiện tượng tụt (drop) là điều không thể tránh khỏi 100%.<br><br>
+                        - Đối với các server có chữ <b>[Bảo Hành]</b>: Nếu tụt quá số lượng cho phép trong thời gian bảo hành, hệ thống sẽ tự động bù lại cho bạn miễn phí.<br>
+                        - Đối với các server <b>[Không Bảo Hành]</b>: Giá thường rất rẻ nhưng sẽ không được hỗ trợ bù/hoàn tiền nếu xảy ra hiện tượng tụt sau khi chạy xong.
+                    </p>
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-gray-50 hover:bg-gray-100 transition">
+                    <span class="font-semibold text-gray-800">4. Nạp tiền vào hệ thống như thế nào? Có mất phí không?</span>
+                    <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                </button>
+                <div class="faq-answer bg-white px-6">
+                    <p class="py-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
+                        Bạn vui lòng đăng nhập, chọn mục <b>Nạp Tiền</b> ở thanh menu bên trái. Quét mã QR Bank và chuyển khoản đúng số tiền. Tiền sẽ được Admin xét duyệt và cộng trực tiếp vào số dư của bạn. Nạp tiền qua Ngân hàng là hoàn toàn miễn phí (Tỉ lệ 1:1).
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6 text-center">
+            <h3 class="font-bold text-blue-800 mb-2">Vẫn còn thắc mắc?</h3>
+            <p class="text-sm text-blue-600 mb-4">Hãy liên hệ trực tiếp với Admin để được hỗ trợ giải quyết nhanh nhất.</p>
+            <a href="mailto:lenhancute1@gmail.com" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded shadow transition"><i class="fa-solid fa-headset mr-2"></i> Liên hệ CSKH</a>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-sm">
+                &copy; 2026 FLMMO.VN. Tất cả quyền được bảo lưu.
+            </div>
+            <div class="flex space-x-4">
+                <a href="https://fb.com/lenhanriel" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://instagram.com/nh4n.vn" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="mailto:lenhancute1@gmail.com" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-500 hover:text-white transition" title="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Script điều khiển Accordion cho FAQ
+        document.querySelectorAll('.faq-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const icon = btn.querySelector('i');
+                
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    // Đóng tất cả cái khác
+                    document.querySelectorAll('.faq-answer').forEach(ans => ans.style.maxHeight = null);
+                    document.querySelectorAll('.faq-btn i').forEach(i => i.style.transform = 'rotate(0deg)');
+                    
+                    // Mở cái hiện tại
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
