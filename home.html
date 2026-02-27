@@ -222,6 +222,18 @@
                                     </button>
                                 </div>
                             </div>
+
+                            <!-- Thêm ô Nội dung chuyển khoản ở đây -->
+                            <div class="md:col-span-2 bg-green-50/50 p-4 rounded-lg border border-green-100 mt-2">
+                                <p class="text-gray-500 mb-1 text-xs uppercase tracking-wider">Nội dung chuyển khoản (Bắt buộc)</p>
+                                <div class="flex items-center justify-between font-bold text-green-700 text-xl tracking-wide">
+                                    <span id="transfer-content-display">Đang tạo...</span>
+                                    <button onclick="copyTransferContent()" class="text-green-600 bg-white hover:bg-green-600 hover:text-white border border-green-200 px-4 py-1.5 rounded shadow-sm text-sm transition flex items-center">
+                                        <span id="btn-copy-content-icon"><i class="fa-regular fa-copy mr-1"></i> Copy</span>
+                                    </button>
+                                </div>
+                                <p class="text-xs text-green-600 mt-2 italic"><i class="fa-solid fa-circle-info"></i> Vui lòng ghi chính xác nội dung này để hệ thống tự động cộng tiền.</p>
+                            </div>
                         </div>
 
                         <!-- Form báo đã chuyển -->
@@ -324,6 +336,7 @@
         window.currentPrice = 0;
         window.currentServer = null;
         window.currentServiceCategory = "";
+        window.currentTransferContent = "FLMMO USER"; // Lưu nội dung chuyển khoản
 
         // Function Toggle Submenu của Sidebar
         window.toggleSubMenu = function(id) {
@@ -542,11 +555,30 @@
             }, 2000);
         }
 
-        // Cập nhật QR Code theo số tiền
+        // Copy Nội dung chuyển khoản
+        window.copyTransferContent = function() {
+            const tempInput = document.createElement('input');
+            tempInput.value = window.currentTransferContent || '';
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            const btnIcon = document.getElementById('btn-copy-content-icon');
+            btnIcon.innerHTML = '<i class="fa-solid fa-check text-green-500 mr-1"></i> Đã Copy';
+            btnIcon.parentElement.classList.replace('text-green-600', 'text-brand-600');
+            setTimeout(() => {
+                btnIcon.innerHTML = '<i class="fa-regular fa-copy mr-1"></i> Copy';
+                btnIcon.parentElement.classList.replace('text-brand-600', 'text-green-600');
+            }, 2000);
+        }
+
+        // Cập nhật QR Code theo số tiền và Nội dung
         window.updateQR = function() {
             const amount = document.getElementById('deposit-amount').value || '';
+            const des = encodeURIComponent(window.currentTransferContent || '');
             const qr = document.getElementById('qr-image');
-            qr.src = `https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=${amount}&des=&template=compact`;
+            qr.src = `https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=${amount}&des=${des}&template=compact`;
         }
 
         // Mở/Đóng Modal
@@ -726,9 +758,20 @@
             }
 
             window.currentUserBalance = coin; 
+            
+            // XỬ LÝ NỘI DUNG CHUYỂN KHOẢN THEO TÊN (Username)
+            // Lọc bỏ dấu, khoảng trắng và ký tự đặc biệt để làm mã nạp đẹp
+            let cleanName = displayName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+            if(!cleanName || cleanName === "KHACHLAANDANH") cleanName = user.uid.substring(0,6).toUpperCase();
+            window.currentTransferContent = "FLMMO " + cleanName;
 
+            // Cập nhật lên UI
             document.getElementById('ui-fullname').innerText = displayName;
             document.getElementById('ui-coin').innerText = coin.toLocaleString() + " VNĐ";
+            
+            const transferDisplay = document.getElementById('transfer-content-display');
+            if(transferDisplay) transferDisplay.innerText = window.currentTransferContent;
+            window.updateQR(); // Gọi ngay cập nhật QR để đính kèm nội dung chuyển
             
             const initial = displayName.charAt(0).toUpperCase();
             document.getElementById('ui-avatar').innerText = initial;
