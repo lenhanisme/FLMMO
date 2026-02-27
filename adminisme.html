@@ -32,6 +32,12 @@
         .view-section { display: none; }
         .view-section.active { display: block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Toggle Switch */
+        .toggle-checkbox:checked { right: 0; border-color: #22c55e; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #22c55e; }
+        .toggle-checkbox { right: 0; z-index: 1; border-color: #e2e8f0; transition: all 0.3s; }
+        .toggle-label { width: 3rem; height: 1.5rem; background-color: #cbd5e1; border-radius: 9999px; transition: all 0.3s; }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden text-gray-800 hidden" id="admin-body">
@@ -91,6 +97,25 @@
             
             <!-- VIEW 1: DASHBOARD -->
             <div id="view-dashboard" class="view-section active max-w-7xl mx-auto space-y-6">
+                
+                <!-- Khu vực Bật/Tắt Bảo Trì -->
+                <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl shadow-sm p-6 border border-yellow-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-2xl shrink-0"><i class="fa-solid fa-traffic-cone"></i></div>
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-lg">Chế Độ Bảo Trì Website</h3>
+                            <p class="text-sm text-gray-600">Khi bật, user không thể truy cập home.html (Ngoại trừ Admin).</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <span id="maintenance-text" class="mr-3 font-bold text-gray-500">Đang hoạt động</span>
+                        <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" name="toggle" id="maintenance-toggle" onchange="toggleMaintenanceMode(this.checked)" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                            <label for="maintenance-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Thẻ thống kê -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 flex items-center justify-between">
@@ -109,15 +134,15 @@
                     </div>
                     <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 flex items-center justify-between">
                         <div>
-                            <div class="text-sm text-gray-500 font-medium mb-1">Đơn Chờ Duyệt</div>
+                            <div class="text-sm text-gray-500 font-medium mb-1">Đơn Chờ Duyệt Nạp</div>
                             <div class="text-2xl font-bold text-red-500" id="stat-pending">0</div>
                         </div>
                         <div class="w-12 h-12 rounded-full bg-red-50 text-red-500 flex items-center justify-center text-xl"><i class="fa-solid fa-bell-concierge"></i></div>
                     </div>
                     <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 flex items-center justify-between">
                         <div>
-                            <div class="text-sm text-gray-500 font-medium mb-1">Đơn Dịch Vụ</div>
-                            <div class="text-2xl font-bold text-gray-800">0</div>
+                            <div class="text-sm text-gray-500 font-medium mb-1">Tổng Đơn Dịch Vụ</div>
+                            <div class="text-2xl font-bold text-gray-800" id="stat-orders">0</div>
                         </div>
                         <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center text-xl"><i class="fa-solid fa-cart-flatbed"></i></div>
                     </div>
@@ -157,12 +182,31 @@
                 </div>
             </div>
 
-            <!-- VIEW 3: QUẢN LÝ ĐƠN HÀNG -->
+            <!-- VIEW 3: QUẢN LÝ ĐƠN HÀNG (ORDERS) -->
             <div id="view-orders" class="view-section max-w-7xl mx-auto">
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center py-20">
-                    <i class="fa-solid fa-screwdriver-wrench text-5xl text-gray-300 mb-4"></i>
-                    <h3 class="text-xl font-bold text-gray-700 mb-2">Đang xây dựng</h3>
-                    <p class="text-gray-500">Khu vực quản lý các đơn hàng dịch vụ mạng xã hội.</p>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Quản Lý Đơn Hàng Dịch Vụ</h2>
+                        <button onclick="fetchOrders()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm text-left border-y border-gray-200">
+                            <thead class="text-xs text-gray-600 uppercase bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3">Mã đơn / Ngày</th>
+                                    <th class="px-4 py-3">UID Khách</th>
+                                    <th class="px-4 py-3">Máy chủ</th>
+                                    <th class="px-4 py-3">Link/UID cần tăng</th>
+                                    <th class="px-4 py-3">SL / Tiền</th>
+                                    <th class="px-4 py-3">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-orders-table">
+                                <tr><td colspan="6" class="text-center py-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-2xl"></i></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -173,7 +217,6 @@
                     <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 mb-6">Thêm Máy Chủ Mới</h2>
                     <form id="form-add-server" class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <!-- Chuyên mục dịch vụ MỚI THÊM -->
                             <div class="lg:col-span-1">
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Chuyên mục Dịch vụ <span class="text-red-500">*</span></label>
                                 <select id="srv-category" required class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
@@ -193,12 +236,10 @@
                                     </optgroup>
                                 </select>
                             </div>
-                            
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Mã Server <span class="text-red-500">*</span></label>
                                 <input type="text" id="srv-code" required placeholder="VD: sv1, sv2..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
                             </div>
-                            
                             <div class="lg:col-span-3">
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Tên Dịch Vụ / Mô tả <span class="text-red-500">*</span></label>
                                 <input type="text" id="srv-name" required placeholder="VD: Tăng Like Facebook - Lên nhanh - Bảo hành 30 ngày..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
@@ -261,7 +302,7 @@
                 </div>
             </div>
 
-            <!-- VIEW 5: QUẢN LÝ NGƯỜI DÙNG (USERS) MỚI THÊM -->
+            <!-- VIEW 5: QUẢN LÝ NGƯỜI DÙNG (USERS) -->
             <div id="view-users" class="view-section max-w-7xl mx-auto space-y-6">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6">
@@ -328,7 +369,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, collection, getDocs, updateDoc, increment, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs, updateDoc, increment, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Sử dụng chung 1 config như bên home.html
         const firebaseConfig = {
@@ -358,10 +399,11 @@
                         // Load dữ liệu ban đầu
                         fetchDashboardStats();
                         fetchDeposits();
+                        fetchOrders();
                         fetchServers(); 
-                        fetchUsers(); // Load dữ liệu users
+                        fetchUsers(); 
+                        checkMaintenanceStatus(); // Kiểm tra nút Bảo trì
                     } else {
-                        // Không phải Admin
                         alert("Bạn không có quyền truy cập khu vực Quản Trị!");
                         window.location.href = "home.html";
                     }
@@ -371,7 +413,6 @@
                     window.location.href = "home.html";
                 }
             } else {
-                // Chưa đăng nhập
                 window.location.href = "dangnhap.html";
             }
         });
@@ -382,13 +423,61 @@
         });
 
         // ==========================================
-        // KHU VỰC: DASHBOARD & DEPOSITS (Giữ nguyên)
+        // KHU VỰC: CHẾ ĐỘ BẢO TRÌ (MAINTENANCE)
         // ==========================================
+        async function checkMaintenanceStatus() {
+            try {
+                const docSnap = await getDoc(doc(db, "settings", "system"));
+                const isMaintenance = docSnap.exists() ? docSnap.data().maintenanceMode : false;
+                
+                const toggle = document.getElementById('maintenance-toggle');
+                const text = document.getElementById('maintenance-text');
+                
+                toggle.checked = isMaintenance;
+                if(isMaintenance) {
+                    text.innerText = "BẢO TRÌ ON";
+                    text.className = "mr-3 font-bold text-red-600";
+                } else {
+                    text.innerText = "Đang hoạt động";
+                    text.className = "mr-3 font-bold text-green-600";
+                }
+            } catch (error) { console.error("Lỗi lấy trạng thái bảo trì", error); }
+        }
 
+        window.toggleMaintenanceMode = async function(isMaintenance) {
+            const text = document.getElementById('maintenance-text');
+            if(!confirm(`Xác nhận chuyển website sang trạng thái ${isMaintenance ? 'BẢO TRÌ (Khách hàng sẽ không thể truy cập home.html)' : 'HOẠT ĐỘNG BÌNH THƯỜNG'}?`)) {
+                // Đảo ngược lại nút nếu User bấm Cancel
+                document.getElementById('maintenance-toggle').checked = !isMaintenance;
+                return;
+            }
+            
+            try {
+                await setDoc(doc(db, "settings", "system"), { maintenanceMode: isMaintenance }, { merge: true });
+                if(isMaintenance) {
+                    text.innerText = "BẢO TRÌ ON";
+                    text.className = "mr-3 font-bold text-red-600";
+                } else {
+                    text.innerText = "Đang hoạt động";
+                    text.className = "mr-3 font-bold text-green-600";
+                }
+                alert("Cập nhật trạng thái Website thành công!");
+            } catch(e) {
+                alert("Lỗi: " + e.message);
+                document.getElementById('maintenance-toggle').checked = !isMaintenance;
+            }
+        }
+
+        // ==========================================
+        // KHU VỰC: DASHBOARD & THỐNG KÊ
+        // ==========================================
         async function fetchDashboardStats() {
             try {
                 const usersSnap = await getDocs(collection(db, "users"));
                 document.getElementById('stat-users').innerText = usersSnap.size;
+
+                const ordersSnap = await getDocs(collection(db, "orders"));
+                document.getElementById('stat-orders').innerText = ordersSnap.size;
 
                 const depositsSnap = await getDocs(collection(db, "deposits"));
                 let totalIncome = 0;
@@ -413,6 +502,97 @@
             } catch (e) { console.error("Lỗi tải thống kê", e); }
         }
 
+        // ==========================================
+        // KHU VỰC: QUẢN LÝ ĐƠN HÀNG (ORDERS)
+        // ==========================================
+        window.fetchOrders = async function() {
+            const tbody = document.getElementById('admin-orders-table');
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải đơn hàng...</td></tr>';
+            
+            try {
+                const snapshot = await getDocs(collection(db, "orders"));
+                let orders = [];
+                snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
+                
+                orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Mới nhất lên đầu
+
+                if(orders.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500">Chưa có đơn hàng nào trên hệ thống</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                orders.forEach(o => {
+                    const date = new Date(o.createdAt).toLocaleString('vi-VN');
+                    
+                    let badgeClass = "bg-gray-100 text-gray-700";
+                    if(o.status === "Đang xử lý" || o.status === "Đang chạy") badgeClass = "bg-blue-100 text-blue-700";
+                    else if(o.status === "Hoàn thành") badgeClass = "bg-green-100 text-green-700";
+                    else if(o.status === "Hủy" || o.status === "Lỗi") badgeClass = "bg-red-100 text-red-700";
+
+                    // Select cập nhật trạng thái đơn
+                    const selectStatusHtml = `
+                        <select onchange="updateOrderStatus('${o.id}', this.value)" class="text-xs border border-gray-300 rounded p-1 outline-none w-full max-w-[120px] bg-gray-50 focus:bg-white mt-1 font-medium ${badgeClass}">
+                            <option value="Đang xử lý" ${o.status === 'Đang xử lý' ? 'selected' : ''}>Đang xử lý</option>
+                            <option value="Đang chạy" ${o.status === 'Đang chạy' ? 'selected' : ''}>Đang chạy</option>
+                            <option value="Hoàn thành" ${o.status === 'Hoàn thành' ? 'selected' : ''}>Hoàn thành</option>
+                            <option value="Hủy" ${o.status === 'Hủy' ? 'selected' : ''}>Hủy (Refund)</option>
+                            <option value="Lỗi" ${o.status === 'Lỗi' ? 'selected' : ''}>Báo Lỗi</option>
+                        </select>
+                    `;
+
+                    tbody.innerHTML += `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-4 py-3">
+                                <div class="font-mono text-xs font-bold text-gray-800 mb-1">#${o.id.substring(0,8).toUpperCase()}</div>
+                                <div class="text-[10px] text-gray-500">${date}</div>
+                            </td>
+                            <td class="px-4 py-3 text-xs font-mono text-brand-600 cursor-help" title="${o.uid}">${o.uid.substring(0,8)}...</td>
+                            <td class="px-4 py-3 text-xs">
+                                <div class="font-bold uppercase text-gray-700">${o.serverId}</div>
+                                <div class="text-[10px] text-gray-400 mt-0.5">${o.category.split(' - ')[1] || o.category}</div>
+                            </td>
+                            <td class="px-4 py-3 text-xs max-w-[150px] truncate text-blue-500 hover:text-blue-700 cursor-pointer" title="${o.link}">
+                                ${o.link}
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="font-bold text-gray-800">${o.quantity.toLocaleString()}</div>
+                                <div class="text-xs font-bold text-brand-600 mt-0.5">${o.total.toLocaleString()} đ</div>
+                            </td>
+                            <td class="px-4 py-3">
+                                ${selectStatusHtml}
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch(e) { console.error(e); }
+        }
+
+        window.updateOrderStatus = async function(orderId, newStatus) {
+            try {
+                // Nếu Hủy, hỏi xem có muốn hoàn tiền không
+                if(newStatus === "Hủy") {
+                    if(confirm("Bạn có muốn tự động HOÀN TIỀN (Refund) cho đơn hàng này không?")) {
+                        const orderDoc = await getDoc(doc(db, "orders", orderId));
+                        if(orderDoc.exists()) {
+                            const oData = orderDoc.data();
+                            await updateDoc(doc(db, "users", oData.uid), { coin: increment(oData.total) });
+                            alert(`Đã hoàn ${oData.total}đ cho UID ${oData.uid}`);
+                        }
+                    }
+                }
+                
+                await updateDoc(doc(db, "orders", orderId), { status: newStatus, updatedAt: new Date().toISOString() });
+                fetchOrders(); // Reload table
+            } catch(e) {
+                alert("Lỗi khi cập nhật trạng thái đơn: " + e.message);
+                fetchOrders();
+            }
+        }
+
+        // ==========================================
+        // KHU VỰC: DUYỆT NẠP TIỀN
+        // ==========================================
         window.fetchDeposits = async function() {
             const tbody = document.getElementById('admin-deposits-table');
             try {
@@ -485,7 +665,6 @@
         // ==========================================
         // KHU VỰC: QUẢN LÝ MÁY CHỦ (SERVERS)
         // ==========================================
-
         document.getElementById('form-add-server').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-add-server');
