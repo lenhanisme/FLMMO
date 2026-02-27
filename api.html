@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Liệu API - FLMMO.VN</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔌</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { brand: { 500: '#22c55e', 600: '#16a34a' } } } } }
+    </script>
+    <style>body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }</style>
+</head>
+<body class="flex flex-col min-h-screen text-gray-800 hidden" id="api-body">
+
+    <!-- HEADER -->
+    <header class="bg-white border-b border-gray-200 shadow-sm shrink-0">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="home.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="w-8 h-8 bg-brand-500 rounded flex items-center justify-center text-white"><i class="fa-solid fa-rocket"></i></div>
+                <span class="font-bold text-xl tracking-tight">FL<span class="text-brand-600">MMO</span> API</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <span class="text-sm font-medium text-gray-600 hidden md:block">Số dư: <b class="text-brand-600" id="user-balance">...</b> VNĐ</span>
+                <a href="home.html" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition">Trở về Dashboard</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+        <!-- API KEY SECTION -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 border-l-4 border-brand-500 pl-3 mb-4">Mã API Key Của Bạn</h2>
+            <p class="text-sm text-gray-600 mb-4">Sử dụng API Key này để kết nối website của bạn (Site con) với máy chủ FLMMO. Số tiền mua dịch vụ qua API sẽ được trừ trực tiếp vào số dư tài khoản của bạn tại đây.</p>
+            
+            <div class="flex items-center gap-3">
+                <div class="relative flex-1 max-w-2xl">
+                    <i class="fa-solid fa-key absolute left-4 top-1/2 -translate-y-1/2 text-brand-500"></i>
+                    <input type="text" id="api-key-display" readonly value="Đang tạo mã..." class="w-full bg-gray-50 border border-gray-300 text-gray-800 font-mono text-sm rounded-lg py-3 pl-12 pr-4 focus:outline-none">
+                </div>
+                <button onclick="copyAPIKey()" class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg font-medium shadow-sm transition flex items-center shrink-0">
+                    <span id="btn-copy-text"><i class="fa-regular fa-copy mr-2"></i> Sao chép</span>
+                </button>
+            </div>
+            <div class="mt-3 text-xs text-red-500 font-medium"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Tuyệt đối không để lộ mã API Key này cho người khác.</div>
+        </div>
+
+        <!-- API DOCS -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 class="text-xl font-bold text-gray-800 border-l-4 border-gray-500 pl-3 mb-6">Tài Liệu Tích Hợp (API Docs)</h2>
+            
+            <div class="space-y-8">
+                <!-- Endpoint 1 -->
+                <div>
+                    <h3 class="font-bold text-gray-800 mb-3 flex items-center"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs mr-2 uppercase">POST</span> 1. Tạo đơn hàng mới</h3>
+                    <div class="bg-gray-900 rounded-lg p-4 text-sm font-mono text-green-400 overflow-x-auto">
+                        <span class="text-pink-400">URL:</span> https://flmmo.vn/api/v2<br>
+                    </div>
+                    <table class="w-full text-sm text-left mt-3 border border-gray-200">
+                        <thead class="bg-gray-50 text-gray-600">
+                            <tr><th class="p-3 border-b">Tham số (Params)</th><th class="p-3 border-b">Loại</th><th class="p-3 border-b">Mô tả</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-3 font-bold text-gray-800">key</td><td class="p-3">String</td><td class="p-3">API Key của bạn</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3 font-bold text-gray-800">action</td><td class="p-3">String</td><td class="p-3">Giá trị cố định: <code class="bg-gray-100 text-red-500 px-1 rounded">add</code></td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3 font-bold text-gray-800">service</td><td class="p-3">Int</td><td class="p-3">Mã ID của máy chủ (Lấy từ bảng giá dịch vụ)</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-3 font-bold text-gray-800">link</td><td class="p-3">String</td><td class="p-3">Đường dẫn hoặc UID cần chạy</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-gray-800">quantity</td><td class="p-3">Int</td><td class="p-3">Số lượng cần mua</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Endpoint 2 -->
+                <div>
+                    <h3 class="font-bold text-gray-800 mb-3 flex items-center"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs mr-2 uppercase">POST</span> 2. Kiểm tra số dư</h3>
+                    <div class="bg-gray-900 rounded-lg p-4 text-sm font-mono text-green-400 overflow-x-auto">
+                        <span class="text-pink-400">URL:</span> https://flmmo.vn/api/v2<br>
+                    </div>
+                    <table class="w-full text-sm text-left mt-3 border border-gray-200">
+                        <thead class="bg-gray-50 text-gray-600">
+                            <tr><th class="p-3 border-b">Tham số (Params)</th><th class="p-3 border-b">Loại</th><th class="p-3 border-b">Mô tả</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-3 font-bold text-gray-800">key</td><td class="p-3">String</td><td class="p-3">API Key của bạn</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-gray-800">action</td><td class="p-3">String</td><td class="p-3">Giá trị cố định: <code class="bg-gray-100 text-red-500 px-1 rounded">balance</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-sm">
+                &copy; 2026 FLMMO.VN. Tất cả quyền được bảo lưu.
+            </div>
+            <div class="flex space-x-4">
+                <a href="https://fb.com/lenhanriel" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://instagram.com/nh4n.vn" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="mailto:lenhancute1@gmail.com" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-500 hover:text-white transition"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function copyAPIKey() {
+            const input = document.getElementById('api-key-display');
+            input.select();
+            document.execCommand('copy');
+            
+            const btn = document.getElementById('btn-copy-text');
+            btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Đã sao chép';
+            setTimeout(() => { btn.innerHTML = '<i class="fa-regular fa-copy mr-2"></i> Sao chép'; }, 2000);
+        }
+    </script>
+
+    <!-- FIREBASE AUTH CHECK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
+            authDomain: "flmmo-a4e53.firebaseapp.com",
+            projectId: "flmmo-a4e53",
+            storageBucket: "flmmo-a4e53.firebasestorage.app",
+            messagingSenderId: "973070510202",
+            appId: "1:973070510202:web:9eea3a002c0d03d0fbb3c3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user && !user.isAnonymous) {
+                // Người dùng ĐÃ đăng nhập hợp lệ
+                document.getElementById('api-body').classList.remove('hidden');
+                
+                // Tạo API key dựa trên UID (Cấu trúc giả định để bảo mật)
+                const pseudoApiKey = "FLMMO-" + btoa(user.uid).replace(/=/g, '').toUpperCase() + "-V2";
+                document.getElementById('api-key-display').value = pseudoApiKey;
+
+                // Load số dư
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if(userDoc.exists()) {
+                        document.getElementById('user-balance').innerText = (userDoc.data().coin || 0).toLocaleString('en-US');
+                    }
+                } catch(e) {}
+
+            } else {
+                // Chưa đăng nhập -> Đá ra trang login
+                alert("Vui lòng đăng nhập tài khoản chính thức để lấy API Key!");
+                window.location.href = "dangnhap.html";
+            }
+        });
+    </script>
+</body>
+</html>
