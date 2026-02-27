@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chính Sách Bảo Mật - FLMMO.VN</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { brand: { 500: '#22c55e', 600: '#16a34a' } } } } }
+    </script>
+    <style>body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }</style>
+</head>
+<body class="flex flex-col min-h-screen text-gray-800">
+
+    <!-- HEADER -->
+    <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="home.html" class="flex items-center gap-2 cursor-pointer">
+                <div class="w-8 h-8 bg-brand-500 rounded flex items-center justify-center text-white shadow"><i class="fa-solid fa-rocket"></i></div>
+                <span class="font-bold text-xl tracking-tight">FL<span class="text-brand-600">MMO</span></span>
+            </a>
+            <nav class="hidden md:flex gap-6">
+                <a href="home.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">Trang chủ</a>
+                <a href="quydinh.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">Quy định chung</a>
+                <a href="faq.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">FAQ</a>
+                <a href="api.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">API Đối tác</a>
+            </nav>
+            <a href="dangnhap.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow transition">Vào Hệ Thống</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 md:p-12">
+            <div class="flex items-center gap-4 mb-6 border-b border-gray-100 pb-6">
+                <div class="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-brand-500 text-2xl shrink-0">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Chính Sách Bảo Mật</h1>
+                    <p class="text-sm text-gray-500 mt-1">Cập nhật lần cuối: Tháng 2, 2026</p>
+                </div>
+            </div>
+            
+            <div class="space-y-8 text-sm md:text-base text-gray-600 leading-relaxed">
+                <p>Tại <strong>FLMMO.VN</strong>, chúng tôi hiểu rằng sự riêng tư và bảo mật thông tin cá nhân là điều vô cùng quan trọng đối với khách hàng. Chính sách này mô tả cách chúng tôi thu thập, sử dụng và bảo vệ dữ liệu của bạn khi sử dụng hệ thống SMM Panel.</p>
+
+                <section>
+                    <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-database text-brand-500 mr-2"></i> 1. Thông tin chúng tôi thu thập</h2>
+                    <p class="mb-2">Khi bạn đăng ký và sử dụng dịch vụ, chúng tôi thu thập các thông tin sau:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Thông tin tài khoản:</strong> Tên hiển thị, địa chỉ Email, mật khẩu (đã được mã hóa).</li>
+                        <li><strong>Thông tin giao dịch:</strong> Lịch sử nạp tiền, mã giao dịch ngân hàng, số dư tài khoản.</li>
+                        <li><strong>Thông tin dịch vụ:</strong> Các đường link (URL) hoặc UID mạng xã hội mà bạn cung cấp để khởi tạo đơn hàng.</li>
+                        <li><strong>Thông tin hệ thống:</strong> Địa chỉ IP, loại trình duyệt, thời gian truy cập để phòng chống gian lận và tấn công mạng.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-tasks text-brand-500 mr-2"></i> 2. Mục đích sử dụng thông tin</h2>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Xử lý và vận hành các đơn hàng dịch vụ mạng xã hội mà bạn đã yêu cầu.</li>
+                        <li>Xác minh các khoản nạp tiền và hỗ trợ xử lý sự cố giao dịch.</li>
+                        <li>Cung cấp dịch vụ chăm sóc khách hàng, gửi thông báo về trạng thái đơn hàng hoặc thay đổi của hệ thống.</li>
+                        <li>Ngăn chặn các hoạt động gian lận, phá hoại hoặc sử dụng sai mục đích dịch vụ.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-share-nodes text-brand-500 mr-2"></i> 3. Chia sẻ thông tin</h2>
+                    <p class="mb-2">Chúng tôi <strong>cam kết tuyệt đối không bán, cho thuê hoặc chia sẻ</strong> thông tin cá nhân (Email, Mật khẩu, Số dư) của bạn cho bất kỳ bên thứ ba nào vì mục đích thương mại. Tuy nhiên, một số dữ liệu cần thiết sẽ được chuyển tiếp như sau:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Đối tác cung cấp (API Providers):</strong> Hệ thống chỉ chuyển duy nhất đường Link/UID và Số lượng cần tăng cho các server máy chủ con để tiến hành chạy dịch vụ.</li>
+                        <li><strong>Yêu cầu pháp lý:</strong> Chúng tôi có thể cung cấp thông tin khi có yêu cầu hợp lệ từ cơ quan pháp luật có thẩm quyền.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-lock text-brand-500 mr-2"></i> 4. Bảo mật dữ liệu</h2>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Hệ thống máy chủ dữ liệu được vận hành bởi công nghệ của Google (Firebase), đảm bảo tiêu chuẩn bảo mật quốc tế.</li>
+                        <li>Mật khẩu của bạn được băm (hashing) và mã hóa hoàn toàn. Ngay cả ban quản trị FLMMO cũng không thể biết được mật khẩu gốc của bạn.</li>
+                        <li>Website sử dụng chứng chỉ SSL để mã hóa toàn bộ dữ liệu truyền tải giữa trình duyệt của bạn và máy chủ.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-user-check text-brand-500 mr-2"></i> 5. Quyền lợi của khách hàng</h2>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li>Bạn có quyền truy cập, chỉnh sửa tên hiển thị và mật khẩu của mình bất cứ lúc nào tại trang Hồ sơ.</li>
+                        <li>Bạn có thể yêu cầu xóa vĩnh viễn tài khoản và dữ liệu liên quan bằng cách liên hệ với bộ phận CSKH của chúng tôi qua Email hoặc Zalo.</li>
+                    </ul>
+                </section>
+
+                <div class="mt-10 p-5 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-800">
+                    <p class="font-bold mb-1"><i class="fa-solid fa-circle-info mr-1"></i> Liên hệ về vấn đề bảo mật</p>
+                    <p>Nếu bạn có bất kỳ câu hỏi nào về việc bảo mật thông tin, vui lòng gửi email trực tiếp cho quản trị viên qua địa chỉ: <a href="mailto:lenhancute1@gmail.com" class="font-bold hover:underline">lenhancute1@gmail.com</a>.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-sm">
+                &copy; 2026 FLMMO.VN. Tất cả quyền được bảo lưu.
+            </div>
+            <div class="flex space-x-4">
+                <a href="https://fb.com/lenhanriel" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://instagram.com/nh4n.vn" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="mailto:lenhancute1@gmail.com" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-500 hover:text-white transition" title="Email"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
