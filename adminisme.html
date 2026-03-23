@@ -214,7 +214,14 @@
             <div id="view-servers" class="view-section max-w-7xl mx-auto space-y-6">
                 <!-- Card Thêm Máy Chủ Mới -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                    <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 mb-6">Thêm Máy Chủ Mới</h2>
+                    <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Thêm Máy Chủ Mới</h2>
+                        <!-- NÚT GỌI MODAL ĐỒNG BỘ API -->
+                        <button onclick="openSyncModal()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition flex items-center shadow-md">
+                            <i class="fa-solid fa-cloud-arrow-down mr-2"></i> Đồng bộ từ MySMM
+                        </button>
+                    </div>
+                    
                     <form id="form-add-server" class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             <div class="lg:col-span-1">
@@ -238,8 +245,8 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Mã Server <span class="text-red-500">*</span></label>
-                                <input type="text" id="srv-code" required placeholder="VD: sv1, sv2..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Mã Server (ID API) <span class="text-red-500">*</span></label>
+                                <input type="text" id="srv-code" required placeholder="VD: 4, 6, 25..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
                             </div>
                             <div class="lg:col-span-3">
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Tên Dịch Vụ / Mô tả <span class="text-red-500">*</span></label>
@@ -289,7 +296,7 @@
                                 <tr>
                                     <th class="px-4 py-3">Mã / Chuyên mục</th>
                                     <th class="px-4 py-3 min-w-[250px]">Tên / Mô tả Server</th>
-                                    <th class="px-4 py-3">Giá (VNĐ)</th>
+                                    <th class="px-4 py-3">Giá Bán (VNĐ)</th>
                                     <th class="px-4 py-3">Giới hạn (Min-Max)</th>
                                     <th class="px-4 py-3 text-center">Trạng thái</th>
                                     <th class="px-4 py-3 text-right">Thao tác</th>
@@ -334,7 +341,65 @@
         </main>
     </div>
 
-    <!-- SCRIPT CHUYỂN TAB UI -->
+    <!-- MODAL ĐỒNG BỘ DỊCH VỤ MYSMM -->
+    <div id="modal-sync" class="fixed inset-0 z-50 bg-gray-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col overflow-hidden relative">
+            <!-- Header Modal -->
+            <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
+                <h3 class="font-bold text-xl text-gray-800"><i class="fa-solid fa-cloud-arrow-down text-purple-600 mr-2"></i> Đồng Bộ Máy Chủ Từ MySMM.VN</h3>
+                <button onclick="closeSyncModal()" class="text-gray-400 hover:text-red-500 transition text-2xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <!-- Toolbar Tùy Chỉnh Lợi Nhuận -->
+            <div class="p-6 border-b border-gray-100 flex flex-wrap gap-4 items-end bg-white">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Tỷ giá USD -> VNĐ</label>
+                    <input type="number" id="sync-exchange" value="25500" class="border border-gray-300 rounded p-2.5 text-sm w-32 font-bold text-gray-800 focus:ring-2 focus:ring-purple-500 outline-none" onchange="renderSyncTable()">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Lợi nhuận (%)</label>
+                    <input type="number" id="sync-profit" value="50" class="border border-gray-300 rounded p-2.5 text-sm w-28 font-bold text-green-600 focus:ring-2 focus:ring-purple-500 outline-none" onchange="renderSyncTable()">
+                </div>
+                <button id="btn-fetch-smm" onclick="fetchSmmApi()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-bold transition shadow-md flex items-center">
+                    <i class="fa-solid fa-bolt mr-2"></i> Tải Dữ Liệu Ngay
+                </button>
+                <div class="ml-auto text-xs text-gray-500 italic hidden md:block bg-blue-50 p-2 rounded border border-blue-100">
+                    <i class="fa-solid fa-circle-info mr-1"></i> Giá Bán / 1 Lượt = [(Giá Gốc USD * Tỷ Giá) / 1000] + Lợi nhuận %
+                </div>
+            </div>
+            
+            <!-- Bảng Dữ Liệu Đồng Bộ -->
+            <div class="flex-1 overflow-auto bg-gray-50 p-6">
+                <table class="min-w-full text-sm text-left border bg-white rounded-lg shadow-sm">
+                    <thead class="text-xs text-gray-600 uppercase bg-gray-200 border-b border-gray-300 sticky top-0 z-10 shadow-sm">
+                        <tr>
+                            <th class="p-3 text-center w-12"><input type="checkbox" id="sync-check-all" onchange="toggleAllSync(this)" class="w-4 h-4 cursor-pointer"></th>
+                            <th class="p-3 w-20">ID Dịch vụ</th>
+                            <th class="p-3 w-48">Chuyên Mục</th>
+                            <th class="p-3">Tên Dịch Vụ Gốc</th>
+                            <th class="p-3 w-32 text-right">Giá Gốc / 1K</th>
+                            <th class="p-3 w-32 text-right">Giá Bán / 1 Lượt</th>
+                            <th class="p-3 w-32 text-center">Min - Max</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sync-table-body">
+                        <tr><td colspan="7" class="text-center py-16 text-gray-400"><i class="fa-solid fa-cloud-arrow-down text-4xl mb-3 text-gray-300"></i><br>Bấm "Tải Dữ Liệu Ngay" để lấy dữ liệu từ MySMM.vn</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Footer Modal -->
+            <div class="p-4 border-t border-gray-200 bg-white flex justify-end items-center">
+                <span id="sync-status" class="text-sm font-bold text-brand-600 mr-4 hidden"><i class="fa-solid fa-check mr-1"></i> Đã nhập thành công!</span>
+                <button onclick="closeSyncModal()" class="px-6 py-2.5 rounded-lg text-gray-600 hover:bg-gray-100 font-bold mr-3 transition">Hủy Bỏ</button>
+                <button id="btn-import-sync" onclick="importSyncServices()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-lg font-bold shadow-lg transition flex items-center">
+                    <i class="fa-solid fa-download mr-2"></i> Thêm Các Dịch Vụ Đã Chọn
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT CHUYỂN TAB UI & LOGIC SYNC MODAL -->
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -363,6 +428,85 @@
                 document.getElementById('sidebar').classList.add('-translate-x-full');
                 document.getElementById('sidebar-overlay').classList.add('hidden');
             }
+        }
+
+        // Logic UI của Modal Đồng Bộ (Sync)
+        window.mySmmServicesList = [];
+        
+        window.openSyncModal = function() {
+            document.getElementById('modal-sync').classList.remove('hidden');
+            // Mặc định tick bỏ chọn check-all mỗi lần mở
+            document.getElementById('sync-check-all').checked = false; 
+        }
+        
+        window.closeSyncModal = function() {
+            document.getElementById('modal-sync').classList.add('hidden');
+        }
+
+        window.toggleAllSync = function(masterCheckbox) {
+            const checkboxes = document.querySelectorAll('.sync-checkbox');
+            checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
+        }
+
+        window.fetchSmmApi = async function() {
+            const btn = document.getElementById('btn-fetch-smm');
+            const tbody = document.getElementById('sync-table-body');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang tải...';
+            btn.disabled = true;
+            
+            try {
+                const formData = new URLSearchParams();
+                formData.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668');
+                formData.append('action', 'services');
+                
+                const res = await fetch('https://api.mysmm.vn/api/v2', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString()
+                });
+                
+                const data = await res.json();
+                if(data.error) throw new Error(data.error);
+                
+                window.mySmmServicesList = data; // Lưu mảng service trả về
+                window.renderSyncTable(); // Gọi hàm render
+            } catch (e) {
+                alert("Lỗi kết nối API MySMM: " + e.message);
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-10 text-red-500"><i class="fa-solid fa-triangle-exclamation text-2xl mb-2"></i><br>Lỗi: ${e.message}</td></tr>`;
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-bolt mr-2"></i> Tải Dữ Liệu Ngay';
+                btn.disabled = false;
+            }
+        }
+        
+        window.renderSyncTable = function() {
+            const tbody = document.getElementById('sync-table-body');
+            if(!window.mySmmServicesList || window.mySmmServicesList.length === 0) return;
+
+            const exchangeRate = parseFloat(document.getElementById('sync-exchange').value) || 25500;
+            const profitMargin = parseFloat(document.getElementById('sync-profit').value) || 50; 
+            
+            tbody.innerHTML = '';
+            
+            // Lặp qua mảng dịch vụ từ MySMM
+            window.mySmmServicesList.forEach(s => {
+                // Tính toán giá
+                const costPer1000Usd = parseFloat(s.rate);
+                const costPer1Vnd = (costPer1000Usd * exchangeRate) / 1000;
+                const sellPriceVnd = costPer1Vnd * (1 + profitMargin / 100);
+                
+                tbody.innerHTML += `
+                    <tr class="border-b border-gray-200 hover:bg-purple-50 transition">
+                        <td class="p-3 text-center"><input type="checkbox" class="sync-checkbox w-4 h-4 cursor-pointer text-purple-600 focus:ring-purple-500" value="${s.service}"></td>
+                        <td class="p-3 font-bold text-gray-800">#${s.service}</td>
+                        <td class="p-3 text-xs text-gray-500 font-medium">${s.category}</td>
+                        <td class="p-3 text-sm font-bold text-gray-700">${s.name}</td>
+                        <td class="p-3 text-xs text-gray-400 text-right font-mono">$${s.rate}</td>
+                        <td class="p-3 font-bold text-brand-600 text-right">${sellPriceVnd.toFixed(2)} đ</td>
+                        <td class="p-3 text-xs text-gray-500 text-center">${s.min} - ${s.max}</td>
+                    </tr>
+                `;
+            });
         }
     </script>
 
@@ -664,7 +808,7 @@
         }
 
         // ==========================================
-        // KHU VỰC: QUẢN LÝ MÁY CHỦ (SERVERS)
+        // KHU VỰC: QUẢN LÝ MÁY CHỦ (SERVERS) & IMPORT API
         // ==========================================
         document.getElementById('form-add-server').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -754,7 +898,7 @@
                     tbody.innerHTML += `
                         <tr class="border-b hover:bg-gray-50">
                             <td class="px-4 py-3">
-                                <div class="font-bold text-gray-800 uppercase">${s.code}</div>
+                                <div class="font-bold text-gray-800 uppercase">#${s.code}</div>
                                 <div class="text-[10px] text-brand-600 font-medium mt-0.5 bg-blue-50 px-1.5 py-0.5 rounded inline-block">${s.category || 'Mặc định'}</div>
                             </td>
                             <td class="px-4 py-3 text-sm text-gray-600 leading-snug">${s.name}</td>
@@ -792,6 +936,61 @@
                 fetchServers(); 
             } catch(e) { alert("Lỗi xóa server: " + e.message); }
         }
+
+        // --- HÀM IMPORT DỊCH VỤ VÀO FIRESTORE ---
+        window.importSyncServices = async function() {
+            const checkboxes = document.querySelectorAll('.sync-checkbox:checked');
+            if(checkboxes.length === 0) return alert('Vui lòng chọn ít nhất 1 dịch vụ để nhập!');
+            
+            const exchangeRate = parseFloat(document.getElementById('sync-exchange').value) || 25500;
+            const profitMargin = parseFloat(document.getElementById('sync-profit').value) || 50;
+            
+            const btn = document.getElementById('btn-import-sync');
+            const statusMsg = document.getElementById('sync-status');
+            
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang thêm dữ liệu...';
+            btn.disabled = true;
+            statusMsg.classList.add('hidden');
+            
+            let count = 0;
+            try {
+                for(let cb of checkboxes) {
+                    const s = window.mySmmServicesList.find(x => x.service.toString() === cb.value);
+                    if(s) {
+                        const costPer1000Usd = parseFloat(s.rate);
+                        const costPer1Vnd = (costPer1000Usd * exchangeRate) / 1000;
+                        const sellPriceVnd = parseFloat((costPer1Vnd * (1 + profitMargin / 100)).toFixed(2));
+                        
+                        await addDoc(collection(db, "servers"), {
+                            category: s.category || "MySMM - Khác",
+                            code: s.service.toString(),
+                            name: s.name,
+                            rate: sellPriceVnd,
+                            minOrder: parseInt(s.min) || 0,
+                            maxOrder: parseInt(s.max) || 0,
+                            status: "Hoạt động",
+                            createdAt: new Date().toISOString()
+                        });
+                        count++;
+                    }
+                }
+                statusMsg.innerText = `Đã nhập thành công ${count} dịch vụ!`;
+                statusMsg.classList.remove('hidden');
+                fetchServers(); // Tải lại bảng máy chủ trong Admin
+                
+                // Ẩn modal sau 2s
+                setTimeout(() => {
+                    closeSyncModal();
+                    statusMsg.classList.add('hidden');
+                }, 2000);
+            } catch(e) {
+                alert("Lỗi khi nhập dịch vụ: " + e.message);
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-download mr-2"></i> Thêm Các Dịch Vụ Đã Chọn';
+                btn.disabled = false;
+            }
+        }
+
 
         // ==========================================
         // KHU VỰC: QUẢN LÝ NGƯỜI DÙNG (USERS)
