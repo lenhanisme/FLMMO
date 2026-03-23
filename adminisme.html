@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - FLMMO.VN</title>
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -40,9 +42,11 @@
 </head>
 <body class="flex h-screen overflow-hidden text-gray-800 hidden" id="admin-body">
 
+    <!-- OVERLAY MOBILE -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
 
-    <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-64 bg-admin-900 text-gray-300 flex flex-col z-40 transition-transform duration-300 ease-in-out">
+    <!-- SIDEBAR ADMIN -->
+    <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-64 bg-admin-900 text-gray-300 flex flex-col z-40 transition-transform duration-300 ease-in-out shrink-0">
         <div class="h-16 flex items-center justify-center border-b border-gray-800 bg-admin-800">
             <span class="text-xl font-bold tracking-tight text-white flex items-center">
                 <i class="fa-solid fa-shield-halved text-brand-500 mr-2 text-2xl"></i> ADMIN PANEL
@@ -58,9 +62,10 @@
                 <li><a href="#" id="menu-orders" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('orders')"><i class="fa-solid fa-cart-shopping w-6 text-gray-400"></i> Đơn Hàng Dịch Vụ</a></li>
             </ul>
 
-            <div class="px-6 mt-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Dữ liệu</div>
+            <div class="px-6 mt-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Sản phẩm & Dữ liệu</div>
             <ul>
-                <li><a href="#" id="menu-servers" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('servers')"><i class="fa-solid fa-server w-6 text-gray-400"></i> Quản lý Máy Chủ</a></li>
+                <li><a href="#" id="menu-games" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('games')"><i class="fa-solid fa-gamepad w-6 text-brand-400"></i> Bán Tài Khoản Game</a></li>
+                <li><a href="#" id="menu-servers" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('servers')"><i class="fa-solid fa-server w-6 text-gray-400"></i> Quản lý Máy Chủ (SMM)</a></li>
                 <li><a href="#" id="menu-users" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('users')"><i class="fa-solid fa-users w-6 text-gray-400"></i> Quản lý Users</a></li>
             </ul>
         </div>
@@ -74,8 +79,10 @@
         </div>
     </aside>
 
+    <!-- MAIN CONTENT -->
     <div class="flex-1 flex flex-col h-screen overflow-hidden">
         
+        <!-- HEADER -->
         <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 z-10 shadow-sm shrink-0">
             <div class="flex items-center gap-3">
                 <button onclick="toggleSidebar()" class="md:hidden text-gray-500 hover:text-gray-800 p-1">
@@ -90,8 +97,10 @@
 
         <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6">
             
+            <!-- VIEW 1: DASHBOARD -->
             <div id="view-dashboard" class="view-section active max-w-7xl mx-auto space-y-6">
                 
+                <!-- Khu vực Bật/Tắt Bảo Trì -->
                 <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl shadow-sm p-6 border border-yellow-200 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-2xl shrink-0"><i class="fa-solid fa-traffic-cone"></i></div>
@@ -109,6 +118,7 @@
                     </div>
                 </div>
 
+                <!-- KHU VỰC SỐ DƯ MYSMM NGUỒN -->
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-sm p-6 border border-blue-200 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl shrink-0"><i class="fa-solid fa-wallet"></i></div>
@@ -125,6 +135,7 @@
                     </div>
                 </div>
 
+                <!-- Thẻ thống kê -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 flex items-center justify-between">
                         <div>
@@ -156,13 +167,131 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 text-center text-gray-500 py-20">
-                    <i class="fa-solid fa-chart-line text-5xl text-gray-300 mb-4"></i>
-                    <p>Tính năng vẽ biểu đồ doanh thu đang được cập nhật...</p>
+            </div>
+
+            <!-- VIEW: BÁN TÀI KHOẢN GAME (NEW FEATURE) -->
+            <div id="view-games" class="view-section max-w-7xl mx-auto space-y-6">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    
+                    <!-- Form 1: Tạo Danh Mục Game -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 mb-4">Thêm Danh Mục (Loại Game)</h2>
+                        <form id="form-add-game" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Tên Game (Vd: Acc Liên Quân VIP) <span class="text-red-500">*</span></label>
+                                <input type="text" id="game-name" required class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-brand-500">
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Đăng nhập qua</label>
+                                    <select id="game-method" onchange="updateGameLogo()" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-brand-500">
+                                        <option value="Garena">Garena</option>
+                                        <option value="Facebook">Facebook</option>
+                                        <option value="VK">VK</option>
+                                        <option value="Google">Google</option>
+                                        <option value="Khác">Tùy chỉnh (Khác)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Link Ảnh Logo <span class="text-red-500">*</span></label>
+                                    <input type="text" id="game-logo" required class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-brand-500">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Giá 1 Acc (đ) <span class="text-red-500">*</span></label>
+                                    <input type="number" id="game-price" required class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-brand-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Mua từ (Acc)</label>
+                                    <input type="number" id="game-discount-qty" placeholder="Vd: 10" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-brand-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Giảm giá (%)</label>
+                                    <input type="number" id="game-discount-pct" placeholder="Vd: 5" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-brand-500">
+                                </div>
+                            </div>
+                            
+                            <button type="submit" id="btn-add-game" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-lg shadow transition">
+                                <i class="fa-solid fa-folder-plus mr-1"></i> Tạo Danh Mục Game
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Form 2: Nhập Kho Tài Khoản Hàng Loạt -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-green-500 pl-2 mb-4">Nhập Kho (Thêm Acc)</h2>
+                        <form id="form-import-acc" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Chọn loại Game cần nhập <span class="text-red-500">*</span></label>
+                                <select id="import-game-id" required class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-green-500">
+                                    <option value="">-- Đang tải danh sách game --</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Dán list tài khoản (Mỗi acc 1 dòng) <span class="text-red-500">*</span></label>
+                                <textarea id="import-data" rows="5" required placeholder="Định dạng: TAIKHOAN:MATKHAU hoặc TAIKHOAN|MATKHAU&#10;user1:pass1&#10;user2|pass2" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-green-500 resize-none font-mono"></textarea>
+                            </div>
+                            <button type="submit" id="btn-import-acc" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg shadow transition">
+                                <i class="fa-solid fa-file-import mr-1"></i> Bơm Acc Vào Kho
+                            </button>
+                            <div id="import-msg" class="hidden text-sm font-medium p-3 rounded-lg mt-2 text-center"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Quản lý Kho & Tra Cứu Đơn -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Bảng Danh mục Game -->
+                    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Kho Tài Khoản Game</h2>
+                            <button onclick="fetchGameProducts()" class="text-sm text-gray-500 hover:text-brand-600 transition"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm text-left border-y border-gray-200">
+                                <thead class="text-xs text-gray-600 uppercase bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3">Tên Game</th>
+                                        <th class="px-4 py-3">Giá / Chiết khấu</th>
+                                        <th class="px-4 py-3 text-center">Tồn Kho</th>
+                                        <th class="px-4 py-3 text-center">Đã Bán</th>
+                                        <th class="px-4 py-3 text-right">Xóa</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-game-products">
+                                    <tr><td colspan="5" class="text-center py-6"><i class="fa-solid fa-circle-notch fa-spin text-brand-500"></i></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Tra cứu Đơn Hàng Game -->
+                    <div class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col">
+                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-purple-500 pl-2 mb-4">Tra Soát Đơn Game</h2>
+                        <div class="flex gap-2 mb-4">
+                            <input type="text" id="search-game-order" placeholder="Nhập ID đơn hàng..." class="flex-1 border border-gray-300 rounded-lg p-2.5 text-sm outline-none focus:border-purple-500 font-mono">
+                            <button onclick="lookupGameOrder()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 rounded-lg font-bold transition"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                        
+                        <div id="game-order-result" class="flex-1 bg-gray-50 rounded-lg border border-gray-200 p-4 hidden flex-col items-center">
+                            <!-- Nội dung bill & QR sẽ hiện ở đây -->
+                        </div>
+                        <div id="game-order-empty" class="flex-1 flex flex-col items-center justify-center text-gray-400 py-10">
+                            <i class="fa-solid fa-receipt text-4xl mb-2 text-gray-300"></i>
+                            <p class="text-sm">Nhập mã đơn để xem chi tiết</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+            <!-- VIEW: QUẢN LÝ THÔNG BÁO (ANNOUNCEMENTS) -->
             <div id="view-announcements" class="view-section max-w-7xl mx-auto space-y-6">
+                <!-- Form Đăng thông báo -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 mb-6">Đăng Thông Báo Mới</h2>
                     <form id="form-add-announcement" class="space-y-4">
@@ -187,6 +316,7 @@
                     </form>
                 </div>
 
+                <!-- Danh sách thông báo -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-lg font-bold text-gray-800">Lịch Sử Thông Báo</h2>
@@ -210,6 +340,7 @@
                 </div>
             </div>
 
+            <!-- VIEW 2: QUẢN LÝ NẠP TIỀN -->
             <div id="view-deposits" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6">
@@ -237,10 +368,11 @@
                 </div>
             </div>
 
+            <!-- VIEW 3: QUẢN LÝ ĐƠN HÀNG (ORDERS) -->
             <div id="view-orders" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
-                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Quản Lý Đơn Hàng Dịch Vụ</h2>
+                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Quản Lý Đơn Hàng Dịch Vụ SMM</h2>
                         <div class="flex items-center gap-3">
                             <div id="auto-sync-status" class="text-xs text-green-600 font-medium hidden"><i class="fa-solid fa-circle-check"></i> Đã đồng bộ API</div>
                             <button onclick="autoSyncOrdersStatus()" class="bg-indigo-50 text-indigo-600 hover:bg-indigo-100 px-4 py-2 rounded-lg text-sm font-medium transition" title="Đồng bộ thủ công với MySMM">
@@ -271,10 +403,13 @@
                 </div>
             </div>
 
+            <!-- VIEW 4: QUẢN LÝ MÁY CHỦ (SERVERS) -->
             <div id="view-servers" class="view-section max-w-7xl mx-auto space-y-6">
+                <!-- Card Thêm Máy Chủ Mới -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
-                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Thêm Máy Chủ Mới</h2>
+                        <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Thêm Máy Chủ Mới (SMM)</h2>
+                        <!-- NÚT GỌI MODAL ĐỒNG BỘ API -->
                         <button onclick="openSyncModal()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition flex items-center shadow-md">
                             <i class="fa-solid fa-cloud-arrow-down mr-2"></i> Đồng bộ từ MySMM
                         </button>
@@ -341,9 +476,10 @@
                     </form>
                 </div>
 
+                <!-- Bảng Danh Sách Máy Chủ -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-lg font-bold text-gray-800">Danh Sách Máy Chủ Đang Có</h2>
+                        <h2 class="text-lg font-bold text-gray-800">Danh Sách Máy Chủ SMM Đang Có</h2>
                         <button onclick="fetchServers()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
                     </div>
 
@@ -367,6 +503,7 @@
                 </div>
             </div>
 
+            <!-- VIEW 5: QUẢN LÝ NGƯỜI DÙNG (USERS) -->
             <div id="view-users" class="view-section max-w-7xl mx-auto space-y-6">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6">
@@ -397,13 +534,16 @@
         </main>
     </div>
 
+    <!-- MODAL ĐỒNG BỘ DỊCH VỤ MYSMM -->
     <div id="modal-sync" class="fixed inset-0 z-50 bg-gray-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col overflow-hidden relative">
+            <!-- Header Modal -->
             <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
                 <h3 class="font-bold text-xl text-gray-800"><i class="fa-solid fa-cloud-arrow-down text-purple-600 mr-2"></i> Đồng Bộ Máy Chủ Từ MySMM.VN</h3>
                 <button onclick="closeSyncModal()" class="text-gray-400 hover:text-red-500 transition text-2xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
+            <!-- Toolbar Tùy Chỉnh Lợi Nhuận -->
             <div class="p-6 border-b border-gray-100 flex flex-wrap gap-4 items-end bg-white">
                 <div>
                     <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Tỷ giá USD -> VNĐ</label>
@@ -421,6 +561,7 @@
                 </div>
             </div>
             
+            <!-- Bảng Dữ Liệu Đồng Bộ -->
             <div class="flex-1 overflow-auto bg-gray-50 p-6">
                 <table class="min-w-full text-sm text-left border bg-white rounded-lg shadow-sm">
                     <thead class="text-xs text-gray-600 uppercase bg-gray-200 border-b border-gray-300 sticky top-0 z-10 shadow-sm">
@@ -440,6 +581,7 @@
                 </table>
             </div>
             
+            <!-- Footer Modal -->
             <div class="p-4 border-t border-gray-200 bg-white flex justify-end items-center">
                 <span id="sync-status" class="text-sm font-bold text-brand-600 mr-4 hidden"><i class="fa-solid fa-check mr-1"></i> Đã nhập thành công!</span>
                 <button onclick="closeSyncModal()" class="px-6 py-2.5 rounded-lg text-gray-600 hover:bg-gray-100 font-bold mr-3 transition">Hủy Bỏ</button>
@@ -450,6 +592,7 @@
         </div>
     </div>
 
+    <!-- SCRIPT CHUYỂN TAB UI & LOGIC CHUNG -->
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -468,6 +611,7 @@
             const titles = { 
                 'dashboard': 'Tổng Quan Hệ Thống',
                 'announcements': 'Quản Lý Thông Báo',
+                'games': 'Quản Lý Tài Khoản Game',
                 'deposits': 'Quản Lý Nạp Tiền', 
                 'orders': 'Quản Lý Đơn Dịch Vụ',
                 'servers': 'Quản Lý Máy Chủ (Servers)',
@@ -478,6 +622,9 @@
             if(viewName === 'announcements' && typeof window.fetchAnnouncements === 'function') {
                 window.fetchAnnouncements();
             }
+            if(viewName === 'games' && typeof window.fetchGameProducts === 'function') {
+                window.fetchGameProducts();
+            }
 
             if(window.innerWidth < 768) {
                 document.getElementById('sidebar').classList.add('-translate-x-full');
@@ -485,19 +632,29 @@
             }
         }
 
+        // Tự động set Logo Game khi chọn Method
+        function updateGameLogo() {
+            const method = document.getElementById('game-method').value;
+            const logoInput = document.getElementById('game-logo');
+            
+            if(method === "Garena") logoInput.value = "https://logospng.org/download/garena/logo-escudo-garena-1024.png";
+            else if(method === "Facebook") logoInput.value = "https://tse4.mm.bing.net/th/id/OIP.ABYI09Y_5S9ciXz7f9QVjgHaHY?rs=1&pid=ImgDetMain&o=7&rm=3";
+            else if(method === "VK") logoInput.value = "https://imagedelivery.net/5MYSbk45M80qAwecrlKzdQ/4e5824ae-87f6-4c5a-910c-1927fa6ac400/public";
+            else if(method === "Google") logoInput.value = "https://tse4.mm.bing.net/th/id/OIP.IGQ4-lvxNaPtCdmsgQpbtAHaHa?w=512&h=512&rs=1&pid=ImgDetMain&o=7&rm=3";
+            else logoInput.value = "";
+        }
+        updateGameLogo(); // Set mặc định lần đầu
+
         // Logic UI của Modal Đồng Bộ (Sync)
         window.mySmmServicesList = [];
         
         window.openSyncModal = function() {
             document.getElementById('modal-sync').classList.remove('hidden');
-            // Mặc định tick bỏ chọn check-all mỗi lần mở
             document.getElementById('sync-check-all').checked = false; 
         }
-        
         window.closeSyncModal = function() {
             document.getElementById('modal-sync').classList.add('hidden');
         }
-
         window.toggleAllSync = function(masterCheckbox) {
             const checkboxes = document.querySelectorAll('.sync-checkbox');
             checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
@@ -610,10 +767,11 @@
         }
     </script>
 
+    <!-- FIREBASE ADMIN LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, collection, getDocs, updateDoc, increment, addDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs, updateDoc, increment, addDoc, deleteDoc, query, orderBy, writeBatch, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Sử dụng chung 1 config như bên home.html
         const firebaseConfig = {
@@ -644,6 +802,7 @@
                         fetchDashboardStats();
                         checkMySmmBalance(); // Gọi hàm check số dư MySMM ngay khi load
                         fetchAnnouncements();
+                        fetchGameProducts(); // Gọi dữ liệu Game
                         fetchDeposits();
                         fetchOrders();
                         fetchServers(); 
@@ -672,6 +831,274 @@
         document.getElementById('btn-logout').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = "dangnhap.html"; });
         });
+
+        // ==========================================
+        // KHU VỰC: QUẢN LÝ ACC GAME (MỚI)
+        // ==========================================
+        
+        // 1. Thêm danh mục Game
+        document.getElementById('form-add-game').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-add-game');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Đang tạo...';
+            btn.disabled = true;
+
+            const name = document.getElementById('game-name').value;
+            const method = document.getElementById('game-method').value;
+            const logo = document.getElementById('game-logo').value;
+            const price = parseFloat(document.getElementById('game-price').value);
+            const discountQty = parseInt(document.getElementById('game-discount-qty').value) || 0;
+            const discountPct = parseFloat(document.getElementById('game-discount-pct').value) || 0;
+
+            try {
+                await addDoc(collection(db, "game_products"), {
+                    name: name,
+                    loginMethod: method,
+                    logoUrl: logo,
+                    price: price,
+                    discountQty: discountQty,
+                    discountPercent: discountPct,
+                    availableCount: 0,
+                    soldCount: 0,
+                    createdAt: new Date().toISOString()
+                });
+                alert("Tạo danh mục Game thành công!");
+                document.getElementById('form-add-game').reset();
+                updateGameLogo(); // Reset logo preview
+                fetchGameProducts();
+            } catch(error) {
+                alert("Lỗi tạo danh mục Game: " + error.message);
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-folder-plus mr-1"></i> Tạo Danh Mục Game';
+                btn.disabled = false;
+            }
+        });
+
+        // 2. Fetch danh sách Game (Vào Select Import & Bảng thống kê)
+        window.fetchGameProducts = async function() {
+            const tbody = document.getElementById('table-game-products');
+            const select = document.getElementById('import-game-id');
+            
+            try {
+                const snap = await getDocs(collection(db, "game_products"));
+                let products = [];
+                snap.forEach(doc => products.push({ id: doc.id, ...doc.data() }));
+
+                if (products.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center py-6 text-gray-500">Chưa có dữ liệu. Hãy tạo danh mục Game mới!</td></tr>';
+                    select.innerHTML = '<option value="">-- Chưa có danh mục Game --</option>';
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                select.innerHTML = '<option value="">-- Chọn Game cần nhập Acc --</option>';
+                
+                products.forEach(p => {
+                    // Đổ vào Select
+                    select.innerHTML += `<option value="${p.id}">${p.name} (Còn ${p.availableCount || 0} Acc)</option>`;
+                    
+                    // Đổ vào Bảng
+                    const discountText = p.discountQty > 0 && p.discountPercent > 0 ? `<div class="text-[10px] text-green-500 mt-1">Mua ${p.discountQty}+ giảm ${p.discountPercent}%</div>` : '';
+                    tbody.innerHTML += `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-4 py-3 flex items-center gap-3">
+                                <img src="${p.logoUrl}" class="w-8 h-8 rounded object-cover shadow-sm bg-gray-100">
+                                <div>
+                                    <div class="font-bold text-gray-800">${p.name}</div>
+                                    <div class="text-[10px] bg-gray-200 px-1.5 py-0.5 rounded text-gray-600 inline-block font-bold">${p.loginMethod}</div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="font-bold text-brand-600">${p.price.toLocaleString('vi-VN')} đ</div>
+                                ${discountText}
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full font-bold text-xs border border-green-200">${p.availableCount || 0}</span>
+                            </td>
+                            <td class="px-4 py-3 text-center">
+                                <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full font-bold text-xs border border-gray-200">${p.soldCount || 0}</span>
+                            </td>
+                            <td class="px-4 py-3 text-right">
+                                <button onclick="deleteGameProduct('${p.id}')" class="text-red-500 hover:text-red-700 p-2 bg-red-50 hover:bg-red-100 rounded transition" title="Xóa Danh Mục"><i class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch(e) {
+                console.error(e);
+            }
+        }
+
+        // Xóa Game (Chỉ xóa danh mục, cẩn thận nếu đã có Acc)
+        window.deleteGameProduct = async function(id) {
+            if(confirm("Lưu ý: Bạn có chắc chắn muốn xóa Danh Mục này? (Những tài khoản game đã nạp thuộc danh mục này sẽ bị mồ côi).")) {
+                try {
+                    await deleteDoc(doc(db, "game_products", id));
+                    fetchGameProducts();
+                } catch(e) { alert("Lỗi xóa: " + e.message); }
+            }
+        }
+
+        // 3. Nhập Acc hàng loạt
+        document.getElementById('form-import-acc').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-import-acc');
+            const msg = document.getElementById('import-msg');
+            const gameId = document.getElementById('import-game-id').value;
+            const textData = document.getElementById('import-data').value;
+
+            if(!gameId) {
+                alert("Vui lòng chọn loại Game để nhập!");
+                return;
+            }
+
+            // Tách dòng và xử lý
+            const lines = textData.split('\n').map(l => l.trim()).filter(l => l !== '');
+            if(lines.length === 0) return;
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-1"></i> Đang bơm data...';
+            btn.disabled = true;
+            msg.classList.add('hidden');
+
+            try {
+                let successCount = 0;
+                let batch = writeBatch(db);
+                
+                for(let line of lines) {
+                    // Hỗ trợ cả 2 định dạng: user:pass hoặc user|pass
+                    let separator = line.includes('|') ? '|' : ':';
+                    let parts = line.split(separator);
+                    
+                    if(parts.length >= 2) {
+                        let username = parts[0].trim();
+                        let password = parts.slice(1).join(separator).trim(); // Lấy phần còn lại làm pass
+                        
+                        let docRef = doc(collection(db, "game_accounts"));
+                        batch.set(docRef, {
+                            productId: gameId,
+                            username: username,
+                            password: password,
+                            status: 'available',
+                            addedAt: new Date().toISOString()
+                        });
+                        
+                        successCount++;
+                        // Nếu vượt quá giới hạn batch của Firestore (500), commit và tạo batch mới
+                        if(successCount % 400 === 0) {
+                            await batch.commit();
+                            batch = writeBatch(db);
+                        }
+                    }
+                }
+                
+                // Commit những data còn sót lại
+                if(successCount % 400 !== 0) {
+                    await batch.commit();
+                }
+
+                // Cập nhật lại số lượng Available Count trong Product
+                if(successCount > 0) {
+                    await updateDoc(doc(db, "game_products", gameId), {
+                        availableCount: increment(successCount)
+                    });
+                }
+
+                msg.className = "text-sm font-medium p-3 rounded-lg bg-green-50 text-green-700 mt-2 text-center block";
+                msg.innerHTML = `<i class='fa-solid fa-check mr-1'></i> Đã nhập thành công ${successCount} tài khoản!`;
+                document.getElementById('import-data').value = ""; // Xóa form
+                fetchGameProducts(); // Cập nhật lại bảng
+                
+                setTimeout(() => msg.classList.add('hidden'), 5000);
+
+            } catch(error) {
+                msg.className = "text-sm font-medium p-3 rounded-lg bg-red-50 text-red-700 mt-2 text-center block";
+                msg.innerHTML = "<i class='fa-solid fa-triangle-exclamation mr-1'></i> Lỗi: " + error.message;
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-file-import mr-1"></i> Bơm Acc Vào Kho';
+                btn.disabled = false;
+            }
+        });
+
+        // 4. Tra cứu đơn hàng Game (Bằng ID Orders)
+        window.lookupGameOrder = async function() {
+            const input = document.getElementById('search-game-order');
+            const resultBox = document.getElementById('game-order-result');
+            const emptyBox = document.getElementById('game-order-empty');
+            
+            const orderId = input.value.trim();
+            if(!orderId) return;
+
+            // Chuyển UI sang Đang tìm
+            emptyBox.classList.add('hidden');
+            resultBox.classList.remove('hidden');
+            resultBox.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin text-2xl text-purple-500 my-10"></i>';
+
+            try {
+                // Tra cứu trong bảng orders (Loại Category Game)
+                const docRef = doc(db, "game_orders", orderId);
+                const docSnap = await getDoc(docRef);
+
+                if(!docSnap.exists()) {
+                    resultBox.innerHTML = `
+                        <i class="fa-solid fa-circle-xmark text-4xl text-red-400 mb-3 mt-4"></i>
+                        <p class="text-red-500 font-bold">Không tìm thấy đơn hàng này!</p>
+                        <p class="text-xs text-gray-500 mt-1">Vui lòng kiểm tra lại ID.</p>
+                    `;
+                    return;
+                }
+
+                const data = docSnap.data();
+                
+                // Lấy email người mua
+                let buyerName = data.uid;
+                try {
+                    const uSnap = await getDoc(doc(db, "users", data.uid));
+                    if(uSnap.exists()) buyerName = uSnap.data().fullname || uSnap.data().email || data.uid;
+                } catch(e){}
+
+                const dateStr = new Date(data.createdAt).toLocaleString('vi-VN');
+                
+                // Chuẩn bị dữ liệu để tạo QR (Chứa URL tra cứu hoặc nội dung text)
+                // Lưu ý: api.qrserver.com dùng url mã hóa
+                const qrText = encodeURIComponent(`Đơn hàng Game #${orderId} | Mua bởi: ${buyerName} | SL: ${data.quantity} Acc | Giá: ${data.totalPrice}đ`);
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrText}`;
+
+                let html = `
+                    <div class="flex flex-col md:flex-row items-center md:items-start w-full gap-4">
+                        <!-- Cột QR -->
+                        <div class="shrink-0 bg-white p-2 rounded-xl shadow-sm border border-gray-200">
+                            <img src="${qrUrl}" class="w-24 h-24 object-contain" alt="QR Đơn">
+                            <div class="text-[10px] text-center text-gray-500 mt-1 font-bold">SCAN ME</div>
+                        </div>
+                        
+                        <!-- Cột Info -->
+                        <div class="flex-1 w-full space-y-2 text-sm">
+                            <div class="flex justify-between border-b border-gray-200 pb-2">
+                                <span class="text-gray-500 font-medium">Người Mua:</span>
+                                <span class="font-bold text-brand-600 truncate max-w-[150px]">${buyerName}</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-200 pb-2">
+                                <span class="text-gray-500 font-medium">Thời Gian:</span>
+                                <span class="font-bold text-gray-800">${dateStr}</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-200 pb-2">
+                                <span class="text-gray-500 font-medium">Số lượng mua:</span>
+                                <span class="font-bold text-gray-800">${data.quantity} Tài Khoản</span>
+                            </div>
+                            <div class="flex justify-between border-b border-gray-200 pb-2">
+                                <span class="text-gray-500 font-medium">Tổng thanh toán:</span>
+                                <span class="font-bold text-green-600">${data.totalPrice.toLocaleString('vi-VN')} đ</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                resultBox.innerHTML = html;
+
+            } catch (e) {
+                resultBox.innerHTML = `<p class="text-red-500">Lỗi tra cứu: ${e.message}</p>`;
+            }
+        }
 
         // ==========================================
         // KHU VỰC: QUẢN LÝ THÔNG BÁO (ANNOUNCEMENTS)
@@ -1376,5 +1803,3 @@
     </script>
 </body>
 </html>
-
-}
