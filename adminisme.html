@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - FLMMO.VN</title>
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -42,10 +40,8 @@
 </head>
 <body class="flex h-screen overflow-hidden text-gray-800 hidden" id="admin-body">
 
-    <!-- OVERLAY MOBILE -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
 
-    <!-- SIDEBAR ADMIN -->
     <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-64 bg-admin-900 text-gray-300 flex flex-col z-40 transition-transform duration-300 ease-in-out">
         <div class="h-16 flex items-center justify-center border-b border-gray-800 bg-admin-800">
             <span class="text-xl font-bold tracking-tight text-white flex items-center">
@@ -57,6 +53,7 @@
             <div class="px-6 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">Hệ thống</div>
             <ul>
                 <li><a href="#" id="menu-dashboard" class="admin-menu-item active flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('dashboard')"><i class="fa-solid fa-chart-pie w-6 text-gray-400"></i> Tổng Quan</a></li>
+                <li><a href="#" id="menu-announcements" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('announcements')"><i class="fa-solid fa-bullhorn w-6 text-gray-400"></i> Quản lý Thông Báo</a></li>
                 <li><a href="#" id="menu-deposits" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('deposits')"><i class="fa-solid fa-money-bill-transfer w-6 text-gray-400"></i> Duyệt Tiền Nạp <span id="badge-pending" class="ml-auto bg-red-500 text-white text-xs px-2 py-0.5 rounded-full hidden">0</span></a></li>
                 <li><a href="#" id="menu-orders" class="admin-menu-item flex items-center px-6 py-3 text-sm hover:bg-gray-800 hover:text-white transition" onclick="switchView('orders')"><i class="fa-solid fa-cart-shopping w-6 text-gray-400"></i> Đơn Hàng Dịch Vụ</a></li>
             </ul>
@@ -77,10 +74,8 @@
         </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <div class="flex-1 flex flex-col h-screen overflow-hidden">
         
-        <!-- HEADER -->
         <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 z-10 shadow-sm shrink-0">
             <div class="flex items-center gap-3">
                 <button onclick="toggleSidebar()" class="md:hidden text-gray-500 hover:text-gray-800 p-1">
@@ -95,10 +90,8 @@
 
         <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6">
             
-            <!-- VIEW 1: DASHBOARD -->
             <div id="view-dashboard" class="view-section active max-w-7xl mx-auto space-y-6">
                 
-                <!-- Khu vực Bật/Tắt Bảo Trì -->
                 <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl shadow-sm p-6 border border-yellow-200 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-2xl shrink-0"><i class="fa-solid fa-traffic-cone"></i></div>
@@ -116,7 +109,6 @@
                     </div>
                 </div>
 
-                <!-- KHU VỰC SỐ DƯ MYSMM NGUỒN -->
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-sm p-6 border border-blue-200 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-4">
                         <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl shrink-0"><i class="fa-solid fa-wallet"></i></div>
@@ -133,7 +125,6 @@
                     </div>
                 </div>
 
-                <!-- Thẻ thống kê -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 flex items-center justify-between">
                         <div>
@@ -171,7 +162,54 @@
                 </div>
             </div>
 
-            <!-- VIEW 2: QUẢN LÝ NẠP TIỀN -->
+            <div id="view-announcements" class="view-section max-w-7xl mx-auto space-y-6">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2 mb-6">Đăng Thông Báo Mới</h2>
+                    <form id="form-add-announcement" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-1">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Loại thông báo</label>
+                                <select id="ann-type" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none font-medium">
+                                    <option value="INFO">INFO (Thông tin thường - Xanh lá)</option>
+                                    <option value="HOT SALE">HOT SALE (Khuyến mãi - Đỏ)</option>
+                                    <option value="UPDATE">UPDATE (Cập nhật - Xanh dương)</option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nội dung thông báo <span class="text-red-500">*</span></label>
+                                <input type="text" id="ann-content" required placeholder="Nhập nội dung ngắn gọn để hiển thị cho User..." class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                            </div>
+                        </div>
+                        <button type="submit" id="btn-add-ann" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-6 rounded-lg shadow-md transition flex items-center">
+                            <i class="fa-solid fa-paper-plane mr-2"></i> Đăng Thông Báo
+                        </button>
+                        <div id="ann-msg" class="hidden text-sm font-medium p-3 rounded-lg mt-2"></div>
+                    </form>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-lg font-bold text-gray-800">Lịch Sử Thông Báo</h2>
+                        <button onclick="fetchAnnouncements()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full text-sm text-left border-y border-gray-200">
+                            <thead class="text-xs text-gray-600 uppercase bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 w-32">Ngày Đăng</th>
+                                    <th class="px-4 py-3 w-24">Phân Loại</th>
+                                    <th class="px-4 py-3">Nội Dung Hiển Thị</th>
+                                    <th class="px-4 py-3 w-20 text-center">Xóa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-announcements-table">
+                                <tr><td colspan="4" class="text-center py-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-2xl"></i></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <div id="view-deposits" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6">
@@ -199,7 +237,6 @@
                 </div>
             </div>
 
-            <!-- VIEW 3: QUẢN LÝ ĐƠN HÀNG (ORDERS) -->
             <div id="view-orders" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
@@ -234,13 +271,10 @@
                 </div>
             </div>
 
-            <!-- VIEW 4: QUẢN LÝ MÁY CHỦ (SERVERS) -->
             <div id="view-servers" class="view-section max-w-7xl mx-auto space-y-6">
-                <!-- Card Thêm Máy Chủ Mới -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
                         <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Thêm Máy Chủ Mới</h2>
-                        <!-- NÚT GỌI MODAL ĐỒNG BỘ API -->
                         <button onclick="openSyncModal()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-bold transition flex items-center shadow-md">
                             <i class="fa-solid fa-cloud-arrow-down mr-2"></i> Đồng bộ từ MySMM
                         </button>
@@ -307,7 +341,6 @@
                     </form>
                 </div>
 
-                <!-- Bảng Danh Sách Máy Chủ -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-lg font-bold text-gray-800">Danh Sách Máy Chủ Đang Có</h2>
@@ -334,7 +367,6 @@
                 </div>
             </div>
 
-            <!-- VIEW 5: QUẢN LÝ NGƯỜI DÙNG (USERS) -->
             <div id="view-users" class="view-section max-w-7xl mx-auto space-y-6">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <div class="flex justify-between items-center mb-6">
@@ -365,16 +397,13 @@
         </main>
     </div>
 
-    <!-- MODAL ĐỒNG BỘ DỊCH VỤ MYSMM -->
     <div id="modal-sync" class="fixed inset-0 z-50 bg-gray-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col overflow-hidden relative">
-            <!-- Header Modal -->
             <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
                 <h3 class="font-bold text-xl text-gray-800"><i class="fa-solid fa-cloud-arrow-down text-purple-600 mr-2"></i> Đồng Bộ Máy Chủ Từ MySMM.VN</h3>
                 <button onclick="closeSyncModal()" class="text-gray-400 hover:text-red-500 transition text-2xl"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <!-- Toolbar Tùy Chỉnh Lợi Nhuận -->
             <div class="p-6 border-b border-gray-100 flex flex-wrap gap-4 items-end bg-white">
                 <div>
                     <label class="block text-xs font-bold text-gray-500 mb-1 uppercase">Tỷ giá USD -> VNĐ</label>
@@ -392,7 +421,6 @@
                 </div>
             </div>
             
-            <!-- Bảng Dữ Liệu Đồng Bộ -->
             <div class="flex-1 overflow-auto bg-gray-50 p-6">
                 <table class="min-w-full text-sm text-left border bg-white rounded-lg shadow-sm">
                     <thead class="text-xs text-gray-600 uppercase bg-gray-200 border-b border-gray-300 sticky top-0 z-10 shadow-sm">
@@ -412,7 +440,6 @@
                 </table>
             </div>
             
-            <!-- Footer Modal -->
             <div class="p-4 border-t border-gray-200 bg-white flex justify-end items-center">
                 <span id="sync-status" class="text-sm font-bold text-brand-600 mr-4 hidden"><i class="fa-solid fa-check mr-1"></i> Đã nhập thành công!</span>
                 <button onclick="closeSyncModal()" class="px-6 py-2.5 rounded-lg text-gray-600 hover:bg-gray-100 font-bold mr-3 transition">Hủy Bỏ</button>
@@ -423,7 +450,6 @@
         </div>
     </div>
 
-    <!-- SCRIPT CHUYỂN TAB UI & LOGIC SYNC MODAL -->
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -440,13 +466,18 @@
             document.getElementById('menu-' + viewName).classList.add('active');
             
             const titles = { 
-                'dashboard': 'Tổng Quan Hệ Thống', 
+                'dashboard': 'Tổng Quan Hệ Thống',
+                'announcements': 'Quản Lý Thông Báo',
                 'deposits': 'Quản Lý Nạp Tiền', 
                 'orders': 'Quản Lý Đơn Dịch Vụ',
                 'servers': 'Quản Lý Máy Chủ (Servers)',
                 'users': 'Quản Lý Người Dùng'
             };
             document.getElementById('header-title').innerText = titles[viewName];
+
+            if(viewName === 'announcements' && typeof window.fetchAnnouncements === 'function') {
+                window.fetchAnnouncements();
+            }
 
             if(window.innerWidth < 768) {
                 document.getElementById('sidebar').classList.add('-translate-x-full');
@@ -579,11 +610,10 @@
         }
     </script>
 
-    <!-- FIREBASE ADMIN LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, collection, getDocs, updateDoc, increment, addDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, collection, getDocs, updateDoc, increment, addDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Sử dụng chung 1 config như bên home.html
         const firebaseConfig = {
@@ -613,6 +643,7 @@
                         // Load dữ liệu ban đầu
                         fetchDashboardStats();
                         checkMySmmBalance(); // Gọi hàm check số dư MySMM ngay khi load
+                        fetchAnnouncements();
                         fetchDeposits();
                         fetchOrders();
                         fetchServers(); 
@@ -641,6 +672,90 @@
         document.getElementById('btn-logout').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = "dangnhap.html"; });
         });
+
+        // ==========================================
+        // KHU VỰC: QUẢN LÝ THÔNG BÁO (ANNOUNCEMENTS)
+        // ==========================================
+        window.fetchAnnouncements = async function() {
+            const tbody = document.getElementById('admin-announcements-table');
+            try {
+                const q = query(collection(db, "announcements"), orderBy("createdAt", "desc"));
+                const snap = await getDocs(q);
+                if(snap.empty) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center py-8 text-gray-500">Chưa có thông báo nào.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = '';
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    let dateStr = "Không rõ";
+                    if (data.createdAt) {
+                        const dateObj = new Date(data.createdAt);
+                        dateStr = `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth()+1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`;
+                    }
+                    
+                    let badgeClass = "bg-gray-100 text-gray-700";
+                    if(data.type === 'HOT SALE' || data.type === 'HOT') badgeClass = "bg-red-100 text-red-600";
+                    else if(data.type === 'UPDATE') badgeClass = "bg-blue-100 text-blue-600";
+                    else if(data.type === 'INFO') badgeClass = "bg-green-100 text-green-600";
+
+                    tbody.innerHTML += `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-4 py-3 text-xs text-gray-500">${dateStr}</td>
+                            <td class="px-4 py-3"><span class="${badgeClass} px-2 py-1 rounded text-[10px] font-bold uppercase">${data.type}</span></td>
+                            <td class="px-4 py-3 text-sm text-gray-700">${data.content}</td>
+                            <td class="px-4 py-3 text-center">
+                                <button onclick="deleteAnnouncement('${doc.id}')" class="text-red-500 hover:text-red-700 p-2 bg-red-50 hover:bg-red-100 rounded transition" title="Xóa"><i class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch(e) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-red-500">Lỗi tải dữ liệu: ${e.message}</td></tr>`;
+            }
+        }
+
+        window.deleteAnnouncement = async function(id) {
+            if(confirm("Bạn có chắc chắn muốn xóa thông báo này?")) {
+                try {
+                    await deleteDoc(doc(db, "announcements", id));
+                    fetchAnnouncements();
+                } catch(e) {
+                    alert("Lỗi xóa: " + e.message);
+                }
+            }
+        }
+
+        document.getElementById('form-add-announcement').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-add-ann');
+            const msg = document.getElementById('ann-msg');
+            const type = document.getElementById('ann-type').value;
+            const content = document.getElementById('ann-content').value;
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang đăng...';
+            btn.disabled = true;
+
+            try {
+                await addDoc(collection(db, "announcements"), {
+                    type: type,
+                    content: content,
+                    createdAt: new Date().toISOString()
+                });
+                msg.className = "text-sm font-medium p-3 rounded-lg bg-green-50 text-green-700 mt-2 block";
+                msg.innerHTML = "<i class='fa-solid fa-check mr-1'></i> Đăng thông báo thành công!";
+                document.getElementById('form-add-announcement').reset();
+                fetchAnnouncements();
+                setTimeout(() => msg.classList.add('hidden'), 3000);
+            } catch(e) {
+                msg.className = "text-sm font-medium p-3 rounded-lg bg-red-50 text-red-700 mt-2 block";
+                msg.innerHTML = "<i class='fa-solid fa-triangle-exclamation mr-1'></i> Lỗi: " + e.message;
+            } finally {
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane mr-2"></i> Đăng Thông Báo';
+                btn.disabled = false;
+            }
+        });
+
 
         // ==========================================
         // KHU VỰC: TỰ ĐỘNG ĐỒNG BỘ TRẠNG THÁI ĐƠN
@@ -1261,3 +1376,5 @@
     </script>
 </body>
 </html>
+
+}
