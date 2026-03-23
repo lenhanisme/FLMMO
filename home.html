@@ -176,16 +176,21 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <!-- Cột Form Đặt Đơn -->
+                        <!-- Cột Form Đặt Đơn / Bảng tin -->
                         <div class="lg:col-span-2 space-y-6">
                             <div class="bg-dark-800 rounded-xl border border-dark-700 p-6 shadow-lg">
-                                <h3 class="text-white font-bold mb-6 flex items-center border-b border-dark-700 pb-3"><i class="fa-solid fa-cart-shopping mr-2 text-brand-500"></i> Chi tiết đơn hàng</h3>
+                                
+                                <!-- Tiêu đề chỉ hiện khi đã chọn form dịch vụ -->
+                                <h3 id="order-detail-heading" class="text-white font-bold mb-6 hidden items-center border-b border-dark-700 pb-3">
+                                    <i class="fa-solid fa-cart-shopping mr-2 text-brand-500"></i> Chi tiết đơn hàng
+                                </h3>
+                                
                                 <form id="form-order" class="space-y-6">
                                     
                                     <div>
                                         <label id="label-dich-vu" class="block text-xs font-bold text-gray-500 uppercase mb-3">Thông Báo Hệ Thống</label>
                                         <div id="server-list" class="space-y-3">
-                                            <!-- DỮ LIỆU SẼ ĐƯỢC INJECT BỞI JS -->
+                                            <!-- DỮ LIỆU SẼ ĐƯỢC INJECT BỞI JS TỪ FIREBASE -->
                                             <div class="text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl"></i></div>
                                         </div>
                                     </div>
@@ -551,6 +556,10 @@
             const inputsEl = document.getElementById('order-form-inputs');
             if(inputsEl) inputsEl.classList.remove('hidden');
             
+            const headingEl = document.getElementById('order-detail-heading');
+            if(headingEl) headingEl.classList.remove('hidden');
+            if(headingEl) headingEl.classList.add('flex');
+            
             document.getElementById('order-link').disabled = false;
             document.getElementById('qty').disabled = false;
             
@@ -740,9 +749,14 @@
             const listEl = document.getElementById('server-list');
             const labelEl = document.getElementById('label-dich-vu');
             const inputsEl = document.getElementById('order-form-inputs');
+            const headingEl = document.getElementById('order-detail-heading');
             
             if(labelEl) labelEl.innerText = "Thông Báo Hệ Thống";
             if(inputsEl) inputsEl.classList.add('hidden');
+            if(headingEl) {
+                headingEl.classList.add('hidden');
+                headingEl.classList.remove('flex');
+            }
             document.getElementById('header-title').innerText = 'Tạo đơn hàng mới';
             if(document.getElementById('header-title-mobile')) document.getElementById('header-title-mobile').innerText = 'Tạo đơn hàng';
             window.currentServiceCategory = "";
@@ -765,45 +779,10 @@
                 `;
 
                 if(snap.empty) {
-                    // FALLBACK HIỂN THỊ NẾU DB CHƯA CÓ DỮ LIỆU
                     html += `
-                        <div class="flex gap-4">
-                            <div class="flex flex-col items-center">
-                                <div class="w-2.5 h-2.5 rounded-full bg-green-500 mt-1 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
-                                <div class="w-px h-full bg-dark-600 mt-1.5"></div>
-                            </div>
-                            <div class="pb-1 flex-1">
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-[10px] bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded border border-red-500/30 font-bold uppercase tracking-wider">HOT SALE</span>
-                                    <span class="text-xs font-medium text-gray-500">Hôm nay</span>
-                                </div>
-                                <p class="text-sm text-gray-300 font-medium leading-relaxed">Giảm giá kịch sàn toàn bộ dịch vụ Tăng Follow TikTok & Facebook. Server chạy cực mượt, tốc độ bàn thờ!</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="flex flex-col items-center">
-                                <div class="w-2.5 h-2.5 rounded-full bg-blue-500 mt-1 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
-                                <div class="w-px h-full bg-dark-600 mt-1.5"></div>
-                            </div>
-                            <div class="pb-1 flex-1">
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded border border-blue-500/30 font-bold uppercase tracking-wider">UPDATE</span>
-                                    <span class="text-xs font-medium text-gray-500">Hôm qua</span>
-                                </div>
-                                <p class="text-sm text-gray-400 leading-relaxed">Đã bảo trì xong và mở lại cụm Server: Mắt xem Livestream Facebook. Đảm bảo ổn định, không rớt giữa chừng.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="flex flex-col items-center">
-                                <div class="w-2.5 h-2.5 rounded-full bg-gray-500 mt-1"></div>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex items-center justify-between mb-1.5">
-                                    <span class="text-[10px] bg-gray-700 text-gray-300 px-1.5 py-0.5 rounded border border-gray-600 font-bold uppercase tracking-wider">INFO</span>
-                                    <span class="text-xs font-medium text-gray-500">Gần đây</span>
-                                </div>
-                                <p class="text-sm text-gray-400 leading-relaxed">Hệ thống nạp tiền tự động qua QR Bank đã hoạt động. Tự động cộng tiền trong 30 giây. Lưu ý: Nạp tối thiểu 5,000đ.</p>
-                            </div>
+                        <div class="text-center py-10">
+                            <i class="fa-solid fa-box-open text-4xl text-gray-600 mb-3"></i>
+                            <p class="text-gray-400 font-medium">Chưa có thông báo nào từ hệ thống.</p>
                         </div>
                     `;
                 } else {
