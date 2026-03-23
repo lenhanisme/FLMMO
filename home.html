@@ -45,7 +45,7 @@
 </head>
 <body class="flex h-screen overflow-hidden relative">
 
-    <!-- MÀN HÌNH BẢO TRÌ -->
+    <!-- MÀN HÌNH BẢO TRÌ (Chỉ hiện khi bị khóa) -->
     <div id="maintenance-screen" class="fixed inset-0 bg-dark-900 z-[9999] flex flex-col items-center justify-center text-white hidden">
         <i class="fa-solid fa-screwdriver-wrench text-6xl text-brand-500 mb-6 animate-pulse"></i>
         <h1 class="text-3xl font-bold mb-2">Hệ Thống Đang Nâng Cấp</h1>
@@ -427,6 +427,20 @@
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
             const menuBtn = document.getElementById('menu-' + viewName);
             if(menuBtn) menuBtn.classList.add('active');
+
+            // Thay đổi Header Mobile
+            const titleMobile = document.getElementById('header-title-mobile');
+            if (viewName === 'order') titleMobile.innerText = "Tạo đơn hàng";
+            if (viewName === 'history') titleMobile.innerText = "Lịch sử giao dịch";
+            if (viewName === 'deposit') titleMobile.innerText = "Nạp tiền tài khoản";
+
+            // Tải lại dữ liệu khi chuyển tab
+            if(viewName === 'history' && typeof window.loadOrderHistory === 'function') {
+                window.loadOrderHistory();
+            }
+            if(viewName === 'deposit' && typeof window.loadDepositHistory === 'function') {
+                window.loadDepositHistory();
+            }
             
             if(window.innerWidth < 768) toggleSidebar();
         }
