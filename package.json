@@ -1,0 +1,12 @@
+{
+  "name": "flmmo-smm-panel",
+  "version": "1.0.0",
+  "description": "FLMMO API Webhook",
+  "main": "api/sepay.js",
+  "scripts": {
+    "start": "node api/sepay.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  }
+}
