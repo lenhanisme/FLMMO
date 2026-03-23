@@ -865,12 +865,45 @@
             btn.disabled = true;
 
             try {
-                // 1. Thêm Order vào Firestore collection "orders"
+                // --- 1. BẮT ĐẦU GỌI API SANG MYSMM.VN ---
+                const mySmmApiKey = "f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668";
+                const mySmmUrl = "https://api.mysmm.vn/api/v2";
+
+                // Sử dụng URLSearchParams để giả lập form-urlencoded giống PHP http_build_query
+                const formData = new URLSearchParams();
+                formData.append('key', mySmmApiKey);
+                formData.append('action', 'add');
+                // Lấy Mã Server (ví dụ "1", "25") để truyền vào ID Dịch vụ của MySMM
+                formData.append('service', window.currentServer.code); 
+                formData.append('link', link);
+                formData.append('quantity', qty);
+
+                const apiResponse = await fetch(mySmmUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: formData.toString()
+                });
+
+                const apiResult = await apiResponse.json();
+
+                // Kiểm tra nếu web nguồn (MySMM) báo lỗi (Sai link, hết tiền, bảo trì...)
+                if (apiResult.error) {
+                    throw new Error("Lỗi từ Server nguồn: " + apiResult.error);
+                }
+
+                // Lấy ID đơn hàng trên MySMM trả về để sau này hệ thống check tiến độ
+                const remoteOrderId = apiResult.order || "Không xác định";
+                // --- KẾT THÚC GỌI API ---
+
+                // 2. Thêm Order vào Firestore collection "orders" (Chỉ chạy khi API nguồn thành công)
                 await addDoc(collection(db, "orders"), {
                     uid: user.uid,
                     category: window.currentServiceCategory,
                     serverName: window.currentServer.name,
                     serverId: window.currentServer.code,
+                    remoteOrderId: remoteOrderId, // Lưu mã đơn hàng của mysmm.vn
                     link: link,
                     quantity: qty,
                     price: window.currentPrice,
@@ -879,7 +912,7 @@
                     createdAt: new Date().toISOString()
                 });
 
-                // 2. Trừ tiền tài khoản
+                // 3. Trừ tiền tài khoản
                 await updateDoc(doc(db, "users", user.uid), {
                     coin: increment(-totalCost)
                 });
@@ -900,7 +933,7 @@
 
             } catch (error) {
                 msg.className = "text-sm mt-3 text-center p-3 rounded bg-red-50 text-red-700 font-medium border border-red-200 block";
-                msg.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Lỗi: ' + error.message;
+                msg.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> ' + error.message;
             } finally {
                 btn.innerHTML = 'Tạo Đơn Hàng';
                 btn.disabled = false;
