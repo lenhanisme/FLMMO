@@ -202,9 +202,15 @@
             <!-- VIEW 3: QUẢN LÝ ĐƠN HÀNG (ORDERS) -->
             <div id="view-orders" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                    <div class="flex justify-between items-center mb-6">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
                         <h2 class="text-lg font-bold text-gray-800 border-l-4 border-brand-500 pl-2">Quản Lý Đơn Hàng Dịch Vụ</h2>
-                        <button onclick="fetchOrders()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
+                        <div class="flex items-center gap-3">
+                            <div id="auto-sync-status" class="text-xs text-green-600 font-medium hidden"><i class="fa-solid fa-circle-check"></i> Đã đồng bộ API</div>
+                            <button onclick="autoSyncOrdersStatus()" class="bg-indigo-50 text-indigo-600 hover:bg-indigo-100 px-4 py-2 rounded-lg text-sm font-medium transition" title="Đồng bộ thủ công với MySMM">
+                                <i class="fa-solid fa-rotate-check mr-1"></i> Đồng bộ API
+                            </button>
+                            <button onclick="fetchOrders()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -212,6 +218,7 @@
                             <thead class="text-xs text-gray-600 uppercase bg-gray-50">
                                 <tr>
                                     <th class="px-4 py-3">Mã đơn / Ngày</th>
+                                    <th class="px-4 py-3">Mã API (MySMM)</th>
                                     <th class="px-4 py-3">UID Khách</th>
                                     <th class="px-4 py-3">Máy chủ</th>
                                     <th class="px-4 py-3">Link/UID cần tăng</th>
@@ -220,7 +227,7 @@
                                 </tr>
                             </thead>
                             <tbody id="admin-orders-table">
-                                <tr><td colspan="6" class="text-center py-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-2xl"></i></td></tr>
+                                <tr><td colspan="7" class="text-center py-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-2xl"></i></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -611,6 +618,11 @@
                         fetchServers(); 
                         fetchUsers(); 
                         checkMaintenanceStatus(); // Kiểm tra nút Bảo trì
+                        
+                        // KHỞI CHẠY TỰ ĐỘNG ĐỒNG BỘ TRẠNG THÁI ĐƠN HÀNG (1 PHÚT/LẦN)
+                        window.autoSyncOrdersStatus();
+                        setInterval(window.autoSyncOrdersStatus, 60000); 
+
                     } else {
                         alert("Bạn không có quyền truy cập khu vực Quản Trị!");
                         window.location.href = "home.html";
@@ -629,6 +641,94 @@
         document.getElementById('btn-logout').addEventListener('click', () => {
             signOut(auth).then(() => { window.location.href = "dangnhap.html"; });
         });
+
+        // ==========================================
+        // KHU VỰC: TỰ ĐỘNG ĐỒNG BỘ TRẠNG THÁI ĐƠN
+        // ==========================================
+        window.autoSyncOrdersStatus = async function() {
+            const statusIndicator = document.getElementById('auto-sync-status');
+            try {
+                // 1. Lấy tất cả đơn hàng đang ở trạng thái chưa hoàn thành
+                const ordersSnap = await getDocs(collection(db, "orders"));
+                let activeOrders = [];
+                ordersSnap.forEach(doc => {
+                    const data = doc.data();
+                    if ((data.status === "Đang xử lý" || data.status === "Đang chạy") && data.remoteOrderId && data.remoteOrderId !== "Không xác định") {
+                        activeOrders.push({ id: doc.id, remoteId: data.remoteOrderId, currentStatus: data.status });
+                    }
+                });
+
+                if (activeOrders.length === 0) return; // Không có đơn nào cần check
+
+                // 2. Gom các ID thành mảng, mỗi lần check tối đa 100 đơn (Theo giới hạn API)
+                const chunks = [];
+                for (let i = 0; i < activeOrders.length; i += 100) {
+                    chunks.push(activeOrders.slice(i, i + 100));
+                }
+
+                let hasUpdates = false;
+
+                // 3. Gửi request check trạng thái
+                for (const chunk of chunks) {
+                    const orderIdsStr = chunk.map(o => o.remoteId).join(',');
+                    
+                    const formData = new URLSearchParams();
+                    formData.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668');
+                    formData.append('action', 'status');
+                    formData.append('orders', orderIdsStr);
+
+                    const response = await fetch('https://api.mysmm.vn/api/v2', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: formData.toString()
+                    });
+
+                    const result = await response.json();
+                    
+                    // Xử lý dữ liệu trả về từ API
+                    if(!result.error) {
+                        for (const localOrder of chunk) {
+                            const remoteData = result[localOrder.remoteId];
+                            if (remoteData && remoteData.status) {
+                                let newStatus = localOrder.currentStatus;
+                                const rStatus = remoteData.status.toLowerCase();
+                                
+                                // Map trạng thái từ API (Tiếng Anh) sang hệ thống (Tiếng Việt)
+                                if (rStatus === 'completed' || rStatus === 'partial') newStatus = 'Hoàn thành';
+                                else if (rStatus === 'processing' || rStatus === 'pending') newStatus = 'Đang xử lý';
+                                else if (rStatus === 'in progress') newStatus = 'Đang chạy';
+                                else if (rStatus === 'canceled' || rStatus === 'refunded') newStatus = 'Hủy';
+                                
+                                // Nếu có sự thay đổi, cập nhật Firestore
+                                if (newStatus !== localOrder.currentStatus) {
+                                    await updateDoc(doc(db, "orders", localOrder.id), { 
+                                        status: newStatus,
+                                        updatedAt: new Date().toISOString()
+                                    });
+                                    hasUpdates = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // 4. Cập nhật lại UI nếu có đơn thay đổi trạng thái
+                if (hasUpdates) {
+                    fetchOrders();
+                    fetchDashboardStats();
+                }
+
+                // Nháy thông báo đồng bộ thành công
+                if(statusIndicator) {
+                    statusIndicator.classList.remove('hidden');
+                    setTimeout(() => statusIndicator.classList.add('hidden'), 3000);
+                }
+
+            } catch(e) {
+                console.error("Lỗi đồng bộ trạng thái đơn hàng:", e);
+            }
+        }
+
 
         // ==========================================
         // KHU VỰC: CHẾ ĐỘ BẢO TRÌ (MAINTENANCE)
@@ -715,7 +815,7 @@
         // ==========================================
         window.fetchOrders = async function() {
             const tbody = document.getElementById('admin-orders-table');
-            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải đơn hàng...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải đơn hàng...</td></tr>';
             
             try {
                 const snapshot = await getDocs(collection(db, "orders"));
@@ -725,7 +825,7 @@
                 orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Mới nhất lên đầu
 
                 if(orders.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-gray-500">Chưa có đơn hàng nào trên hệ thống</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center py-8 text-gray-500">Chưa có đơn hàng nào trên hệ thống</td></tr>';
                     return;
                 }
 
@@ -749,11 +849,16 @@
                         </select>
                     `;
 
+                    const remoteIdText = o.remoteOrderId && o.remoteOrderId !== "Không xác định" ? `<span class="text-purple-600 font-bold">#${o.remoteOrderId}</span>` : `<span class="text-gray-400 italic">Không có</span>`;
+
                     tbody.innerHTML += `
                         <tr class="border-b hover:bg-gray-50">
                             <td class="px-4 py-3">
                                 <div class="font-mono text-xs font-bold text-gray-800 mb-1">#${o.id.substring(0,8).toUpperCase()}</div>
                                 <div class="text-[10px] text-gray-500">${date}</div>
+                            </td>
+                            <td class="px-4 py-3 text-xs font-mono">
+                                ${remoteIdText}
                             </td>
                             <td class="px-4 py-3 text-xs font-mono text-brand-600 cursor-help" title="${o.uid}">${o.uid.substring(0,8)}...</td>
                             <td class="px-4 py-3 text-xs">
