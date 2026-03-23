@@ -454,7 +454,7 @@
             
             <div class="p-6">
                 <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-sm border-b border-dark-700 pb-5 mb-5">
-                    <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Số Dư (VNĐ)</span> <span class="font-bold text-green-400 text-base font-mono display-balance-vnd">0 đ</span></div>
+                    <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Số Dư (VNĐ)</span> <span id="profile-balance" class="font-bold text-green-400 text-base font-mono display-balance-vnd">0 đ</span></div>
                     <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Trạng Thái TK</span> <span class="font-medium text-green-400 bg-green-500/10 border border-green-500/30 px-2 py-0.5 rounded text-xs" id="profile-status"><i class="fa-solid fa-circle-check text-[10px]"></i> Hoạt động</span></div>
                     <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Bảo Mật 2FA</span> <span class="font-medium text-gray-400 bg-dark-700 px-2 py-0.5 rounded text-xs" id="profile-2fa">Tắt</span></div>
                     <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Ngày đăng ký</span> <span class="font-medium text-gray-300 font-mono" id="profile-created">...</span></div>
@@ -1189,6 +1189,7 @@
             btn.disabled = true;
 
             try {
+                // --- BẮT ĐẦU GỌI API SANG MYSMM.VN ---
                 const mySmmApiKey = "f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668";
                 const formData = new URLSearchParams();
                 formData.append('key', mySmmApiKey);
@@ -1207,6 +1208,7 @@
                 if (apiResult.error) throw new Error("Lỗi Server nguồn: " + apiResult.error);
                 const remoteOrderId = apiResult.order || "Không xác định";
 
+                // Lưu Order
                 await addDoc(collection(db, "orders"), {
                     uid: user.uid,
                     category: window.currentServiceCategory,
@@ -1221,6 +1223,7 @@
                     createdAt: new Date().toISOString()
                 });
 
+                // Trừ tiền
                 await updateDoc(doc(db, "users", user.uid), { coin: increment(-totalCost) });
                 checkMaintenanceAndLoadUser(user);
 
@@ -1240,7 +1243,7 @@
             }
         });
 
-        // LỊCH SỬ ĐƠN HÀNG SMM
+        // LỊCH SỬ ĐƠN HÀNG
         window.loadOrderHistory = async function() {
             const user = auth.currentUser;
             if(!user) return;
@@ -1268,6 +1271,7 @@
                     const dt = new Date(o.createdAt);
                     const formattedDate = `${dt.getDate()}/${dt.getMonth()+1}/${dt.getFullYear()} ${dt.getHours()}:${dt.getMinutes()}`;
                     
+                    // Clickable Link
                     const safeLink = o.link.startsWith('http') ? o.link : 'https://' + o.link;
 
                     tbody.innerHTML += `
@@ -1323,206 +1327,6 @@
                 });
             } catch(e) {}
         }
-
-        // ==========================================
-        // KHU VỰC: LOGIC MUA GAME CHO USER
-        // ==========================================
-        window.loadGameProductsUI = async function() {
-            const container = document.getElementById('game-products-container');
-            container.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-3xl"></i></div>';
-            
-            try {
-                const snap = await getDocs(collection(db, "game_products"));
-                window.allGameProducts = [];
-                snap.forEach(doc => window.allGameProducts.push({ id: doc.id, ...doc.data() }));
-
-                if(window.allGameProducts.length === 0) {
-                    container.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500 bg-dark-800 rounded-2xl border border-dark-700"><i class="fa-solid fa-ghost text-4xl mb-3"></i><p>Hiện chưa có tài khoản game nào được bán.</p></div>';
-                    return;
-                }
-
-                // Sắp xếp game còn hàng lên trước
-                window.allGameProducts.sort((a,b) => (b.availableCount || 0) - (a.availableCount || 0));
-
-                container.innerHTML = '';
-                window.allGameProducts.forEach(game => {
-                    const isOutOfStock = (game.availableCount || 0) === 0;
-                    const stockText = isOutOfStock 
-                        ? `<span class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded text-[10px] font-bold border border-red-500/30">Hết hàng</span>`
-                        : `<span class="bg-green-500/20 text-green-400 px-2 py-0.5 rounded text-[10px] font-bold border border-green-500/30">Kho: ${game.availableCount} acc</span>`;
-                    
-                    const btnClass = isOutOfStock 
-                        ? "bg-dark-700 text-gray-500 cursor-not-allowed opacity-70"
-                        : "bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-500/20";
-
-                    let discountBadge = '';
-                    if(game.discountQty > 0 && game.discountPercent > 0 && !isOutOfStock) {
-                        discountBadge = `<div class="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-lg z-10 rounded-tr-xl border-l border-b border-orange-400/50 transform translate-x-px -translate-y-px">Mua ${game.discountQty}+ Giảm ${game.discountPercent}%</div>`;
-                    }
-
-                    container.innerHTML += `
-                        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-5 hover:border-brand-500/50 transition duration-300 relative group overflow-hidden">
-                            ${discountBadge}
-                            <div class="flex items-start gap-4 mb-4 relative z-10">
-                                <img src="${game.logoUrl}" class="w-16 h-16 rounded-xl object-cover bg-white p-1 shrink-0 shadow-md border border-dark-600">
-                                <div>
-                                    <h3 class="font-bold text-white leading-tight group-hover:text-brand-400 transition">${game.name}</h3>
-                                    <div class="text-xs text-gray-400 mt-1 flex items-center"><i class="fa-solid fa-key mr-1"></i> Login: ${game.loginMethod}</div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-end relative z-10">
-                                <div>
-                                    <div class="text-brand-400 font-black text-xl">${game.price.toLocaleString('vi-VN')}đ</div>
-                                    <div class="mt-1">${stockText}</div>
-                                </div>
-                                <button ${isOutOfStock ? 'disabled' : `onclick="openBuyGameModal('${game.id}')"`} class="px-5 py-2.5 rounded-xl font-bold transition flex items-center ${btnClass}">
-                                    ${isOutOfStock ? 'Hết Hàng' : '<i class="fa-solid fa-cart-arrow-down mr-2"></i> Mua'}
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-            } catch(e) {
-                container.innerHTML = `<div class="col-span-full text-center text-red-500 py-10">Lỗi tải danh sách game: ${e.message}</div>`;
-            }
-        }
-
-        // HÀM XỬ LÝ MUA GAME
-        window.executeGamePurchase = async function() {
-            const user = auth.currentUser;
-            if(!user || user.isAnonymous) return showToast("Vui lòng đăng ký tài khoản chính thức để mua hàng!", "error");
-            
-            if(!window.currentGamePurchase) return;
-            const game = window.currentGamePurchase;
-            const qty = window.currentGamePurchaseQty;
-            const totalPrice = window.currentGamePurchaseTotal;
-
-            if(window.currentUserBalance < totalPrice) {
-                return showToast("Tài khoản của bạn không đủ số dư. Vui lòng nạp thêm!", "error");
-            }
-
-            const btn = document.getElementById('btn-confirm-buy-game');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang trích xuất Acc...';
-            btn.disabled = true;
-
-            try {
-                // 1. Query lấy đúng [qty] accounts đang available
-                const q = query(collection(db, "game_accounts"), where("productId", "==", game.id), where("status", "==", "available"), limit(qty));
-                const accSnaps = await getDocs(q);
-
-                if(accSnaps.size < qty) {
-                    throw new Error(`Kho chỉ còn ${accSnaps.size} tài khoản, không đủ để giao dịch!`);
-                }
-
-                // 2. Gom vào 1 Batch để xử lý
-                const batch = writeBatch(db);
-                let purchasedAccs = [];
-
-                accSnaps.forEach(docSnap => {
-                    const accData = docSnap.data();
-                    purchasedAccs.push(`${accData.username}:${accData.password}`);
-                    // Đánh dấu acc đã bán
-                    batch.update(docSnap.ref, { 
-                        status: "sold", 
-                        buyerUid: user.uid, 
-                        soldAt: new Date().toISOString() 
-                    });
-                });
-
-                // 3. Trừ tiền user
-                batch.update(doc(db, "users", user.uid), { coin: increment(-totalPrice) });
-
-                // 4. Cập nhật số lượng tồn kho Product
-                batch.update(doc(db, "game_products", game.id), {
-                    availableCount: increment(-qty),
-                    soldCount: increment(qty)
-                });
-
-                // 5. Lưu hóa đơn Game Orders
-                const orderRef = doc(collection(db, "game_orders"));
-                batch.set(orderRef, {
-                    uid: user.uid,
-                    productId: game.id,
-                    productName: game.name,
-                    quantity: qty,
-                    totalPrice: totalPrice,
-                    accountsData: purchasedAccs.join(', '), // Lưu chuỗi acc vào hóa đơn
-                    createdAt: new Date().toISOString()
-                });
-
-                // THỰC THI BATCH
-                await batch.commit();
-
-                // 6. Cập nhật UI & Báo thành công
-                checkMaintenanceAndLoadUser(user);
-                showToast(`Mua thành công ${qty} Tài Khoản! Đang mở...`, "success");
-                toggleModal('modal-buy-game');
-                
-                // Cập nhật lại UI Kho
-                loadGameProductsUI();
-                
-                // Tự động chuyển qua tab Lịch sử game & Show tài khoản vừa mua lên luôn
-                setTimeout(() => {
-                    switchView('game-history');
-                    viewPurchasedAccs(purchasedAccs.join('\n'));
-                }, 1500);
-
-            } catch(e) {
-                showToast(e.message, "error");
-            } finally {
-                btn.innerHTML = 'Xác Nhận Mua Ngay';
-                btn.disabled = false;
-            }
-        }
-
-        // LỊCH SỬ MUA ACC GAME
-        window.loadGameOrderHistory = async function() {
-            const user = auth.currentUser; if(!user) return;
-            const tbody = document.getElementById('game-history-body');
-            tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-12 text-center text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải dữ liệu...</td></tr>';
-            
-            try {
-                const snapshot = await getDocs(collection(db, "game_orders"));
-                let orders = [];
-                snapshot.forEach(doc => { if (doc.data().uid === user.uid) orders.push({ id: doc.id, ...doc.data() }); });
-                orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-                if(orders.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-12 text-center text-gray-500">Bạn chưa mua tài khoản game nào</td></tr>';
-                    return;
-                }
-
-                tbody.innerHTML = '';
-                orders.forEach(o => {
-                    const dt = new Date(o.createdAt);
-                    const formattedDate = `${dt.getDate()}/${dt.getMonth()+1}/${dt.getFullYear()} ${dt.getHours()}:${dt.getMinutes()}`;
-                    
-                    // Nút bấm xem acc
-                    // Phải escape nháy kép cho chuỗi string chứa Acc
-                    const safeAccData = (o.accountsData || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-
-                    tbody.innerHTML += `
-                        <tr class="hover:bg-dark-700/50 transition text-gray-300">
-                            <td class="px-6 py-4">
-                                <div class="text-xs font-mono font-bold text-white mb-1">#${o.id.substring(0,8).toUpperCase()}</div>
-                                <div class="text-[10px] text-gray-500">${formattedDate}</div>
-                            </td>
-                            <td class="px-6 py-4 text-xs font-medium text-brand-400">${o.productName || '-'}</td>
-                            <td class="px-6 py-4 text-center font-bold text-white bg-dark-900/50">${o.quantity} Acc</td>
-                            <td class="px-6 py-4 font-bold text-green-400">${o.totalPrice.toLocaleString('en-US')}đ</td>
-                            <td class="px-6 py-4 text-center">
-                                <button onclick="viewPurchasedAccs('${safeAccData}')" class="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center mx-auto">
-                                    <i class="fa-solid fa-eye mr-1.5"></i> Xem Acc
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                });
-            } catch(e) {
-                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-red-500">Lỗi tải lịch sử: ${e.message}</td></tr>`;
-            }
-        }
-
 
         // ĐỔI MẬT KHẨU
         document.getElementById('form-change-password').addEventListener('submit', async (e) => {
