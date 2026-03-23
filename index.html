@@ -1,21 +1,66 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Meta Tags -->
-    <title>FLMMO.VN - Dịch Vụ Mạng Xã Hội, Tăng Tương Tác Nhanh & Thật</title>
-    <meta name="description" content="FLMMO.VN cung cấp giải pháp tăng tương tác mạng xã hội hàng đầu. Tăng Like, Share, Comment, Follow thật 100% trên Facebook, TikTok, Instagram với tốc độ nhanh chóng và giá rẻ nhất.">
-    <meta name="keywords" content="SMM Panel, tăng like, tăng follow, dịch vụ mạng xã hội, FLMMO, tăng tương tác thật, tăng sub, dịch vụ facebook, dịch vụ tiktok">
-    <meta name="author" content="@vnsoftware">
-    <meta name="robots" content="index, follow">
+    <!-- TỐI ƯU HÓA SEO CƠ BẢN -->
+    <title>FLMMO.VN - SMM Panel Số 1, Tăng Tương Tác Mạng Xã Hội Tự Động</title>
+    <meta name="description" content="FLMMO.VN - Nền tảng SMM Panel cung cấp giải pháp tăng tương tác (Like, Follow, View, Comment) thật 100% trên Facebook, TikTok, Instagram, YouTube. Tự động 24/7, giá rẻ nhất thị trường.">
+    <meta name="keywords" content="SMM Panel, tăng like, tăng follow, tăng view tiktok, dịch vụ mạng xã hội, buff like, buff sub youtube, flmmo, tăng tương tác thật">
+    <meta name="author" content="FLMMO.VN">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://flmmo.vn/">
     
-    <!-- Open Graph / Facebook -->
+    <!-- OPEN GRAPH / FACEBOOK -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://flmmo.vn/">
     <meta property="og:title" content="FLMMO.VN - Hệ Thống Dịch Vụ Mạng Xã Hội Hàng Đầu">
-    <meta property="og:description" content="Hệ thống tự động hóa 24/7, cung cấp tương tác thật, an toàn cho tài khoản với chi phí tối ưu nhất thị trường.">
+    <meta property="og:description" content="Hệ thống tự động hóa 24/7, cung cấp tương tác thật, an toàn cho tài khoản với chi phí tối ưu nhất thị trường. Đăng ký ngay!">
+    <meta property="og:image" content="https://flmmo.vn/assets/thumbnail.png"> <!-- Thay bằng link ảnh thumbnail thật của bạn -->
+    <meta property="og:site_name" content="FLMMO">
+
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FLMMO.VN - SMM Panel Số 1">
+    <meta name="twitter:description" content="Tăng tương tác MXH (Like, Sub, View) siêu tốc. Đăng ký tài khoản miễn phí và trải nghiệm ngay.">
+    <meta name="twitter:image" content="https://flmmo.vn/assets/thumbnail.png">
+    
+    <!-- JSON-LD / DỮ LIỆU CẤU TRÚC CHO GOOGLE -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "FLMMO",
+      "alternateName": "FLMMO SMM Panel",
+      "url": "https://flmmo.vn/",
+      "description": "Hệ thống cung cấp dịch vụ mạng xã hội, tăng like, follow tự động lớn nhất.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://flmmo.vn/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "FLMMO",
+      "url": "https://flmmo.vn",
+      "logo": "https://flmmo.vn/assets/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+84-0732-323-321",
+        "contactType": "customer service",
+        "areaServed": "VN",
+        "availableLanguage": "Vietnamese"
+      }
+    }
+    </script>
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,23 +69,31 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { 
+                        dark: { 900: '#121215', 800: '#181920', 700: '#23242d', 600: '#2d2d39' },
+                        brand: { 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9' } 
                     },
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#15803d',
-                            900: '#14532d',
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
                         }
                     }
                 }
@@ -49,292 +102,325 @@
     </script>
     
     <style>
-        html { scroll-behavior: smooth; }
+        body { background-color: #121215; color: #cbd5e1; }
         .hero-pattern {
-            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
         }
-        .gradient-text {
-            background: linear-gradient(to right, #16a34a, #3b82f6);
+        .text-gradient {
+            background: linear-gradient(135deg, #a78bfa 0%, #3b82f6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        .glass-nav {
+            background: rgba(18, 18, 21, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .card-glow:hover {
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
     </style>
 </head>
-<body class="font-sans text-gray-800 antialiased overflow-x-hidden">
+<body class="antialiased overflow-x-hidden selection:bg-brand-500 selection:text-white">
 
-    <!-- HEADER -->
-    <header class="fixed w-full top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+    <!-- HEADER / NAVIGATION -->
+    <header class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg">
-                        <i class="fa-solid fa-rocket text-xl"></i>
+                <a href="#" class="flex-shrink-0 flex items-center gap-3 cursor-pointer group" aria-label="FLMMO Trang chủ">
+                    <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-blue-600 rounded-xl flex items-center justify-center text-white shadow-[0_0_15px_rgba(139,92,246,0.3)] group-hover:shadow-[0_0_25px_rgba(139,92,246,0.5)] transition-all">
+                        <i class="fa-solid fa-rocket text-xl group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform"></i>
                     </div>
-                    <span class="font-bold text-2xl tracking-tight text-gray-900">FL<span class="text-brand-600">MMO</span></span>
-                </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-2xl tracking-tight text-white leading-none">FL<span class="text-brand-500">MMO</span></span>
+                        <span class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mt-0.5">Social Panel</span>
+                    </div>
+                </a>
 
                 <!-- Desktop Nav -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#trang-chu" class="text-gray-600 hover:text-brand-600 font-medium transition">Trang chủ</a>
-                    <a href="#tinh-nang" class="text-gray-600 hover:text-brand-600 font-medium transition">Tính năng</a>
-                    <a href="#dich-vu" class="text-gray-600 hover:text-brand-600 font-medium transition">Dịch vụ</a>
-                    <a href="#lien-he" class="text-gray-600 hover:text-brand-600 font-medium transition">Gửi Yêu Cầu</a>
+                <nav class="hidden md:flex space-x-8" aria-label="Menu chính">
+                    <a href="#trang-chu" class="text-gray-300 hover:text-white font-medium transition">Trang chủ</a>
+                    <a href="#tinh-nang" class="text-gray-300 hover:text-white font-medium transition">Tính năng</a>
+                    <a href="#dich-vu" class="text-gray-300 hover:text-white font-medium transition">Dịch vụ</a>
+                    <a href="#lien-he" class="text-gray-300 hover:text-white font-medium transition">Liên hệ</a>
                 </nav>
 
                 <!-- Auth Buttons (Desktop) -->
                 <div id="desktop-auth-buttons" class="hidden md:flex items-center space-x-4">
-                    <a href="dangnhap.html" class="text-gray-600 hover:text-gray-900 font-medium transition">Đăng nhập</a>
-                    <a href="dangky.html" class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full font-medium transition shadow-md shadow-brand-500/30">
-                        Bắt đầu ngay <i class="fa-solid fa-arrow-right ml-1 text-sm"></i>
+                    <a href="dangnhap.html" class="text-gray-300 hover:text-white font-medium transition">Đăng nhập</a>
+                    <a href="dangky.html" class="bg-white text-dark-900 hover:bg-gray-200 px-6 py-2.5 rounded-full font-bold transition flex items-center">
+                        Bắt đầu <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
                     </a>
                 </div>
 
                 <!-- Mobile menu button -->
                 <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900 focus:outline-none p-2">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2" aria-label="Mở menu">
                         <i class="fa-solid fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Mobile Menu (Hidden by default) -->
-            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full left-0 top-20 shadow-xl pb-4">
-                <div class="px-4 pt-2 pb-3 space-y-1 flex flex-col">
-                    <a href="#trang-chu" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Trang chủ</a>
-                    <a href="#tinh-nang" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Tính năng</a>
-                    <a href="#dich-vu" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Dịch vụ</a>
-                    <a href="#lien-he" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-brand-600 hover:bg-gray-50 rounded-md transition">Gửi Yêu Cầu</a>
+            <div id="mobile-menu" class="hidden md:hidden bg-dark-800 border-t border-dark-700 absolute w-full left-0 top-20 shadow-2xl pb-6 rounded-b-2xl">
+                <nav class="px-4 pt-2 pb-3 space-y-1 flex flex-col" aria-label="Menu di động">
+                    <a href="#trang-chu" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700 rounded-lg transition">Trang chủ</a>
+                    <a href="#tinh-nang" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700 rounded-lg transition">Tính năng</a>
+                    <a href="#dich-vu" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700 rounded-lg transition">Dịch vụ</a>
+                    <a href="#lien-he" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700 rounded-lg transition">Liên hệ</a>
                     
                     <!-- Auth Buttons (Mobile) -->
-                    <div id="mobile-auth-buttons" class="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3 px-3">
-                        <a href="dangnhap.html" class="text-center text-gray-600 hover:text-brand-600 font-medium py-2 border border-gray-200 rounded-full">Đăng nhập</a>
-                        <a href="dangky.html" class="text-center bg-brand-600 hover:bg-brand-700 text-white px-5 py-3 rounded-full font-medium shadow-md">Bắt đầu ngay</a>
+                    <div id="mobile-auth-buttons" class="mt-4 pt-4 border-t border-dark-700 flex flex-col gap-3 px-3">
+                        <a href="dangnhap.html" class="text-center text-gray-300 hover:text-white font-medium py-3 border border-dark-600 rounded-xl transition">Đăng nhập</a>
+                        <a href="dangky.html" class="text-center bg-brand-600 hover:bg-brand-500 text-white px-5 py-3 rounded-xl font-bold shadow-lg transition">Đăng ký ngay</a>
                     </div>
-                </div>
+                </nav>
             </div>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main>
         <!-- HERO SECTION -->
-        <section id="trang-chu" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-gray-50 hero-pattern">
-            <!-- Background Decorations -->
+        <section id="trang-chu" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden hero-pattern">
+            <!-- Glowing Orbs (Background) -->
             <div class="absolute top-0 left-1/2 w-full -translate-x-1/2 h-full overflow-hidden -z-10 pointer-events-none">
-                <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-brand-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-                <div class="absolute top-[20%] right-[-10%] w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-                <div class="absolute bottom-[-20%] left-[20%] w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+                <div class="absolute top-[10%] left-[20%] w-72 h-72 bg-brand-600/30 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+                <div class="absolute top-[30%] right-[20%] w-80 h-80 bg-blue-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob" style="animation-delay: 2s"></div>
+                <div class="absolute bottom-[10%] left-[40%] w-96 h-96 bg-purple-600/20 rounded-full mix-blend-screen filter blur-[120px] animate-blob" style="animation-delay: 4s"></div>
             </div>
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
-                <span class="inline-block py-1 px-3 rounded-full bg-brand-100 text-brand-700 font-semibold text-sm mb-6 border border-brand-200">
-                    <i class="fa-solid fa-star text-yellow-500 mr-1"></i> Hệ thống SMM Panel #1 Việt Nam
-                </span>
+                <div class="animate-float inline-flex mb-6">
+                    <span class="py-1 px-4 rounded-full bg-brand-500/10 text-brand-400 font-medium text-sm border border-brand-500/20 backdrop-blur-sm flex items-center shadow-[0_0_15px_rgba(139,92,246,0.15)]">
+                        <span class="w-2 h-2 rounded-full bg-brand-400 mr-2 animate-pulse"></span>
+                        Hệ thống SMM Panel #1 Việt Nam
+                    </span>
+                </div>
                 
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight text-white mb-6 leading-[1.1]">
                     Tăng Trưởng Mạng Xã Hội <br class="hidden md:block">
-                    <span class="gradient-text">Nhanh Chóng & Bền Vững</span>
+                    <span class="text-gradient">Nhanh Chóng & Bền Vững</span>
                 </h1>
                 
-                <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
-                    FLMMO cung cấp giải pháp toàn diện giúp bạn buff Like, Share, Comment, Follow với 100% tài khoản thật. Tự động hóa hoàn toàn, chi phí cực rẻ và an toàn tuyệt đối.
+                <p class="mt-4 text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+                    Nền tảng cung cấp giải pháp <b class="text-gray-200">Buff Like, Sub, Follow, Comment</b> với tài khoản thật 100%. Tự động hóa hoàn toàn 24/7, an toàn tuyệt đối và chi phí tốt nhất thị trường.
                 </p>
                 
                 <div id="hero-auth-buttons" class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="dangky.html" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-full font-bold text-lg transition shadow-xl shadow-brand-500/20 flex items-center justify-center">
-                        <i class="fa-solid fa-user-plus mr-2"></i> Đăng Ký Trải Nghiệm
+                    <a href="dangky.html" class="bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition shadow-[0_0_20px_rgba(139,92,246,0.3)] flex items-center justify-center group">
+                        <i class="fa-solid fa-bolt mr-2 text-yellow-300 group-hover:scale-110 transition-transform"></i> Bắt Đầu Sử Dụng
                     </a>
-                    <a href="#dich-vu" class="bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-8 py-4 rounded-full font-bold text-lg transition shadow-sm flex items-center justify-center">
-                        Xem Bảng Giá <i class="fa-solid fa-arrow-down ml-2"></i>
+                    <a href="#dich-vu" class="bg-dark-800 hover:bg-dark-700 text-white border border-dark-600 hover:border-gray-500 px-8 py-4 rounded-xl font-bold text-lg transition flex items-center justify-center">
+                        Xem Bảng Giá Dịch Vụ <i class="fa-solid fa-arrow-down ml-2 text-sm text-gray-400"></i>
                     </a>
                 </div>
                 
-                <div class="mt-14 pt-8 border-t border-gray-200 max-w-4xl mx-auto flex flex-wrap justify-center gap-8 md:gap-16 text-gray-500">
+                <!-- Stats -->
+                <div class="mt-20 pt-10 border-t border-dark-800 max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
                     <div class="flex flex-col items-center">
-                        <span class="text-3xl font-bold text-gray-900">5M+</span>
-                        <span class="text-sm font-medium uppercase tracking-wider mt-1">Đơn hàng hoàn thành</span>
+                        <span class="text-4xl font-black text-white">5M+</span>
+                        <span class="text-xs font-bold text-gray-500 uppercase mt-2">Đơn Hoàn Thành</span>
                     </div>
                     <div class="flex flex-col items-center">
-                        <span class="text-3xl font-bold text-gray-900">10K+</span>
-                        <span class="text-sm font-medium uppercase tracking-wider mt-1">Khách hàng tin dùng</span>
+                        <span class="text-4xl font-black text-white">12K+</span>
+                        <span class="text-xs font-bold text-gray-500 uppercase mt-2">Khách Hàng</span>
                     </div>
                     <div class="flex flex-col items-center">
-                        <span class="text-3xl font-bold text-gray-900">24/7</span>
-                        <span class="text-sm font-medium uppercase tracking-wider mt-1">Hệ thống tự động</span>
+                        <span class="text-4xl font-black text-white">20+</span>
+                        <span class="text-xs font-bold text-gray-500 uppercase mt-2">Dịch Vụ MXH</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-4xl font-black text-white text-gradient">24/7</span>
+                        <span class="text-xs font-bold text-gray-500 uppercase mt-2">Hỗ Trợ & Tự Động</span>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- FEATURES SECTION -->
-        <section id="tinh-nang" class="py-20 bg-white">
+        <section id="tinh-nang" class="py-24 bg-dark-900 border-y border-dark-800 relative z-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-brand-600 font-semibold tracking-wide uppercase text-sm mb-2">Tại sao chọn chúng tôi?</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Ưu Điểm Vượt Trội Của FLMMO</h3>
-                    <p class="text-gray-600 text-lg">Hệ thống được thiết kế tối ưu nhất để mang lại trải nghiệm tuyệt vời cho khách hàng và đại lý.</p>
+                    <h2 class="text-brand-500 font-bold tracking-widest uppercase text-xs mb-3">Tại sao chọn FLMMO?</h2>
+                    <h3 class="text-3xl md:text-5xl font-black text-white mb-6">Ưu Điểm <span class="text-gradient">Vượt Trội</span></h3>
+                    <p class="text-gray-400 text-lg">Kiến trúc hệ thống Serverless tiên tiến đảm bảo tính ổn định cao nhất, mang lại trải nghiệm mượt mà cho hàng ngàn người dùng cùng lúc.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Feature 1 -->
-                    <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-shadow duration-300 group">
-                        <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-bolt"></i>
+                    <article class="bg-dark-800 rounded-2xl p-8 border border-dark-700 card-glow transition-all duration-300">
+                        <div class="w-14 h-14 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-[0_0_15px_rgba(59,130,246,0.15)]">
+                            <i class="fa-solid fa-bolt-lightning" aria-hidden="true"></i>
                         </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-3">Tốc Độ Siêu Tốc</h4>
-                        <p class="text-gray-600 leading-relaxed">Hệ thống xử lý đơn hàng hoàn toàn tự động chỉ trong vài giây. Tương tác lên nhanh và ổn định.</p>
-                    </div>
+                        <h4 class="text-xl font-bold text-white mb-3">Tốc Độ Bàn Thờ</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed">Hệ thống xử lý API tự động 100%. Đơn hàng được đẩy sang máy chủ và bắt đầu chạy chỉ sau 1-5 phút.</p>
+                    </article>
 
                     <!-- Feature 2 -->
-                    <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-shadow duration-300 group">
-                        <div class="w-14 h-14 bg-green-100 text-brand-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-shield-halved"></i>
+                    <article class="bg-dark-800 rounded-2xl p-8 border border-dark-700 card-glow transition-all duration-300">
+                        <div class="w-14 h-14 bg-green-500/10 border border-green-500/20 text-green-400 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-[0_0_15px_rgba(34,197,94,0.15)]">
+                            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
                         </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-3">Tương Tác Thật & An Toàn</h4>
-                        <p class="text-gray-600 leading-relaxed">Sử dụng 100% tài khoản người dùng thật để tương tác, đảm bảo an toàn tuyệt đối cho tài khoản của bạn.</p>
-                    </div>
+                        <h4 class="text-xl font-bold text-white mb-3">An Toàn 100%</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed">Bảo mật tuyệt đối. Sử dụng tài khoản người dùng thật để tương tác, không lo dính check point hay khóa nick.</p>
+                    </article>
 
                     <!-- Feature 3 -->
-                    <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-shadow duration-300 group">
-                        <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-tags"></i>
+                    <article class="bg-dark-800 rounded-2xl p-8 border border-dark-700 card-glow transition-all duration-300">
+                        <div class="w-14 h-14 bg-purple-500/10 border border-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-[0_0_15px_rgba(168,85,247,0.15)]">
+                            <i class="fa-solid fa-coins" aria-hidden="true"></i>
                         </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-3">Chi Phí Cực Rẻ</h4>
-                        <p class="text-gray-600 leading-relaxed">Cam kết bảng giá SMM rẻ nhất thị trường. Chiết khấu cực cao dành riêng cho Đại lý và Nhà phân phối.</p>
-                    </div>
+                        <h4 class="text-xl font-bold text-white mb-3">Giá Gốc Tận Xưởng</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed">Nguồn server trực tiếp không qua trung gian. Bảng giá cực rẻ, tạo điều kiện tối đa cho Reseller/Đại lý.</p>
+                    </article>
 
                     <!-- Feature 4 -->
-                    <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 hover:shadow-xl transition-shadow duration-300 group">
-                        <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-headset"></i>
+                    <article class="bg-dark-800 rounded-2xl p-8 border border-dark-700 card-glow transition-all duration-300">
+                        <div class="w-14 h-14 bg-pink-500/10 border border-pink-500/20 text-pink-400 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-[0_0_15px_rgba(236,72,153,0.15)]">
+                            <i class="fa-solid fa-code" aria-hidden="true"></i>
                         </div>
-                        <h4 class="text-xl font-bold text-gray-900 mb-3">Hỗ Trợ 24/7</h4>
-                        <p class="text-gray-600 leading-relaxed">Đội ngũ kỹ thuật viên dày dặn kinh nghiệm luôn túc trực để hỗ trợ và xử lý vấn đề cho bạn bất cứ lúc nào.</p>
-                    </div>
+                        <h4 class="text-xl font-bold text-white mb-3">API Dành Cho Dev</h4>
+                        <p class="text-gray-400 text-sm leading-relaxed">Cung cấp tài liệu API chuẩn RESTful. Tích hợp đấu nối về website riêng của bạn chỉ trong 5 phút.</p>
+                    </article>
                 </div>
             </div>
         </section>
 
         <!-- SERVICES SECTION -->
-        <section id="dich-vu" class="py-20 bg-gray-900 text-white relative overflow-hidden">
+        <section id="dich-vu" class="py-24 bg-dark-900 relative overflow-hidden">
             <!-- Background glow -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-600 rounded-full mix-blend-screen filter blur-[150px] opacity-20 pointer-events-none"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-600 rounded-full mix-blend-screen filter blur-[200px] opacity-[0.15] pointer-events-none z-0"></div>
             
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="flex flex-col md:flex-row justify-between items-end mb-12">
                     <div class="max-w-2xl">
-                        <h2 class="text-brand-400 font-semibold tracking-wide uppercase text-sm mb-2">Nền tảng hỗ trợ</h2>
-                        <h3 class="text-3xl md:text-4xl font-bold mb-4">Đa Dạng Dịch Vụ Mạng Xã Hội</h3>
-                        <p class="text-gray-400 text-lg">Cung cấp tất cả những gì bạn cần để xây dựng thương hiệu cá nhân hoặc doanh nghiệp trên môi trường số.</p>
+                        <h2 class="text-brand-500 font-bold tracking-widest uppercase text-xs mb-3">Bảng Dịch Vụ</h2>
+                        <h3 class="text-3xl md:text-5xl font-black text-white mb-4">Mọi Nền Tảng, Một Nơi</h3>
+                        <p class="text-gray-400 text-lg">Đầy đủ các gói dịch vụ giúp bạn xây dựng hình ảnh cá nhân và thương hiệu đa kênh chuyên nghiệp.</p>
                     </div>
-                    <a href="#dich-vu" class="hidden md:flex mt-4 md:mt-0 text-brand-400 hover:text-white font-medium transition items-center">
-                        Xem tất cả dịch vụ <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </a>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Facebook -->
-                    <div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:bg-gray-800 transition duration-300">
-                        <i class="fa-brands fa-facebook text-5xl text-blue-500 mb-4"></i>
-                        <h4 class="text-xl font-bold mb-2">Dịch vụ Facebook</h4>
-                        <ul class="text-gray-400 space-y-2 mb-6">
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng Like Bài Viết</li>
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng Follow Cá Nhân / Page</li>
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng Comment Thật</li>
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Mắt Xem Livestream</li>
+                    <div class="bg-dark-800/80 backdrop-blur-md border border-dark-700 rounded-2xl p-8 card-glow">
+                        <div class="w-16 h-16 bg-[#1877F2]/10 border border-[#1877F2]/30 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fa-brands fa-facebook-f text-3xl text-[#1877F2]" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-4">Facebook</h4>
+                        <ul class="text-gray-400 space-y-3 mb-8 text-sm">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Like / Cảm Xúc Bài Viết</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Follow Cá Nhân / Fanpage</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Bình Luận Thật (Custom)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Mắt Xem Livestream Tự Động</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Thành Viên Group</li>
                         </ul>
+                        <a href="dangky.html" class="block w-full text-center py-3 rounded-xl border border-dark-600 text-white hover:bg-dark-700 transition font-medium text-sm">Xem Bảng Giá Ngay</a>
                     </div>
 
                     <!-- TikTok -->
-                    <div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:bg-gray-800 transition duration-300">
-                        <i class="fa-brands fa-tiktok text-5xl text-white mb-4"></i>
-                        <h4 class="text-xl font-bold mb-2">Dịch vụ TikTok</h4>
-                        <ul class="text-gray-400 space-y-2 mb-6">
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng View Video</li>
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng Tim (Like)</li>
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng Follower</li>
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Chia Sẻ & Lưu Video</li>
+                    <div class="bg-dark-800/80 backdrop-blur-md border border-dark-700 rounded-2xl p-8 card-glow">
+                        <div class="w-16 h-16 bg-white/5 border border-white/20 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fa-brands fa-tiktok text-3xl text-white" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-4">TikTok</h4>
+                        <ul class="text-gray-400 space-y-3 mb-8 text-sm">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Lượt Xem Video (View)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Tim (Thả tim video)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Người Theo Dõi (Follower)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Chia Sẻ & Lưu Video</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Mắt Live & Tương Tác Live</li>
                         </ul>
+                        <a href="dangky.html" class="block w-full text-center py-3 rounded-xl border border-dark-600 text-white hover:bg-dark-700 transition font-medium text-sm">Xem Bảng Giá Ngay</a>
                     </div>
 
                     <!-- Instagram -->
-                    <div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:bg-gray-800 transition duration-300">
-                        <i class="fa-brands fa-instagram text-5xl text-pink-500 mb-4"></i>
-                        <h4 class="text-xl font-bold mb-2">Dịch vụ Instagram</h4>
-                        <ul class="text-gray-400 space-y-2 mb-6">
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng Tim Ảnh/Reels</li>
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng Người Theo Dõi</li>
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng View Story/Reels</li>
+                    <div class="bg-dark-800/80 backdrop-blur-md border border-dark-700 rounded-2xl p-8 card-glow">
+                        <div class="w-16 h-16 bg-[#E4405F]/10 border border-[#E4405F]/30 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fa-brands fa-instagram text-3xl text-[#E4405F]" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-4">Instagram</h4>
+                        <ul class="text-gray-400 space-y-3 mb-8 text-sm">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Tim Hình Ảnh / Reels</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Follower (Bảo hành 30D)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Lượt Xem Reels & IGTV</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Bình Luận Bài Viết</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Tương Tác Story</li>
                         </ul>
+                        <a href="dangky.html" class="block w-full text-center py-3 rounded-xl border border-dark-600 text-white hover:bg-dark-700 transition font-medium text-sm">Xem Bảng Giá Ngay</a>
                     </div>
 
                     <!-- Youtube -->
-                    <div class="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-6 hover:bg-gray-800 transition duration-300">
-                        <i class="fa-brands fa-youtube text-5xl text-red-500 mb-4"></i>
-                        <h4 class="text-xl font-bold mb-2">Dịch vụ YouTube</h4>
-                        <ul class="text-gray-400 space-y-2 mb-6">
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng Subscriber</li>
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng View Video / Shorts</li>
-                            <li><i class="fa-solid fa-check text-brand-500 mr-2 text-sm"></i> Tăng Giờ Xem (Bật KTX)</li>
+                    <div class="bg-dark-800/80 backdrop-blur-md border border-dark-700 rounded-2xl p-8 card-glow">
+                        <div class="w-16 h-16 bg-[#FF0000]/10 border border-[#FF0000]/30 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fa-brands fa-youtube text-3xl text-[#FF0000]" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-4">YouTube</h4>
+                        <ul class="text-gray-400 space-y-3 mb-8 text-sm">
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Người Đăng Ký (Sub)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng View Video Chuẩn SEO</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Giờ Xem (Gói Bật Kiếm Tiền)</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng View Youtube Shorts</li>
+                            <li class="flex items-center"><i class="fa-solid fa-check text-green-500 mr-3"></i> Tăng Like & Cmt Video</li>
                         </ul>
+                        <a href="dangky.html" class="block w-full text-center py-3 rounded-xl border border-dark-600 text-white hover:bg-dark-700 transition font-medium text-sm">Xem Bảng Giá Ngay</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- FORM LIÊN HỆ GỬI YÊU CẦU LÊN FIREBASE -->
-        <section id="lien-he" class="py-20 bg-gray-50 border-t border-gray-200">
-            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-10">
-                    <h2 class="text-brand-600 font-semibold tracking-wide uppercase text-sm mb-2">Liên Hệ Trực Tiếp</h2>
-                    <h3 class="text-3xl font-bold text-gray-900">Gửi Yêu Cầu Hỗ Trợ</h3>
-                    <p class="mt-4 text-gray-600">Bạn muốn làm đại lý hoặc cần hỗ trợ nạp tiền? Hãy để lại thông tin, Admin sẽ xét duyệt sớm nhất.</p>
+        <section id="lien-he" class="py-24 bg-dark-800 relative border-t border-dark-700">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-12">
+                    <h2 class="text-brand-500 font-bold tracking-widest uppercase text-xs mb-3">Trung Tâm Hỗ Trợ</h2>
+                    <h3 class="text-3xl font-black text-white">Gửi Yêu Cầu Cho Admin</h3>
+                    <p class="mt-4 text-gray-400">Bạn muốn làm đại lý phân phối, cần hỗ trợ xử lý đơn hàng hay đóng góp ý kiến? Hãy để lại thông tin bên dưới.</p>
                 </div>
                 
-                <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+                <div class="bg-dark-900 rounded-3xl shadow-2xl p-8 border border-dark-700">
                     <form id="contact-form" class="space-y-6">
-                        <div id="contact-status" class="hidden p-4 rounded-lg text-sm font-medium"></div>
+                        <div id="contact-status" class="hidden p-4 rounded-xl text-sm font-medium border"></div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Họ và tên</label>
-                                <input type="text" id="contact-name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition" placeholder="Nguyễn Văn A">
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Họ và tên *</label>
+                                <input type="text" id="contact-name" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition" placeholder="Vd: Nguyễn Văn A">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Số Zalo / Điện thoại</label>
-                                <input type="text" id="contact-phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition" placeholder="09xxxxxx">
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Số Zalo / Liên Hệ *</label>
+                                <input type="text" id="contact-phone" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition" placeholder="Vd: 0912345678">
                             </div>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Nội dung yêu cầu</label>
-                            <textarea id="contact-message" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 outline-none transition" placeholder="Ví dụ: Mình cần đăng ký quyền làm đại lý SMM..."></textarea>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Nội dung yêu cầu *</label>
+                            <textarea id="contact-message" rows="4" required class="w-full bg-dark-800 border border-dark-600 text-white rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-brand-500 focus:border-transparent outline-none transition resize-none" placeholder="Hãy mô tả chi tiết vấn đề của bạn..."></textarea>
                         </div>
                         
-                        <button type="submit" id="btn-submit-contact" class="w-full bg-gray-900 hover:bg-black text-white font-bold py-4 px-4 rounded-lg transition duration-300 flex justify-center items-center">
-                            Gửi Yêu Cầu Tới Admin <i class="fa-solid fa-paper-plane ml-2"></i>
+                        <button type="submit" id="btn-submit-contact" class="w-full bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-bold py-4 px-4 rounded-xl shadow-[0_0_20px_rgba(139,92,246,0.4)] transition-all duration-300 flex justify-center items-center group">
+                            Gửi Yêu Cầu <i class="fa-solid fa-paper-plane ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </button>
                     </form>
                 </div>
             </div>
         </section>
 
-        <!-- CTA SECTION -->
-        <section class="py-20 bg-white">
+        <!-- CTA SECTION FINAL -->
+        <section class="py-20 bg-dark-900">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-gradient-to-r from-brand-600 to-blue-600 rounded-3xl p-8 md:p-16 text-center text-white shadow-2xl relative overflow-hidden">
-                    <!-- Circles decoration -->
-                    <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
-                    <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
+                <div class="bg-gradient-to-r from-brand-700 via-brand-600 to-blue-600 rounded-[2rem] p-10 md:p-16 text-center text-white shadow-[0_0_50px_rgba(139,92,246,0.3)] relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-30"></div>
                     
-                    <h2 class="text-3xl md:text-5xl font-bold mb-6 relative z-10">Sẵn sàng bứt phá doanh thu?</h2>
-                    <p class="text-lg md:text-xl text-brand-100 mb-10 max-w-2xl mx-auto relative z-10">
-                        Hàng ngàn khách hàng đã và đang sử dụng hệ thống của chúng tôi để gia tăng uy tín và tiếp cận khách hàng tiềm năng.
+                    <h2 class="text-3xl md:text-5xl font-black mb-6 relative z-10">Sẵn sàng bứt phá doanh thu?</h2>
+                    <p class="text-lg text-brand-100/80 mb-10 max-w-2xl mx-auto relative z-10 font-medium">
+                        Hàng ngàn Reseller/Đại lý đã và đang sử dụng hệ thống của FLMMO để kiếm tiền và cung cấp dịch vụ cho khách hàng của họ.
                     </p>
-                    <a href="dangky.html" class="inline-block bg-white text-brand-600 font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-gray-50 hover:scale-105 transition-all duration-300 relative z-10">
-                        Tạo Tài Khoản Ngay Miễn Phí
+                    <a href="dangky.html" class="inline-flex items-center bg-white text-brand-600 font-black text-lg px-10 py-4 rounded-full shadow-xl hover:bg-gray-100 hover:scale-105 transition-all duration-300 relative z-10">
+                        Tạo Tài Khoản Miễn Phí Ngay
                     </a>
                 </div>
             </div>
@@ -342,84 +428,87 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-gray-950 text-gray-300 pt-16 pb-8 border-t border-gray-800">
+    <footer class="bg-[#0b0b0e] text-gray-400 pt-16 pb-8 border-t border-dark-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                 <!-- Brand Info -->
                 <div class="lg:col-span-1">
-                    <div class="flex items-center gap-2 mb-6">
-                        <div class="w-8 h-8 bg-brand-500 rounded flex items-center justify-center text-white">
-                            <i class="fa-solid fa-rocket"></i>
+                    <a href="#" class="flex items-center gap-3 mb-6" aria-label="FLMMO Footer">
+                        <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-white shadow-lg shadow-brand-500/20">
+                            <i class="fa-solid fa-rocket text-sm"></i>
                         </div>
-                        <span class="font-bold text-xl text-white">FL<span class="text-brand-500">MMO</span></span>
-                    </div>
-                    <p class="text-sm text-gray-400 leading-relaxed mb-6">
-                        Hệ thống cung cấp dịch vụ mạng xã hội SMM Panel hàng đầu Việt Nam. Tăng uy tín thương hiệu nhanh chóng, an toàn, tự động 24/7.
+                        <span class="font-bold text-xl text-white tracking-tight">FL<span class="text-brand-500">MMO</span></span>
+                    </a>
+                    <p class="text-sm text-gray-500 leading-relaxed mb-6">
+                        Hệ thống SMM Panel tự động hóa 100%, an toàn, bảo mật. Phân phối sỉ lẻ dịch vụ mạng xã hội giá rẻ nhất VN.
                     </p>
-                    <div class="flex space-x-4">
-                        <a href="https://facebook.com/lenhanriel" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="https://instagram.com/nh4n.vn" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-400 hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="mailto:lenhancute1@gmail.com" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition"><i class="fa-solid fa-envelope"></i></a>
+                    <div class="flex space-x-3">
+                        <a href="https://facebook.com/lenhanriel" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-dark-800 border border-dark-700 flex items-center justify-center hover:bg-blue-600 hover:border-blue-500 hover:text-white transition" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/nh4n.vn" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-dark-800 border border-dark-700 flex items-center justify-center hover:bg-pink-600 hover:border-pink-500 hover:text-white transition" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="mailto:lenhancute1@gmail.com" class="w-9 h-9 rounded-full bg-dark-800 border border-dark-700 flex items-center justify-center hover:bg-red-500 hover:border-red-500 hover:text-white transition" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
                     </div>
                 </div>
 
-                <!-- Dịch vụ -->
+                <!-- Link nhanh -->
                 <div>
-                    <h4 class="text-white font-semibold mb-6 uppercase text-sm tracking-wider">Dịch Vụ Nổi Bật</h4>
+                    <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Hệ Thống</h4>
                     <ul class="space-y-3 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-brand-400 transition">Tăng Bình Luận Facebook</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-brand-400 transition">Tăng Follow Fanpage</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-brand-400 transition">Buff View TikTok</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-brand-400 transition">Tăng Follow Instagram</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-brand-400 transition">Tăng Subscriber YouTube</a></li>
+                        <li><a href="dangnhap.html" class="text-gray-500 hover:text-brand-400 transition">Đăng Nhập</a></li>
+                        <li><a href="dangky.html" class="text-gray-500 hover:text-brand-400 transition">Tạo Tài Khoản Mới</a></li>
+                        <li><a href="api.html" class="text-gray-500 hover:text-brand-400 transition">Tài Liệu API Dành Cho Dev</a></li>
+                        <li><a href="#dich-vu" class="text-gray-500 hover:text-brand-400 transition">Bảng Giá Dịch Vụ</a></li>
                     </ul>
                 </div>
 
-                <!-- Hỗ trợ -->
+                <!-- Chính sách -->
                 <div>
-                    <h4 class="text-white font-semibold mb-6 uppercase text-sm tracking-wider">Hỗ Trợ Khách Hàng</h4>
+                    <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Chính Sách & Hỗ Trợ</h4>
                     <ul class="space-y-3 text-sm">
-                        <li><a href="#bang-gia" class="text-gray-400 hover:text-brand-400 transition">Bảng Giá Dịch Vụ</a></li>
-                        <li><a href="faq.html" class="text-gray-400 hover:text-brand-400 transition">Câu Hỏi Thường Gặp (FAQ)</a></li>
-                        <li><a href="quydinh.html" class="text-gray-400 hover:text-brand-400 transition">Quy Định Sử Dụng</a></li>
-                        <li><a href="baomat.html" class="text-gray-400 hover:text-brand-400 transition">Chính Sách Bảo Mật</a></li>
-                        <li><a href="api.html" class="text-gray-400 hover:text-brand-400 transition">API Cho Đối Tác</a></li>
+                        <li><a href="faq.html" class="text-gray-500 hover:text-brand-400 transition">Câu Hỏi Thường Gặp (FAQ)</a></li>
+                        <li><a href="quydinh.html" class="text-gray-500 hover:text-brand-400 transition">Điều Khoản Dịch Vụ</a></li>
+                        <li><a href="baomat.html" class="text-gray-500 hover:text-brand-400 transition">Chính Sách Bảo Mật</a></li>
+                        <li><a href="quydinh.html" class="text-gray-500 hover:text-brand-400 transition">Chính Sách Hoàn Tiền</a></li>
                     </ul>
                 </div>
 
                 <!-- Liên hệ -->
                 <div>
-                    <h4 class="text-white font-semibold mb-6 uppercase text-sm tracking-wider">Liên Hệ</h4>
-                    <ul class="space-y-4 text-sm">
+                    <h4 class="text-white font-bold mb-6 uppercase text-xs tracking-widest">Liên Hệ</h4>
+                    <ul class="space-y-4 text-sm text-gray-500">
                         <li class="flex items-start">
-                            <i class="fa-solid fa-envelope mt-1 mr-3 text-brand-500"></i>
-                            <span class="text-gray-400">support@flmmo.vn</span>
+                            <i class="fa-solid fa-envelope mt-1 mr-3 text-gray-400"></i>
+                            <span>support@flmmo.vn</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="fa-solid fa-phone mt-1 mr-3 text-brand-500"></i>
-                            <span class="text-gray-400">0732.323.321 (Zalo/Tele)</span>
+                            <i class="fa-solid fa-phone mt-1 mr-3 text-gray-400"></i>
+                            <span>0732.323.321 (Zalo/Tele)</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="fa-solid fa-clock mt-1 mr-3 text-brand-500"></i>
-                            <span class="text-gray-400">Hỗ trợ 24/7 (Kể cả Lễ, Tết)</span>
+                            <i class="fa-solid fa-clock mt-1 mr-3 text-gray-400"></i>
+                            <span>Hỗ trợ 24/7 (Kể cả Lễ, Tết)</span>
                         </li>
                     </ul>
                 </div>
             </div>
 
             <!-- Copyright -->
-            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-sm text-gray-500 mb-4 md:mb-0">
-                    &copy; 2026 FLMMO.VN. Tất cả quyền được bảo lưu.
+            <div class="pt-8 border-t border-dark-800 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-600 font-medium">
+                    &copy; 2026 FLMMO.VN. Đã đăng ký bản quyền.
                 </p>
-                <p class="text-sm text-gray-500 flex items-center">
-                    Designed & Developed by <a href="#" class="text-brand-500 hover:text-white font-medium ml-1 transition">@vnsoftware</a>
+                <p class="text-xs text-gray-600 flex items-center">
+                    Phát triển bởi <a href="#" class="text-gray-400 hover:text-white font-bold ml-1 transition">@vnsoftware</a>
                 </p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript cho Mobile Menu -->
+    <!-- SCROLL TO TOP BTN -->
+    <a href="#" class="fixed bottom-6 right-6 w-12 h-12 bg-dark-800 border border-dark-600 text-gray-400 rounded-xl flex items-center justify-center hover:bg-brand-600 hover:border-brand-500 hover:text-white transition shadow-lg z-40 opacity-50 hover:opacity-100" aria-label="Lên đầu trang">
+        <i class="fa-solid fa-arrow-up"></i>
+    </a>
+
+    <!-- JAVASCRIPT GIAO DIỆN -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('mobile-menu-btn');
@@ -428,7 +517,6 @@
 
             btn.addEventListener('click', () => {
                 menu.classList.toggle('hidden');
-                // Đổi icon từ bars (menu) sang x (đóng)
                 if (menu.classList.contains('hidden')) {
                     icon.classList.remove('fa-xmark');
                     icon.classList.add('fa-bars');
@@ -447,6 +535,18 @@
                     icon.classList.add('fa-bars');
                 });
             });
+
+            // Thay đổi màu header khi scroll
+            window.addEventListener('scroll', () => {
+                const header = document.querySelector('header');
+                if (window.scrollY > 20) {
+                    header.classList.add('shadow-lg', 'border-dark-700');
+                    header.classList.remove('border-transparent');
+                } else {
+                    header.classList.remove('shadow-lg', 'border-dark-700');
+                    header.classList.add('border-transparent');
+                }
+            });
         });
     </script>
 
@@ -456,14 +556,14 @@
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // Vui lòng đảm bảo dán đúng config Firebase của bạn
         const firebaseConfig = {
             apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
             authDomain: "flmmo-a4e53.firebaseapp.com",
             projectId: "flmmo-a4e53",
             storageBucket: "flmmo-a4e53.firebasestorage.app",
             messagingSenderId: "973070510202",
-            appId: "1:973070510202:web:9eea3a002c0d03d0fbb3c3",
-            measurementId: "G-C060Q5CW1E"
+            appId: "1:973070510202:web:9eea3a002c0d03d0fbb3c3"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -472,7 +572,7 @@
 
         // 1. Kiểm tra xem user có đang đăng nhập không để đổi UI Nút
         onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if (user && !user.isAnonymous) {
                 const desktopAuth = document.getElementById('desktop-auth-buttons');
                 const mobileAuth = document.getElementById('mobile-auth-buttons');
                 const heroAuth = document.getElementById('hero-auth-buttons');
@@ -481,16 +581,16 @@
 
                 if (desktopAuth) {
                     desktopAuth.innerHTML = `
-                        <a href="home.html" class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full font-medium transition shadow-md shadow-brand-500/30 flex items-center">
-                            <div class="w-6 h-6 rounded-full bg-white text-brand-600 flex items-center justify-center text-xs font-bold mr-2">${initial}</div>
-                            Vào Dashboard <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                        <a href="home.html" class="bg-brand-600 hover:bg-brand-500 text-white px-6 py-2.5 rounded-full font-bold transition shadow-[0_0_15px_rgba(139,92,246,0.3)] flex items-center group">
+                            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs mr-2">${initial}</div>
+                            Vào Dashboard <i class="fa-solid fa-arrow-right ml-2 text-sm group-hover:translate-x-1 transition-transform"></i>
                         </a>
                     `;
                 }
 
                 if (mobileAuth) {
                     mobileAuth.innerHTML = `
-                        <a href="home.html" class="text-center bg-brand-600 hover:bg-brand-700 text-white px-5 py-3 rounded-full font-medium shadow-md">
+                        <a href="home.html" class="text-center bg-brand-600 hover:bg-brand-500 text-white px-5 py-3 rounded-xl font-bold shadow-lg transition">
                             Vào Dashboard
                         </a>
                     `;
@@ -498,11 +598,11 @@
 
                 if (heroAuth) {
                     heroAuth.innerHTML = `
-                        <a href="home.html" class="bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-full font-bold text-lg transition shadow-xl shadow-brand-500/20 flex items-center justify-center">
-                            <i class="fa-solid fa-chart-line mr-2"></i> Truy Cập Hệ Thống
+                        <a href="home.html" class="bg-brand-600 hover:bg-brand-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition shadow-[0_0_20px_rgba(139,92,246,0.3)] flex items-center justify-center group">
+                            <i class="fa-solid fa-chart-line mr-2 text-white"></i> Truy Cập Hệ Thống
                         </a>
-                        <a href="#dich-vu" class="bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-8 py-4 rounded-full font-bold text-lg transition shadow-sm flex items-center justify-center">
-                            Xem Bảng Giá <i class="fa-solid fa-arrow-down ml-2"></i>
+                        <a href="#dich-vu" class="bg-dark-800 hover:bg-dark-700 text-white border border-dark-600 hover:border-gray-500 px-8 py-4 rounded-xl font-bold text-lg transition flex items-center justify-center">
+                            Xem Bảng Giá <i class="fa-solid fa-arrow-down ml-2 text-sm text-gray-400"></i>
                         </a>
                     `;
                 }
@@ -520,7 +620,7 @@
             const message = document.getElementById('contact-message').value;
 
             // Đổi trạng thái nút
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang gửi yêu cầu...';
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang gửi yêu cầu...';
             btn.disabled = true;
 
             try {
@@ -534,8 +634,8 @@
                 });
 
                 // Hiện thông báo thành công
-                status.className = "p-4 rounded-lg text-sm font-medium bg-green-50 text-green-700 mb-4";
-                status.innerText = "Gửi yêu cầu thành công! Admin sẽ sớm xem xét và liên hệ với bạn.";
+                status.className = "p-4 rounded-xl text-sm font-bold bg-green-500/10 text-green-400 border border-green-500/30 mb-6 flex items-start";
+                status.innerHTML = "<i class='fa-solid fa-circle-check mt-0.5 mr-2 text-lg'></i> Gửi yêu cầu thành công! Admin sẽ sớm xem xét và liên hệ với bạn qua Zalo.";
                 status.classList.remove('hidden');
                 
                 // Reset form
@@ -543,18 +643,15 @@
 
             } catch (error) {
                 // Hiện thông báo Lỗi
-                status.className = "p-4 rounded-lg text-sm font-medium bg-red-50 text-red-700 mb-4";
-                status.innerText = "Đã xảy ra lỗi: " + error.message + " (Vui lòng kiểm tra lại Rule Firebase cho collection 'contact_requests')";
+                status.className = "p-4 rounded-xl text-sm font-bold bg-red-500/10 text-red-400 border border-red-500/30 mb-6 flex items-start";
+                status.innerHTML = "<i class='fa-solid fa-triangle-exclamation mt-0.5 mr-2 text-lg'></i> Đã xảy ra lỗi: " + error.message;
                 status.classList.remove('hidden');
             } finally {
                 // Trả lại nút
-                btn.innerHTML = 'Gửi Yêu Cầu Tới Admin <i class="fa-solid fa-paper-plane ml-2"></i>';
+                btn.innerHTML = 'Gửi Yêu Cầu <i class="fa-solid fa-paper-plane ml-2"></i>';
                 btn.disabled = false;
             }
         });
     </script>
 </body>
 </html>
-
-
-
