@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FLMMO.VN - Social MMO Panel</title>
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -43,8 +45,10 @@
 </head>
 <body class="flex h-screen overflow-hidden relative">
 
+    <!-- TOAST NOTIFICATION CONTAINER -->
     <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
 
+    <!-- CUSTOM CONFIRM MODAL -->
     <div id="custom-confirm" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[10000] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 w-full max-w-sm transform scale-95 transition-transform duration-300 shadow-2xl" id="custom-confirm-box">
             <h3 class="text-xl font-bold text-white mb-2 flex items-center"><i class="fa-solid fa-circle-question text-brand-500 mr-2"></i> Xác nhận</h3>
@@ -56,6 +60,7 @@
         </div>
     </div>
 
+    <!-- MÀN HÌNH BẢO TRÌ -->
     <div id="maintenance-screen" class="fixed inset-0 bg-dark-900 z-[9998] flex flex-col items-center justify-center text-white hidden">
         <i class="fa-solid fa-screwdriver-wrench text-6xl text-brand-500 mb-6 animate-pulse"></i>
         <h1 class="text-3xl font-bold mb-2">Hệ Thống Đang Nâng Cấp</h1>
@@ -65,11 +70,15 @@
         </button>
     </div>
 
+    <!-- MAIN APP WRAPPER -->
     <div id="main-app-content" class="flex w-full h-full">
 
+        <!-- MOBILE OVERLAY -->
         <div id="sidebar-overlay" class="fixed inset-0 bg-black/80 z-30 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
 
+        <!-- SIDEBAR -->
         <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-64 bg-dark-800 border-r border-dark-700 flex flex-col z-40 transition-transform duration-300 ease-in-out shrink-0">
+            <!-- Favicon/Logo Area -->
             <a href="home.html" class="h-20 flex items-center px-6 border-b border-dark-700 cursor-pointer hover:bg-dark-700 transition">
                 <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg mr-3 shadow-purple-500/30">
                     <i class="fa-solid fa-bolt text-xl"></i>
@@ -80,6 +89,7 @@
                 </div>
             </a>
 
+            <!-- Menu Navigation -->
             <div class="flex-1 overflow-y-auto py-4">
                 <div class="px-6 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Menu</div>
                 <ul>
@@ -90,6 +100,7 @@
 
                 <div class="px-6 mt-6 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Danh Mục Dịch Vụ</div>
                 
+                <!-- MENU ĐỘNG TỪ FIREBASE ĐỔ VÀO ĐÂY -->
                 <ul id="dynamic-sidebar-menu">
                     <li class="px-6 py-3 text-sm text-gray-500 italic">
                         <i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang tải...
@@ -97,6 +108,7 @@
                 </ul>
             </div>
 
+            <!-- User Profile Sidebar -->
             <div class="p-4 border-t border-dark-700 bg-dark-900 cursor-pointer hover:bg-dark-700 transition" onclick="toggleModal('modal-profile')">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold shadow-md" id="ui-avatar">U</div>
@@ -109,8 +121,10 @@
             </div>
         </aside>
 
+        <!-- MAIN CONTENT -->
         <div class="flex-1 flex flex-col h-screen overflow-hidden bg-dark-900">
             
+            <!-- HEADER MOBILE ONLY -->
             <header class="h-16 bg-dark-800 border-b border-dark-700 flex md:hidden items-center justify-between px-4 z-10 shrink-0">
                 <div class="flex items-center gap-3">
                     <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white p-1">
@@ -123,6 +137,7 @@
 
             <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 lg:p-8">
                 
+                <!-- VIEW 1: ĐẶT ĐƠN (ORDER) -->
                 <div id="view-order" class="view-section active max-w-6xl mx-auto space-y-6">
                     
                     <div class="hidden md:flex justify-between items-end mb-2">
@@ -132,6 +147,7 @@
                         </div>
                     </div>
 
+                    <!-- 3 Thẻ Thống Kê -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 flex justify-between items-center relative overflow-hidden">
                             <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
@@ -160,47 +176,50 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Cột Form Đặt Đơn -->
                         <div class="lg:col-span-2 space-y-6">
                             <div class="bg-dark-800 rounded-xl border border-dark-700 p-6 shadow-lg">
                                 <h3 class="text-white font-bold mb-6 flex items-center border-b border-dark-700 pb-3"><i class="fa-solid fa-cart-shopping mr-2 text-brand-500"></i> Chi tiết đơn hàng</h3>
                                 <form id="form-order" class="space-y-6">
                                     
                                     <div>
-                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-3">Dịch vụ *</label>
+                                        <label id="label-dich-vu" class="block text-xs font-bold text-gray-500 uppercase mb-3">Thông Báo Hệ Thống</label>
                                         <div id="server-list" class="space-y-3">
-                                            <div class="p-6 border border-dashed border-dark-600 rounded-xl text-center text-sm text-gray-500 bg-dark-900">
-                                                <i class="fa-solid fa-hand-pointer mb-3 text-gray-600 text-2xl"></i><br>
-                                                Vui lòng chọn một danh mục từ Menu bên trái.
-                                            </div>
+                                            <!-- DỮ LIỆU SẼ ĐƯỢC INJECT BỞI JS -->
+                                            <div class="text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl"></i></div>
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Link *</label>
-                                        <input type="text" id="order-link" placeholder="Nhập đường dẫn hoặc UID..." class="w-full px-4 py-3 rounded-xl dark-input transition font-mono text-sm" disabled required>
-                                    </div>
-                                    
-                                    <div class="grid grid-cols-2 gap-4">
+                                    <!-- VÙNG NHẬP LIỆU BỊ ẨN KHI CHƯA CHỌN DỊCH VỤ -->
+                                    <div id="order-form-inputs" class="hidden space-y-6">
                                         <div>
-                                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Số lượng</label>
-                                            <input type="number" id="qty" value="0" class="w-full px-4 py-3 rounded-xl dark-input transition font-bold" disabled required oninput="calcPrice()">
+                                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Link *</label>
+                                            <input type="text" id="order-link" placeholder="Nhập đường dẫn hoặc UID..." class="w-full px-4 py-3 rounded-xl dark-input transition font-mono text-sm" disabled required>
                                         </div>
-                                        <div>
-                                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Tổng tiền (VNĐ)</label>
-                                            <div class="w-full px-4 py-3 rounded-xl bg-dark-900 border border-dark-600 text-white font-bold flex items-center justify-between">
-                                                <span id="total">0</span>
-                                                <i class="fa-solid fa-coins text-yellow-500"></i>
+                                        
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Số lượng</label>
+                                                <input type="number" id="qty" value="0" class="w-full px-4 py-3 rounded-xl dark-input transition font-bold" disabled required oninput="calcPrice()">
+                                            </div>
+                                            <div>
+                                                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Tổng tiền (VNĐ)</label>
+                                                <div class="w-full px-4 py-3 rounded-xl bg-dark-900 border border-dark-600 text-white font-bold flex items-center justify-between">
+                                                    <span id="total">0</span>
+                                                    <i class="fa-solid fa-coins text-yellow-500"></i>
+                                                </div>
                                             </div>
                                         </div>
+                                        
+                                        <button type="submit" id="btn-create-order" class="w-full bg-dark-700 text-gray-400 font-bold py-3.5 rounded-xl cursor-not-allowed transition duration-300 flex justify-center items-center" disabled>
+                                            <span>Tạo Đơn Hàng</span>
+                                        </button>
                                     </div>
-                                    
-                                    <button type="submit" id="btn-create-order" class="w-full bg-dark-700 text-gray-400 font-bold py-3.5 rounded-xl cursor-not-allowed transition duration-300 flex justify-center items-center" disabled>
-                                        <span>Tạo Đơn Hàng</span>
-                                    </button>
                                 </form>
                             </div>
                         </div>
 
+                        <!-- Cột Chú Ý (Notes) -->
                         <div class="lg:col-span-1">
                             <div class="bg-dark-800 rounded-xl border border-dark-700 p-6 sticky top-6 shadow-lg">
                                 <h3 class="text-white font-bold mb-4 flex items-center"><i class="fa-regular fa-circle-question mr-2"></i> Chú ý</h3>
@@ -225,6 +244,7 @@
                     </div>
                 </div>
 
+                <!-- VIEW 2: LỊCH SỬ ĐƠN (HISTORY) -->
                 <div id="view-history" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="flex justify-between items-end mb-2">
                         <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-brand-500 mr-2"></i> Lịch Sử Đơn Hàng</h2>
@@ -257,6 +277,7 @@
                     </div>
                 </div>
 
+                <!-- VIEW 3: NẠP TIỀN (DEPOSIT) -->
                 <div id="view-deposit" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="flex justify-between items-end mb-2">
                         <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-wallet text-brand-500 mr-2"></i> Nạp Tiền & Lịch Sử</h2>
@@ -265,6 +286,7 @@
                         </div>
                     </div>
 
+                    <!-- TABS NẠP TIỀN -->
                     <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
                         <button class="px-5 py-2.5 rounded-full border border-green-500/50 text-green-400 bg-green-500/10 font-bold flex items-center whitespace-nowrap transition shadow-[0_0_15px_rgba(34,197,94,0.15)] pointer-events-none">
                             <i class="fa-solid fa-building-columns mr-2"></i> Chuyển khoản ngân hàng 
@@ -275,11 +297,13 @@
                         </button>
                     </div>
 
+                    <!-- THÔNG TIN NGÂN HÀNG & QR -->
                     <div class="bg-dark-800 border border-green-500/30 rounded-2xl p-6 shadow-lg relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-blue-500"></div>
                         <h3 class="text-white font-bold text-lg mb-6 flex items-center"><i class="fa-solid fa-qrcode text-green-500 mr-2"></i> Trình Tạo Mã QR Thanh Toán Nhanh</h3>
                         
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                            <!-- Input Amount & Info -->
                             <div class="space-y-6">
                                 <div>
                                     <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Nhập số tiền bạn muốn nạp (VNĐ)</label>
@@ -319,6 +343,7 @@
                                 </div>
                             </div>
                             
+                            <!-- QR Image Generator -->
                             <div class="flex flex-col items-center justify-center h-full">
                                 <div class="bg-white p-4 rounded-2xl shadow-[0_0_40px_rgba(139,92,246,0.15)] mb-4 w-full max-w-[280px] aspect-square flex items-center justify-center relative border-4 border-dark-800">
                                     <img id="qr-image" src="https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=5000&des=&template=compact" class="w-full h-full object-contain" alt="VietQR">
@@ -328,6 +353,7 @@
                         </div>
                     </div>
 
+                    <!-- Bảng Lịch sử nạp -->
                     <div class="bg-dark-800 rounded-xl shadow-lg border border-dark-700 overflow-hidden mt-8">
                         <div class="px-6 py-4 border-b border-dark-700 flex justify-between items-center bg-dark-900">
                             <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-brand-500 mr-2"></i> Lịch Sử Nạp Tiền</h3>
@@ -356,6 +382,7 @@
         </div>
     </div>
 
+    <!-- MODAL PROFILE -->
     <div id="modal-profile" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
         <div class="bg-dark-800 border border-dark-700 rounded-2xl shadow-2xl w-full max-w-md mx-auto overflow-hidden relative transform transition-all">
             <button onclick="toggleModal('modal-profile')" class="absolute top-4 right-4 text-gray-500 hover:text-white bg-dark-700 hover:bg-dark-600 rounded-lg w-8 h-8 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
@@ -392,6 +419,7 @@
         </div>
     </div>
 
+    <!-- UI JAVASCRIPT & UI HELPERS (TOAST, CONFIRM, RATE) -->
     <script>
         // Data toàn cục
         window.allServers = [];
@@ -488,6 +516,11 @@
             if(viewName === 'history' && typeof window.loadOrderHistory === 'function') window.loadOrderHistory();
             if(viewName === 'deposit' && typeof window.loadDepositHistory === 'function') window.loadDepositHistory();
             
+            // Xử lý nạp Bảng Tin Hệ Thống nếu về tab Order mà chưa chọn dịch vụ
+            if (viewName === 'order' && !window.currentServiceCategory && typeof window.loadAnnouncements === 'function') {
+                window.loadAnnouncements();
+            }
+            
             if(window.innerWidth < 768) toggleSidebar();
         }
 
@@ -511,6 +544,12 @@
             document.getElementById('header-title').innerText = serviceCategory;
             document.getElementById('header-title-mobile').innerText = serviceCategory.split(' - ')[0];
             window.currentServiceCategory = serviceCategory;
+            
+            const labelEl = document.getElementById('label-dich-vu');
+            if(labelEl) labelEl.innerText = "Dịch Vụ *";
+            
+            const inputsEl = document.getElementById('order-form-inputs');
+            if(inputsEl) inputsEl.classList.remove('hidden');
             
             document.getElementById('order-link').disabled = false;
             document.getElementById('qty').disabled = false;
@@ -680,7 +719,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInAnonymously, EmailAuthProvider, reauthenticateWithCredential, updatePassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, collection, addDoc, getDocs, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, addDoc, getDocs, updateDoc, increment, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
@@ -695,6 +734,128 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+
+        // HÀM TẢI BẢNG TIN TỪ FIREBASE
+        window.loadAnnouncements = async function() {
+            const listEl = document.getElementById('server-list');
+            const labelEl = document.getElementById('label-dich-vu');
+            const inputsEl = document.getElementById('order-form-inputs');
+            
+            if(labelEl) labelEl.innerText = "Thông Báo Hệ Thống";
+            if(inputsEl) inputsEl.classList.add('hidden');
+            document.getElementById('header-title').innerText = 'Tạo đơn hàng mới';
+            if(document.getElementById('header-title-mobile')) document.getElementById('header-title-mobile').innerText = 'Tạo đơn hàng';
+            window.currentServiceCategory = "";
+
+            listEl.innerHTML = '<div class="text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl"></i></div>';
+
+            try {
+                const q = query(collection(db, "announcements"), orderBy("createdAt", "desc"));
+                const snap = await getDocs(q);
+                
+                let html = `
+                <div class="bg-dark-900 border border-dark-600 rounded-xl overflow-hidden shadow-inner">
+                    <div class="bg-dark-800 border-b border-dark-600 px-5 py-3 flex items-center justify-between">
+                        <h4 class="font-bold text-white flex items-center">
+                            <i class="fa-solid fa-bullhorn text-brand-500 mr-2"></i> Bảng Tin Mới
+                        </h4>
+                        <span class="bg-brand-500/20 text-brand-400 text-[10px] font-bold px-2 py-1 rounded border border-brand-500/30">Tin tức</span>
+                    </div>
+                    <div class="p-5 space-y-5">
+                `;
+
+                if(snap.empty) {
+                    // FALLBACK HIỂN THỊ NẾU DB CHƯA CÓ DỮ LIỆU
+                    html += `
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-2.5 h-2.5 rounded-full bg-green-500 mt-1 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+                                <div class="w-px h-full bg-dark-600 mt-1.5"></div>
+                            </div>
+                            <div class="pb-1 flex-1">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="text-[10px] bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded border border-red-500/30 font-bold uppercase tracking-wider">HOT SALE</span>
+                                    <span class="text-xs font-medium text-gray-500">Hôm nay</span>
+                                </div>
+                                <p class="text-sm text-gray-300 font-medium leading-relaxed">Giảm giá kịch sàn toàn bộ dịch vụ Tăng Follow TikTok & Facebook. Server chạy cực mượt, tốc độ bàn thờ!</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-2.5 h-2.5 rounded-full bg-blue-500 mt-1 shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+                                <div class="w-px h-full bg-dark-600 mt-1.5"></div>
+                            </div>
+                            <div class="pb-1 flex-1">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="text-[10px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded border border-blue-500/30 font-bold uppercase tracking-wider">UPDATE</span>
+                                    <span class="text-xs font-medium text-gray-500">Hôm qua</span>
+                                </div>
+                                <p class="text-sm text-gray-400 leading-relaxed">Đã bảo trì xong và mở lại cụm Server: Mắt xem Livestream Facebook. Đảm bảo ổn định, không rớt giữa chừng.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-2.5 h-2.5 rounded-full bg-gray-500 mt-1"></div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="text-[10px] bg-gray-700 text-gray-300 px-1.5 py-0.5 rounded border border-gray-600 font-bold uppercase tracking-wider">INFO</span>
+                                    <span class="text-xs font-medium text-gray-500">Gần đây</span>
+                                </div>
+                                <p class="text-sm text-gray-400 leading-relaxed">Hệ thống nạp tiền tự động qua QR Bank đã hoạt động. Tự động cộng tiền trong 30 giây. Lưu ý: Nạp tối thiểu 5,000đ.</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    snap.forEach(doc => {
+                        const data = doc.data();
+                        let badgeColor = 'bg-gray-700 text-gray-300 border-gray-600';
+                        let dotColor = 'bg-gray-500';
+                        let shadowColor = '';
+                        let typeLabel = data.type || 'INFO';
+                        
+                        if(typeLabel === 'HOT SALE' || typeLabel === 'HOT') { badgeColor = 'bg-red-500/20 text-red-400 border-red-500/30'; dotColor = 'bg-red-500'; shadowColor = 'shadow-[0_0_8px_rgba(239,68,68,0.6)]'; }
+                        else if(typeLabel === 'UPDATE') { badgeColor = 'bg-blue-500/20 text-blue-400 border-blue-500/30'; dotColor = 'bg-blue-500'; shadowColor = 'shadow-[0_0_8px_rgba(59,130,246,0.6)]'; }
+                        else if(typeLabel === 'INFO') { badgeColor = 'bg-green-500/20 text-green-400 border-green-500/30'; dotColor = 'bg-green-500'; shadowColor = 'shadow-[0_0_8px_rgba(34,197,94,0.6)]'; }
+
+                        let dateStr = "";
+                        if(data.createdAt) {
+                            const dateObj = new Date(data.createdAt);
+                            dateStr = `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth()+1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`;
+                        }
+
+                        html += `
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center">
+                                <div class="w-2.5 h-2.5 rounded-full ${dotColor} mt-1 ${shadowColor}"></div>
+                                <div class="w-px h-full bg-dark-600 mt-1.5"></div>
+                            </div>
+                            <div class="pb-1 flex-1">
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <span class="text-[10px] ${badgeColor} px-1.5 py-0.5 rounded border font-bold uppercase tracking-wider">${typeLabel}</span>
+                                    <span class="text-xs font-medium text-gray-500">${dateStr}</span>
+                                </div>
+                                <p class="text-sm text-gray-300 font-medium leading-relaxed">${data.content}</p>
+                            </div>
+                        </div>
+                        `;
+                    });
+                }
+
+                html += `
+                    </div>
+                    <div class="bg-brand-500/10 px-5 py-3.5 border-t border-dark-600 text-sm text-brand-400 text-center font-medium animate-pulse">
+                        <i class="fa-solid fa-hand-point-left mr-2"></i> Vui lòng chọn một <b>danh mục dịch vụ</b> ở Menu bên trái để bắt đầu.
+                    </div>
+                </div>`;
+                
+                listEl.innerHTML = html;
+                
+            } catch(e) {
+                console.error(e);
+                listEl.innerHTML = `<div class="text-center py-10 text-red-500">Lỗi tải thông báo: ${e.message}</div>`;
+            }
+        }
 
         const initAuth = async () => {
             onAuthStateChanged(auth, async (user) => {
@@ -762,6 +923,7 @@
 
             loadDepositHistory();
             fetchAndRenderServicesMenu();
+            window.loadAnnouncements(); // Load thông báo ngay sau khi khởi tạo xong user
         }
 
         async function loadOrderStats(uid) {
