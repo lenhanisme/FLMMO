@@ -146,18 +146,24 @@
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang xử lý...';
             btn.disabled = true;
             
+            // Lấy mã Ref từ thanh địa chỉ URL (Nếu có)
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref') || null;
+            
             createUserWithEmailAndPassword(auth, email, password)
                 .then(async (userCredential) => {
                     const user = userCredential.user;
                     await updateProfile(user, { displayName: fullname });
                     
-                    // Lưu profile vào Firestore (Mặc định 0 coin)
+                    // Lưu profile vào Firestore kèm mã Giới Thiệu (ReferredBy)
                     await setDoc(doc(db, "users", user.uid), {
                         uid: user.uid,
                         fullname: fullname,
                         email: email,
                         coin: 0,
                         role: "user",
+                        status: "Kích hoạt",
+                        referredBy: refCode, 
                         createdAt: new Date().toISOString()
                     });
 
