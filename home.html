@@ -104,6 +104,11 @@
                     <li><a href="#" id="menu-game-history" class="menu-item flex items-center px-6 py-3 text-sm text-gray-400 hover:text-white transition" onclick="switchView('game-history')"><i class="fa-solid fa-box-open w-6 text-orange-400"></i> Lịch sử mua Acc</a></li>
                 </ul>
 
+                <div class="px-6 mt-6 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Tiếp Thị Liên Kết</div>
+                <ul>
+                    <li><a href="#" id="menu-affiliate" class="menu-item flex items-center px-6 py-3 text-sm text-gray-400 hover:text-white transition" onclick="switchView('affiliate')"><i class="fa-solid fa-handshake-angle w-6 text-pink-500"></i> Kiếm Tiền (Ref)</a></li>
+                </ul>
+
                 <div class="px-6 mt-6 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Danh Mục Dịch Vụ</div>
                 
                 <!-- MENU ĐỘNG TỪ FIREBASE ĐỔ VÀO ĐÂY -->
@@ -295,6 +300,48 @@
                                             <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải dữ liệu...
                                         </td>
                                     </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIEW: AFFILIATE (TIẾP THỊ LIÊN KẾT) -->
+                <div id="view-affiliate" class="view-section max-w-6xl mx-auto space-y-6">
+                    <div class="flex justify-between items-end mb-2">
+                        <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-handshake-angle text-brand-500 mr-2"></i> Kiếm Tiền Cùng FLMMO</h2>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 rounded-2xl p-6 shadow-lg relative overflow-hidden">
+                        <h3 class="text-white font-bold text-lg mb-2">Chia sẻ Link - Nhận Hoa Hồng Trọn Đời</h3>
+                        <p class="text-sm text-gray-400 mb-6">Nhận <strong class="text-green-400">15%</strong> hoa hồng với các hóa đơn nạp dưới 100k, và <strong class="text-green-400">8%</strong> với hóa đơn từ 100k trở lên. Tiền thưởng được tự động cộng thẳng vào số dư của bạn ngay khi người được mời nạp tiền thành công!</p>
+                        
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Link giới thiệu của riêng bạn:</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="my-ref-link" class="flex-1 bg-dark-900 border border-dark-600 focus:border-brand-500 rounded-xl py-3 px-4 text-brand-400 font-mono text-sm outline-none" readonly>
+                            <button onclick="copyToClipboard(document.getElementById('my-ref-link').value)" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-6 rounded-xl transition shadow-md whitespace-nowrap">
+                                <i class="fa-regular fa-copy mr-2"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-dark-800 rounded-xl shadow-lg border border-dark-700 overflow-hidden mt-6">
+                        <div class="px-6 py-4 border-b border-dark-700 flex justify-between items-center bg-dark-900">
+                            <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-sack-dollar text-brand-500 mr-2"></i> Lịch Sử Nhận Hoa Hồng</h3>
+                            <button onclick="loadCommissions()" class="text-xs text-gray-400 hover:text-white transition"><i class="fa-solid fa-rotate mr-1"></i> Tải lại</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm text-left whitespace-nowrap">
+                                <thead class="text-xs text-gray-400 uppercase bg-dark-800 border-b border-dark-700">
+                                    <tr>
+                                        <th class="px-6 py-4">Thời gian</th>
+                                        <th class="px-6 py-4">Người nạp</th>
+                                        <th class="px-6 py-4">Mức nạp</th>
+                                        <th class="px-6 py-4 text-right">Hoa hồng nhận được</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="commission-history-body" class="divide-y divide-dark-700 bg-dark-900">
+                                    <tr><td colspan="4" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-xl"></i></td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -638,11 +685,13 @@
             if (viewName === 'deposit') titleMobile.innerText = "Nạp tiền tài khoản";
             if (viewName === 'games') titleMobile.innerText = "Mua Tài Khoản";
             if (viewName === 'game-history') titleMobile.innerText = "Lịch sử Acc";
+            if (viewName === 'affiliate') titleMobile.innerText = "Kiếm Tiền (Ref)";
 
             if(viewName === 'history' && typeof window.loadOrderHistory === 'function') window.loadOrderHistory();
             if(viewName === 'deposit' && typeof window.loadDepositHistory === 'function') window.loadDepositHistory();
             if(viewName === 'games' && typeof window.loadGameProductsUI === 'function') window.loadGameProductsUI();
             if(viewName === 'game-history' && typeof window.loadGameOrderHistory === 'function') window.loadGameOrderHistory();
+            if(viewName === 'affiliate' && typeof window.loadCommissions === 'function') window.loadCommissions();
             
             if (viewName === 'order' && !window.currentServiceCategory && typeof window.loadAnnouncements === 'function') {
                 window.loadAnnouncements();
@@ -1214,6 +1263,38 @@
             }
         }
 
+        // TẢI HOA HỒNG REF
+        window.loadCommissions = async function() {
+            const user = auth.currentUser; if(!user) return;
+            const tbody = document.getElementById('commission-history-body');
+            if(!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-xl"></i><br>Đang tải...</td></tr>';
+            try {
+                const q = query(collection(db, "commissions"), where("referrerUid", "==", user.uid));
+                const snapshot = await getDocs(q);
+                let comms = [];
+                snapshot.forEach(doc => comms.push(doc.data()));
+                comms.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                if(comms.length === 0) return tbody.innerHTML = '<tr><td colspan="4" class="text-center py-6 text-gray-500">Chưa có dữ liệu hoa hồng</td></tr>';
+                
+                tbody.innerHTML = '';
+                comms.forEach(c => {
+                    const date = new Date(c.createdAt).toLocaleString('vi-VN');
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-dark-700/50 transition text-gray-300 border-b border-dark-700">
+                            <td class="px-6 py-4 text-xs text-gray-500">${date}</td>
+                            <td class="px-6 py-4 font-bold text-white">${c.fromUserName || 'Ẩn danh'}</td>
+                            <td class="px-6 py-4 text-gray-400">${Number(c.depositAmount).toLocaleString('vi-VN')}đ</td>
+                            <td class="px-6 py-4 font-black text-green-400 text-right">+ ${Number(c.bonusAmount).toLocaleString('vi-VN')}đ <span class="text-[10px] text-gray-500 font-normal">(${c.rate})</span></td>
+                        </tr>
+                    `;
+                });
+            } catch(e) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-red-500">Lỗi: ${e.message}</td></tr>`;
+            }
+        }
+
         const initAuth = async () => {
             onAuthStateChanged(auth, async (user) => {
                 if (!user) await signInAnonymously(auth);
@@ -1275,13 +1356,17 @@
             if(document.getElementById('profile-balance')) document.getElementById('profile-balance').innerText = coin.toLocaleString('en-US') + " đ";
             if(document.getElementById('profile-created')) document.getElementById('profile-created').innerText = createdAt;
 
+            // Update Affiliate Link
+            if(document.getElementById('my-ref-link')) document.getElementById('my-ref-link').value = `https://flmmo.vercel.app/dangky.html?ref=${user.uid}`;
+
             // TẢI DỮ LIỆU SONG SONG SIÊU TỐC
             Promise.all([
                 loadOrderStats(user.uid),
                 loadDepositHistory(),
                 fetchAndRenderServicesMenu(),
                 window.loadAnnouncements(),
-                typeof window.loadGameProductsUI === 'function' ? window.loadGameProductsUI() : Promise.resolve()
+                typeof window.loadGameProductsUI === 'function' ? window.loadGameProductsUI() : Promise.resolve(),
+                typeof window.loadCommissions === 'function' ? window.loadCommissions() : Promise.resolve()
             ]).catch(e => console.error("Lỗi khi tải dữ liệu ngầm:", e));
         }
 
@@ -1474,7 +1559,10 @@
                     tbody.innerHTML += `
                         <tr class="hover:bg-dark-700/50 transition text-gray-300 border-b border-dark-700">
                             <td class="px-6 py-4">
-                                <div class="text-xs font-mono font-bold text-white mb-1">#${o.id.substring(0,8).toUpperCase()}</div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs font-mono font-bold text-white" title="${o.id}">#${o.id.substring(0,8).toUpperCase()}</span>
+                                    <button onclick="copyToClipboard('${o.id}')" class="text-gray-500 hover:text-brand-400 transition" title="Copy mã đơn"><i class="fa-regular fa-copy"></i></button>
+                                </div>
                                 <div class="text-[10px] text-gray-500">${formattedDate}</div>
                             </td>
                             <td class="px-6 py-4 text-xs font-medium text-brand-400">${o.category || '-'}</td>
@@ -1515,7 +1603,12 @@
 
                     tbody.innerHTML += `
                         <tr class="hover:bg-dark-700/50 transition text-gray-300 border-b border-dark-700">
-                            <td class="px-6 py-4 text-xs font-mono">#${d.id.substring(0,6).toUpperCase()}</td>
+                            <td class="px-6 py-4 text-xs font-mono">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs font-mono font-bold text-white" title="${d.id}">#${d.id.substring(0,6).toUpperCase()}</span>
+                                    <button onclick="copyToClipboard('${d.id}')" class="text-gray-500 hover:text-brand-400 transition" title="Copy mã đơn"><i class="fa-regular fa-copy"></i></button>
+                                </div>
+                            </td>
                             <td class="px-6 py-4 font-bold text-white">${Number(d.amount).toLocaleString('en-US')}đ</td>
                             <td class="px-6 py-4 text-xs font-mono text-gray-400">${d.transId || '-'}</td>
                             <td class="px-6 py-4 text-xs text-gray-400">${new Date(d.createdAt).toLocaleString('vi-VN')}</td>
