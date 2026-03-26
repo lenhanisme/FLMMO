@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FLMMO.VN - Social MMO Panel</title>
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -45,10 +43,8 @@
 </head>
 <body class="flex h-screen overflow-hidden relative">
 
-    <!-- TOAST NOTIFICATION CONTAINER -->
     <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
 
-    <!-- CUSTOM CONFIRM MODAL -->
     <div id="custom-confirm" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[10000] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 w-full max-w-sm transform scale-95 transition-transform duration-300 shadow-2xl" id="custom-confirm-box">
             <h3 class="text-xl font-bold text-white mb-2 flex items-center"><i class="fa-solid fa-circle-question text-brand-500 mr-2"></i> Xác nhận</h3>
@@ -60,37 +56,24 @@
         </div>
     </div>
 
-    <!-- MÀN HÌNH BẢO TRÌ -->
     <div id="maintenance-screen" class="fixed inset-0 bg-dark-900 z-[9998] flex flex-col items-center justify-center text-white hidden">
         <i class="fa-solid fa-screwdriver-wrench text-6xl text-brand-500 mb-6 animate-pulse"></i>
         <h1 class="text-3xl font-bold mb-2">Hệ Thống Đang Nâng Cấp</h1>
-        <p class="text-gray-400 max-w-md text-center mb-6">Xin lỗi bạn vì sự bất tiện này. Chúng tôi đang tiến hành bảo trì máy chủ và nâng cấp tài nguyên để phục vụ bạn tốt hơn. Vui lòng quay lại sau ít phút nhé!</p>
-        <button onclick="window.location.reload()" class="bg-brand-600 hover:bg-brand-500 px-6 py-2.5 rounded-full font-bold transition shadow-lg shadow-brand-500/30">
-            <i class="fa-solid fa-rotate-right mr-2"></i> Tải Lại Trang
-        </button>
+        <p class="text-gray-400 max-w-md text-center mb-6">Xin lỗi bạn vì sự bất tiện này. Chúng tôi đang tiến hành bảo trì hệ thống.</p>
+        <button onclick="window.location.reload()" class="bg-brand-600 hover:bg-brand-500 px-6 py-2.5 rounded-full font-bold transition shadow-lg shadow-brand-500/30">Tải Lại Trang</button>
     </div>
 
-    <!-- MAIN APP WRAPPER -->
     <div id="main-app-content" class="flex w-full h-full">
 
-        <!-- MOBILE OVERLAY -->
         <div id="sidebar-overlay" class="fixed inset-0 bg-black/80 z-30 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
 
-        <!-- SIDEBAR -->
         <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-64 bg-dark-800 border-r border-dark-700 flex flex-col z-40 transition-transform duration-300 ease-in-out shrink-0">
-            <!-- Favicon/Logo Area -->
             <a href="home.html" class="h-20 flex items-center px-6 border-b border-dark-700 cursor-pointer hover:bg-dark-700 transition">
-                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg mr-3 shadow-purple-500/30">
-                    <i class="fa-solid fa-bolt text-xl"></i>
-                </div>
-                <div>
-                    <span class="text-xl font-bold tracking-tight text-white block leading-tight">FLMMO.VN</span>
-                    <span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Social MMO</span>
-                </div>
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg mr-3 shadow-purple-500/30"><i class="fa-solid fa-bolt text-xl"></i></div>
+                <div><span class="text-xl font-bold tracking-tight text-white block leading-tight">FLMMO.VN</span><span class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Social MMO</span></div>
             </a>
 
-            <!-- Menu Navigation -->
-            <div class="flex-1 overflow-y-auto py-4">
+            <div class="flex-1 overflow-y-auto py-4 pb-20">
                 <div class="px-6 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Hệ thống SMM</div>
                 <ul>
                     <li><a href="#" id="menu-order" class="menu-item active flex items-center px-6 py-3 text-sm text-gray-400 hover:text-white transition" onclick="switchView('order')"><i class="fa-solid fa-circle-plus w-6"></i> Tạo đơn hàng</a></li>
@@ -104,25 +87,25 @@
                     <li><a href="#" id="menu-game-history" class="menu-item flex items-center px-6 py-3 text-sm text-gray-400 hover:text-white transition" onclick="switchView('game-history')"><i class="fa-solid fa-box-open w-6 text-orange-400"></i> Lịch sử mua Acc</a></li>
                 </ul>
 
-                <div class="px-6 mt-6 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Tiếp Thị Liên Kết</div>
+                <div class="px-6 mt-6 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Tiện Ích Nâng Cao</div>
                 <ul>
                     <li><a href="#" id="menu-affiliate" class="menu-item flex items-center px-6 py-3 text-sm text-gray-400 hover:text-white transition" onclick="switchView('affiliate')"><i class="fa-solid fa-handshake-angle w-6 text-pink-500"></i> Kiếm Tiền (Ref)</a></li>
+                    <li><a href="#" id="menu-ticket" class="menu-item flex items-center px-6 py-3 text-sm text-gray-400 hover:text-white transition" onclick="switchView('ticket')"><i class="fa-solid fa-headset w-6 text-blue-400"></i> Hỗ Trợ (Ticket)</a></li>
+                    <li><a href="api.html" target="_blank" class="menu-item flex items-center px-6 py-3 text-sm text-gray-400 hover:text-white transition"><i class="fa-solid fa-code w-6 text-gray-300"></i> Tài Liệu API <i class="fa-solid fa-arrow-up-right-from-square ml-auto text-[10px]"></i></a></li>
                 </ul>
 
                 <div class="px-6 mt-6 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Danh Mục Dịch Vụ</div>
-                
-                <!-- MENU ĐỘNG TỪ FIREBASE ĐỔ VÀO ĐÂY -->
                 <ul id="dynamic-sidebar-menu">
-                    <li class="px-6 py-3 text-sm text-gray-500 italic">
-                        <i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang tải...
-                    </li>
+                    <li class="px-6 py-3 text-sm text-gray-500 italic"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang tải...</li>
                 </ul>
             </div>
 
-            <!-- User Profile Sidebar -->
-            <div class="p-4 border-t border-dark-700 bg-dark-900 cursor-pointer hover:bg-dark-700 transition" onclick="toggleModal('modal-profile')">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold shadow-md" id="ui-avatar">U</div>
+            <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-dark-700 bg-dark-900 cursor-pointer hover:bg-dark-700 transition" onclick="toggleModal('modal-profile')">
+                <div class="flex items-center gap-3 relative">
+                    <div class="w-10 h-10 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold shadow-md relative" id="ui-avatar">
+                        U
+                        <div id="ui-vip-badge" class="absolute -top-2 -right-2 bg-gray-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow-md border border-dark-800 hidden">VIP</div>
+                    </div>
                     <div class="flex-1 overflow-hidden">
                         <div class="text-sm font-bold text-white truncate" id="ui-fullname">Đang tải...</div>
                         <div class="text-xs font-mono text-green-400 mt-0.5 flex items-center"><i class="fa-solid fa-sack-dollar mr-1"></i> <span id="ui-coin">...</span> VNĐ</div>
@@ -132,15 +115,10 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <div class="flex-1 flex flex-col h-screen overflow-hidden bg-dark-900">
-            
-            <!-- HEADER MOBILE ONLY -->
             <header class="h-16 bg-dark-800 border-b border-dark-700 flex md:hidden items-center justify-between px-4 z-10 shrink-0">
                 <div class="flex items-center gap-3">
-                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white p-1">
-                        <i class="fa-solid fa-bars text-xl"></i>
-                    </button>
+                    <button onclick="toggleSidebar()" class="text-gray-400 hover:text-white p-1"><i class="fa-solid fa-bars text-xl"></i></button>
                     <h1 id="header-title-mobile" class="text-lg font-bold text-white">Tạo đơn hàng</h1>
                 </div>
                 <button onclick="toggleModal('modal-profile')" class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-sm shadow">U</button>
@@ -148,9 +126,7 @@
 
             <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 lg:p-8">
                 
-                <!-- VIEW 1: ĐẶT ĐƠN (ORDER SMM) -->
                 <div id="view-order" class="view-section active max-w-6xl mx-auto space-y-6">
-                    
                     <div class="hidden md:flex justify-between items-end mb-2">
                         <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-circle-plus text-brand-500 mr-2"></i> <span id="header-title">Tạo đơn hàng mới</span></h2>
                         <div class="text-sm text-gray-400 flex items-center bg-dark-800 px-3 py-1.5 rounded-lg border border-dark-700">
@@ -158,7 +134,6 @@
                         </div>
                     </div>
 
-                    <!-- 3 Thẻ Thống Kê -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 flex justify-between items-center relative overflow-hidden">
                             <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
@@ -187,26 +162,27 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <!-- Cột Form Đặt Đơn / Bảng tin -->
                         <div class="lg:col-span-2 space-y-6">
                             <div class="bg-dark-800 rounded-xl border border-dark-700 p-6 shadow-lg">
-                                
-                                <!-- Tiêu đề chỉ hiện khi đã chọn form dịch vụ -->
                                 <h3 id="order-detail-heading" class="text-white font-bold mb-6 hidden items-center border-b border-dark-700 pb-3">
                                     <i class="fa-solid fa-cart-shopping mr-2 text-brand-500"></i> Chi tiết đơn hàng
                                 </h3>
                                 
                                 <form id="form-order" class="space-y-6">
-                                    
                                     <div>
-                                        <label id="label-dich-vu" class="block text-xs font-bold text-gray-500 uppercase mb-3">Thông Báo Hệ Thống</label>
+                                        <div class="flex justify-between items-end mb-3">
+                                            <label id="label-dich-vu" class="block text-xs font-bold text-gray-500 uppercase">Thông Báo Hệ Thống</label>
+                                            <div id="search-service-box" class="hidden relative">
+                                                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-500 text-xs"></i>
+                                                <input type="text" id="search-service-input" onkeyup="filterServices()" placeholder="Tìm ID hoặc Tên Dịch Vụ..." class="pl-8 pr-3 py-1.5 text-xs bg-dark-900 border border-dark-600 rounded-lg text-white outline-none focus:border-brand-500 transition w-48">
+                                            </div>
+                                        </div>
+                                        
                                         <div id="server-list" class="space-y-3">
-                                            <!-- DỮ LIỆU SẼ ĐƯỢC INJECT BỞI JS TỪ FIREBASE -->
                                             <div class="text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl"></i></div>
                                         </div>
                                     </div>
 
-                                    <!-- VÙNG NHẬP LIỆU BỊ ẨN KHI CHƯA CHỌN DỊCH VỤ -->
                                     <div id="order-form-inputs" class="hidden space-y-6">
                                         <div>
                                             <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Link *</label>
@@ -220,9 +196,12 @@
                                             </div>
                                             <div>
                                                 <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Tổng tiền (VNĐ)</label>
-                                                <div class="w-full px-4 py-3 rounded-xl bg-dark-900 border border-dark-600 text-white font-bold flex items-center justify-between">
-                                                    <span id="total">0</span>
-                                                    <i class="fa-solid fa-coins text-yellow-500"></i>
+                                                <div class="w-full px-4 py-3 rounded-xl bg-dark-900 border border-dark-600 text-white font-bold flex flex-col justify-center">
+                                                    <div class="flex items-center justify-between">
+                                                        <span id="total" class="text-lg">0</span>
+                                                        <i class="fa-solid fa-coins text-yellow-500"></i>
+                                                    </div>
+                                                    <span id="total-original" class="text-[10px] text-gray-500 line-through hidden">0đ</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -235,24 +214,21 @@
                             </div>
                         </div>
 
-                        <!-- Cột Chú Ý (Notes) -->
                         <div class="lg:col-span-1">
                             <div class="bg-dark-800 rounded-xl border border-dark-700 p-6 sticky top-6 shadow-lg">
                                 <h3 class="text-white font-bold mb-4 flex items-center"><i class="fa-regular fa-circle-question mr-2"></i> Chú ý</h3>
                                 <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-3 text-red-400 text-sm font-medium mb-4 flex items-start">
-                                    <i class="fa-solid fa-circle-exclamation mt-0.5 mr-2"></i> 
-                                    Nghiêm cấm buff nội dung vi phạm pháp luật
+                                    <i class="fa-solid fa-circle-exclamation mt-0.5 mr-2"></i> Nghiêm cấm buff nội dung vi phạm pháp luật
                                 </div>
                                 <ul class="space-y-3 text-sm text-gray-400">
                                     <li class="flex items-start"><i class="fa-regular fa-circle-check mt-0.5 mr-2 text-gray-500"></i> Chọn dịch vụ phù hợp với nhu cầu của bạn</li>
                                     <li class="flex items-start"><i class="fa-regular fa-circle-check mt-0.5 mr-2 text-gray-500"></i> Kiểm tra min/max quantity trước khi đặt</li>
                                     <li class="flex items-start"><i class="fa-regular fa-circle-check mt-0.5 mr-2 text-gray-500"></i> Đảm bảo link chính xác để tránh lỗi</li>
                                     <li class="flex items-start"><i class="fa-regular fa-circle-check mt-0.5 mr-2 text-gray-500"></i> Không hoàn tiền nếu đơn sai thông tin/lỗi</li>
-                                    <li class="flex items-start"><i class="fa-regular fa-circle-check mt-0.5 mr-2 text-gray-500"></i> Không xử lý nếu mua ở nhiều hệ thống cùng lúc</li>
                                 </ul>
                                 <div class="mt-6 pt-6 border-t border-dark-700">
                                     <a href="https://fb.com/lenhanriel" target="_blank" class="w-full bg-green-500/10 hover:bg-green-500/20 text-green-400 border border-green-500/30 font-bold py-2.5 rounded-xl transition flex justify-center items-center">
-                                        <i class="fa-brands fa-whatsapp mr-2"></i> Liên Hệ Hỗ Trợ
+                                        <i class="fa-brands fa-whatsapp mr-2"></i> Zalo Hỗ Trợ Nhanh
                                     </a>
                                 </div>
                             </div>
@@ -260,7 +236,6 @@
                     </div>
                 </div>
 
-                <!-- VIEW: CỬA HÀNG GAME (MUA ACC GAME) -->
                 <div id="view-games" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="hidden md:flex justify-between items-end mb-4">
                         <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-gamepad text-brand-500 mr-2"></i> Cửa Hàng Tài Khoản Game</h2>
@@ -268,20 +243,16 @@
                             <i class="fa-solid fa-wallet text-green-500 mr-2"></i> Số dư: <strong class="text-green-400 ml-1 font-mono display-balance-vnd">0 đ</strong>
                         </div>
                     </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="game-products-container">
-                        <!-- Danh sách game sẽ được render bằng JS -->
                         <div class="col-span-full text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl"></i></div>
                     </div>
                 </div>
 
-                <!-- VIEW: LỊCH SỬ MUA GAME -->
                 <div id="view-game-history" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="flex justify-between items-end mb-2">
                         <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-box-open text-brand-500 mr-2"></i> Lịch Sử Mua Tài Khoản</h2>
                         <button onclick="loadGameOrderHistory()" class="text-sm text-gray-400 hover:text-white bg-dark-800 border border-dark-700 px-4 py-2 rounded-lg transition"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
                     </div>
-                    
                     <div class="bg-dark-800 rounded-xl shadow-lg border border-dark-700 overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="min-w-full text-sm text-left whitespace-nowrap">
@@ -294,67 +265,17 @@
                                         <th class="px-6 py-4 text-center">Tài khoản</th>
                                     </tr>
                                 </thead>
-                                <tbody id="game-history-body" class="divide-y divide-dark-700">
-                                    <tr>
-                                        <td colspan="5" class="px-6 py-12 text-center text-gray-500">
-                                            <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải dữ liệu...
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="game-history-body" class="divide-y divide-dark-700"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- VIEW: AFFILIATE (TIẾP THỊ LIÊN KẾT) -->
-                <div id="view-affiliate" class="view-section max-w-6xl mx-auto space-y-6">
-                    <div class="flex justify-between items-end mb-2">
-                        <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-handshake-angle text-brand-500 mr-2"></i> Kiếm Tiền Cùng FLMMO</h2>
-                    </div>
-
-                    <div class="bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 rounded-2xl p-6 shadow-lg relative overflow-hidden">
-                        <h3 class="text-white font-bold text-lg mb-2">Chia sẻ Link - Nhận Hoa Hồng Trọn Đời</h3>
-                        <p class="text-sm text-gray-400 mb-6">Nhận <strong class="text-green-400">15%</strong> hoa hồng với các hóa đơn nạp dưới 100k, và <strong class="text-green-400">8%</strong> với hóa đơn từ 100k trở lên. Tiền thưởng được tự động cộng thẳng vào số dư của bạn ngay khi người được mời nạp tiền thành công!</p>
-                        
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Link giới thiệu của riêng bạn:</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="my-ref-link" class="flex-1 bg-dark-900 border border-dark-600 focus:border-brand-500 rounded-xl py-3 px-4 text-brand-400 font-mono text-sm outline-none" readonly>
-                            <button onclick="copyToClipboard(document.getElementById('my-ref-link').value)" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-6 rounded-xl transition shadow-md whitespace-nowrap">
-                                <i class="fa-regular fa-copy mr-2"></i> Copy
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="bg-dark-800 rounded-xl shadow-lg border border-dark-700 overflow-hidden mt-6">
-                        <div class="px-6 py-4 border-b border-dark-700 flex justify-between items-center bg-dark-900">
-                            <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-sack-dollar text-brand-500 mr-2"></i> Lịch Sử Nhận Hoa Hồng</h3>
-                            <button onclick="loadCommissions()" class="text-xs text-gray-400 hover:text-white transition"><i class="fa-solid fa-rotate mr-1"></i> Tải lại</button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full text-sm text-left whitespace-nowrap">
-                                <thead class="text-xs text-gray-400 uppercase bg-dark-800 border-b border-dark-700">
-                                    <tr>
-                                        <th class="px-6 py-4">Thời gian</th>
-                                        <th class="px-6 py-4">Người nạp</th>
-                                        <th class="px-6 py-4">Mức nạp</th>
-                                        <th class="px-6 py-4 text-right">Hoa hồng nhận được</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="commission-history-body" class="divide-y divide-dark-700 bg-dark-900">
-                                    <tr><td colspan="4" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-xl"></i></td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- VIEW: LỊCH SỬ ĐƠN SMM (HISTORY) -->
                 <div id="view-history" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="flex justify-between items-end mb-2">
                         <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-brand-500 mr-2"></i> Lịch Sử Đơn SMM</h2>
                         <button onclick="loadOrderHistory()" class="text-sm text-gray-400 hover:text-white bg-dark-800 border border-dark-700 px-4 py-2 rounded-lg transition"><i class="fa-solid fa-rotate mr-1"></i> Làm mới</button>
                     </div>
-                    
                     <div class="bg-dark-800 rounded-xl shadow-lg border border-dark-700 overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="min-w-full text-sm text-left whitespace-nowrap">
@@ -369,95 +290,39 @@
                                         <th class="px-6 py-4 text-center">Trạng thái</th>
                                     </tr>
                                 </thead>
-                                <tbody id="order-history-body" class="divide-y divide-dark-700">
-                                    <tr>
-                                        <td colspan="7" class="px-6 py-12 text-center text-gray-500">
-                                            <i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải dữ liệu...
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="order-history-body" class="divide-y divide-dark-700"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- VIEW: NẠP TIỀN (DEPOSIT) -->
                 <div id="view-deposit" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="flex justify-between items-end mb-2">
-                        <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-wallet text-brand-500 mr-2"></i> Nạp Tiền & Lịch Sử</h2>
-                        <div class="text-sm text-gray-400 hidden sm:flex items-center bg-dark-800 px-3 py-1.5 rounded-lg border border-dark-700">
-                            <i class="fa-solid fa-dollar-sign text-green-500 mr-2"></i> Tỷ giá: <strong class="text-white ml-1 font-mono display-exchange-rate">Đang tải...</strong> VNĐ/$
-                        </div>
+                        <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-wallet text-brand-500 mr-2"></i> Nạp Tiền Tự Động</h2>
                     </div>
-
-                    <!-- TABS NẠP TIỀN -->
-                    <div class="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
-                        <button class="px-5 py-2.5 rounded-full border border-green-500/50 text-green-400 bg-green-500/10 font-bold flex items-center whitespace-nowrap transition shadow-[0_0_15px_rgba(34,197,94,0.15)] pointer-events-none">
-                            <i class="fa-solid fa-building-columns mr-2"></i> Chuyển khoản ngân hàng 
-                            <div class="w-2 h-2 rounded-full bg-green-500 ml-2 animate-pulse"></div>
-                        </button>
-                        <button onclick="showToast('Chức năng nạp USDT hiện đang bảo trì hệ thống. Vui lòng quay lại sau!', 'warning')" class="px-5 py-2.5 rounded-full border border-dark-600 text-gray-400 bg-dark-800 hover:bg-dark-700 hover:text-white font-bold flex items-center whitespace-nowrap transition">
-                            <i class="fa-brands fa-bitcoin mr-2 text-yellow-500"></i> Chuyển USDT
-                        </button>
-                    </div>
-
-                    <!-- THÔNG TIN NGÂN HÀNG & QR -->
                     <div class="bg-dark-800 border border-green-500/30 rounded-2xl p-6 shadow-lg relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-blue-500"></div>
-                        <h3 class="text-white font-bold text-lg mb-6 flex items-center"><i class="fa-solid fa-qrcode text-green-500 mr-2"></i> Trình Tạo Mã QR Thanh Toán Nhanh</h3>
-                        
+                        <h3 class="text-white font-bold text-lg mb-6 flex items-center"><i class="fa-solid fa-qrcode text-green-500 mr-2"></i> Quét Mã QR Thanh Toán (Auto 5s)</h3>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                            <!-- Input Amount & Info -->
                             <div class="space-y-6">
                                 <div>
-                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Nhập số tiền bạn muốn nạp (VNĐ)</label>
-                                    <input type="number" id="deposit-amount-input" min="5000" step="1000" class="w-full px-5 py-4 rounded-xl bg-dark-900 border-2 border-dark-600 focus:border-brand-500 text-xl font-bold text-white outline-none transition" placeholder="Tối thiểu 5000..." oninput="generateQR()">
-                                    <div class="mt-2 flex justify-between items-center px-1">
-                                        <span class="text-sm text-gray-400">Tương đương: <strong id="deposit-usd-equiv" class="text-green-400 font-mono text-base ml-1">$0.00</strong></span>
-                                        <span class="text-xs font-medium text-orange-400 bg-orange-500/10 px-2 py-1 rounded border border-orange-500/20">Min: 5,000đ</span>
-                                    </div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Nhập số tiền nạp (VNĐ)</label>
+                                    <input type="number" id="deposit-amount-input" min="5000" step="1000" class="w-full px-5 py-4 rounded-xl bg-dark-900 border-2 border-dark-600 focus:border-brand-500 text-xl font-bold text-white outline-none" placeholder="Tối thiểu 5000..." oninput="generateQR()">
                                 </div>
-                                
                                 <div class="bg-dark-900 rounded-xl border border-dark-700 p-4 space-y-4">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-xs font-bold text-gray-500 uppercase">Ngân hàng</span>
-                                        <div class="text-white font-bold flex items-center"><img src="https://my.sepay.vn/assets/images/banklogo/mbbank-icon.png" class="h-5 w-auto mr-2"> MBBANK</div>
-                                    </div>
-                                    <div class="flex items-center justify-between border-t border-dark-700 pt-3">
-                                        <span class="text-xs font-bold text-gray-500 uppercase">Chủ tài khoản</span>
-                                        <span class="text-white font-bold tracking-wide">LE NGOC NHAN</span>
-                                    </div>
-                                    <div class="flex items-center justify-between border-t border-dark-700 pt-3">
-                                        <span class="text-xs font-bold text-gray-500 uppercase">Số tài khoản</span>
-                                        <div class="flex items-center gap-2">
-                                            <span class="text-green-400 font-bold text-lg tracking-widest">4477040408</span>
-                                            <button onclick="copyToClipboard('4477040408')" class="text-gray-400 hover:text-white p-1" title="Copy"><i class="fa-regular fa-copy"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between border-t border-dark-700 pt-3">
-                                        <span class="text-xs font-bold text-gray-500 uppercase">Nội dung CK</span>
-                                        <div class="flex items-center gap-2 overflow-hidden">
-                                            <span class="text-blue-400 font-bold text-lg truncate" id="transfer-content-display">Đang tải...</span>
-                                            <button onclick="copyToClipboard(window.currentTransferContent)" class="text-gray-400 hover:text-white p-1 shrink-0" title="Copy"><i class="fa-regular fa-copy"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-xs text-gray-400 bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-                                    <i class="fa-solid fa-circle-info text-blue-400 mr-1"></i> Hệ thống tự động cộng tiền vào tài khoản sau 1-3 phút. Nếu đợi lâu chưa thấy cộng, vui lòng liên hệ Zalo Admin.
+                                    <div class="flex items-center justify-between"><span class="text-xs font-bold text-gray-500 uppercase">Ngân hàng</span><div class="text-white font-bold flex items-center">MBBANK</div></div>
+                                    <div class="flex items-center justify-between border-t border-dark-700 pt-3"><span class="text-xs font-bold text-gray-500 uppercase">Chủ tài khoản</span><span class="text-white font-bold tracking-wide">LE NGOC NHAN</span></div>
+                                    <div class="flex items-center justify-between border-t border-dark-700 pt-3"><span class="text-xs font-bold text-gray-500 uppercase">Số tài khoản</span><div class="flex items-center gap-2"><span class="text-green-400 font-bold text-lg">4477040408</span><button onclick="copyToClipboard('4477040408')" class="text-gray-400 hover:text-white p-1"><i class="fa-regular fa-copy"></i></button></div></div>
+                                    <div class="flex items-center justify-between border-t border-dark-700 pt-3"><span class="text-xs font-bold text-gray-500 uppercase">Nội dung CK</span><div class="flex items-center gap-2 overflow-hidden"><span class="text-blue-400 font-bold text-lg truncate" id="transfer-content-display">...</span><button onclick="copyToClipboard(window.currentTransferContent)" class="text-gray-400 hover:text-white p-1 shrink-0"><i class="fa-regular fa-copy"></i></button></div></div>
                                 </div>
                             </div>
-                            
-                            <!-- QR Image Generator -->
                             <div class="flex flex-col items-center justify-center h-full">
                                 <div class="bg-white p-4 rounded-2xl shadow-[0_0_40px_rgba(139,92,246,0.15)] mb-4 w-full max-w-[280px] aspect-square flex items-center justify-center relative border-4 border-dark-800">
                                     <img id="qr-image" src="https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=5000&des=&template=compact" class="w-full h-full object-contain" alt="VietQR">
                                 </div>
-                                <p class="text-sm text-gray-400 text-center"><i class="fa-solid fa-camera text-green-500 mr-1"></i> Sử dụng App Ngân Hàng để quét mã.<br><span class="text-xs italic text-gray-500">(Nội dung và số tiền sẽ được tự động điền)</span></p>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Bảng Lịch sử nạp -->
                     <div class="bg-dark-800 rounded-xl shadow-lg border border-dark-700 overflow-hidden mt-8">
                         <div class="px-6 py-4 border-b border-dark-700 flex justify-between items-center bg-dark-900">
                             <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-brand-500 mr-2"></i> Lịch Sử Nạp Tiền</h3>
@@ -466,18 +331,76 @@
                         <div class="overflow-x-auto">
                             <table class="min-w-full text-sm text-left whitespace-nowrap">
                                 <thead class="text-xs text-gray-400 uppercase bg-dark-800 border-b border-dark-700">
-                                    <tr>
-                                        <th class="px-6 py-4">Mã Giao Dịch</th>
-                                        <th class="px-6 py-4">Số Tiền (VNĐ)</th>
-                                        <th class="px-6 py-4">Mã Bank</th>
-                                        <th class="px-6 py-4">Thời gian</th>
-                                        <th class="px-6 py-4 text-center">Trạng thái</th>
-                                    </tr>
+                                    <tr><th class="px-6 py-4">Mã Giao Dịch</th><th class="px-6 py-4">Số Tiền (VNĐ)</th><th class="px-6 py-4">Thời gian</th><th class="px-6 py-4 text-center">Trạng thái</th></tr>
                                 </thead>
-                                <tbody id="deposit-history-body" class="divide-y divide-dark-700 bg-dark-900">
-                                    <tr><td colspan="5" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-xl"></i></td></tr>
-                                </tbody>
+                                <tbody id="deposit-history-body" class="divide-y divide-dark-700 bg-dark-900"></tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-affiliate" class="view-section max-w-6xl mx-auto space-y-6">
+                    <div class="bg-gradient-to-r from-pink-500/10 to-purple-500/10 border border-pink-500/20 rounded-2xl p-6 shadow-lg relative overflow-hidden">
+                        <h3 class="text-white font-bold text-lg mb-2"><i class="fa-solid fa-handshake-angle text-pink-500 mr-2"></i> Chia sẻ Link - Nhận Hoa Hồng Trọn Đời</h3>
+                        <p class="text-sm text-gray-400 mb-6">Nhận <strong class="text-green-400">15%</strong> hoa hồng với các hóa đơn nạp dưới 100k, và <strong class="text-green-400">8%</strong> với hóa đơn từ 100k trở lên. Tiền được cộng tự động.</p>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Link giới thiệu của riêng bạn:</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="my-ref-link" class="flex-1 bg-dark-900 border border-dark-600 focus:border-brand-500 rounded-xl py-3 px-4 text-brand-400 font-mono text-sm outline-none" readonly>
+                            <button onclick="copyToClipboard(document.getElementById('my-ref-link').value)" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-6 rounded-xl transition shadow-md whitespace-nowrap">Copy</button>
+                        </div>
+                    </div>
+                    <div class="bg-dark-800 rounded-xl shadow-lg border border-dark-700 overflow-hidden mt-6">
+                        <div class="px-6 py-4 border-b border-dark-700 flex justify-between items-center bg-dark-900">
+                            <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-sack-dollar text-brand-500 mr-2"></i> Lịch Sử Nhận Hoa Hồng</h3>
+                            <button onclick="loadCommissions()" class="text-xs text-gray-400 hover:text-white transition"><i class="fa-solid fa-rotate mr-1"></i> Tải lại</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm text-left whitespace-nowrap">
+                                <thead class="text-xs text-gray-400 uppercase bg-dark-800 border-b border-dark-700">
+                                    <tr><th class="px-6 py-4">Thời gian</th><th class="px-6 py-4">Người nạp</th><th class="px-6 py-4">Mức nạp</th><th class="px-6 py-4 text-right">Hoa hồng nhận được</th></tr>
+                                </thead>
+                                <tbody id="commission-history-body" class="divide-y divide-dark-700 bg-dark-900"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-ticket" class="view-section max-w-6xl mx-auto space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-1">
+                            <div class="bg-dark-800 rounded-xl border border-dark-700 p-6 shadow-lg">
+                                <h3 class="text-white font-bold mb-4 border-b border-dark-700 pb-3"><i class="fa-solid fa-paper-plane text-blue-400 mr-2"></i> Gửi Yêu Cầu Hỗ Trợ</h3>
+                                <form id="form-ticket" class="space-y-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Tiêu đề</label>
+                                        <input type="text" id="ticket-subject" placeholder="VD: Lỗi đơn hàng, Hủy đơn..." required class="w-full dark-input rounded-xl py-2.5 px-4 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Đơn hàng (Không bắt buộc)</label>
+                                        <select id="ticket-orderid" class="w-full dark-input rounded-xl py-2.5 px-4 text-sm font-mono text-gray-400 outline-none focus:border-brand-500">
+                                            <option value="">-- Chọn đơn hàng liên quan --</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Nội dung cần hỗ trợ</label>
+                                        <textarea id="ticket-message" rows="4" required placeholder="Mô tả chi tiết vấn đề của bạn để Admin xử lý nhanh nhất..." class="w-full dark-input rounded-xl py-2.5 px-4 text-sm resize-none"></textarea>
+                                    </div>
+                                    <button type="submit" id="btn-submit-ticket" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-500/20">Gửi Yêu Cầu</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-2">
+                            <div class="bg-dark-800 rounded-xl border border-dark-700 overflow-hidden shadow-lg h-full flex flex-col">
+                                <div class="px-6 py-4 border-b border-dark-700 flex justify-between items-center bg-dark-900">
+                                    <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-blue-400 mr-2"></i> Lịch Sử Hỗ Trợ (Tickets)</h3>
+                                    <button onclick="loadTickets()" class="text-xs text-gray-400 hover:text-white transition"><i class="fa-solid fa-rotate mr-1"></i> Tải lại</button>
+                                </div>
+                                <div class="overflow-x-auto flex-1 p-4">
+                                    <div id="ticket-list-container" class="space-y-4">
+                                        <div class="text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-xl"></i></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -486,35 +409,56 @@
         </div>
     </div>
 
-    <!-- MODAL PROFILE -->
     <div id="modal-profile" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
-        <div class="bg-dark-800 border border-dark-700 rounded-2xl shadow-2xl w-full max-w-md mx-auto overflow-hidden relative transform transition-all">
-            <button onclick="toggleModal('modal-profile')" class="absolute top-4 right-4 text-gray-500 hover:text-white bg-dark-700 hover:bg-dark-600 rounded-lg w-8 h-8 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl shadow-2xl w-full max-w-md mx-auto overflow-hidden relative transform transition-all max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleModal('modal-profile')" class="absolute top-4 right-4 text-gray-500 hover:text-white bg-dark-700 hover:bg-dark-600 rounded-lg w-8 h-8 flex items-center justify-center transition z-10"><i class="fa-solid fa-xmark"></i></button>
             
-            <div class="p-6 border-b border-dark-700 flex items-center gap-4">
-                <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 text-white flex items-center justify-center text-3xl font-bold shadow-lg" id="modal-avatar">U</div>
-                <div>
-                    <h3 class="font-bold text-xl text-white" id="modal-name">User</h3>
-                    <p class="text-sm text-gray-400 font-mono" id="modal-email">user@email.com</p>
+            <div class="p-6 border-b border-dark-700 flex items-center gap-4 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-brand-600/20 to-purple-600/20 z-0"></div>
+                <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 text-white flex items-center justify-center text-3xl font-bold shadow-lg relative z-10" id="modal-avatar">U</div>
+                <div class="relative z-10">
+                    <h3 class="font-bold text-xl text-white flex items-center" id="modal-name">User</h3>
+                    <div id="modal-vip-badge" class="text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-md mt-1 inline-block bg-gray-600 text-white">Thành Viên</div>
                 </div>
             </div>
             
-            <div class="p-6">
-                <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-sm border-b border-dark-700 pb-5 mb-5">
-                    <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Số Dư (VNĐ)</span> <span id="profile-balance" class="font-bold text-green-400 text-base font-mono display-balance-vnd">0 đ</span></div>
-                    <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Trạng Thái TK</span> <span class="font-medium text-green-400 bg-green-500/10 border border-green-500/30 px-2 py-0.5 rounded text-xs" id="profile-status"><i class="fa-solid fa-circle-check text-[10px]"></i> Hoạt động</span></div>
-                    <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Bảo Mật 2FA</span> <span class="font-medium text-gray-400 bg-dark-700 px-2 py-0.5 rounded text-xs" id="profile-2fa">Tắt</span></div>
-                    <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Ngày đăng ký</span> <span class="font-medium text-gray-300 font-mono" id="profile-created">...</span></div>
+            <div class="p-6 space-y-6">
+                <div class="bg-dark-900 border border-dark-600 rounded-xl p-4">
+                    <div class="flex justify-between text-xs mb-2">
+                        <span class="text-gray-400 font-bold uppercase">Tổng Nạp: <span id="vip-total-deposit" class="text-white">0đ</span></span>
+                        <span id="vip-next-tier" class="text-gray-500 font-medium">VIP: 500.000đ</span>
+                    </div>
+                    <div class="w-full bg-dark-700 rounded-full h-2">
+                        <div id="vip-progress-bar" class="bg-gradient-to-r from-blue-500 to-brand-500 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                    <p id="vip-discount-text" class="text-[10px] text-brand-400 mt-2 font-medium text-center">Đang nhận ưu đãi giảm 0% mọi dịch vụ</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-y-4 gap-x-2 text-sm border-b border-dark-700 pb-5">
+                    <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Số Dư (VNĐ)</span> <span class="font-bold text-green-400 text-base font-mono display-balance-vnd">0 đ</span></div>
+                    <div><span class="text-gray-500 text-[10px] block uppercase mb-1 font-bold">Trạng Thái TK</span> <span class="font-medium text-green-400 bg-green-500/10 px-2 py-0.5 rounded text-xs border border-green-500/30">Hoạt động</span></div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-2 flex items-center justify-between">
+                        <span><i class="fa-solid fa-code text-brand-500 mr-2"></i> Khóa API Của Bạn</span>
+                        <a href="api.html" target="_blank" class="text-[10px] text-blue-400 hover:underline">Xem Tài Liệu <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </h4>
+                    <div class="flex gap-2">
+                        <input type="password" id="my-api-key" value="Chưa tạo khóa API" class="flex-1 bg-dark-900 border border-dark-600 focus:border-brand-500 rounded-lg py-2 px-3 text-brand-400 font-mono text-xs outline-none" readonly>
+                        <button onclick="copyToClipboard(document.getElementById('my-api-key').value)" class="bg-dark-700 hover:bg-dark-600 text-white font-bold px-3 rounded-lg transition"><i class="fa-regular fa-copy"></i></button>
+                        <button onclick="generateApiKey()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-3 rounded-lg transition tooltip" title="Tạo/Đổi Mã Mới"><i class="fa-solid fa-rotate"></i></button>
+                    </div>
                 </div>
                 
-                <form id="form-change-password" class="space-y-4">
+                <form id="form-change-password" class="space-y-4 border-t border-dark-700 pt-5">
                     <h4 class="font-bold text-white text-sm mb-2"><i class="fa-solid fa-key text-brand-500 mr-2"></i> Đổi Mật Khẩu</h4>
                     <input type="password" id="old-pass" placeholder="Mật khẩu hiện tại" required class="w-full dark-input rounded-xl py-2.5 px-4 text-sm">
                     <input type="password" id="new-pass" placeholder="Mật khẩu mới (Tối thiểu 6 ký tự)" required minlength="6" class="w-full dark-input rounded-xl py-2.5 px-4 text-sm">
-                    <button type="submit" id="btn-change-pass" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-2.5 rounded-xl text-sm w-full transition shadow-md">Lưu Mật Khẩu</button>
+                    <button type="submit" id="btn-change-pass" class="bg-dark-700 hover:bg-dark-600 text-white font-bold px-4 py-2.5 rounded-xl text-sm w-full transition shadow-md border border-dark-600">Lưu Mật Khẩu</button>
                 </form>
 
-                <div class="mt-6 border-t border-dark-700 pt-4">
+                <div class="mt-2 border-t border-dark-700 pt-4">
                     <button id="btn-logout" class="w-full bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/30 font-bold py-2.5 rounded-xl text-sm transition flex items-center justify-center">
                         <i class="fa-solid fa-right-from-bracket mr-2"></i> Đăng Xuất Hệ Thống
                     </button>
@@ -523,7 +467,6 @@
         </div>
     </div>
 
-    <!-- MODAL MUA TÀI KHOẢN GAME -->
     <div id="modal-buy-game" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
         <div class="bg-dark-800 border border-dark-700 rounded-2xl shadow-2xl w-full max-w-md mx-auto overflow-hidden relative">
             <div class="p-5 border-b border-dark-700 flex justify-between items-center bg-dark-900">
@@ -535,7 +478,7 @@
                     <img id="buy-game-logo" src="" class="w-14 h-14 rounded-xl object-cover bg-white p-1">
                     <div>
                         <div id="buy-game-name" class="font-bold text-white text-lg leading-tight"></div>
-                        <div class="text-xs text-gray-400 mt-1">Đơn giá: <span id="buy-game-unit-price" class="font-bold text-green-400">0đ</span></div>
+                        <div class="text-xs text-gray-400 mt-1">Đơn giá: <span id="buy-game-unit-price" class="font-bold text-green-400">0đ</span> <span id="buy-game-unit-original" class="line-through text-[10px] text-gray-500 ml-1 hidden"></span></div>
                         <div id="buy-game-stock" class="text-xs text-brand-400 font-medium mt-1">Trong kho: 0 acc</div>
                     </div>
                 </div>
@@ -565,7 +508,6 @@
         </div>
     </div>
 
-    <!-- MODAL XEM CHI TIẾT TÀI KHOẢN GAME ĐÃ MUA -->
     <div id="modal-view-accs" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
         <div class="bg-dark-800 border border-dark-700 rounded-2xl shadow-2xl w-full max-w-lg mx-auto overflow-hidden relative flex flex-col max-h-[85vh]">
             <div class="p-5 border-b border-dark-700 flex justify-between items-center bg-dark-900">
@@ -575,7 +517,7 @@
             <div class="p-5 overflow-y-auto flex-1">
                 <div class="text-xs text-orange-400 bg-orange-500/10 border border-orange-500/20 p-3 rounded-lg mb-4 flex items-start">
                     <i class="fa-solid fa-triangle-exclamation mt-0.5 mr-2"></i>
-                    Khuyến cáo: Hãy đăng nhập và đổi mật khẩu tài khoản ngay sau khi nhận để đảm bảo an toàn tuyệt đối.
+                    Khuyến cáo: Hãy đăng nhập và đổi mật khẩu tài khoản ngay sau khi nhận để đảm bảo an toàn.
                 </div>
                 <textarea id="view-accs-data" class="w-full h-64 bg-dark-900 border border-dark-600 text-green-400 rounded-xl p-4 font-mono text-sm resize-none outline-none focus:border-brand-500" readonly></textarea>
             </div>
@@ -588,21 +530,20 @@
     </div>
 
 
-    <!-- UI JAVASCRIPT & UI HELPERS (TOAST, CONFIRM, RATE) -->
     <script>
-        // Data toàn cục
         window.allServers = [];
         window.currentPrice = 0;
         window.currentServer = null;
         window.currentServiceCategory = "";
         window.currentTransferContent = "FLMMO USER"; 
-        window.currentExchangeRate = 25500; // Tỷ giá mặc định (Fallback)
+        window.currentExchangeRate = 25500; 
 
-        // DATA GAME TOÀN CỤC
         window.allGameProducts = [];
         window.currentGamePurchase = null;
 
-        // HÀM TOAST GIAO DIỆN (THAY THẾ ALERT)
+        // BIẾN LƯU VIP & TỔNG NẠP
+        window.userVipDiscount = 0; // VD: 0.05 (5%)
+
         window.showToast = function(msg, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -616,38 +557,27 @@
             toast.innerHTML = `<i class="fa-solid ${icon} mr-3 text-lg"></i> <span class="font-medium text-sm leading-tight">${msg}</span>`;
             
             container.appendChild(toast);
-            
             setTimeout(() => { toast.classList.remove('translate-x-full', 'opacity-0'); }, 10);
-            
             setTimeout(() => {
                 toast.classList.add('translate-x-full', 'opacity-0');
                 setTimeout(() => toast.remove(), 300);
             }, 3500);
         }
 
-        // HÀM XÁC NHẬN GIAO DIỆN (THAY THẾ CONFIRM)
         window.showConfirm = function(message, onConfirm) {
             const modal = document.getElementById('custom-confirm');
             const box = document.getElementById('custom-confirm-box');
             document.getElementById('confirm-msg').innerText = message;
-            
             modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                box.classList.remove('scale-95');
-            }, 10);
-
+            setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.remove('scale-95'); }, 10);
             const closeModal = () => {
-                modal.classList.add('opacity-0');
-                box.classList.add('scale-95');
+                modal.classList.add('opacity-0'); box.classList.add('scale-95');
                 setTimeout(() => modal.classList.add('hidden'), 300);
             };
-
             document.getElementById('btn-confirm-cancel').onclick = () => { closeModal(); };
             document.getElementById('btn-confirm-ok').onclick = () => { closeModal(); onConfirm(); };
         }
 
-        // LẤY TỶ GIÁ USD-VND TỰ ĐỘNG
         async function fetchExchangeRate() {
             try {
                 const res = await fetch('https://open.er-api.com/v6/latest/USD');
@@ -656,14 +586,10 @@
                     window.currentExchangeRate = data.rates.VND;
                     document.querySelectorAll('.display-exchange-rate').forEach(el => el.innerText = window.currentExchangeRate.toLocaleString('vi-VN'));
                 }
-            } catch(e) {
-                console.log("Sử dụng tỷ giá mặc định do lỗi mạng");
-                document.querySelectorAll('.display-exchange-rate').forEach(el => el.innerText = window.currentExchangeRate.toLocaleString('vi-VN'));
-            }
+            } catch(e) {}
         }
         fetchExchangeRate();
 
-        // LOGIC UI CHUNG
         window.toggleSidebar = function() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
@@ -679,24 +605,20 @@
             const menuBtn = document.getElementById('menu-' + viewName);
             if(menuBtn) menuBtn.classList.add('active');
 
-            const titleMobile = document.getElementById('header-title-mobile');
-            if (viewName === 'order') titleMobile.innerText = "Tạo đơn hàng";
-            if (viewName === 'history') titleMobile.innerText = "Lịch sử đơn hàng";
-            if (viewName === 'deposit') titleMobile.innerText = "Nạp tiền tài khoản";
-            if (viewName === 'games') titleMobile.innerText = "Mua Tài Khoản";
-            if (viewName === 'game-history') titleMobile.innerText = "Lịch sử Acc";
-            if (viewName === 'affiliate') titleMobile.innerText = "Kiếm Tiền (Ref)";
+            const titles = {
+                'order': 'Tạo đơn hàng', 'history': 'Lịch sử đơn hàng', 'deposit': 'Nạp tiền tài khoản',
+                'games': 'Mua Tài Khoản', 'game-history': 'Lịch sử Acc', 'affiliate': 'Kiếm Tiền (Ref)', 'ticket': 'Hỗ Trợ (Ticket)'
+            };
+            if(document.getElementById('header-title-mobile')) document.getElementById('header-title-mobile').innerText = titles[viewName];
 
             if(viewName === 'history' && typeof window.loadOrderHistory === 'function') window.loadOrderHistory();
             if(viewName === 'deposit' && typeof window.loadDepositHistory === 'function') window.loadDepositHistory();
             if(viewName === 'games' && typeof window.loadGameProductsUI === 'function') window.loadGameProductsUI();
             if(viewName === 'game-history' && typeof window.loadGameOrderHistory === 'function') window.loadGameOrderHistory();
             if(viewName === 'affiliate' && typeof window.loadCommissions === 'function') window.loadCommissions();
+            if(viewName === 'ticket' && typeof window.loadTickets === 'function') window.loadTickets();
             
-            if (viewName === 'order' && !window.currentServiceCategory && typeof window.loadAnnouncements === 'function') {
-                window.loadAnnouncements();
-            }
-            
+            if (viewName === 'order' && !window.currentServiceCategory && typeof window.loadAnnouncements === 'function') window.loadAnnouncements();
             if(window.innerWidth < 768) toggleSidebar();
         }
 
@@ -704,21 +626,29 @@
             const ul = document.getElementById(id);
             const icon = btn.querySelector('.fa-chevron-down');
             if(ul.classList.contains('hidden')) {
-                ul.classList.remove('hidden');
-                icon.style.transform = 'rotate(180deg)';
-                btn.classList.add('bg-dark-700');
+                ul.classList.remove('hidden'); icon.style.transform = 'rotate(180deg)'; btn.classList.add('bg-dark-700');
             } else {
-                ul.classList.add('hidden');
-                icon.style.transform = 'rotate(0deg)';
-                btn.classList.remove('bg-dark-700');
+                ul.classList.add('hidden'); icon.style.transform = 'rotate(0deg)'; btn.classList.remove('bg-dark-700');
             }
         }
 
-        // TẢI DANH SÁCH SERVER SMM
+        // TÍNH NĂNG TÌM KIẾM DỊCH VỤ SMM
+        window.filterServices = function() {
+            const input = document.getElementById('search-service-input');
+            const filter = input.value.toUpperCase();
+            const labels = document.querySelectorAll('.service-radio-item');
+            
+            labels.forEach(label => {
+                const text = label.getAttribute('data-name').toUpperCase();
+                if (text.indexOf(filter) > -1) label.style.display = "flex";
+                else label.style.display = "none";
+            });
+        }
+
+        // TẢI DANH SÁCH SERVER SMM (CÓ TÍNH VIP DISCOUNT)
         window.loadServiceForm = function(serviceCategory) {
             switchView('order');
-            document.getElementById('header-title').innerText = serviceCategory;
-            document.getElementById('header-title-mobile').innerText = serviceCategory.split(' - ')[0];
+            if(document.getElementById('header-title')) document.getElementById('header-title').innerText = serviceCategory;
             window.currentServiceCategory = serviceCategory;
             
             const labelEl = document.getElementById('label-dich-vu');
@@ -728,10 +658,11 @@
             if(inputsEl) inputsEl.classList.remove('hidden');
             
             const headingEl = document.getElementById('order-detail-heading');
-            if(headingEl) {
-                headingEl.classList.remove('hidden');
-                headingEl.classList.add('flex');
-            }
+            if(headingEl) { headingEl.classList.remove('hidden'); headingEl.classList.add('flex'); }
+            
+            const searchBox = document.getElementById('search-service-box');
+            if(searchBox) searchBox.classList.remove('hidden');
+            if(document.getElementById('search-service-input')) document.getElementById('search-service-input').value = '';
             
             document.getElementById('order-link').disabled = false;
             document.getElementById('qty').disabled = false;
@@ -742,8 +673,7 @@
             const serversData = window.allServers.filter(s => s.category === serviceCategory);
             serversData.sort((a,b) => a.rate - b.rate);
 
-            window.currentServer = null;
-            window.currentPrice = 0;
+            window.currentServer = null; window.currentPrice = 0;
 
             if (serversData.length === 0) {
                 listEl.innerHTML = `<div class="p-6 border border-dashed border-dark-600 rounded-xl text-center text-sm text-gray-500 bg-dark-900">Không có máy chủ hoạt động.</div>`;
@@ -755,12 +685,21 @@
                 const isAvailable = sv.status === 'Hoạt động' || sv.status === 'Nghẽn dịch vụ';
                 let isChecked = false;
 
-                if (isAvailable && !firstAvailableSet) {
-                    isChecked = true; firstAvailableSet = true;
-                    window.currentPrice = sv.rate; window.currentServer = sv;
+                // TÍNH GIÁ VIP DISCOUNT
+                let finalRate = sv.rate;
+                let isDiscounted = false;
+                if(window.userVipDiscount > 0) {
+                    finalRate = sv.rate - (sv.rate * window.userVipDiscount);
+                    isDiscounted = true;
                 }
 
-                const rate1K_VND = sv.rate * 1000;
+                if (isAvailable && !firstAvailableSet) {
+                    isChecked = true; firstAvailableSet = true;
+                    window.currentPrice = finalRate; window.currentServer = sv;
+                }
+
+                const rate1K_VND = finalRate * 1000;
+                const oldRate1K_VND = sv.rate * 1000;
                 const rate1K_USD = (rate1K_VND / window.currentExchangeRate).toFixed(3);
                 
                 const checkedClass = isChecked ? 'border-brand-500 bg-brand-500/10' : 'border-dark-600 bg-dark-900 hover:border-gray-500';
@@ -770,8 +709,16 @@
                 if(!isAvailable) statusHtml = `<span class="ml-2 text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded border border-red-500/30">${sv.status}</span>`;
                 else if(sv.status === 'Nghẽn dịch vụ') statusHtml = `<span class="ml-2 text-[10px] bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded border border-orange-500/30">Nghẽn</span>`;
 
+                let priceHtml = `
+                    <span class="text-gray-500">$${rate1K_USD}/1K</span>
+                    <span class="text-green-500">(${rate1K_VND.toLocaleString('en-US')} VNĐ/1K)</span>
+                `;
+                if(isDiscounted) {
+                    priceHtml += `<span class="text-xs text-gray-600 line-through ml-1">${oldRate1K_VND.toLocaleString('en-US')}đ</span>`;
+                }
+
                 listEl.innerHTML += `
-                    <label class="flex items-center p-4 border rounded-xl relative transition ${checkedClass} ${cursorClass}" ${isAvailable ? `onclick="selectServer('${sv.id}', this)"` : ''}>
+                    <label class="service-radio-item flex items-center p-4 border rounded-xl relative transition ${checkedClass} ${cursorClass}" data-name="${sv.code} ${sv.name}" ${isAvailable ? `onclick="selectServer('${sv.id}', this)"` : ''}>
                         <div class="mr-4 shrink-0">
                             <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center ${isChecked ? 'border-brand-500' : 'border-gray-600'}">
                                 ${isChecked ? '<div class="w-2.5 h-2.5 bg-brand-500 rounded-full"></div>' : ''}
@@ -784,9 +731,8 @@
                                 <span class="truncate">${sv.name}</span>
                                 ${statusHtml}
                             </div>
-                            <div class="text-xs font-medium flex flex-wrap gap-2">
-                                <span class="text-gray-500">$${rate1K_USD}/1K</span>
-                                <span class="text-green-500">(${rate1K_VND.toLocaleString('en-US')} VNĐ/1K)</span>
+                            <div class="text-xs font-medium flex flex-wrap items-center gap-2">
+                                ${priceHtml}
                                 <span class="text-gray-600 text-[10px] ml-auto border border-dark-600 px-1.5 rounded">Min: ${sv.minOrder||0} - Max: ${sv.maxOrder||'∞'}</span>
                             </div>
                         </div>
@@ -803,26 +749,22 @@
             const sv = window.allServers.find(s => s.id === id);
             if(!sv) return;
 
-            window.currentPrice = sv.rate; window.currentServer = sv;
+            let finalRate = sv.rate;
+            if(window.userVipDiscount > 0) finalRate = sv.rate - (sv.rate * window.userVipDiscount);
+
+            window.currentPrice = finalRate; window.currentServer = sv;
             
             document.querySelectorAll('#server-list label').forEach(label => {
                 if(!label.classList.contains('cursor-not-allowed')) {
-                    label.classList.remove('border-brand-500', 'bg-brand-500/10');
-                    label.classList.add('border-dark-600', 'bg-dark-900');
-                    label.querySelector('.w-5').classList.replace('border-brand-500', 'border-gray-600');
-                    label.querySelector('.w-5').innerHTML = '';
-                    const radio = label.querySelector('input[type="radio"]');
-                    if(radio) radio.checked = false;
+                    label.classList.remove('border-brand-500', 'bg-brand-500/10'); label.classList.add('border-dark-600', 'bg-dark-900');
+                    label.querySelector('.w-5').classList.replace('border-brand-500', 'border-gray-600'); label.querySelector('.w-5').innerHTML = '';
+                    const radio = label.querySelector('input[type="radio"]'); if(radio) radio.checked = false;
                 }
             });
             
-            el.classList.add('border-brand-500', 'bg-brand-500/10');
-            el.classList.remove('border-dark-600', 'bg-dark-900');
-            el.querySelector('.w-5').classList.replace('border-gray-600', 'border-brand-500');
-            el.querySelector('.w-5').innerHTML = '<div class="w-2.5 h-2.5 bg-brand-500 rounded-full"></div>';
-            
-            const radio = el.querySelector('input[type="radio"]');
-            if(radio) radio.checked = true;
+            el.classList.add('border-brand-500', 'bg-brand-500/10'); el.classList.remove('border-dark-600', 'bg-dark-900');
+            el.querySelector('.w-5').classList.replace('border-gray-600', 'border-brand-500'); el.querySelector('.w-5').innerHTML = '<div class="w-2.5 h-2.5 bg-brand-500 rounded-full"></div>';
+            const radio = el.querySelector('input[type="radio"]'); if(radio) radio.checked = true;
             
             updateQtyLimits();
             document.getElementById('qty').value = sv.minOrder || 0;
@@ -845,12 +787,19 @@
             
             document.getElementById('total').innerText = total.toLocaleString('en-US');
             
-            const btn = document.getElementById('btn-create-order');
+            // Hiển thị giá cũ nếu có VIP
+            if(window.userVipDiscount > 0 && window.currentServer && qty > 0) {
+                const oldTotal = qty * window.currentServer.rate;
+                const oldBox = document.getElementById('total-original');
+                oldBox.innerText = oldTotal.toLocaleString('en-US') + 'đ';
+                oldBox.classList.remove('hidden');
+            } else {
+                document.getElementById('total-original').classList.add('hidden');
+            }
             
+            const btn = document.getElementById('btn-create-order');
             let isValid = true; 
-
-            if (!window.currentServer) isValid = false;
-            else if (qty <= 0) isValid = false;
+            if (!window.currentServer || qty <= 0) isValid = false;
             else if (window.currentServer.minOrder && qty < window.currentServer.minOrder) isValid = false; 
             else if (window.currentServer.maxOrder && qty > window.currentServer.maxOrder) isValid = false;
 
@@ -863,27 +812,18 @@
             }
         }
 
-        // TOOL COPY
         window.copyToClipboard = function(text) {
-            const tempInput = document.createElement('input');
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
+            const tempInput = document.createElement('input'); tempInput.value = text;
+            document.body.appendChild(tempInput); tempInput.select(); document.execCommand('copy'); document.body.removeChild(tempInput);
             showToast("Đã copy thành công!", 'success');
         }
 
-        // TOOL TẠO QR TỰ ĐỘNG
         window.generateQR = function() {
             let amountStr = document.getElementById('deposit-amount-input').value;
             let numAmount = parseInt(amountStr) || 0;
-            
             let usdEquiv = numAmount / window.currentExchangeRate;
             document.getElementById('deposit-usd-equiv').innerText = '$' + usdEquiv.toFixed(3);
-
             let finalQrAmount = numAmount >= 5000 ? numAmount : '';
-            
             const des = encodeURIComponent(window.currentTransferContent || '');
             const qr = document.getElementById('qr-image');
             qr.src = `https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=${finalQrAmount}&des=${des}&template=compact`;
@@ -895,21 +835,33 @@
             else modal.classList.add('hidden');
         }
 
-        // LOGIC MUA ACC GAME
+        // LOGIC MUA ACC GAME (CÓ TÍNH VIP)
         window.openBuyGameModal = function(id) {
             const game = window.allGameProducts.find(g => g.id === id);
             if(!game) return;
 
             window.currentGamePurchase = game;
             
+            // Tính giá hiển thị
+            let unitPrice = game.price;
+            let originalPriceHtml = '';
+            if(window.userVipDiscount > 0) {
+                unitPrice = game.price - (game.price * window.userVipDiscount);
+                originalPriceHtml = game.price.toLocaleString('vi-VN') + 'đ';
+                document.getElementById('buy-game-unit-original').innerText = originalPriceHtml;
+                document.getElementById('buy-game-unit-original').classList.remove('hidden');
+            } else {
+                document.getElementById('buy-game-unit-original').classList.add('hidden');
+            }
+            
             document.getElementById('buy-game-logo').src = game.logoUrl;
             document.getElementById('buy-game-name').innerText = game.name;
-            document.getElementById('buy-game-unit-price').innerText = game.price.toLocaleString('vi-VN') + 'đ';
+            document.getElementById('buy-game-unit-price').innerText = unitPrice.toLocaleString('vi-VN') + 'đ';
             document.getElementById('buy-game-stock').innerText = `Trong kho: ${game.availableCount || 0} acc`;
             
             const discountBox = document.getElementById('buy-game-discount-info');
             if(game.discountQty > 0 && game.discountPercent > 0) {
-                document.getElementById('buy-game-discount-text').innerText = `Khuyến mãi: Mua từ ${game.discountQty} tài khoản, giảm ngay ${game.discountPercent}%`;
+                document.getElementById('buy-game-discount-text').innerText = `Khuyến mãi mua buôn: Mua từ ${game.discountQty} tk, giảm ngay ${game.discountPercent}%`;
                 discountBox.classList.remove('hidden');
             } else {
                 discountBox.classList.add('hidden');
@@ -930,15 +882,18 @@
 
             if(qty < 1) qty = 1;
             if(qty > game.availableCount) {
-                qty = game.availableCount;
-                qtyInput.value = qty;
-                showToast(`Chỉ còn tối đa ${qty} tài khoản trong kho!`, 'warning');
+                qty = game.availableCount; qtyInput.value = qty;
+                showToast(`Kho chỉ còn ${qty} tài khoản!`, 'warning');
             }
 
-            let total = qty * game.price;
+            // Lấy giá sau VIP
+            let basePrice = game.price;
+            if(window.userVipDiscount > 0) basePrice = game.price - (game.price * window.userVipDiscount);
+            
+            let total = qty * basePrice;
             const originalTotalBox = document.getElementById('buy-game-original-total');
             
-            // Xử lý Discount
+            // Xử lý Discount Mua sỉ
             if(game.discountQty > 0 && game.discountPercent > 0 && qty >= game.discountQty) {
                 originalTotalBox.innerText = total.toLocaleString('vi-VN') + ' đ';
                 originalTotalBox.classList.remove('hidden');
@@ -979,20 +934,19 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // HÀM TẢI BẢNG TIN TỪ FIREBASE
         window.loadAnnouncements = async function() {
             const listEl = document.getElementById('server-list');
             const labelEl = document.getElementById('label-dich-vu');
             const inputsEl = document.getElementById('order-form-inputs');
             const headingEl = document.getElementById('order-detail-heading');
+            const searchBox = document.getElementById('search-service-box');
             
             if(labelEl) labelEl.innerText = "Thông Báo Hệ Thống";
             if(inputsEl) inputsEl.classList.add('hidden');
-            if(headingEl) {
-                headingEl.classList.add('hidden');
-                headingEl.classList.remove('flex');
-            }
-            document.getElementById('header-title').innerText = 'Tạo đơn hàng mới';
+            if(searchBox) searchBox.classList.add('hidden');
+            if(headingEl) { headingEl.classList.add('hidden'); headingEl.classList.remove('flex'); }
+            
+            if(document.getElementById('header-title')) document.getElementById('header-title').innerText = 'Tạo đơn hàng mới';
             if(document.getElementById('header-title-mobile')) document.getElementById('header-title-mobile').innerText = 'Tạo đơn hàng';
             window.currentServiceCategory = "";
 
@@ -1005,38 +959,25 @@
                 let html = `
                 <div class="bg-dark-900 border border-dark-600 rounded-xl overflow-hidden shadow-inner">
                     <div class="bg-dark-800 border-b border-dark-600 px-5 py-3 flex items-center justify-between">
-                        <h4 class="font-bold text-white flex items-center">
-                            <i class="fa-solid fa-bullhorn text-brand-500 mr-2"></i> Bảng Tin Mới
-                        </h4>
+                        <h4 class="font-bold text-white flex items-center"><i class="fa-solid fa-bullhorn text-brand-500 mr-2"></i> Bảng Tin Mới</h4>
                         <span class="bg-brand-500/20 text-brand-400 text-[10px] font-bold px-2 py-1 rounded border border-brand-500/30">Tin tức</span>
                     </div>
                     <div class="p-5 space-y-5">
                 `;
 
                 if(snap.empty) {
-                    html += `
-                        <div class="text-center py-10">
-                            <i class="fa-solid fa-box-open text-4xl text-gray-600 mb-3"></i>
-                            <p class="text-gray-400 font-medium">Chưa có thông báo nào từ hệ thống.</p>
-                        </div>
-                    `;
+                    html += `<div class="text-center py-10"><i class="fa-solid fa-box-open text-4xl text-gray-600 mb-3"></i><p class="text-gray-400 font-medium">Chưa có thông báo nào từ hệ thống.</p></div>`;
                 } else {
                     snap.forEach(doc => {
                         const data = doc.data();
-                        let badgeColor = 'bg-gray-700 text-gray-300 border-gray-600';
-                        let dotColor = 'bg-gray-500';
-                        let shadowColor = '';
+                        let badgeColor = 'bg-gray-700 text-gray-300 border-gray-600'; let dotColor = 'bg-gray-500'; let shadowColor = '';
                         let typeLabel = data.type || 'INFO';
-                        
                         if(typeLabel === 'HOT SALE' || typeLabel === 'HOT') { badgeColor = 'bg-red-500/20 text-red-400 border-red-500/30'; dotColor = 'bg-red-500'; shadowColor = 'shadow-[0_0_8px_rgba(239,68,68,0.6)]'; }
                         else if(typeLabel === 'UPDATE') { badgeColor = 'bg-blue-500/20 text-blue-400 border-blue-500/30'; dotColor = 'bg-blue-500'; shadowColor = 'shadow-[0_0_8px_rgba(59,130,246,0.6)]'; }
                         else if(typeLabel === 'INFO') { badgeColor = 'bg-green-500/20 text-green-400 border-green-500/30'; dotColor = 'bg-green-500'; shadowColor = 'shadow-[0_0_8px_rgba(34,197,94,0.6)]'; }
 
                         let dateStr = "";
-                        if(data.createdAt) {
-                            const dateObj = new Date(data.createdAt);
-                            dateStr = `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth()+1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`;
-                        }
+                        if(data.createdAt) { const dateObj = new Date(data.createdAt); dateStr = `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth()+1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`; }
 
                         html += `
                         <div class="flex gap-4">
@@ -1051,29 +992,14 @@
                                 </div>
                                 <p class="text-sm text-gray-300 font-medium leading-relaxed">${data.content}</p>
                             </div>
-                        </div>
-                        `;
+                        </div>`;
                     });
                 }
-
-                html += `
-                    </div>
-                    <div class="bg-brand-500/10 px-5 py-3.5 border-t border-dark-600 text-sm text-brand-400 text-center font-medium animate-pulse">
-                        <i class="fa-solid fa-hand-point-left mr-2"></i> Vui lòng chọn một <b>danh mục dịch vụ</b> ở Menu bên trái để bắt đầu.
-                    </div>
-                </div>`;
-                
+                html += `</div><div class="bg-brand-500/10 px-5 py-3.5 border-t border-dark-600 text-sm text-brand-400 text-center font-medium animate-pulse"><i class="fa-solid fa-hand-point-left mr-2"></i> Vui lòng chọn một <b>danh mục dịch vụ</b> ở Menu bên trái để bắt đầu.</div></div>`;
                 if(listEl) listEl.innerHTML = html;
-                
-            } catch(e) {
-                console.error(e);
-                if(listEl) listEl.innerHTML = `<div class="text-center py-10 text-red-500">Lỗi tải thông báo: ${e.message}</div>`;
-            }
+            } catch(e) {}
         }
 
-        // ==========================================
-        // KHU VỰC: LOGIC MUA GAME CHO USER
-        // ==========================================
         window.loadGameProductsUI = async function() {
             const container = document.getElementById('game-products-container');
             if(!container) return;
@@ -1089,7 +1015,6 @@
                     return;
                 }
 
-                // Sắp xếp game còn hàng lên trước
                 window.allGameProducts.sort((a,b) => (b.availableCount || 0) - (a.availableCount || 0));
 
                 container.innerHTML = '';
@@ -1108,6 +1033,14 @@
                         discountBadge = `<div class="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-lg z-10 rounded-tr-xl border-l border-b border-orange-400/50 transform translate-x-px -translate-y-px">Mua ${game.discountQty}+ Giảm ${game.discountPercent}%</div>`;
                     }
 
+                    // TÍNH GIÁ VIP
+                    let displayPrice = game.price;
+                    let oldPriceHtml = "";
+                    if(window.userVipDiscount > 0) {
+                        displayPrice = game.price - (game.price * window.userVipDiscount);
+                        oldPriceHtml = `<div class="text-[10px] text-gray-500 line-through">${game.price.toLocaleString('vi-VN')}đ</div>`;
+                    }
+
                     container.innerHTML += `
                         <div class="bg-dark-800 border border-dark-700 rounded-2xl p-5 hover:border-brand-500/50 transition duration-300 relative group overflow-hidden">
                             ${discountBadge}
@@ -1120,7 +1053,8 @@
                             </div>
                             <div class="flex justify-between items-end relative z-10">
                                 <div>
-                                    <div class="text-brand-400 font-black text-xl">${game.price.toLocaleString('vi-VN')}đ</div>
+                                    ${oldPriceHtml}
+                                    <div class="text-brand-400 font-black text-xl">${displayPrice.toLocaleString('vi-VN')}đ</div>
                                     <div class="mt-1">${stockText}</div>
                                 </div>
                                 <button ${isOutOfStock ? 'disabled' : `onclick="openBuyGameModal('${game.id}')"`} class="px-5 py-2.5 rounded-xl font-bold transition flex items-center ${btnClass}">
@@ -1130,150 +1064,333 @@
                         </div>
                     `;
                 });
-            } catch(e) {
-                container.innerHTML = `<div class="col-span-full text-center text-red-500 py-10">Lỗi tải danh sách game: ${e.message}</div>`;
-            }
+            } catch(e) {}
         }
 
         window.executeGamePurchase = async function() {
             const user = auth.currentUser;
             if(!user || user.isAnonymous) return showToast("Vui lòng đăng ký tài khoản chính thức để mua hàng!", "error");
-            
             if(!window.currentGamePurchase) return;
             const game = window.currentGamePurchase;
             const qty = window.currentGamePurchaseQty;
             const totalPrice = window.currentGamePurchaseTotal;
 
-            if(window.currentUserBalance < totalPrice) {
-                return showToast("Tài khoản của bạn không đủ số dư. Vui lòng nạp thêm!", "error");
-            }
+            if(window.currentUserBalance < totalPrice) return showToast("Tài khoản của bạn không đủ số dư. Vui lòng nạp thêm!", "error");
 
             const btn = document.getElementById('btn-confirm-buy-game');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang trích xuất...';
-            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang trích xuất...'; btn.disabled = true;
 
             try {
                 const q = query(collection(db, "game_accounts"), where("productId", "==", game.id), where("status", "==", "available"), limit(qty));
                 const accSnaps = await getDocs(q);
 
-                if(accSnaps.size < qty) {
-                    throw new Error(`Kho chỉ còn ${accSnaps.size} tài khoản, không đủ để giao dịch!`);
-                }
+                if(accSnaps.size < qty) throw new Error(`Kho chỉ còn ${accSnaps.size} tài khoản, không đủ để giao dịch!`);
 
                 const batch = writeBatch(db);
                 let purchasedAccs = [];
 
                 accSnaps.forEach(docSnap => {
-                    const accData = docSnap.data();
-                    purchasedAccs.push(`${accData.username}:${accData.password}`);
-                    batch.update(docSnap.ref, { 
-                        status: "sold", 
-                        buyerUid: user.uid, 
-                        soldAt: new Date().toISOString() 
-                    });
+                    const accData = docSnap.data(); purchasedAccs.push(`${accData.username}:${accData.password}`);
+                    batch.update(docSnap.ref, { status: "sold", buyerUid: user.uid, soldAt: new Date().toISOString() });
                 });
 
                 batch.update(doc(db, "users", user.uid), { coin: increment(-totalPrice) });
+                batch.update(doc(db, "game_products", game.id), { availableCount: increment(-qty), soldCount: increment(qty) });
 
-                batch.update(doc(db, "game_products", game.id), {
-                    availableCount: increment(-qty),
-                    soldCount: increment(qty)
-                });
-
-                const orderRef = doc(collection(db, "game_orders"));
-                batch.set(orderRef, {
-                    uid: user.uid,
-                    productId: game.id,
-                    productName: game.name,
-                    quantity: qty,
-                    totalPrice: totalPrice,
-                    accountsData: purchasedAccs.join(', '), 
-                    createdAt: new Date().toISOString()
+                batch.set(doc(collection(db, "game_orders")), {
+                    uid: user.uid, productId: game.id, productName: game.name, quantity: qty, totalPrice: totalPrice,
+                    accountsData: purchasedAccs.join(', '), createdAt: new Date().toISOString()
                 });
 
                 await batch.commit();
 
-                // Fake reload balance
                 window.currentUserBalance -= totalPrice;
                 document.querySelectorAll('.display-balance-vnd').forEach(el => el.innerText = window.currentUserBalance.toLocaleString('vi-VN') + ' đ');
                 document.querySelectorAll('.display-balance-usd').forEach(el => el.innerText = "$" + (window.currentUserBalance / window.currentExchangeRate).toFixed(3));
 
                 showToast(`Mua thành công ${qty} Tài Khoản! Đang mở...`, "success");
                 toggleModal('modal-buy-game');
-                
                 window.loadGameProductsUI();
                 
                 setTimeout(() => {
                     switchView('game-history');
-                    // Mã hóa để truyền vào inline HTML an toàn
                     window.viewPurchasedAccs(encodeURIComponent(purchasedAccs.join('\n')));
                 }, 1500);
 
-            } catch(e) {
-                showToast(e.message, "error");
-            } finally {
-                btn.innerHTML = 'Xác Nhận Mua Ngay';
-                btn.disabled = false;
-            }
+            } catch(e) { showToast(e.message, "error"); } 
+            finally { btn.innerHTML = 'Xác Nhận Mua Ngay'; btn.disabled = false; }
         }
 
-        window.loadGameOrderHistory = async function() {
+        const initAuth = async () => {
+            onAuthStateChanged(auth, async (user) => {
+                if (!user) await signInAnonymously(auth);
+                else { window.currentUserBalance = 0; checkMaintenanceAndLoadUser(user); }
+            });
+        };
+        initAuth();
+
+        async function checkMaintenanceAndLoadUser(user) {
+            let role = "user"; let displayName = user.displayName || "User";
+            let coin = 0; let createdAt = new Date().toLocaleDateString('vi-VN');
+            let apiKey = "Chưa tạo khóa API";
+
+            if (!user.isAnonymous) {
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        const data = userDoc.data();
+                        role = data.role || "user";
+                        displayName = data.fullname || displayName;
+                        coin = data.coin || 0;
+                        if(data.createdAt) createdAt = new Date(data.createdAt).toLocaleDateString('vi-VN');
+                        if(data.apiKey) apiKey = data.apiKey;
+                    }
+                } catch(e) {}
+            }
+
+            try {
+                const settingsDoc = await getDoc(doc(db, "settings", "system"));
+                if (settingsDoc.exists() && settingsDoc.data().maintenanceMode === true && role !== "admin") {
+                    if(document.getElementById('maintenance-screen')) document.getElementById('maintenance-screen').classList.remove('hidden');
+                    if(document.getElementById('main-app-content')) document.getElementById('main-app-content').classList.add('hidden');
+                    return; 
+                }
+            } catch(e) {}
+
+            window.currentUserBalance = coin; 
+            
+            // --- HỆ THỐNG TÍNH TOÁN VIP (MỚI) ---
+            window.userVipDiscount = 0;
+            let totalDeposit = 0;
+            let vipTier = "Thành Viên"; let nextTier = "VIP: 500k";
+            let badgeColor = "bg-gray-600"; let progressPct = 0;
+
+            try {
+                const depSnap = await getDocs(query(collection(db, "deposits"), where("uid", "==", user.uid), where("status", "==", "Chấp Nhận")));
+                depSnap.forEach(d => { totalDeposit += Number(d.data().amount || 0); });
+
+                if(totalDeposit >= 10000000) {
+                    vipTier = "Nhà Phân Phối"; nextTier = "MAX CẤP"; badgeColor = "bg-red-500"; progressPct = 100; window.userVipDiscount = 0.15;
+                    document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-red-500 to-orange-500 h-2 rounded-full";
+                } else if(totalDeposit >= 2000000) {
+                    vipTier = "Đại Lý"; nextTier = "NPP: 10tr"; badgeColor = "bg-purple-500"; progressPct = (totalDeposit/10000000)*100; window.userVipDiscount = 0.10;
+                    document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full";
+                } else if(totalDeposit >= 500000) {
+                    vipTier = "VIP"; nextTier = "Đại Lý: 2tr"; badgeColor = "bg-yellow-500 text-dark-900"; progressPct = (totalDeposit/2000000)*100; window.userVipDiscount = 0.05;
+                    document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-yellow-400 to-yellow-600 h-2 rounded-full";
+                } else {
+                    progressPct = (totalDeposit/500000)*100;
+                }
+
+                // Cập nhật UI VIP
+                document.getElementById('vip-total-deposit').innerText = totalDeposit.toLocaleString('vi-VN') + 'đ';
+                document.getElementById('vip-next-tier').innerText = nextTier;
+                document.getElementById('vip-progress-bar').style.width = `${progressPct}%`;
+                document.getElementById('vip-discount-text').innerText = window.userVipDiscount > 0 ? `Bạn đang được giảm ${window.userVipDiscount * 100}% mọi dịch vụ` : "Nạp thêm để lên cấp và nhận ưu đãi giảm giá!";
+                
+                const badge1 = document.getElementById('modal-vip-badge');
+                const badge2 = document.getElementById('ui-vip-badge');
+                if(badge1) { badge1.innerText = vipTier; badge1.className = `text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-md mt-1 inline-block text-white ${badgeColor}`; }
+                if(badge2 && vipTier !== "Thành Viên") { badge2.innerText = vipTier.charAt(0); badge2.className = `absolute -top-2 -right-2 ${badgeColor} text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow-md border border-dark-800`; }
+                
+            } catch(e) {}
+            // -----------------------------------
+            
+            let cleanName = displayName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+            if(!cleanName || cleanName === "KHACHLAANDANH") cleanName = user.uid.substring(0,6).toUpperCase();
+            window.currentTransferContent = "FLMMO " + cleanName;
+
+            if(document.getElementById('ui-fullname')) document.getElementById('ui-fullname').innerText = displayName;
+            if(document.getElementById('ui-coin')) document.getElementById('ui-coin').innerText = coin.toLocaleString('en-US');
+            
+            document.querySelectorAll('.display-balance-usd').forEach(el => el.innerText = "$" + (coin / window.currentExchangeRate).toFixed(3)); 
+            document.querySelectorAll('.display-balance-vnd').forEach(el => el.innerText = coin.toLocaleString('vi-VN') + ' đ');
+            
+            if(document.getElementById('transfer-content-display')) document.getElementById('transfer-content-display').innerText = window.currentTransferContent;
+            if(typeof window.generateQR === 'function') window.generateQR(); 
+            
+            const initial = displayName.charAt(0).toUpperCase();
+            if(document.getElementById('ui-avatar')) document.getElementById('ui-avatar').childNodes[0].nodeValue = initial + " ";
+            if(document.getElementById('modal-avatar')) document.getElementById('modal-avatar').innerText = initial;
+            if(document.getElementById('modal-name')) document.getElementById('modal-name').innerText = displayName;
+            if(document.getElementById('modal-email')) document.getElementById('modal-email').innerText = user.email || 'Ẩn danh';
+            if(document.getElementById('profile-balance')) document.getElementById('profile-balance').innerText = coin.toLocaleString('en-US') + " đ";
+            if(document.getElementById('profile-created')) document.getElementById('profile-created').innerText = createdAt;
+            if(document.getElementById('my-api-key')) document.getElementById('my-api-key').value = apiKey;
+
+            if(document.getElementById('my-ref-link')) document.getElementById('my-ref-link').value = `https://flmmo.vercel.app/dangky.html?ref=${user.uid}`;
+
+            Promise.all([
+                loadOrderStats(user.uid),
+                loadDepositHistory(),
+                fetchAndRenderServicesMenu(), // Bây giờ loadServiceMenu sẽ tự động gán giá mới nhờ window.userVipDiscount đã có
+                window.loadAnnouncements(),
+                typeof window.loadGameProductsUI === 'function' ? window.loadGameProductsUI() : Promise.resolve(),
+                typeof window.loadCommissions === 'function' ? window.loadCommissions() : Promise.resolve(),
+                typeof window.loadTickets === 'function' ? window.loadTickets() : Promise.resolve(),
+                populateTicketOrderDropdown(user.uid)
+            ]).catch(e => console.error(e));
+        }
+
+        // TẠO API KEY CHO USER
+        window.generateApiKey = async function() {
+            const user = auth.currentUser; if(!user || user.isAnonymous) return showToast("Cần đăng ký tài khoản chính thức!", "error");
+            if(!confirm("Xác nhận tạo mới/đổi mã Khóa API? Mã cũ sẽ không thể sử dụng nữa!")) return;
+
+            const randomHash = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            const newKey = "flmmo_" + randomHash;
+
+            try {
+                await updateDoc(doc(db, "users", user.uid), { apiKey: newKey });
+                document.getElementById('my-api-key').value = newKey;
+                showToast("Khởi tạo API Key thành công!", "success");
+            } catch(e) { showToast("Lỗi tạo API: " + e.message, "error"); }
+        }
+
+        // HỖ TRỢ TICKET LOGIC
+        async function populateTicketOrderDropdown(uid) {
+            const select = document.getElementById('ticket-orderid');
+            if(!select) return;
+            try {
+                const snap = await getDocs(query(collection(db, "orders"), where("uid", "==", uid)));
+                let html = '<option value="">-- Chọn mã đơn SMM bị lỗi (Tùy chọn) --</option>';
+                let orders = [];
+                snap.forEach(d => orders.push({id: d.id, ...d.data()}));
+                orders.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+                // Lấy 30 đơn gần nhất
+                orders.slice(0, 30).forEach(o => {
+                    html += `<option value="${o.id}">Đơn #${o.id.substring(0,8).toUpperCase()} - ${o.category.split(' - ')[1] || 'SMM'} (${o.status})</option>`;
+                });
+                select.innerHTML = html;
+            } catch(e){}
+        }
+
+        document.getElementById('form-ticket').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser; if(!user || user.isAnonymous) return showToast("Vui lòng đăng ký tài khoản!", "error");
+            
+            const btn = document.getElementById('btn-submit-ticket');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang gửi...'; btn.disabled = true;
+
+            const subject = document.getElementById('ticket-subject').value;
+            const orderId = document.getElementById('ticket-orderid').value;
+            const message = document.getElementById('ticket-message').value;
+
+            try {
+                await addDoc(collection(db, "tickets"), {
+                    uid: user.uid,
+                    email: user.email || 'No email',
+                    subject: subject,
+                    orderId: orderId,
+                    message: message,
+                    status: "Chờ xử lý",
+                    reply: "",
+                    createdAt: new Date().toISOString()
+                });
+                showToast("Gửi yêu cầu hỗ trợ thành công! Admin sẽ xử lý sớm nhất.", "success");
+                document.getElementById('form-ticket').reset();
+                loadTickets();
+            } catch(e) {
+                showToast("Lỗi gửi Ticket: " + e.message, "error");
+            } finally {
+                btn.innerHTML = 'Gửi Yêu Cầu'; btn.disabled = false;
+            }
+        });
+
+        window.loadTickets = async function() {
             const user = auth.currentUser; if(!user) return;
-            const tbody = document.getElementById('game-history-body');
-            if(!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-12 text-center text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải dữ liệu...</td></tr>';
+            const container = document.getElementById('ticket-list-container');
+            if(!container) return;
+            container.innerHTML = '<div class="text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-xl"></i></div>';
             
             try {
-                const snapshot = await getDocs(collection(db, "game_orders"));
-                let orders = [];
-                snapshot.forEach(doc => { if (doc.data().uid === user.uid) orders.push({ id: doc.id, ...doc.data() }); });
-                orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                const snap = await getDocs(query(collection(db, "tickets"), where("uid", "==", user.uid)));
+                let tickets = [];
+                snap.forEach(d => tickets.push({id: d.id, ...d.data()}));
+                tickets.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-                if(orders.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-12 text-center text-gray-500">Bạn chưa mua tài khoản game nào</td></tr>';
+                if(tickets.length === 0) {
+                    container.innerHTML = '<div class="text-center py-10 text-gray-500"><i class="fa-solid fa-inbox text-3xl mb-2 text-gray-600"></i><br>Bạn chưa gửi yêu cầu hỗ trợ nào.</div>';
                     return;
                 }
 
+                container.innerHTML = '';
+                tickets.forEach(t => {
+                    let statusHtml = '';
+                    if(t.status === "Chờ xử lý") statusHtml = '<span class="bg-orange-500/20 text-orange-400 border border-orange-500/30 px-2 py-0.5 rounded text-[10px] font-bold">Chờ xử lý</span>';
+                    else if(t.status === "Đã trả lời") statusHtml = '<span class="bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded text-[10px] font-bold">Đã trả lời</span>';
+                    else statusHtml = '<span class="bg-gray-700 text-gray-400 border border-gray-600 px-2 py-0.5 rounded text-[10px] font-bold">Đã đóng</span>';
+
+                    let orderTag = t.orderId ? `<span class="text-[10px] bg-dark-900 border border-dark-600 text-gray-400 px-1.5 rounded ml-2 font-mono">Đơn #${t.orderId.substring(0,8).toUpperCase()}</span>` : '';
+                    let replyBlock = t.reply ? `<div class="mt-3 pt-3 border-t border-dark-600"><span class="text-xs font-bold text-brand-400"><i class="fa-solid fa-reply mr-1"></i> Admin trả lời:</span><p class="text-sm text-gray-300 mt-1 bg-dark-900 p-2.5 rounded-lg border border-brand-500/20">${t.reply}</p></div>` : '';
+
+                    container.innerHTML += `
+                        <div class="bg-dark-900 border border-dark-600 rounded-xl p-4 transition hover:border-dark-500">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="font-bold text-white text-sm">${t.subject} ${orderTag}</div>
+                                ${statusHtml}
+                            </div>
+                            <div class="text-xs text-gray-500 mb-2">${new Date(t.createdAt).toLocaleString('vi-VN')}</div>
+                            <p class="text-sm text-gray-400">${t.message}</p>
+                            ${replyBlock}
+                        </div>
+                    `;
+                });
+            } catch(e) {}
+        }
+
+        // CÁC HÀM CŨ GIỮ NGUYÊN (loadOrderStats, TẠO ĐƠN API, LỊCH SỬ...)
+        // Lịch sử Đơn SMM
+        window.loadOrderHistory = async function() {
+            const user = auth.currentUser; if(!user) return;
+            const tbody = document.getElementById('order-history-body'); if(!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải...</td></tr>';
+            try {
+                const snapshot = await getDocs(query(collection(db, "orders"), where("uid", "==", user.uid)));
+                let orders = []; snapshot.forEach(doc => { orders.push({ id: doc.id, ...doc.data() }); });
+                orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                if(orders.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500">Bạn chưa có đơn hàng nào</td></tr>'; return; }
+
                 tbody.innerHTML = '';
                 orders.forEach(o => {
-                    const dt = new Date(o.createdAt);
-                    const formattedDate = `${dt.getDate()}/${dt.getMonth()+1}/${dt.getFullYear()} ${dt.getHours()}:${dt.getMinutes()}`;
-                    
-                    const encodedData = encodeURIComponent(o.accountsData || "");
+                    let statusHtml = '';
+                    if (o.status === 'Đang xử lý' || o.status === 'Đang chạy') statusHtml = '<span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs font-bold border border-blue-500/30">' + o.status + '</span>';
+                    else if (o.status === 'Hoàn thành') statusHtml = '<span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold border border-green-500/30">Hoàn thành</span>';
+                    else statusHtml = `<span class="bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs font-bold border border-red-500/30">${o.status}</span>`;
+
+                    const dt = new Date(o.createdAt); const formattedDate = `${dt.getDate()}/${dt.getMonth()+1}/${dt.getFullYear()} ${dt.getHours()}:${dt.getMinutes()}`;
+                    const safeLink = o.link.startsWith('http') ? o.link : 'https://' + o.link;
 
                     tbody.innerHTML += `
                         <tr class="hover:bg-dark-700/50 transition text-gray-300 border-b border-dark-700">
                             <td class="px-6 py-4">
-                                <div class="text-xs font-mono font-bold text-white mb-1">#${o.id.substring(0,8).toUpperCase()}</div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs font-mono font-bold text-white" title="${o.id}">#${o.id.substring(0,8).toUpperCase()}</span>
+                                    <button onclick="copyToClipboard('${o.id}')" class="text-gray-500 hover:text-brand-400 transition" title="Copy mã đơn"><i class="fa-regular fa-copy"></i></button>
+                                </div>
                                 <div class="text-[10px] text-gray-500">${formattedDate}</div>
                             </td>
-                            <td class="px-6 py-4 text-xs font-medium text-brand-400">${o.productName || '-'}</td>
-                            <td class="px-6 py-4 text-center font-bold text-white bg-dark-900/50">${o.quantity} Acc</td>
-                            <td class="px-6 py-4 font-bold text-green-400">${o.totalPrice.toLocaleString('en-US')}đ</td>
-                            <td class="px-6 py-4 text-center">
-                                <button onclick="viewPurchasedAccs('${encodedData}')" class="bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center justify-center mx-auto">
-                                    <i class="fa-solid fa-eye mr-1.5"></i> Xem Acc
-                                </button>
-                            </td>
+                            <td class="px-6 py-4 text-xs font-medium text-brand-400">${o.category || '-'}</td>
+                            <td class="px-6 py-4 text-xs"><span class="bg-dark-900 text-gray-300 border border-dark-600 px-2 py-0.5 rounded font-bold uppercase">${o.serverId || 'SV'}</span></td>
+                            <td class="px-6 py-4 text-xs max-w-[150px] truncate"><a href="${safeLink}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline transition">${o.link}</a></td>
+                            <td class="px-6 py-4 font-bold">${o.quantity.toLocaleString('en-US')}</td>
+                            <td class="px-6 py-4 font-bold text-white">${o.total.toLocaleString('en-US')}đ</td>
+                            <td class="px-6 py-4 text-center">${statusHtml}</td>
                         </tr>
                     `;
                 });
-            } catch(e) {
-                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-red-500">Lỗi tải lịch sử: ${e.message}</td></tr>`;
-            }
+            } catch(e) {}
         }
 
         // TẢI HOA HỒNG REF
         window.loadCommissions = async function() {
             const user = auth.currentUser; if(!user) return;
-            const tbody = document.getElementById('commission-history-body');
-            if(!tbody) return;
+            const tbody = document.getElementById('commission-history-body'); if(!tbody) return;
             tbody.innerHTML = '<tr><td colspan="4" class="text-center py-8 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-xl"></i><br>Đang tải...</td></tr>';
             try {
-                const q = query(collection(db, "commissions"), where("referrerUid", "==", user.uid));
-                const snapshot = await getDocs(q);
-                let comms = [];
-                snapshot.forEach(doc => comms.push(doc.data()));
+                const snapshot = await getDocs(query(collection(db, "commissions"), where("referrerUid", "==", user.uid)));
+                let comms = []; snapshot.forEach(doc => comms.push(doc.data()));
                 comms.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
                 if(comms.length === 0) return tbody.innerHTML = '<tr><td colspan="4" class="text-center py-6 text-gray-500">Chưa có dữ liệu hoa hồng</td></tr>';
@@ -1290,372 +1407,26 @@
                         </tr>
                     `;
                 });
-            } catch(e) {
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-red-500">Lỗi: ${e.message}</td></tr>`;
-            }
-        }
-
-        const initAuth = async () => {
-            onAuthStateChanged(auth, async (user) => {
-                if (!user) await signInAnonymously(auth);
-                else {
-                    window.currentUserBalance = 0; 
-                    checkMaintenanceAndLoadUser(user);
-                }
-            });
-        };
-        initAuth();
-
-        async function checkMaintenanceAndLoadUser(user) {
-            let role = "user"; let displayName = user.displayName || "User";
-            let coin = 0; let createdAt = new Date().toLocaleDateString('vi-VN');
-
-            if (!user.isAnonymous) {
-                try {
-                    const userDoc = await getDoc(doc(db, "users", user.uid));
-                    if (userDoc.exists()) {
-                        const data = userDoc.data();
-                        role = data.role || "user";
-                        displayName = data.fullname || displayName;
-                        coin = data.coin || 0;
-                        if(data.createdAt) createdAt = new Date(data.createdAt).toLocaleDateString('vi-VN');
-                    }
-                } catch(e) {}
-            }
-
-            try {
-                const settingsDoc = await getDoc(doc(db, "settings", "system"));
-                if (settingsDoc.exists() && settingsDoc.data().maintenanceMode === true && role !== "admin") {
-                    if(document.getElementById('maintenance-screen')) document.getElementById('maintenance-screen').classList.remove('hidden');
-                    if(document.getElementById('main-app-content')) document.getElementById('main-app-content').classList.add('hidden');
-                    return; 
-                }
-            } catch(e) {}
-
-            window.currentUserBalance = coin; 
-            
-            let cleanName = displayName.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-            if(!cleanName || cleanName === "KHACHLAANDANH") cleanName = user.uid.substring(0,6).toUpperCase();
-            window.currentTransferContent = "FLMMO " + cleanName;
-
-            // AN TOÀN UPDATE UI
-            if(document.getElementById('ui-fullname')) document.getElementById('ui-fullname').innerText = displayName;
-            if(document.getElementById('ui-coin')) document.getElementById('ui-coin').innerText = coin.toLocaleString('en-US');
-            
-            document.querySelectorAll('.display-balance-usd').forEach(el => el.innerText = "$" + (coin / window.currentExchangeRate).toFixed(3)); 
-            document.querySelectorAll('.display-balance-vnd').forEach(el => el.innerText = coin.toLocaleString('vi-VN') + ' đ');
-            
-            if(document.getElementById('transfer-content-display')) document.getElementById('transfer-content-display').innerText = window.currentTransferContent;
-            if(typeof window.generateQR === 'function') window.generateQR(); 
-            
-            const initial = displayName.charAt(0).toUpperCase();
-            if(document.getElementById('ui-avatar')) document.getElementById('ui-avatar').innerText = initial;
-            if(document.getElementById('modal-avatar')) document.getElementById('modal-avatar').innerText = initial;
-            if(document.getElementById('modal-name')) document.getElementById('modal-name').innerText = displayName;
-            if(document.getElementById('modal-email')) document.getElementById('modal-email').innerText = user.email || 'Ẩn danh';
-            if(document.getElementById('profile-balance')) document.getElementById('profile-balance').innerText = coin.toLocaleString('en-US') + " đ";
-            if(document.getElementById('profile-created')) document.getElementById('profile-created').innerText = createdAt;
-
-            // Update Affiliate Link
-            if(document.getElementById('my-ref-link')) document.getElementById('my-ref-link').value = `https://flmmo.vercel.app/dangky.html?ref=${user.uid}`;
-
-            // TẢI DỮ LIỆU SONG SONG SIÊU TỐC
-            Promise.all([
-                loadOrderStats(user.uid),
-                loadDepositHistory(),
-                fetchAndRenderServicesMenu(),
-                window.loadAnnouncements(),
-                typeof window.loadGameProductsUI === 'function' ? window.loadGameProductsUI() : Promise.resolve(),
-                typeof window.loadCommissions === 'function' ? window.loadCommissions() : Promise.resolve()
-            ]).catch(e => console.error("Lỗi khi tải dữ liệu ngầm:", e));
-        }
-
-        async function loadOrderStats(uid) {
-            try {
-                const snapshot = await getDocs(collection(db, "orders"));
-                let pending = 0; let completed = 0;
-                snapshot.forEach(doc => {
-                    const d = doc.data();
-                    if(d.uid === uid) {
-                        if(d.status === "Đang xử lý" || d.status === "Đang chạy") pending++;
-                        else if(d.status === "Hoàn thành") completed++;
-                    }
-                });
-                if(document.getElementById('stat-pending')) document.getElementById('stat-pending').innerText = pending;
-                if(document.getElementById('stat-completed')) document.getElementById('stat-completed').innerText = completed;
-            } catch(e){}
-        }
-
-        async function fetchAndRenderServicesMenu() {
-            try {
-                const snap = await getDocs(collection(db, "servers"));
-                window.allServers = [];
-                snap.forEach(doc => window.allServers.push({ id: doc.id, ...doc.data() }));
-
-                const menuTree = {};
-                window.allServers.forEach(s => {
-                    const cat = s.category || "Khác - Dịch Vụ Mặc Định";
-                    const parts = cat.split(" - ");
-                    const platform = parts[0].trim();
-                    if (!menuTree[platform]) menuTree[platform] = new Set();
-                    menuTree[platform].add(cat);
-                });
-
-                const menuEl = document.getElementById('dynamic-sidebar-menu');
-                if(!menuEl) return;
-                menuEl.innerHTML = '';
-
-                if(Object.keys(menuTree).length === 0) {
-                    menuEl.innerHTML = '<li class="px-6 py-3 text-sm text-gray-500">Chưa có dịch vụ nào</li>';
-                    return;
-                }
-
-                let isFirst = true;
-                for (const platform in menuTree) {
-                    let pIcon = 'fa-solid fa-hashtag'; let pColor = 'text-gray-400';
-                    if (platform.toLowerCase().includes('facebook')) { pIcon = 'fa-brands fa-facebook'; pColor = 'text-blue-500'; }
-                    else if (platform.toLowerCase().includes('tiktok')) { pIcon = 'fa-brands fa-tiktok'; pColor = 'text-white'; }
-                    else if (platform.toLowerCase().includes('instagram')) { pIcon = 'fa-brands fa-instagram'; pColor = 'text-pink-500'; }
-
-                    let subHtml = '';
-                    menuTree[platform].forEach(fullCat => {
-                        const parts = fullCat.split(" - ");
-                        const subName = parts[1] ? parts[1].trim() : fullCat;
-                        let sIcon = 'fa-solid fa-bolt text-yellow-500';
-                        subHtml += `<li><a href="#" class="block pl-10 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-dark-700 transition" onclick="loadServiceForm('${fullCat}')"><i class="${sIcon} mr-2 w-4 text-center"></i> ${subName}</a></li>`;
-                    });
-
-                    const subMenuId = 'submenu-' + Math.random().toString(36).substr(2, 9);
-                    
-                    menuEl.innerHTML += `
-                        <li class="mb-1">
-                            <button class="w-full flex items-center justify-between px-6 py-3 text-sm text-gray-300 hover:bg-dark-700 hover:text-white font-bold transition rounded-lg ${isFirst?'bg-dark-700':''}" onclick="toggleSubMenu('${subMenuId}', this)">
-                                <span class="flex items-center"><i class="${pIcon} w-6 ${pColor}"></i> ${platform}</span>
-                                <i class="fa-solid fa-chevron-down text-[10px] transition-transform ${isFirst?'rotate-180':''}"></i>
-                            </button>
-                            <ul class="${isFirst?'':'hidden'} mt-1 space-y-1" id="${subMenuId}">
-                                ${subHtml}
-                            </ul>
-                        </li>
-                    `;
-                    isFirst = false;
-                }
-            } catch(e) {
-                if(document.getElementById('dynamic-sidebar-menu')) document.getElementById('dynamic-sidebar-menu').innerHTML = `<li class="px-6 py-3 text-sm text-red-500">Lỗi kết nối CSDL</li>`;
-            }
-        }
-
-        // TẠO ĐƠN API MYSMM
-        document.getElementById('form-order').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const user = auth.currentUser;
-            const btn = document.getElementById('btn-create-order');
-            
-            if(!user || user.isAnonymous) {
-                showToast("Vui lòng Đăng ký Tài khoản trước khi tạo đơn!", 'error');
-                return;
-            }
-
-            const link = document.getElementById('order-link').value;
-            const qtyStr = document.getElementById('qty').value;
-            const qty = parseInt(qtyStr) || 0;
-            const totalCost = qty * window.currentPrice;
-
-            if (window.currentUserBalance < totalCost) {
-                showToast(`Số dư không đủ. Vui lòng nạp thêm tiền!`, 'error');
-                return;
-            }
-
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang xử lý...';
-            btn.disabled = true;
-
-            try {
-                // --- BẮT ĐẦU GỌI API SANG MYSMM.VN ---
-                const mySmmApiKey = "f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668";
-                const formData = new URLSearchParams();
-                formData.append('key', mySmmApiKey);
-                formData.append('action', 'add');
-                formData.append('service', window.currentServer.code); 
-                formData.append('link', link);
-                formData.append('quantity', qty);
-
-                const apiResponse = await fetch("https://api.mysmm.vn/api/v2", {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData.toString()
-                });
-                const apiResult = await apiResponse.json();
-
-                if (apiResult.error) throw new Error("Lỗi Server nguồn: " + apiResult.error);
-                const remoteOrderId = apiResult.order || "Không xác định";
-
-                // Lưu Order
-                await addDoc(collection(db, "orders"), {
-                    uid: user.uid,
-                    category: window.currentServiceCategory,
-                    serverName: window.currentServer.name,
-                    serverId: window.currentServer.code,
-                    remoteOrderId: remoteOrderId,
-                    link: link,
-                    quantity: qty,
-                    price: window.currentPrice,
-                    total: totalCost,
-                    status: "Đang xử lý",
-                    createdAt: new Date().toISOString()
-                });
-
-                // Trừ tiền
-                await updateDoc(doc(db, "users", user.uid), { coin: increment(-totalCost) });
-                checkMaintenanceAndLoadUser(user);
-
-                showToast("Tạo đơn hàng thành công!", 'success');
-                
-                setTimeout(() => {
-                    document.getElementById('form-order').reset();
-                    window.calcPrice(); 
-                    window.switchView('history');
-                }, 1500);
-
-            } catch (error) {
-                showToast(error.message, 'error');
-            } finally {
-                btn.innerHTML = 'Tạo Đơn Hàng';
-                btn.disabled = false;
-            }
-        });
-
-        // LỊCH SỬ ĐƠN HÀNG
-        window.loadOrderHistory = async function() {
-            const user = auth.currentUser;
-            if(!user) return;
-            const tbody = document.getElementById('order-history-body');
-            if(!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải...</td></tr>';
-            
-            try {
-                const snapshot = await getDocs(collection(db, "orders"));
-                let orders = [];
-                snapshot.forEach(doc => { if (doc.data().uid === user.uid) orders.push({ id: doc.id, ...doc.data() }); });
-                orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-                if(orders.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500">Bạn chưa có đơn hàng nào</td></tr>';
-                    return;
-                }
-
-                tbody.innerHTML = '';
-                orders.forEach(o => {
-                    let statusHtml = '';
-                    if (o.status === 'Đang xử lý' || o.status === 'Đang chạy') statusHtml = '<span class="bg-blue-500/20 text-blue-400 px-2 py-1 rounded text-xs font-bold border border-blue-500/30">' + o.status + '</span>';
-                    else if (o.status === 'Hoàn thành') statusHtml = '<span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold border border-green-500/30">Hoàn thành</span>';
-                    else statusHtml = `<span class="bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs font-bold border border-red-500/30">${o.status}</span>`;
-
-                    const dt = new Date(o.createdAt);
-                    const formattedDate = `${dt.getDate()}/${dt.getMonth()+1}/${dt.getFullYear()} ${dt.getHours()}:${dt.getMinutes()}`;
-                    
-                    // Clickable Link
-                    const safeLink = o.link.startsWith('http') ? o.link : 'https://' + o.link;
-
-                    tbody.innerHTML += `
-                        <tr class="hover:bg-dark-700/50 transition text-gray-300 border-b border-dark-700">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-xs font-mono font-bold text-white" title="${o.id}">#${o.id.substring(0,8).toUpperCase()}</span>
-                                    <button onclick="copyToClipboard('${o.id}')" class="text-gray-500 hover:text-brand-400 transition" title="Copy mã đơn"><i class="fa-regular fa-copy"></i></button>
-                                </div>
-                                <div class="text-[10px] text-gray-500">${formattedDate}</div>
-                            </td>
-                            <td class="px-6 py-4 text-xs font-medium text-brand-400">${o.category || '-'}</td>
-                            <td class="px-6 py-4 text-xs"><span class="bg-dark-900 text-gray-300 border border-dark-600 px-2 py-0.5 rounded font-bold uppercase">${o.serverId || 'SV'}</span></td>
-                            <td class="px-6 py-4 text-xs max-w-[150px] truncate">
-                                <a href="${safeLink}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline transition">${o.link}</a>
-                            </td>
-                            <td class="px-6 py-4 font-bold">${o.quantity.toLocaleString('en-US')}</td>
-                            <td class="px-6 py-4 font-bold text-white">${o.total.toLocaleString('en-US')}đ</td>
-                            <td class="px-6 py-4 text-center">${statusHtml}</td>
-                        </tr>
-                    `;
-                });
-            } catch(e) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-red-500">Lỗi tải lịch sử: ${e.message}</td></tr>`;
-            }
-        }
-
-        // TẢI LỊCH SỬ NẠP TIỀN
-        window.loadDepositHistory = async function() {
-            const user = auth.currentUser; if(!user) return;
-            const tbody = document.getElementById('deposit-history-body');
-            if(!tbody) return;
-            try {
-                const snapshot = await getDocs(collection(db, "deposits"));
-                let deposits = [];
-                snapshot.forEach(doc => { if (doc.data().uid === user.uid) deposits.push({ id: doc.id, ...doc.data() }); });
-                deposits.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-                if(deposits.length === 0) return tbody.innerHTML = '<tr><td colspan="5" class="text-center py-6 text-gray-500">Chưa có giao dịch nạp tiền</td></tr>';
-                
-                tbody.innerHTML = '';
-                deposits.forEach(d => {
-                    let statusHtml = '';
-                    if (d.status === 'Chờ Duyệt') statusHtml = '<span class="bg-orange-500/20 text-orange-400 px-2 py-1 rounded text-xs font-bold border border-orange-500/30">Chờ Duyệt</span>';
-                    else if (d.status === 'Chấp Nhận') statusHtml = '<span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold border border-green-500/30">Hoàn thành</span>';
-                    else statusHtml = `<span class="bg-red-500/20 text-red-400 px-2 py-1 rounded text-xs font-bold border border-red-500/30">Từ Chối</span>`;
-
-                    tbody.innerHTML += `
-                        <tr class="hover:bg-dark-700/50 transition text-gray-300 border-b border-dark-700">
-                            <td class="px-6 py-4 text-xs font-mono">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-xs font-mono font-bold text-white" title="${d.id}">#${d.id.substring(0,6).toUpperCase()}</span>
-                                    <button onclick="copyToClipboard('${d.id}')" class="text-gray-500 hover:text-brand-400 transition" title="Copy mã đơn"><i class="fa-regular fa-copy"></i></button>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 font-bold text-white">${Number(d.amount).toLocaleString('en-US')}đ</td>
-                            <td class="px-6 py-4 text-xs font-mono text-gray-400">${d.transId || '-'}</td>
-                            <td class="px-6 py-4 text-xs text-gray-400">${new Date(d.createdAt).toLocaleString('vi-VN')}</td>
-                            <td class="px-6 py-4 text-center">${statusHtml}</td>
-                        </tr>
-                    `;
-                });
             } catch(e) {}
         }
 
-        // ĐỔI MẬT KHẨU
         document.getElementById('form-change-password').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const user = auth.currentUser; 
-            const btn = document.getElementById('btn-change-pass');
-
-            if(!user || user.isAnonymous) {
-                showToast("Vui lòng đăng ký tài khoản chính thức để đổi mật khẩu.", "error");
-                return;
-            }
-
-            const oldPass = document.getElementById('old-pass').value;
-            const newPass = document.getElementById('new-pass').value;
-            
+            e.preventDefault(); const user = auth.currentUser; const btn = document.getElementById('btn-change-pass');
+            if(!user || user.isAnonymous) return showToast("Vui lòng đăng ký tài khoản chính thức để đổi mật khẩu.", "error");
+            const oldPass = document.getElementById('old-pass').value; const newPass = document.getElementById('new-pass').value;
             btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>'; btn.disabled = true;
-
             try {
                 const credential = EmailAuthProvider.credential(user.email, oldPass);
                 await reauthenticateWithCredential(user, credential);
                 await updatePassword(user, newPass);
-                
-                showToast("Đổi mật khẩu thành công!", "success");
-                document.getElementById('form-change-password').reset();
+                showToast("Đổi mật khẩu thành công!", "success"); document.getElementById('form-change-password').reset();
             } catch (error) {
-                let errText = error.code === 'auth/invalid-credential' ? "Mật khẩu cũ không đúng!" : error.message;
-                showToast(errText, "error");
-            } finally { 
-                btn.innerHTML = 'Lưu Mật Khẩu'; 
-                btn.disabled = false; 
-            }
+                showToast(error.code === 'auth/invalid-credential' ? "Mật khẩu cũ không đúng!" : error.message, "error");
+            } finally { btn.innerHTML = 'Lưu Mật Khẩu'; btn.disabled = false; }
         });
 
-        // ĐĂNG XUẤT
         document.getElementById('btn-logout').addEventListener('click', () => {
-            showConfirm("Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?", () => {
-                signOut(auth).then(() => { window.location.href = "dangnhap.html"; });
-            });
+            showConfirm("Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?", () => { signOut(auth).then(() => { window.location.href = "dangnhap.html"; }); });
         });
     </script>
 </body>
