@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - FLMMO V2.0</title>
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
     
-    <!-- Tailwind CSS & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -53,10 +51,8 @@
 </head>
 <body class="flex h-screen overflow-hidden relative selection:bg-brand-500 selection:text-white">
 
-    <!-- TOAST NOTIFICATION -->
     <div id="toast-container" class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 pointer-events-none"></div>
 
-    <!-- CONFIRM MODAL -->
     <div id="custom-confirm" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[10000] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="glass-card rounded-2xl p-6 w-full max-w-sm transform scale-95 transition-transform duration-300 shadow-2xl" id="custom-confirm-box">
             <h3 class="text-xl font-bold text-white mb-2 flex items-center"><i class="fa-solid fa-circle-question text-brand-500 mr-2"></i> Xác nhận</h3>
@@ -68,7 +64,6 @@
         </div>
     </div>
 
-    <!-- MÀN HÌNH BẢO TRÌ -->
     <div id="maintenance-screen" class="fixed inset-0 bg-surface-900 z-[9998] flex flex-col items-center justify-center text-white hidden">
         <i class="fa-solid fa-screwdriver-wrench text-6xl text-brand-500 mb-6 animate-pulse"></i>
         <h1 class="text-3xl font-bold mb-2">Hệ Thống Đang Nâng Cấp</h1>
@@ -78,12 +73,9 @@
 
     <div id="main-app-content" class="flex w-full h-full">
 
-        <!-- OVERLAY MOBILE -->
         <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
 
-        <!-- SIDEBAR V2 -->
         <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-[260px] bg-surface-800 border-r border-white/5 flex flex-col z-40 transition-transform duration-300 ease-in-out shrink-0 shadow-2xl md:shadow-none">
-            <!-- Logo -->
             <a href="home.html" class="h-20 flex items-center px-6 border-b border-white/5 cursor-pointer hover:bg-white/5 transition group">
                 <div class="w-10 h-10 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl flex items-center justify-center text-white shadow-[0_0_15px_rgba(99,102,241,0.3)] group-hover:scale-105 transition-transform mr-3">
                     <i class="fa-solid fa-bolt text-xl"></i>
@@ -94,9 +86,7 @@
                 </div>
             </a>
 
-            <!-- Menu -->
             <div class="flex-1 overflow-y-auto py-6 pb-24 px-3 space-y-6">
-                <!-- Group 1 -->
                 <div>
                     <div class="px-3 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Hệ thống SMM</div>
                     <ul class="space-y-1">
@@ -106,7 +96,6 @@
                     </ul>
                 </div>
 
-                <!-- Group 2 -->
                 <div>
                     <div class="px-3 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Cửa Hàng</div>
                     <ul class="space-y-1">
@@ -115,7 +104,6 @@
                     </ul>
                 </div>
 
-                <!-- Group 3 -->
                 <div>
                     <div class="px-3 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Công cụ</div>
                     <ul class="space-y-1">
@@ -125,7 +113,6 @@
                     </ul>
                 </div>
 
-                <!-- Group 4: Đổ data Firebase -->
                 <div>
                     <div class="px-3 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Dịch Vụ SMM</div>
                     <ul id="dynamic-sidebar-menu" class="space-y-1">
@@ -134,7 +121,6 @@
                 </div>
             </div>
 
-            <!-- Profile Info Sidebar -->
             <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-white/5 bg-surface-900/50 backdrop-blur-md cursor-pointer hover:bg-surface-700 transition" onclick="toggleModal('modal-profile')">
                 <div class="flex items-center gap-3 relative">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-md relative">
@@ -150,9 +136,7 @@
             </div>
         </aside>
 
-        <!-- MAIN -->
         <div class="flex-1 flex flex-col h-screen overflow-hidden bg-surface-900 relative">
-            <!-- Ambient Glow Background -->
             <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-600/10 rounded-full mix-blend-screen filter blur-[100px] pointer-events-none z-0"></div>
 
             <header class="h-16 bg-surface-800/80 backdrop-blur-md border-b border-white/5 flex md:hidden items-center justify-between px-4 z-10 shrink-0 relative">
@@ -165,10 +149,8 @@
 
             <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-6 lg:p-8 relative z-10">
                 
-                <!-- VIEW 1: ĐẶT ĐƠN (ORDER SMM) -->
                 <div id="view-order" class="view-section active max-w-6xl mx-auto space-y-6">
                     
-                    <!-- Welcome Banner -->
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
                         <div>
                             <h2 class="text-2xl md:text-3xl font-bold text-white mb-1"><span id="header-title">Chào mừng trở lại!</span> 👋</h2>
@@ -179,7 +161,6 @@
                         </div>
                     </div>
 
-                    <!-- 3 Thẻ Thống Kê V2 -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div class="glass-card rounded-2xl p-5 border-l-4 border-l-blue-500 glow-hover relative overflow-hidden group">
                             <div class="absolute -right-6 -top-6 text-blue-500/10 text-8xl group-hover:scale-110 transition-transform duration-500"><i class="fa-solid fa-wallet"></i></div>
@@ -208,7 +189,6 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-                        <!-- Cột Form Đặt Đơn -->
                         <div class="lg:col-span-2 space-y-6">
                             <div class="glass-card rounded-2xl p-6 shadow-xl">
                                 <h3 id="order-detail-heading" class="text-white font-bold mb-6 hidden items-center border-b border-white/10 pb-4 text-lg">
@@ -219,7 +199,6 @@
                                     <div>
                                         <div class="flex flex-wrap justify-between items-end gap-2 mb-3">
                                             <label id="label-dich-vu" class="block text-xs font-bold text-gray-400 uppercase tracking-widest">Bảng Tin Hệ Thống</label>
-                                            <!-- Ô Tìm kiếm Dịch vụ -->
                                             <div id="search-service-box" class="hidden relative">
                                                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-500 text-xs"></i>
                                                 <input type="text" id="search-service-input" onkeyup="filterServices()" placeholder="Tìm tên, ID gói..." class="pl-8 pr-3 py-1.5 text-xs bg-surface-900 border border-white/10 rounded-lg text-white outline-none focus:border-brand-500 transition w-full sm:w-56">
@@ -262,9 +241,28 @@
                             </div>
                         </div>
 
-                        <!-- Cột Chú Ý -->
-                        <div class="lg:col-span-1">
-                            <div class="glass-card rounded-2xl p-6 sticky top-6 shadow-xl border-t-4 border-t-brand-500">
+                        <div class="lg:col-span-1 space-y-6">
+                            
+                            <div class="glass-card rounded-2xl p-6 shadow-xl border-t-4 border-t-blue-500">
+                                <h3 class="text-white font-bold mb-4 flex items-center text-lg"><i class="fa-brands fa-facebook text-blue-500 mr-2 text-xl"></i> Lấy UID Facebook</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <input type="text" id="fb-link-input" placeholder="Nhập link hoặc username FB..." class="w-full glass-input rounded-xl py-3 px-4 text-sm font-mono transition outline-none">
+                                    </div>
+                                    <button onclick="getFacebookUID()" id="btn-get-uid" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-500/20 flex justify-center items-center">
+                                        Tìm UID Ngay
+                                    </button>
+                                    <div id="fb-uid-result-box" class="hidden pt-4 border-t border-white/5 mt-2">
+                                        <label class="block text-[11px] font-bold text-gray-400 uppercase mb-2">Kết quả UID:</label>
+                                        <div class="flex gap-2">
+                                            <input type="text" id="fb-uid-output" class="flex-1 glass-input rounded-xl py-2.5 px-3 text-green-400 font-mono text-sm font-bold outline-none" readonly>
+                                            <button onclick="copyToClipboard(document.getElementById('fb-uid-output').value); document.getElementById('order-link').value = document.getElementById('fb-uid-output').value; showToast('Đã copy và điền tự động vào ô Link!', 'success');" class="bg-surface-700 hover:bg-surface-600 text-white font-bold px-4 rounded-xl transition tooltip border border-white/5" title="Copy & Điền vào Đơn"><i class="fa-solid fa-check-double"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="glass-card rounded-2xl p-6 shadow-xl border-t-4 border-t-brand-500">
                                 <h3 class="text-white font-bold mb-5 flex items-center text-lg"><i class="fa-solid fa-clipboard-list mr-2 text-brand-400"></i> Lưu ý quan trọng</h3>
                                 
                                 <div class="bg-red-500/10 border border-red-500/20 rounded-xl p-4 text-red-400 text-sm font-medium mb-5 flex items-start shadow-inner">
@@ -288,7 +286,6 @@
                     </div>
                 </div>
 
-                <!-- VIEW CỬA HÀNG GAME -->
                 <div id="view-games" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="flex flex-col md:flex-row justify-between items-end mb-6 border-b border-white/10 pb-4">
                         <div>
@@ -300,7 +297,6 @@
                         </div>
                     </div>
 
-                    <!-- BANNER VÒNG QUAY -->
                     <div class="bg-gradient-to-r from-red-600 via-orange-500 to-yellow-500 rounded-2xl p-6 md:p-8 shadow-[0_10px_30px_rgba(239,68,68,0.3)] relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 border border-yellow-400/50">
                         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=')] opacity-30"></div>
                         <div class="relative z-10 md:w-2/3 text-center md:text-left">
@@ -320,7 +316,6 @@
                     </div>
                 </div>
 
-                <!-- LỊCH SỬ MUA GAME -->
                 <div id="view-game-history" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="flex justify-between items-end mb-4 border-b border-white/10 pb-4">
                         <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-box-open text-orange-400 mr-2"></i> Tài Khoản Đã Mua</h2>
@@ -346,7 +341,6 @@
                     </div>
                 </div>
 
-                <!-- LỊCH SỬ ĐƠN SMM -->
                 <div id="view-history" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="flex justify-between items-end mb-4 border-b border-white/10 pb-4">
                         <h2 class="text-2xl font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-brand-400 mr-2"></i> Lịch Sử Đơn SMM</h2>
@@ -374,7 +368,6 @@
                     </div>
                 </div>
 
-                <!-- NẠP TIỀN -->
                 <div id="view-deposit" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="mb-6 border-b border-white/10 pb-4">
                         <h2 class="text-2xl md:text-3xl font-bold text-white mb-1"><i class="fa-solid fa-wallet text-green-400 mr-2"></i> Nạp Tiền Tự Động</h2>
@@ -385,7 +378,6 @@
                         <div class="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full filter blur-[80px] pointer-events-none"></div>
                         
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative z-10">
-                            <!-- Input -->
                             <div class="space-y-6">
                                 <h3 class="text-white font-bold text-xl mb-2 flex items-center"><i class="fa-solid fa-qrcode text-green-400 mr-2"></i> Thông Tin Chuyển Khoản</h3>
                                 <div>
@@ -413,7 +405,6 @@
                                 </div>
                             </div>
                             
-                            <!-- QR -->
                             <div class="flex flex-col items-center justify-center h-full bg-surface-900/30 p-6 rounded-2xl border border-white/5">
                                 <div class="bg-white p-4 rounded-3xl shadow-[0_0_50px_rgba(34,197,94,0.2)] mb-5 w-full max-w-[260px] aspect-square flex items-center justify-center relative">
                                     <img id="qr-image" src="https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=5000&des=&template=compact" class="w-full h-full object-contain rounded-xl" alt="VietQR">
@@ -442,7 +433,6 @@
                     </div>
                 </div>
 
-                <!-- AFFILIATE -->
                 <div id="view-affiliate" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="bg-gradient-to-br from-pink-500/10 to-purple-600/10 border border-pink-500/20 rounded-2xl p-6 md:p-8 shadow-lg relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-purple-500"></div>
@@ -476,7 +466,6 @@
                     </div>
                 </div>
 
-                <!-- SUPPORT TICKET -->
                 <div id="view-ticket" class="view-section max-w-6xl mx-auto space-y-6">
                     <div class="mb-6 border-b border-white/10 pb-4">
                         <h2 class="text-2xl md:text-3xl font-bold text-white mb-1"><i class="fa-solid fa-headset text-blue-400 mr-2"></i> Trung Tâm Hỗ Trợ</h2>
@@ -528,7 +517,6 @@
         </div>
     </div>
 
-    <!-- MODAL PROFILE VIP & API -->
     <div id="modal-profile" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
         <div class="glass-card rounded-3xl shadow-2xl w-full max-w-md mx-auto overflow-hidden relative transform transition-all max-h-[90vh] overflow-y-auto border border-white/10">
             <button onclick="toggleModal('modal-profile')" class="absolute top-4 right-4 text-gray-400 hover:text-white bg-surface-800 hover:bg-surface-700 rounded-full w-8 h-8 flex items-center justify-center transition z-10"><i class="fa-solid fa-xmark"></i></button>
@@ -543,7 +531,6 @@
             </div>
             
             <div class="p-6 sm:p-8 space-y-6">
-                <!-- Tiến trình VIP -->
                 <div class="bg-surface-900/80 border border-white/5 rounded-2xl p-5 shadow-inner">
                     <div class="flex justify-between text-xs mb-3">
                         <span class="text-gray-400 font-bold uppercase tracking-wider">Đã Nạp: <span id="vip-total-deposit" class="text-white">0đ</span></span>
@@ -566,7 +553,6 @@
                     </div>
                 </div>
 
-                <!-- KHU VỰC API KEY -->
                 <div>
                     <h4 class="font-bold text-white text-sm mb-3 flex items-center justify-between">
                         <span><i class="fa-solid fa-code text-brand-400 mr-2"></i> Khóa API Dev</span>
@@ -595,7 +581,6 @@
         </div>
     </div>
 
-    <!-- MODAL MUA TÀI KHOẢN GAME -->
     <div id="modal-buy-game" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
         <div class="glass-card rounded-3xl shadow-2xl w-full max-w-md mx-auto overflow-hidden relative border border-white/10">
             <div class="p-6 border-b border-white/5 flex justify-between items-center bg-surface-900/50">
@@ -637,7 +622,6 @@
         </div>
     </div>
 
-    <!-- MODAL XEM CHI TIẾT TÀI KHOẢN GAME ĐÃ MUA -->
     <div id="modal-view-accs" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 transition-opacity">
         <div class="glass-card rounded-3xl shadow-2xl w-full max-w-lg mx-auto overflow-hidden relative flex flex-col max-h-[85vh] border border-white/10">
             <div class="p-6 border-b border-white/5 flex justify-between items-center bg-surface-900/50">
@@ -660,7 +644,6 @@
     </div>
 
 
-    <!-- UI JAVASCRIPT & UI HELPERS (AN TOÀN 100%) -->
     <script>
         window.allServers = []; window.currentPrice = 0; window.currentServer = null; window.currentServiceCategory = "";
         window.currentTransferContent = "FLMMO USER"; window.currentExchangeRate = 25500; 
@@ -728,7 +711,6 @@
             };
             if(document.getElementById('header-title-mobile')) document.getElementById('header-title-mobile').innerText = titles[viewName] || 'FLMMO';
 
-            // Kích hoạt load dữ liệu độc lập (Tránh sập)
             setTimeout(() => {
                 if(viewName === 'history' && window.loadOrderHistory) window.loadOrderHistory().catch(e=>console.log(e));
                 if(viewName === 'deposit' && window.loadDepositHistory) window.loadDepositHistory().catch(e=>console.log(e));
@@ -1011,15 +993,58 @@
             if(document.getElementById('view-accs-data')) document.getElementById('view-accs-data').value = accDataStr.replace(/, /g, '\n');
             toggleModal('modal-view-accs');
         }
+
+        // ==========================================
+        // TOOL LẤY UID FACEBOOK
+        // ==========================================
+        window.getFacebookUID = async function() {
+            const inputEl = document.getElementById('fb-link-input');
+            let val = inputEl.value.trim();
+            if(!val) return showToast("Vui lòng nhập link hoặc username Facebook!", "error");
+
+            if (!val.startsWith('http') && !val.includes('facebook.com') && !val.includes('fb.com')) {
+                val = 'https://facebook.com/' + val;
+            }
+
+            const btn = document.getElementById('btn-get-uid');
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang lấy UID...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch("https://api.mysmm.vn/api/user/utilities/facebook-uid", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({ link: val })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success && result.data && result.data.uid) {
+                    document.getElementById('fb-uid-output').value = result.data.uid;
+                    document.getElementById('fb-uid-result-box').classList.remove('hidden');
+                    showToast("Trích xuất UID thành công!", "success");
+                } else {
+                    throw new Error(result.message || "Không thể lấy UID. Hãy kiểm tra lại link.");
+                }
+            } catch (error) {
+                showToast("Lỗi lấy UID: " + error.message, "error");
+            } finally {
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+            }
+        }
     </script>
 
-    <!-- FIREBASE & NON-BLOCKING LOGIC V2.0 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInAnonymously, EmailAuthProvider, reauthenticateWithCredential, updatePassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, collection, addDoc, getDocs, updateDoc, increment, query, orderBy, where, limit, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // CẤU HÌNH CỦA BẠN (GIỮ NGUYÊN)
+        // CẤU HÌNH CỦA BẠN
         const firebaseConfig = {
             apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
             authDomain: "flmmo-a4e53.firebaseapp.com",
@@ -1033,7 +1058,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // HÀM TẢI BẢNG TIN (ĐỘC LẬP)
         window.loadAnnouncements = async function() {
             const listEl = document.getElementById('server-list');
             if(!listEl) return;
@@ -1065,7 +1089,6 @@
                 html += `</div><div class="bg-brand-500/10 px-5 py-4 border-t border-white/5 text-sm text-brand-300 text-center font-medium animate-pulse"><i class="fa-solid fa-hand-point-left mr-2"></i> Chọn mục Dịch Vụ SMM ở menu trái để tạo đơn.</div></div>`;
                 listEl.innerHTML = html;
                 
-                // Set UI States safely
                 if(document.getElementById('label-dich-vu')) document.getElementById('label-dich-vu').innerText = "Thông Báo Hệ Thống";
                 if(document.getElementById('order-form-inputs')) document.getElementById('order-form-inputs').classList.add('hidden');
                 if(document.getElementById('search-service-box')) document.getElementById('search-service-box').classList.add('hidden');
@@ -1077,7 +1100,6 @@
             }
         }
 
-        // KHỞI ĐỘNG HỆ THỐNG
         const initAuth = async () => {
             onAuthStateChanged(auth, async (user) => {
                 if (!user) await signInAnonymously(auth);
@@ -1121,7 +1143,6 @@
             
             const initial = safeName.charAt(0).toUpperCase();
 
-            // CẬP NHẬT UI AN TOÀN BẰNG OPTIONAL CHAINING (?.)
             if(document.getElementById('ui-fullname')) document.getElementById('ui-fullname').innerText = displayName;
             if(document.getElementById('ui-coin')) document.getElementById('ui-coin').innerText = coin.toLocaleString('en-US');
             if(document.getElementById('transfer-content-display')) document.getElementById('transfer-content-display').innerText = window.currentTransferContent;
@@ -1138,9 +1159,6 @@
 
             if(typeof window.generateQR === 'function') window.generateQR(); 
 
-            // ========================================================
-            // CHẠY CÁC TÁC VỤ BACKGROUND ĐỘC LẬP - KHÔNG BAO GIỜ SẬP LÂY
-            // ========================================================
             setTimeout(() => { loadVIPAndServices(user.uid).catch(console.error); }, 10);
             setTimeout(() => { loadOrderStats(user.uid).catch(console.error); }, 20);
             setTimeout(() => { loadDepositHistory().catch(console.error); }, 30);
@@ -1382,91 +1400,6 @@
                     `;
                 });
             } catch(e) { tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-red-500">Lỗi: ${e.message}</td></tr>`; }
-        }
-
-        // TẢI HÀM VIP VÀ DỊCH VỤ (ĐỘC LẬP HOÀN TOÀN)
-        async function loadVIPAndServices(uid) {
-            window.userVipDiscount = 0;
-            let totalDeposit = 0; let vipTier = "Thành Viên"; let nextTier = "VIP: 500k";
-            let badgeColor = "bg-gray-600"; let progressPct = 0;
-
-            try {
-                const q = query(collection(db, "deposits"), where("uid", "==", uid));
-                const depSnap = await getDocs(q);
-                depSnap.forEach(d => { if(d.data().status === "Chấp Nhận") totalDeposit += Number(d.data().amount || 0); });
-
-                if(totalDeposit >= 10000000) {
-                    vipTier = "Nhà Phân Phối"; nextTier = "MAX CẤP"; badgeColor = "bg-red-500"; progressPct = 100; window.userVipDiscount = 0.15;
-                    if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-red-500 to-orange-500 h-full rounded-full transition-all duration-1000";
-                } else if(totalDeposit >= 2000000) {
-                    vipTier = "Đại Lý"; nextTier = "NPP: 10tr"; badgeColor = "bg-purple-500"; progressPct = (totalDeposit/10000000)*100; window.userVipDiscount = 0.10;
-                    if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-purple-500 to-pink-500 h-full rounded-full transition-all duration-1000";
-                } else if(totalDeposit >= 500000) {
-                    vipTier = "VIP"; nextTier = "Đại Lý: 2tr"; badgeColor = "bg-yellow-500"; progressPct = (totalDeposit/2000000)*100; window.userVipDiscount = 0.05;
-                    if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-yellow-400 to-yellow-600 h-full rounded-full transition-all duration-1000";
-                } else { progressPct = (totalDeposit/500000)*100; }
-
-                if(document.getElementById('vip-total-deposit')) document.getElementById('vip-total-deposit').innerText = totalDeposit.toLocaleString('vi-VN') + 'đ';
-                if(document.getElementById('vip-next-tier')) document.getElementById('vip-next-tier').innerText = nextTier;
-                if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').style.width = `${progressPct}%`;
-                if(document.getElementById('vip-discount-text')) document.getElementById('vip-discount-text').innerText = window.userVipDiscount > 0 ? `Tuyệt vời! Bạn đang được giảm ${window.userVipDiscount * 100}% mọi dịch vụ` : "Nạp thêm để lên cấp và nhận ưu đãi giảm giá!";
-                
-                const badge1 = document.getElementById('modal-vip-badge');
-                const badge2 = document.getElementById('ui-vip-badge');
-                if(badge1) { badge1.innerText = vipTier; badge1.className = `text-[10px] font-black uppercase px-2.5 py-0.5 rounded shadow-md mt-2 inline-block text-white ${badgeColor}`; }
-                if(badge2 && vipTier !== "Thành Viên") { badge2.innerText = vipTier.charAt(0); badge2.className = `absolute -top-2 -right-2 ${badgeColor} text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow-md border border-surface-900`; badge2.classList.remove("hidden");}
-            } catch(e) { console.error("Lỗi VIP:", e); }
-
-            // Sau khi có giá VIP, gọi hàm lấy danh sách dịch vụ SMM
-            await fetchAndRenderServicesMenu();
-        }
-
-        async function fetchAndRenderServicesMenu() {
-            try {
-                const snap = await getDocs(collection(db, "servers"));
-                window.allServers = []; snap.forEach(doc => window.allServers.push({ id: doc.id, ...doc.data() }));
-
-                const menuTree = {};
-                window.allServers.forEach(s => {
-                    const cat = s.category || "Khác - Dịch Vụ Mặc Định"; const parts = cat.split(" - "); const platform = parts[0].trim();
-                    if (!menuTree[platform]) menuTree[platform] = new Set(); menuTree[platform].add(cat);
-                });
-
-                const menuEl = document.getElementById('dynamic-sidebar-menu'); if(!menuEl) return;
-                menuEl.innerHTML = '';
-
-                if(Object.keys(menuTree).length === 0) { menuEl.innerHTML = '<li class="px-3 py-2 text-sm text-gray-500">Chưa có dịch vụ nào</li>'; return; }
-
-                let isFirst = true;
-                for (const platform in menuTree) {
-                    let pIcon = 'fa-solid fa-hashtag'; let pColor = 'text-gray-400';
-                    if (platform.toLowerCase().includes('facebook')) { pIcon = 'fa-brands fa-facebook'; pColor = 'text-[#1877F2]'; }
-                    else if (platform.toLowerCase().includes('tiktok')) { pIcon = 'fa-brands fa-tiktok'; pColor = 'text-white'; }
-                    else if (platform.toLowerCase().includes('instagram')) { pIcon = 'fa-brands fa-instagram'; pColor = 'text-[#E4405F]'; }
-                    else if (platform.toLowerCase().includes('youtube')) { pIcon = 'fa-brands fa-youtube'; pColor = 'text-[#FF0000]'; }
-
-                    let subHtml = '';
-                    menuTree[platform].forEach(fullCat => {
-                        const parts = fullCat.split(" - "); const subName = parts[1] ? parts[1].trim() : fullCat;
-                        subHtml += `<li><a href="#" class="block pl-10 pr-3 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition" onclick="loadServiceForm('${fullCat}')"><i class="fa-solid fa-angle-right mr-2 text-[10px] text-gray-600"></i> ${subName}</a></li>`;
-                    });
-
-                    const subMenuId = 'submenu-' + Math.random().toString(36).substr(2, 9);
-                    menuEl.innerHTML += `
-                        <li class="mb-1">
-                            <button class="w-full flex items-center justify-between px-3 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white font-bold transition rounded-xl ${isFirst?'bg-white/5':''}" onclick="toggleSubMenu('${subMenuId}', this)">
-                                <span class="flex items-center"><i class="${pIcon} w-5 text-center mr-2 text-lg"></i> ${platform}</span>
-                                <i class="fa-solid fa-chevron-down text-[10px] transition-transform ${isFirst?'rotate-180':''}"></i>
-                            </button>
-                            <ul class="${isFirst?'':'hidden'} mt-1 space-y-1" id="${subMenuId}">${subHtml}</ul>
-                        </li>
-                    `;
-                    isFirst = false;
-                }
-            } catch(e) {
-                const menuEl = document.getElementById('dynamic-sidebar-menu');
-                if(menuEl) menuEl.innerHTML = `<li class="px-3 py-2 text-xs text-red-400 bg-red-500/10 rounded-lg border border-red-500/20"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Lỗi tải Menu</li>`;
-            }
         }
 
         // Tạo đơn SMM API MySMM
