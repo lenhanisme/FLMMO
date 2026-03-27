@@ -963,7 +963,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // HÀM TẢI BẢNG TIN - Đã sửa lỗi Index Firebase
+        // HÀM TẢI BẢNG TIN 
         window.loadAnnouncements = async function() {
             const listEl = document.getElementById('server-list');
             const labelEl = document.getElementById('label-dich-vu');
@@ -1030,242 +1030,10 @@
                 html += `</div><div class="bg-brand-500/10 px-5 py-3.5 border-t border-dark-600 text-sm text-brand-400 text-center font-medium animate-pulse"><i class="fa-solid fa-hand-point-left mr-2"></i> Vui lòng chọn một <b>danh mục dịch vụ</b> ở Menu bên trái để bắt đầu.</div></div>`;
                 if(listEl) listEl.innerHTML = html;
             } catch(e) {
-                console.error(e);
+                if(listEl) listEl.innerHTML = `<div class="text-center py-10 text-red-500">Lỗi tải thông báo: ${e.message}</div>`;
             }
         }
 
-        // TẢI HÀM VIP VÀ DỊCH VỤ - Đã gộp để chạy mượt
-        async function loadVIPAndServices(uid) {
-            window.userVipDiscount = 0;
-            let totalDeposit = 0;
-            let vipTier = "Thành Viên"; let nextTier = "VIP: 500k";
-            let badgeColor = "bg-gray-600"; let progressPct = 0;
-
-            try {
-                // Lọc ở Client để chống sập
-                const depSnap = await getDocs(collection(db, "deposits"));
-                depSnap.forEach(d => { 
-                    if(d.data().uid === uid && d.data().status === "Chấp Nhận") {
-                        totalDeposit += Number(d.data().amount || 0);
-                    }
-                });
-
-                if(totalDeposit >= 10000000) {
-                    vipTier = "Nhà Phân Phối"; nextTier = "MAX CẤP"; badgeColor = "bg-red-500"; progressPct = 100; window.userVipDiscount = 0.15;
-                    if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-red-500 to-orange-500 h-2 rounded-full";
-                } else if(totalDeposit >= 2000000) {
-                    vipTier = "Đại Lý"; nextTier = "NPP: 10tr"; badgeColor = "bg-purple-500"; progressPct = (totalDeposit/10000000)*100; window.userVipDiscount = 0.10;
-                    if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full";
-                } else if(totalDeposit >= 500000) {
-                    vipTier = "VIP"; nextTier = "Đại Lý: 2tr"; badgeColor = "bg-yellow-500 text-dark-900"; progressPct = (totalDeposit/2000000)*100; window.userVipDiscount = 0.05;
-                    if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-yellow-400 to-yellow-600 h-2 rounded-full";
-                } else {
-                    progressPct = (totalDeposit/500000)*100;
-                }
-
-                if(document.getElementById('vip-total-deposit')) document.getElementById('vip-total-deposit').innerText = totalDeposit.toLocaleString('vi-VN') + 'đ';
-                if(document.getElementById('vip-next-tier')) document.getElementById('vip-next-tier').innerText = nextTier;
-                if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').style.width = `${progressPct}%`;
-                if(document.getElementById('vip-discount-text')) document.getElementById('vip-discount-text').innerText = window.userVipDiscount > 0 ? `Bạn đang được giảm ${window.userVipDiscount * 100}% mọi dịch vụ` : "Nạp thêm để lên cấp và nhận ưu đãi giảm giá!";
-                
-                const badge1 = document.getElementById('modal-vip-badge');
-                const badge2 = document.getElementById('ui-vip-badge');
-                if(badge1) { badge1.innerText = vipTier; badge1.className = `text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-md mt-1 inline-block text-white ${badgeColor}`; }
-                if(badge2 && vipTier !== "Thành Viên") { badge2.innerText = vipTier.charAt(0); badge2.className = `absolute -top-2 -right-2 ${badgeColor} text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow-md border border-dark-800`; badge2.classList.remove("hidden");}
-                
-            } catch(e) {}
-
-            // Gọi tải dịch vụ sau khi đã có discount
-            await fetchAndRenderServicesMenu();
-        }
-
-        async function fetchAndRenderServicesMenu() {
-            try {
-                const snap = await getDocs(collection(db, "servers"));
-                window.allServers = [];
-                snap.forEach(doc => window.allServers.push({ id: doc.id, ...doc.data() }));
-
-                const menuTree = {};
-                window.allServers.forEach(s => {
-                    const cat = s.category || "Khác - Dịch Vụ Mặc Định";
-                    const parts = cat.split(" - ");
-                    const platform = parts[0].trim();
-                    if (!menuTree[platform]) menuTree[platform] = new Set();
-                    menuTree[platform].add(cat);
-                });
-
-                const menuEl = document.getElementById('dynamic-sidebar-menu');
-                if(!menuEl) return;
-                menuEl.innerHTML = '';
-
-                if(Object.keys(menuTree).length === 0) {
-                    menuEl.innerHTML = '<li class="px-6 py-3 text-sm text-gray-500">Chưa có dịch vụ nào</li>';
-                    return;
-                }
-
-                let isFirst = true;
-                for (const platform in menuTree) {
-                    let pIcon = 'fa-solid fa-hashtag'; let pColor = 'text-gray-400';
-                    if (platform.toLowerCase().includes('facebook')) { pIcon = 'fa-brands fa-facebook'; pColor = 'text-blue-500'; }
-                    else if (platform.toLowerCase().includes('tiktok')) { pIcon = 'fa-brands fa-tiktok'; pColor = 'text-white'; }
-                    else if (platform.toLowerCase().includes('instagram')) { pIcon = 'fa-brands fa-instagram'; pColor = 'text-pink-500'; }
-
-                    let subHtml = '';
-                    menuTree[platform].forEach(fullCat => {
-                        const parts = fullCat.split(" - ");
-                        const subName = parts[1] ? parts[1].trim() : fullCat;
-                        let sIcon = 'fa-solid fa-bolt text-yellow-500';
-                        subHtml += `<li><a href="#" class="block pl-10 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-dark-700 transition" onclick="loadServiceForm('${fullCat}')"><i class="${sIcon} mr-2 w-4 text-center"></i> ${subName}</a></li>`;
-                    });
-
-                    const subMenuId = 'submenu-' + Math.random().toString(36).substr(2, 9);
-                    
-                    menuEl.innerHTML += `
-                        <li class="mb-1">
-                            <button class="w-full flex items-center justify-between px-6 py-3 text-sm text-gray-300 hover:bg-dark-700 hover:text-white font-bold transition rounded-lg ${isFirst?'bg-dark-700':''}" onclick="toggleSubMenu('${subMenuId}', this)">
-                                <span class="flex items-center"><i class="${pIcon} w-6 ${pColor}"></i> ${platform}</span>
-                                <i class="fa-solid fa-chevron-down text-[10px] transition-transform ${isFirst?'rotate-180':''}"></i>
-                            </button>
-                            <ul class="${isFirst?'':'hidden'} mt-1 space-y-1" id="${subMenuId}">
-                                ${subHtml}
-                            </ul>
-                        </li>
-                    `;
-                    isFirst = false;
-                }
-            } catch(e) {}
-        }
-
-        window.loadGameProductsUI = async function() {
-            const container = document.getElementById('game-products-container');
-            if(!container) return;
-            container.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-3xl"></i></div>';
-            
-            try {
-                const snap = await getDocs(collection(db, "game_products"));
-                window.allGameProducts = [];
-                snap.forEach(doc => window.allGameProducts.push({ id: doc.id, ...doc.data() }));
-
-                if(window.allGameProducts.length === 0) {
-                    container.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500 bg-dark-800 rounded-2xl border border-dark-700"><i class="fa-solid fa-ghost text-4xl mb-3"></i><p>Hiện chưa có tài khoản game nào được bán.</p></div>';
-                    return;
-                }
-
-                window.allGameProducts.sort((a,b) => (b.availableCount || 0) - (a.availableCount || 0));
-
-                container.innerHTML = '';
-                window.allGameProducts.forEach(game => {
-                    const isOutOfStock = (game.availableCount || 0) === 0;
-                    const stockText = isOutOfStock 
-                        ? `<span class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded text-[10px] font-bold border border-red-500/30">Hết hàng</span>`
-                        : `<span class="bg-green-500/20 text-green-400 px-2 py-0.5 rounded text-[10px] font-bold border border-green-500/30">Kho: ${game.availableCount} acc</span>`;
-                    
-                    const btnClass = isOutOfStock 
-                        ? "bg-dark-700 text-gray-500 cursor-not-allowed opacity-70"
-                        : "bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-500/20";
-
-                    let discountBadge = '';
-                    if(game.discountQty > 0 && game.discountPercent > 0 && !isOutOfStock) {
-                        discountBadge = `<div class="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-lg z-10 rounded-tr-xl border-l border-b border-orange-400/50 transform translate-x-px -translate-y-px">Mua ${game.discountQty}+ Giảm ${game.discountPercent}%</div>`;
-                    }
-
-                    // TÍNH GIÁ VIP
-                    let displayPrice = game.price;
-                    let oldPriceHtml = "";
-                    if(window.userVipDiscount > 0) {
-                        displayPrice = game.price - (game.price * window.userVipDiscount);
-                        oldPriceHtml = `<div class="text-[10px] text-gray-500 line-through">${game.price.toLocaleString('vi-VN')}đ</div>`;
-                    }
-
-                    container.innerHTML += `
-                        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-5 hover:border-brand-500/50 transition duration-300 relative group overflow-hidden">
-                            ${discountBadge}
-                            <div class="flex items-start gap-4 mb-4 relative z-10">
-                                <img src="${game.logoUrl}" class="w-16 h-16 rounded-xl object-cover bg-white p-1 shrink-0 shadow-md border border-dark-600">
-                                <div>
-                                    <h3 class="font-bold text-white leading-tight group-hover:text-brand-400 transition">${game.name}</h3>
-                                    <div class="text-xs text-gray-400 mt-1 flex items-center"><i class="fa-solid fa-key mr-1"></i> Login: ${game.loginMethod}</div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-end relative z-10">
-                                <div>
-                                    ${oldPriceHtml}
-                                    <div class="text-brand-400 font-black text-xl">${displayPrice.toLocaleString('vi-VN')}đ</div>
-                                    <div class="mt-1">${stockText}</div>
-                                </div>
-                                <button ${isOutOfStock ? 'disabled' : `onclick="openBuyGameModal('${game.id}')"`} class="px-5 py-2.5 rounded-xl font-bold transition flex items-center ${btnClass}">
-                                    ${isOutOfStock ? 'Hết Hàng' : '<i class="fa-solid fa-cart-arrow-down mr-2"></i> Mua'}
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-            } catch(e) {}
-        }
-
-        window.executeGamePurchase = async function() {
-            const user = auth.currentUser;
-            if(!user || user.isAnonymous) return showToast("Vui lòng đăng ký tài khoản chính thức để mua hàng!", "error");
-            if(!window.currentGamePurchase) return;
-            const game = window.currentGamePurchase;
-            const qty = window.currentGamePurchaseQty;
-            const totalPrice = window.currentGamePurchaseTotal;
-
-            if(window.currentUserBalance < totalPrice) return showToast("Tài khoản của bạn không đủ số dư. Vui lòng nạp thêm!", "error");
-
-            const btn = document.getElementById('btn-confirm-buy-game');
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang trích xuất...'; btn.disabled = true;
-
-            try {
-                // Đã sửa để không cần index composite (Chỉ lấy toàn bộ acc và lọc bằng JS)
-                const accSnaps = await getDocs(collection(db, "game_accounts"));
-                let availableDocs = [];
-                accSnaps.forEach(docSnap => {
-                    if(docSnap.data().productId === game.id && docSnap.data().status === "available") {
-                        availableDocs.push(docSnap);
-                    }
-                });
-
-                if(availableDocs.length < qty) throw new Error(`Kho chỉ còn ${availableDocs.length} tài khoản!`);
-                
-                availableDocs = availableDocs.slice(0, qty);
-
-                const batch = writeBatch(db);
-                let purchasedAccs = [];
-
-                availableDocs.forEach(docSnap => {
-                    const accData = docSnap.data(); purchasedAccs.push(`${accData.username}:${accData.password}`);
-                    batch.update(docSnap.ref, { status: "sold", buyerUid: user.uid, soldAt: new Date().toISOString() });
-                });
-
-                batch.update(doc(db, "users", user.uid), { coin: increment(-totalPrice) });
-                batch.update(doc(db, "game_products", game.id), { availableCount: increment(-qty), soldCount: increment(qty) });
-
-                batch.set(doc(collection(db, "game_orders")), {
-                    uid: user.uid, productId: game.id, productName: game.name, quantity: qty, totalPrice: totalPrice,
-                    accountsData: purchasedAccs.join(', '), createdAt: new Date().toISOString()
-                });
-
-                await batch.commit();
-
-                window.currentUserBalance -= totalPrice;
-                document.querySelectorAll('.display-balance-vnd').forEach(el => el.innerText = window.currentUserBalance.toLocaleString('vi-VN') + ' đ');
-                document.querySelectorAll('.display-balance-usd').forEach(el => el.innerText = "$" + (window.currentUserBalance / window.currentExchangeRate).toFixed(3));
-
-                showToast(`Mua thành công ${qty} Tài Khoản! Đang mở...`, "success");
-                toggleModal('modal-buy-game');
-                window.loadGameProductsUI();
-                
-                setTimeout(() => {
-                    switchView('game-history');
-                    window.viewPurchasedAccs(encodeURIComponent(purchasedAccs.join('\n')));
-                }, 1500);
-
-            } catch(e) { showToast(e.message, "error"); } 
-            finally { btn.innerHTML = 'Xác Nhận Mua Ngay'; btn.disabled = false; }
-        }
-
-        // KHỞI CHẠY HỆ THỐNG TỐC ĐỘ CAO
         const initAuth = async () => {
             onAuthStateChanged(auth, async (user) => {
                 if (!user) await signInAnonymously(auth);
@@ -1365,12 +1133,11 @@
             const select = document.getElementById('ticket-orderid');
             if(!select) return;
             try {
-                const snap = await getDocs(collection(db, "orders"));
+                const q = query(collection(db, "orders"), where("uid", "==", uid));
+                const snap = await getDocs(q);
                 let html = '<option value="">-- Chọn mã đơn SMM bị lỗi (Tùy chọn) --</option>';
                 let orders = [];
-                snap.forEach(d => {
-                    if(d.data().uid === uid) orders.push({id: d.id, ...d.data()});
-                });
+                snap.forEach(d => orders.push({id: d.id, ...d.data()}));
                 orders.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
                 orders.slice(0, 30).forEach(o => {
                     html += `<option value="${o.id}">Đơn #${o.id.substring(0,8).toUpperCase()} - ${o.category.split(' - ')[1] || 'SMM'} (${o.status})</option>`;
@@ -1418,11 +1185,10 @@
             container.innerHTML = '<div class="text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-xl"></i></div>';
             
             try {
-                const snap = await getDocs(collection(db, "tickets"));
+                const q = query(collection(db, "tickets"), where("uid", "==", user.uid));
+                const snap = await getDocs(q);
                 let tickets = [];
-                snap.forEach(d => {
-                    if(d.data().uid === user.uid) tickets.push({id: d.id, ...d.data()});
-                });
+                snap.forEach(d => tickets.push({id: d.id, ...d.data()}));
                 tickets.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
 
                 if(tickets.length === 0) {
@@ -1457,14 +1223,13 @@
 
         async function loadOrderStats(uid) {
             try {
-                const snapshot = await getDocs(collection(db, "orders"));
+                const q = query(collection(db, "orders"), where("uid", "==", uid));
+                const snapshot = await getDocs(q);
                 let pending = 0; let completed = 0;
                 snapshot.forEach(doc => {
                     const d = doc.data();
-                    if(d.uid === uid) {
-                        if(d.status === "Đang xử lý" || d.status === "Đang chạy") pending++;
-                        else if(d.status === "Hoàn thành") completed++;
-                    }
+                    if(d.status === "Đang xử lý" || d.status === "Đang chạy") pending++;
+                    else if(d.status === "Hoàn thành") completed++;
                 });
                 if(document.getElementById('stat-pending')) document.getElementById('stat-pending').innerText = pending;
                 if(document.getElementById('stat-completed')) document.getElementById('stat-completed').innerText = completed;
@@ -1476,8 +1241,9 @@
             const tbody = document.getElementById('order-history-body'); if(!tbody) return;
             tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-2xl mb-2"></i><br>Đang tải...</td></tr>';
             try {
-                const snapshot = await getDocs(collection(db, "orders"));
-                let orders = []; snapshot.forEach(doc => { if(doc.data().uid === user.uid) orders.push({ id: doc.id, ...doc.data() }); });
+                const q = query(collection(db, "orders"), where("uid", "==", user.uid));
+                const snapshot = await getDocs(q);
+                let orders = []; snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
                 orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
                 if(orders.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-12 text-center text-gray-500">Bạn chưa có đơn hàng nào</td></tr>'; return; }
@@ -1517,8 +1283,9 @@
             const user = auth.currentUser; if(!user) return;
             const tbody = document.getElementById('deposit-history-body'); if(!tbody) return;
             try {
-                const snapshot = await getDocs(collection(db, "deposits"));
-                let deposits = []; snapshot.forEach(doc => { if(doc.data().uid === user.uid) deposits.push({ id: doc.id, ...doc.data() }); });
+                const q = query(collection(db, "deposits"), where("uid", "==", user.uid));
+                const snapshot = await getDocs(q);
+                let deposits = []; snapshot.forEach(doc => deposits.push({ id: doc.id, ...doc.data() }));
                 deposits.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
                 if(deposits.length === 0) return tbody.innerHTML = '<tr><td colspan="5" class="text-center py-6 text-gray-500">Chưa có giao dịch nạp tiền</td></tr>';
@@ -1552,8 +1319,9 @@
             const user = auth.currentUser; if(!user) return;
             const tbody = document.getElementById('game-history-body'); if(!tbody) return;
             try {
-                const snapshot = await getDocs(collection(db, "game_orders"));
-                let orders = []; snapshot.forEach(doc => { if(doc.data().uid === user.uid) orders.push({ id: doc.id, ...doc.data() }); });
+                const q = query(collection(db, "game_orders"), where("uid", "==", user.uid));
+                const snapshot = await getDocs(q);
+                let orders = []; snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
                 orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
                 if(orders.length === 0) return tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-12 text-center text-gray-500">Bạn chưa mua tài khoản game nào</td></tr>';
@@ -1587,8 +1355,9 @@
             const user = auth.currentUser; if(!user) return;
             const tbody = document.getElementById('commission-history-body'); if(!tbody) return;
             try {
-                const snapshot = await getDocs(collection(db, "commissions"));
-                let comms = []; snapshot.forEach(doc => { if(doc.data().referrerUid === user.uid) comms.push(doc.data()); });
+                const q = query(collection(db, "commissions"), where("referrerUid", "==", user.uid));
+                const snapshot = await getDocs(q);
+                let comms = []; snapshot.forEach(doc => comms.push(doc.data()));
                 comms.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
                 if(comms.length === 0) return tbody.innerHTML = '<tr><td colspan="4" class="text-center py-6 text-gray-500">Chưa có dữ liệu hoa hồng</td></tr>';
@@ -1606,6 +1375,50 @@
                     `;
                 });
             } catch(e) {}
+        }
+
+        // TẢI HÀM VIP VÀ DỊCH VỤ
+        async function loadVIPAndServices(uid) {
+            window.userVipDiscount = 0;
+            let totalDeposit = 0;
+            let vipTier = "Thành Viên"; let nextTier = "VIP: 500k";
+            let badgeColor = "bg-gray-600"; let progressPct = 0;
+
+            try {
+                const q = query(collection(db, "deposits"), where("uid", "==", uid));
+                const depSnap = await getDocs(q);
+                depSnap.forEach(d => { 
+                    if(d.data().status === "Chấp Nhận") {
+                        totalDeposit += Number(d.data().amount || 0);
+                    }
+                });
+
+                if(totalDeposit >= 10000000) {
+                    vipTier = "Nhà Phân Phối"; nextTier = "MAX CẤP"; badgeColor = "bg-red-500"; progressPct = 100; window.userVipDiscount = 0.15;
+                    if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-red-500 to-orange-500 h-2 rounded-full";
+                } else if(totalDeposit >= 2000000) {
+                    vipTier = "Đại Lý"; nextTier = "NPP: 10tr"; badgeColor = "bg-purple-500"; progressPct = (totalDeposit/10000000)*100; window.userVipDiscount = 0.10;
+                    if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full";
+                } else if(totalDeposit >= 500000) {
+                    vipTier = "VIP"; nextTier = "Đại Lý: 2tr"; badgeColor = "bg-yellow-500 text-dark-900"; progressPct = (totalDeposit/2000000)*100; window.userVipDiscount = 0.05;
+                    if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').className = "bg-gradient-to-r from-yellow-400 to-yellow-600 h-2 rounded-full";
+                } else {
+                    progressPct = (totalDeposit/500000)*100;
+                }
+
+                if(document.getElementById('vip-total-deposit')) document.getElementById('vip-total-deposit').innerText = totalDeposit.toLocaleString('vi-VN') + 'đ';
+                if(document.getElementById('vip-next-tier')) document.getElementById('vip-next-tier').innerText = nextTier;
+                if(document.getElementById('vip-progress-bar')) document.getElementById('vip-progress-bar').style.width = `${progressPct}%`;
+                if(document.getElementById('vip-discount-text')) document.getElementById('vip-discount-text').innerText = window.userVipDiscount > 0 ? `Bạn đang được giảm ${window.userVipDiscount * 100}% mọi dịch vụ` : "Nạp thêm để lên cấp và nhận ưu đãi giảm giá!";
+                
+                const badge1 = document.getElementById('modal-vip-badge');
+                const badge2 = document.getElementById('ui-vip-badge');
+                if(badge1) { badge1.innerText = vipTier; badge1.className = `text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-md mt-1 inline-block text-white ${badgeColor}`; }
+                if(badge2 && vipTier !== "Thành Viên") { badge2.innerText = vipTier.charAt(0); badge2.className = `absolute -top-2 -right-2 ${badgeColor} text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow-md border border-dark-800`; badge2.classList.remove("hidden");}
+                
+            } catch(e) {}
+
+            await fetchAndRenderServicesMenu();
         }
 
         document.getElementById('form-change-password').addEventListener('submit', async (e) => {
