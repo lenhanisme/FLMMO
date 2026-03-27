@@ -103,7 +103,7 @@
 
                 <div class="px-6 mt-6 mb-2 text-[10px] font-bold text-gray-500 uppercase tracking-wider">Danh Mục Dịch Vụ</div>
                 <ul id="dynamic-sidebar-menu">
-                    <li class="px-6 py-3 text-sm text-gray-500 italic"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang tải...</li>
+                    <li class="px-6 py-3 text-sm text-gray-500 italic"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang tải menu...</li>
                 </ul>
             </div>
 
@@ -1030,7 +1030,9 @@
                 html += `</div><div class="bg-brand-500/10 px-5 py-3.5 border-t border-dark-600 text-sm text-brand-400 text-center font-medium animate-pulse"><i class="fa-solid fa-hand-point-left mr-2"></i> Vui lòng chọn một <b>danh mục dịch vụ</b> ở Menu bên trái để bắt đầu.</div></div>`;
                 if(listEl) listEl.innerHTML = html;
             } catch(e) {
-                if(listEl) listEl.innerHTML = `<div class="text-center py-10 text-red-500">Lỗi tải thông báo: ${e.message}</div>`;
+                let errorText = e.message;
+                if(errorText.includes('Quota') || errorText.includes('quota')) errorText = "Hệ thống đã đạt giới hạn truy cập cơ sở dữ liệu miễn phí trong ngày (Firebase Quota Exceeded). Vui lòng nâng cấp gói Firebase hoặc chờ đến ngày mai.";
+                if(listEl) listEl.innerHTML = `<div class="text-center py-10 text-red-500"><i class="fa-solid fa-database text-4xl mb-3"></i><p class="font-bold">Lỗi tải dữ liệu</p><p class="text-sm mt-2 max-w-md mx-auto">${errorText}</p></div>`;
             }
         }
 
@@ -1100,18 +1102,23 @@
             if(document.getElementById('my-api-key')) document.getElementById('my-api-key').value = apiKey;
             if(document.getElementById('my-ref-link')) document.getElementById('my-ref-link').value = `https://flmmo.vercel.app/dangky.html?ref=${user.uid}`;
 
-            // TẢI CÁC TÁC VỤ NẶNG Ở BACKGROUND SAU 50ms
+            // TẢI CÁC TÁC VỤ NẶNG Ở BACKGROUND HOÀN TOÀN ĐỘC LẬP
             setTimeout(() => {
-                Promise.all([
-                    loadVIPAndServices(user.uid),
-                    loadOrderStats(user.uid),
-                    loadDepositHistory(),
-                    window.loadAnnouncements(),
-                    typeof window.loadGameProductsUI === 'function' ? window.loadGameProductsUI() : Promise.resolve(),
-                    typeof window.loadCommissions === 'function' ? window.loadCommissions() : Promise.resolve(),
-                    typeof window.loadTickets === 'function' ? window.loadTickets() : Promise.resolve(),
-                    populateTicketOrderDropdown(user.uid)
-                ]).catch(e => console.error("Lỗi Background Tasks:", e));
+                loadVIPAndServices(user.uid).catch(e => console.error("VIP Error:", e));
+                loadOrderStats(user.uid).catch(e => console.error("OrderStats Error:", e));
+                loadDepositHistory().catch(e => console.error("DepositHistory Error:", e));
+                window.loadAnnouncements().catch(e => console.error("Announcements Error:", e));
+                
+                if (typeof window.loadGameProductsUI === 'function') {
+                    window.loadGameProductsUI().catch(e => console.error("GameUI Error:", e));
+                }
+                if (typeof window.loadCommissions === 'function') {
+                    window.loadCommissions().catch(e => console.error("Commissions Error:", e));
+                }
+                if (typeof window.loadTickets === 'function') {
+                    window.loadTickets().catch(e => console.error("Tickets Error:", e));
+                }
+                populateTicketOrderDropdown(user.uid).catch(e => console.error("Dropdown Error:", e));
             }, 50);
         }
 
@@ -1218,7 +1225,9 @@
                         </div>
                     `;
                 });
-            } catch(e) {}
+            } catch(e) {
+                container.innerHTML = `<div class="text-center py-10 text-red-500">Lỗi tải hỗ trợ: ${e.message}</div>`;
+            }
         }
 
         async function loadOrderStats(uid) {
@@ -1276,7 +1285,9 @@
                         </tr>
                     `;
                 });
-            } catch(e) {}
+            } catch(e) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-red-500">Lỗi tải lịch sử đơn: ${e.message}</td></tr>`;
+            }
         }
 
         window.loadDepositHistory = async function() {
@@ -1312,7 +1323,9 @@
                         </tr>
                     `;
                 });
-            } catch(e) {}
+            } catch(e) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-red-500">Lỗi tải lịch sử nạp: ${e.message}</td></tr>`;
+            }
         }
 
         window.loadGameOrderHistory = async function() {
@@ -1348,7 +1361,9 @@
                         </tr>
                     `;
                 });
-            } catch(e) {}
+            } catch(e) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-red-500">Lỗi tải lịch sử game: ${e.message}</td></tr>`;
+            }
         }
 
         window.loadCommissions = async function() {
@@ -1374,7 +1389,9 @@
                         </tr>
                     `;
                 });
-            } catch(e) {}
+            } catch(e) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-red-500">Lỗi tải hoa hồng: ${e.message}</td></tr>`;
+            }
         }
 
         // TẢI HÀM VIP VÀ DỊCH VỤ
@@ -1416,9 +1433,141 @@
                 if(badge1) { badge1.innerText = vipTier; badge1.className = `text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-md mt-1 inline-block text-white ${badgeColor}`; }
                 if(badge2 && vipTier !== "Thành Viên") { badge2.innerText = vipTier.charAt(0); badge2.className = `absolute -top-2 -right-2 ${badgeColor} text-white text-[9px] font-black px-1.5 py-0.5 rounded shadow-md border border-dark-800`; badge2.classList.remove("hidden");}
                 
-            } catch(e) {}
+            } catch(e) {
+                console.error("Lỗi tải thông tin VIP:", e);
+            }
 
             await fetchAndRenderServicesMenu();
+        }
+
+        async function fetchAndRenderServicesMenu() {
+            try {
+                const snap = await getDocs(collection(db, "servers"));
+                window.allServers = [];
+                snap.forEach(doc => window.allServers.push({ id: doc.id, ...doc.data() }));
+
+                const menuTree = {};
+                window.allServers.forEach(s => {
+                    const cat = s.category || "Khác - Dịch Vụ Mặc Định";
+                    const parts = cat.split(" - ");
+                    const platform = parts[0].trim();
+                    if (!menuTree[platform]) menuTree[platform] = new Set();
+                    menuTree[platform].add(cat);
+                });
+
+                const menuEl = document.getElementById('dynamic-sidebar-menu');
+                if(!menuEl) return;
+                menuEl.innerHTML = '';
+
+                if(Object.keys(menuTree).length === 0) {
+                    menuEl.innerHTML = '<li class="px-6 py-3 text-sm text-gray-500">Chưa có dịch vụ nào</li>';
+                    return;
+                }
+
+                let isFirst = true;
+                for (const platform in menuTree) {
+                    let pIcon = 'fa-solid fa-hashtag'; let pColor = 'text-gray-400';
+                    if (platform.toLowerCase().includes('facebook')) { pIcon = 'fa-brands fa-facebook'; pColor = 'text-blue-500'; }
+                    else if (platform.toLowerCase().includes('tiktok')) { pIcon = 'fa-brands fa-tiktok'; pColor = 'text-white'; }
+                    else if (platform.toLowerCase().includes('instagram')) { pIcon = 'fa-brands fa-instagram'; pColor = 'text-pink-500'; }
+
+                    let subHtml = '';
+                    menuTree[platform].forEach(fullCat => {
+                        const parts = fullCat.split(" - ");
+                        const subName = parts[1] ? parts[1].trim() : fullCat;
+                        let sIcon = 'fa-solid fa-bolt text-yellow-500';
+                        subHtml += `<li><a href="#" class="block pl-10 pr-4 py-2.5 text-sm text-gray-400 hover:text-white hover:bg-dark-700 transition" onclick="loadServiceForm('${fullCat}')"><i class="${sIcon} mr-2 w-4 text-center"></i> ${subName}</a></li>`;
+                    });
+
+                    const subMenuId = 'submenu-' + Math.random().toString(36).substr(2, 9);
+                    
+                    menuEl.innerHTML += `
+                        <li class="mb-1">
+                            <button class="w-full flex items-center justify-between px-6 py-3 text-sm text-gray-300 hover:bg-dark-700 hover:text-white font-bold transition rounded-lg ${isFirst?'bg-dark-700':''}" onclick="toggleSubMenu('${subMenuId}', this)">
+                                <span class="flex items-center"><i class="${pIcon} w-6 ${pColor}"></i> ${platform}</span>
+                                <i class="fa-solid fa-chevron-down text-[10px] transition-transform ${isFirst?'rotate-180':''}"></i>
+                            </button>
+                            <ul class="${isFirst?'':'hidden'} mt-1 space-y-1" id="${subMenuId}">
+                                ${subHtml}
+                            </ul>
+                        </li>
+                    `;
+                    isFirst = false;
+                }
+            } catch(e) {
+                let errorText = e.message.includes('Quota') ? 'Hết giới hạn truy cập cơ sở dữ liệu' : e.message;
+                const menuEl = document.getElementById('dynamic-sidebar-menu');
+                if(menuEl) menuEl.innerHTML = `<li class="px-6 py-3 text-xs text-red-500 bg-red-500/10 border-y border-red-500/20"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Lỗi tải Menu: ${errorText}</li>`;
+            }
+        }
+
+        window.loadGameProductsUI = async function() {
+            const container = document.getElementById('game-products-container');
+            if(!container) return;
+            container.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500"><i class="fa-solid fa-circle-notch fa-spin text-3xl"></i></div>';
+            
+            try {
+                const snap = await getDocs(collection(db, "game_products"));
+                window.allGameProducts = [];
+                snap.forEach(doc => window.allGameProducts.push({ id: doc.id, ...doc.data() }));
+
+                if(window.allGameProducts.length === 0) {
+                    container.innerHTML = '<div class="col-span-full text-center py-10 text-gray-500 bg-dark-800 rounded-2xl border border-dark-700"><i class="fa-solid fa-ghost text-4xl mb-3"></i><p>Hiện chưa có tài khoản game nào được bán.</p></div>';
+                    return;
+                }
+
+                window.allGameProducts.sort((a,b) => (b.availableCount || 0) - (a.availableCount || 0));
+
+                container.innerHTML = '';
+                window.allGameProducts.forEach(game => {
+                    const isOutOfStock = (game.availableCount || 0) === 0;
+                    const stockText = isOutOfStock 
+                        ? `<span class="bg-red-500/20 text-red-400 px-2 py-0.5 rounded text-[10px] font-bold border border-red-500/30">Hết hàng</span>`
+                        : `<span class="bg-green-500/20 text-green-400 px-2 py-0.5 rounded text-[10px] font-bold border border-green-500/30">Kho: ${game.availableCount} acc</span>`;
+                    
+                    const btnClass = isOutOfStock 
+                        ? "bg-dark-700 text-gray-500 cursor-not-allowed opacity-70"
+                        : "bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-500/20";
+
+                    let discountBadge = '';
+                    if(game.discountQty > 0 && game.discountPercent > 0 && !isOutOfStock) {
+                        discountBadge = `<div class="absolute top-0 right-0 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-lg z-10 rounded-tr-xl border-l border-b border-orange-400/50 transform translate-x-px -translate-y-px">Mua ${game.discountQty}+ Giảm ${game.discountPercent}%</div>`;
+                    }
+
+                    // TÍNH GIÁ VIP
+                    let displayPrice = game.price;
+                    let oldPriceHtml = "";
+                    if(window.userVipDiscount > 0) {
+                        displayPrice = game.price - (game.price * window.userVipDiscount);
+                        oldPriceHtml = `<div class="text-[10px] text-gray-500 line-through">${game.price.toLocaleString('vi-VN')}đ</div>`;
+                    }
+
+                    container.innerHTML += `
+                        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-5 hover:border-brand-500/50 transition duration-300 relative group overflow-hidden">
+                            ${discountBadge}
+                            <div class="flex items-start gap-4 mb-4 relative z-10">
+                                <img src="${game.logoUrl}" class="w-16 h-16 rounded-xl object-cover bg-white p-1 shrink-0 shadow-md border border-dark-600">
+                                <div>
+                                    <h3 class="font-bold text-white leading-tight group-hover:text-brand-400 transition">${game.name}</h3>
+                                    <div class="text-xs text-gray-400 mt-1 flex items-center"><i class="fa-solid fa-key mr-1"></i> Login: ${game.loginMethod}</div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-end relative z-10">
+                                <div>
+                                    ${oldPriceHtml}
+                                    <div class="text-brand-400 font-black text-xl">${displayPrice.toLocaleString('vi-VN')}đ</div>
+                                    <div class="mt-1">${stockText}</div>
+                                </div>
+                                <button ${isOutOfStock ? 'disabled' : `onclick="openBuyGameModal('${game.id}')"`} class="px-5 py-2.5 rounded-xl font-bold transition flex items-center ${btnClass}">
+                                    ${isOutOfStock ? 'Hết Hàng' : '<i class="fa-solid fa-cart-arrow-down mr-2"></i> Mua'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch(e) {
+                container.innerHTML = `<div class="col-span-full text-center text-red-500 py-10">Lỗi tải dữ liệu Game: ${e.message}</div>`;
+            }
         }
 
         document.getElementById('form-change-password').addEventListener('submit', async (e) => {
