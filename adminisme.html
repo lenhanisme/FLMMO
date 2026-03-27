@@ -677,18 +677,32 @@
         onAuthStateChanged(auth, async (user) => {
             if (user && !user.isAnonymous) {
                 try {
+                    // BẠN CÓ THỂ ĐIỀN EMAIL ADMIN CỦA BẠN VÀO ĐÂY ĐỂ VÀO THẲNG KHÔNG CẦN CHỈNH DATABASE
+                    const ADMIN_EMAIL = "lenhancute1@gmail.com"; 
+
                     const userDoc = await getDoc(doc(db, "users", user.uid));
-                    if (userDoc.exists() && userDoc.data().role === "admin") {
+                    
+                    // Kiểm tra: Nếu đúng email chỉ định HOẶC trong Database có role là admin
+                    if (user.email === ADMIN_EMAIL || (userDoc.exists() && userDoc.data().role === "admin")) {
                         document.getElementById('admin-body').classList.remove('hidden');
-                        document.getElementById('admin-name').innerText = userDoc.data().fullname || "Admin";
+                        document.getElementById('admin-name').innerText = userDoc.exists() ? (userDoc.data().fullname || "Admin") : "Super Admin";
                         
                         fetchDashboardStats(); checkMySmmBalance(); fetchServers(); fetchUsers(); fetchOrders(); fetchDeposits(); checkMaintenanceStatus();
                         
                         window.autoSyncOrdersStatus();
                         setInterval(window.autoSyncOrdersStatus, 60000); 
-                    } else { alert("Bạn không có quyền Admin!"); window.location.href = "home.html"; }
-                } catch (error) { alert("Lỗi xác thực!"); window.location.href = "home.html"; }
-            } else { window.location.href = "dangnhap.html"; }
+                    } else {
+                        alert("Tài khoản của bạn (" + user.email + ") không có quyền Admin!");
+                        window.location.href = "home.html";
+                    }
+                } catch (error) {
+                    console.error("Chi tiết lỗi Firebase:", error);
+                    alert("Lỗi kết nối CSDL: " + error.message);
+                    window.location.href = "home.html";
+                }
+            } else {
+                window.location.href = "dangnhap.html";
+            }
         });
 
         // ==========================================
