@@ -1074,6 +1074,7 @@
         import { getAuth, onAuthStateChanged, signInAnonymously, EmailAuthProvider, reauthenticateWithCredential, updatePassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, collection, addDoc, getDocs, updateDoc, increment, query, orderBy, where, limit, writeBatch } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // CẤU HÌNH CỦA BẠN
         const firebaseConfig = {
             apiKey: "AIzaSyBcR0Dl8GYalOIDN5aMoku7wJL-ICS7E2Q",
             authDomain: "flmmo-a4e53.firebaseapp.com",
@@ -1086,6 +1087,76 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+
+        // ========================================================
+        // TÍNH NĂNG MỚI: TỰ ĐỘNG ĐỒNG BỘ TRẠNG THÁI ĐƠN REALTIME 
+        // ========================================================
+        window.autoSyncUserOrders = async function(uid) {
+            try {
+                // 1. Chỉ lấy các đơn ĐANG CHẠY / ĐANG XỬ LÝ của user này
+                const q = query(collection(db, "orders"), where("uid", "==", uid));
+                const snap = await getDocs(q);
+                let activeOrders = [];
+                
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    if ((data.status === "Đang xử lý" || data.status === "Đang chạy") && data.remoteOrderId && data.remoteOrderId !== "Không xác định") {
+                        activeOrders.push({ id: doc.id, remoteId: data.remoteOrderId, currentStatus: data.status, total: data.total });
+                    }
+                });
+
+                if (activeOrders.length === 0) return; // Không có đơn chạy -> Bỏ qua để tiết kiệm tài nguyên
+
+                // 2. Ghép ID gọi API kiểm tra
+                const orderIdsStr = activeOrders.map(o => o.remoteId).join(',');
+                const fd = new URLSearchParams();
+                fd.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668');
+                fd.append('action', 'status');
+                fd.append('orders', orderIdsStr);
+
+                const res = await fetch('https://api.mysmm.vn/api/v2', { method: 'POST', body: fd });
+                const result = await res.json();
+                
+                if (!result.error) {
+                    let hasUpdates = false;
+                    for (const localOrder of activeOrders) {
+                        const remoteData = result[localOrder.remoteId];
+                        if (remoteData && remoteData.status) {
+                            let newStatus = localOrder.currentStatus;
+                            const rStatus = remoteData.status.toLowerCase();
+
+                            if (rStatus === 'completed' || rStatus === 'partial') newStatus = 'Hoàn thành';
+                            else if (rStatus === 'processing' || rStatus === 'pending') newStatus = 'Đang xử lý';
+                            else if (rStatus === 'in progress') newStatus = 'Đang chạy';
+                            else if (rStatus === 'canceled' || rStatus === 'refunded') newStatus = 'Hủy';
+
+                            // CẬP NHẬT NẾU TRẠNG THÁI ĐÃ THAY ĐỔI
+                            if (newStatus !== localOrder.currentStatus) {
+                                // TỰ ĐỘNG HOÀN TIỀN NẾU ĐƠN BỊ HỦY
+                                if(newStatus === "Hủy") {
+                                    await updateDoc(doc(db, "users", uid), { coin: increment(localOrder.total) });
+                                    // Update lại hiển thị số dư cho khách xem ngay
+                                    window.currentUserBalance += localOrder.total;
+                                    document.querySelectorAll('.display-balance-vnd').forEach(el => el.innerText = window.currentUserBalance.toLocaleString('vi-VN') + ' đ');
+                                    document.querySelectorAll('.display-balance-usd').forEach(el => el.innerText = "$" + (window.currentUserBalance / window.currentExchangeRate).toFixed(3));
+                                }
+                                
+                                await updateDoc(doc(db, "orders", localOrder.id), { status: newStatus, updatedAt: new Date().toISOString() });
+                                hasUpdates = true;
+                            }
+                        }
+                    }
+                    
+                    // RENDER LẠI BẢNG VÀ THỐNG KÊ NẾU CÓ SỰ THAY ĐỔI
+                    if (hasUpdates) {
+                        if(window.loadOrderHistory) window.loadOrderHistory();
+                        if(typeof loadOrderStats === 'function') loadOrderStats(uid);
+                    }
+                }
+            } catch(e) {
+                console.error("Lỗi đồng bộ Realtime ngầm:", e);
+            }
+        }
 
         // HÀM TẢI MENU DỊCH VỤ (ƯU TIÊN SỐ 1 - CHẠY NGAY LẬP TỨC)
         window.fetchAndRenderServicesMenu = async function() {
@@ -1229,7 +1300,7 @@
                         if(data.createdAt) createdAt = new Date(data.createdAt).toLocaleDateString('vi-VN');
                         if(data.apiKey) apiKey = data.apiKey;
                     }
-                } catch(e) {}
+                } catch(e) { console.error("Lỗi lấy user:", e); }
             }
 
             try {
@@ -1269,6 +1340,14 @@
             
             setTimeout(() => { loadOrderStats(user.uid).catch(console.error); }, 100);
             setTimeout(() => { populateTicketOrderDropdown(user.uid).catch(console.error); }, 200);
+
+            // BẬT VÒNG LẶP ĐỒNG BỘ REALTIME
+            setTimeout(() => {
+                window.autoSyncUserOrders(user.uid); // Chạy ngay lần 1
+                setInterval(() => {
+                    window.autoSyncUserOrders(user.uid); // Chạy ngầm lặp lại mỗi 60 giây
+                }, 60000);
+            }, 500);
         }
 
         window.generateApiKey = async function() {
@@ -1555,7 +1634,6 @@
             }
         });
 
-        // Xử lý đổi mật khẩu
         document.getElementById('form-change-password')?.addEventListener('submit', async (e) => {
             e.preventDefault(); const user = auth.currentUser; const btn = document.getElementById('btn-change-pass');
             if(!user || user.isAnonymous) return showToast("Vui lòng đăng ký tài khoản chính thức để đổi mật khẩu.", "error");
@@ -1571,7 +1649,6 @@
             } finally { btn.innerHTML = 'Lưu Mật Khẩu'; btn.disabled = false; }
         });
 
-        // Xử lý Đăng xuất
         document.getElementById('btn-logout')?.addEventListener('click', () => {
             showConfirm("Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?", () => { signOut(auth).then(() => { window.location.href = "dangnhap.html"; }); });
         });
