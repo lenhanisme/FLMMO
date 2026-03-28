@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel V2.3 - FLMMO.VN</title>
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -68,27 +68,15 @@
             <div>
                 <div class="px-6 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Hệ thống</div>
                 <ul class="space-y-1">
-                    <li>
-                        <a href="#" id="menu-dashboard" class="admin-menu-item active flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('dashboard')">
-                            <i class="fa-solid fa-chart-pie w-6 text-slate-400"></i> Tổng Quan
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="menu-announcements" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('announcements')">
-                            <i class="fa-solid fa-bullhorn w-6 text-slate-400"></i> Quản lý Bảng Tin
-                        </a>
-                    </li>
+                    <li><a href="#" id="menu-dashboard" class="admin-menu-item active flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('dashboard')"><i class="fa-solid fa-chart-pie w-6 text-slate-400"></i> Tổng Quan</a></li>
+                    <li><a href="#" id="menu-announcements" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('announcements')"><i class="fa-solid fa-bullhorn w-6 text-slate-400"></i> Quản lý Bảng Tin</a></li>
                     <li>
                         <a href="#" id="menu-deposits" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('deposits')">
                             <i class="fa-solid fa-money-bill-transfer w-6 text-slate-400"></i> Duyệt Tiền Nạp 
                             <span id="badge-pending" class="ml-auto bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden shadow-sm shadow-red-500/30">0</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#" id="menu-orders" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('orders')">
-                            <i class="fa-solid fa-cart-shopping w-6 text-slate-400"></i> Đơn Hàng Dịch Vụ
-                        </a>
-                    </li>
+                    <li><a href="#" id="menu-orders" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('orders')"><i class="fa-solid fa-cart-shopping w-6 text-slate-400"></i> Đơn Hàng Dịch Vụ</a></li>
                     <li>
                         <a href="#" id="menu-tickets" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('tickets')">
                             <i class="fa-solid fa-headset w-6 text-slate-400"></i> Hỗ Trợ (Tickets)
@@ -101,32 +89,16 @@
             <div>
                 <div class="px-6 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Sản phẩm & Dữ liệu</div>
                 <ul class="space-y-1">
-                    <li>
-                        <a href="#" id="menu-games" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('games')">
-                            <i class="fa-solid fa-gamepad w-6 text-slate-400"></i> Bán Tài Khoản Game
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="menu-servers" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('servers')">
-                            <i class="fa-solid fa-server w-6 text-slate-400"></i> Quản lý Máy Chủ SMM
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="menu-users" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('users')">
-                            <i class="fa-solid fa-users w-6 text-slate-400"></i> Quản lý Khách Hàng
-                        </a>
-                    </li>
+                    <li><a href="#" id="menu-games" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('games')"><i class="fa-solid fa-gamepad w-6 text-slate-400"></i> Bán Tài Khoản Game</a></li>
+                    <li><a href="#" id="menu-servers" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('servers')"><i class="fa-solid fa-server w-6 text-slate-400"></i> Quản lý Máy Chủ SMM</a></li>
+                    <li><a href="#" id="menu-users" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('users')"><i class="fa-solid fa-users w-6 text-slate-400"></i> Quản lý Khách Hàng</a></li>
                 </ul>
             </div>
 
             <div>
                 <div class="px-6 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cấu hình</div>
                 <ul class="space-y-1">
-                    <li>
-                        <a href="#" id="menu-settings" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('settings')">
-                            <i class="fa-solid fa-gear w-6 text-slate-400"></i> Cài Đặt Hệ Thống
-                        </a>
-                    </li>
+                    <li><a href="#" id="menu-settings" class="admin-menu-item flex items-center px-6 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition" onclick="switchView('settings')"><i class="fa-solid fa-gear w-6 text-slate-400"></i> Cài Đặt Hệ Thống</a></li>
                 </ul>
             </div>
         </div>
@@ -139,9 +111,7 @@
                     <span class="text-[10px] text-brand-600 font-bold uppercase">Super Admin</span>
                 </div>
             </div>
-            <button id="btn-logout" class="text-slate-400 hover:text-red-500 transition w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-50" title="Đăng xuất">
-                <i class="fa-solid fa-power-off"></i>
-            </button>
+            <button id="btn-logout" class="text-slate-400 hover:text-red-500 transition w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-50" title="Đăng xuất"><i class="fa-solid fa-power-off"></i></button>
         </div>
     </aside>
 
@@ -151,15 +121,11 @@
         <!-- HEADER -->
         <header class="h-16 glass-header border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-20 shrink-0">
             <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 p-2 bg-slate-100 rounded-lg">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 p-2 bg-slate-100 rounded-lg"><i class="fa-solid fa-bars"></i></button>
                 <h1 id="header-title" class="text-lg md:text-xl font-bold text-slate-800 tracking-tight">Tổng Quan Hệ Thống</h1>
             </div>
             <div class="flex items-center gap-3">
-                <div id="top-sync-status" class="hidden text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded font-bold border border-emerald-200 flex items-center shadow-sm">
-                    <i class="fa-solid fa-cloud-arrow-down mr-1 animate-pulse"></i> Auto Sync ON
-                </div>
+                <div id="top-sync-status" class="hidden text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded font-bold border border-emerald-200 flex items-center shadow-sm"><i class="fa-solid fa-cloud-arrow-down mr-1 animate-pulse"></i> Auto Sync ON</div>
                 <a href="home.html" target="_blank" class="text-sm bg-brand-50 text-brand-600 hover:bg-brand-100 border border-brand-200 px-3 py-1.5 rounded-lg font-bold transition flex items-center shadow-sm hidden sm:flex">
                     Vào Trang Khách <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
                 </a>
@@ -168,15 +134,11 @@
 
         <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 lg:p-8 relative">
             
-            <!-- ============================================== -->
             <!-- VIEW: DASHBOARD -->
-            <!-- ============================================== -->
             <div id="view-dashboard" class="view-section active max-w-7xl mx-auto space-y-6">
                 <!-- MySMM Balance -->
                 <div class="bg-gradient-to-br from-indigo-600 to-brand-600 rounded-2xl shadow-lg p-6 text-white flex flex-col justify-between relative overflow-hidden">
-                    <div class="absolute -right-10 -top-10 text-white/10 text-9xl">
-                        <i class="fa-solid fa-wallet"></i>
-                    </div>
+                    <div class="absolute -right-10 -top-10 text-white/10 text-9xl"><i class="fa-solid fa-wallet"></i></div>
                     <div class="relative z-10 flex justify-between items-start mb-4">
                         <div>
                             <h3 class="font-bold text-lg opacity-90">Số Dư Nguồn (MySMM)</h3>
@@ -194,21 +156,15 @@
                 <!-- Thẻ thống kê 5 ô -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">
                     <div class="bg-white rounded-2xl shadow-sm p-5 border border-slate-200 hover:border-brand-300 transition">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center text-lg border border-blue-100"><i class="fa-solid fa-users"></i></div>
-                        </div>
+                        <div class="flex justify-between items-start mb-4"><div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center text-lg border border-blue-100"><i class="fa-solid fa-users"></i></div></div>
                         <div class="text-2xl font-black text-slate-800 mb-1" id="stat-users">0</div>
                         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Khách Hàng</div>
                     </div>
-                    
                     <div class="bg-white rounded-2xl shadow-sm p-5 border border-slate-200 hover:border-emerald-300 transition">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-lg border border-emerald-100"><i class="fa-solid fa-money-bill-trend-up"></i></div>
-                        </div>
+                        <div class="flex justify-between items-start mb-4"><div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-lg border border-emerald-100"><i class="fa-solid fa-money-bill-trend-up"></i></div></div>
                         <div class="text-2xl font-black text-slate-800 mb-1" id="stat-deposits">0 đ</div>
                         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Doanh Thu Nạp</div>
                     </div>
-                    
                     <div class="bg-white rounded-2xl shadow-sm p-5 border border-slate-200 hover:border-orange-300 transition relative overflow-hidden">
                         <div class="flex justify-between items-start mb-4">
                             <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center text-lg border border-orange-100"><i class="fa-solid fa-bell-concierge"></i></div>
@@ -217,15 +173,11 @@
                         <div class="text-2xl font-black text-orange-500 mb-1" id="stat-pending">0</div>
                         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Đơn Chờ Duyệt</div>
                     </div>
-                    
                     <div class="bg-white rounded-2xl shadow-sm p-5 border border-slate-200 hover:border-purple-300 transition">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center text-lg border border-purple-100"><i class="fa-solid fa-cart-flatbed"></i></div>
-                        </div>
+                        <div class="flex justify-between items-start mb-4"><div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center text-lg border border-purple-100"><i class="fa-solid fa-cart-flatbed"></i></div></div>
                         <div class="text-2xl font-black text-slate-800 mb-1" id="stat-orders">0</div>
                         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tổng Đơn SMM</div>
                     </div>
-                    
                     <div class="bg-white rounded-2xl shadow-sm p-5 border border-slate-200 hover:border-pink-300 transition relative overflow-hidden">
                         <div class="flex justify-between items-start mb-4">
                             <div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center text-lg border border-pink-100"><i class="fa-solid fa-headset"></i></div>
@@ -237,9 +189,7 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
             <!-- VIEW: BẢNG TIN -->
-            <!-- ============================================== -->
             <div id="view-announcements" class="view-section max-w-7xl mx-auto space-y-6">
                 <!-- Thêm thông báo -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
@@ -267,7 +217,6 @@
                         </div>
                     </form>
                 </div>
-                
                 <!-- Bảng thông báo -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -277,13 +226,7 @@
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-sm text-left">
                             <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200">
-                                <tr>
-                                    <th class="px-6 py-4">ID</th>
-                                    <th class="px-6 py-4">Loại</th>
-                                    <th class="px-6 py-4">Nội dung</th>
-                                    <th class="px-6 py-4">Ngày đăng</th>
-                                    <th class="px-6 py-4 text-center">Xóa</th>
-                                </tr>
+                                <tr><th class="px-6 py-4">ID</th><th class="px-6 py-4">Loại</th><th class="px-6 py-4">Nội dung</th><th class="px-6 py-4">Ngày đăng</th><th class="px-6 py-4 text-center">Xóa</th></tr>
                             </thead>
                             <tbody id="admin-announcements-table" class="divide-y divide-slate-100"></tbody>
                         </table>
@@ -291,9 +234,7 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
             <!-- VIEW: DUYỆT TIỀN NẠP -->
-            <!-- ============================================== -->
             <div id="view-deposits" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -317,9 +258,7 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- VIEW: ĐƠN HÀNG SMM (Đã thêm Emoji & Link) -->
-            <!-- ============================================== -->
+            <!-- VIEW: ĐƠN HÀNG SMM (Đã tích hợp hiển thị Emoji & Link) -->
             <div id="view-orders" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
@@ -327,15 +266,9 @@
                             <h2 class="text-lg font-bold text-slate-800 flex items-center"><i class="fa-solid fa-cart-shopping text-brand-500 mr-2"></i> Quản Lý Đơn Hàng SMM</h2>
                         </div>
                         <div class="flex items-center gap-2">
-                            <div id="auto-sync-status" class="text-[10px] uppercase font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded hidden">
-                                <i class="fa-solid fa-circle-check mr-1"></i> Sync OK
-                            </div>
-                            <button onclick="autoSyncOrdersStatus()" class="bg-indigo-50 border border-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm">
-                                <i class="fa-solid fa-rotate-check mr-1"></i> Ép Đồng Bộ API
-                            </button>
-                            <button onclick="fetchOrders()" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm">
-                                <i class="fa-solid fa-rotate"></i>
-                            </button>
+                            <div id="auto-sync-status" class="text-[10px] uppercase font-bold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 py-1 rounded hidden"><i class="fa-solid fa-circle-check mr-1"></i> Sync OK</div>
+                            <button onclick="autoSyncOrdersStatus()" class="bg-indigo-50 border border-indigo-100 text-indigo-600 hover:bg-indigo-600 hover:text-white px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm"><i class="fa-solid fa-rotate-check mr-1"></i> Ép Đồng Bộ API</button>
+                            <button onclick="fetchOrders()" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm"><i class="fa-solid fa-rotate"></i></button>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
@@ -356,9 +289,7 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
             <!-- VIEW: QUẢN LÝ TICKETS (HỖ TRỢ) -->
-            <!-- ============================================== -->
             <div id="view-tickets" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
@@ -389,45 +320,23 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
             <!-- VIEW: BÁN TÀI KHOẢN GAME -->
-            <!-- ============================================== -->
             <div id="view-games" class="view-section max-w-7xl mx-auto space-y-6">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                         <div class="p-5 border-b border-slate-100 bg-slate-50"><h2 class="text-base font-bold text-slate-800"><i class="fa-solid fa-plus-circle text-orange-500 mr-2"></i> Tạo Sản Phẩm Game Mới</h2></div>
                         <form id="form-add-game" class="p-5 space-y-4">
                             <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Tên SP (VD: Acc Liên Quân)</label>
-                                    <input type="text" id="game-name" required class="w-full border rounded-lg p-2.5 text-sm outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Link Ảnh Logo</label>
-                                    <input type="text" id="game-logo" required class="w-full border rounded-lg p-2.5 text-sm outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Giá Bán / 1 Acc (VNĐ)</label>
-                                    <input type="number" id="game-price" required class="w-full border rounded-lg p-2.5 text-sm outline-none">
-                                </div>
+                                <div><label class="block text-xs font-bold text-slate-600 uppercase mb-1">Tên SP (VD: Acc Liên Quân)</label><input type="text" id="game-name" required class="w-full border rounded-lg p-2.5 text-sm outline-none"></div>
+                                <div><label class="block text-xs font-bold text-slate-600 uppercase mb-1">Link Ảnh Logo</label><input type="text" id="game-logo" required class="w-full border rounded-lg p-2.5 text-sm outline-none"></div>
+                                <div><label class="block text-xs font-bold text-slate-600 uppercase mb-1">Giá Bán / 1 Acc (VNĐ)</label><input type="number" id="game-price" required class="w-full border rounded-lg p-2.5 text-sm outline-none"></div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Kiểu Login</label>
-                                    <select id="game-login" class="w-full border rounded-lg p-2.5 text-sm outline-none">
-                                        <option value="Tài khoản | Mật khẩu">Tài khoản | Mật khẩu</option>
-                                        <option value="Token / Cookie">Token / Cookie</option>
-                                        <option value="Garena">Garena</option>
-                                        <option value="Facebook">Facebook</option>
-                                    </select>
+                                    <select id="game-login" class="w-full border rounded-lg p-2.5 text-sm outline-none"><option value="Tài khoản | Mật khẩu">Tài khoản | Mật khẩu</option><option value="Token / Cookie">Token / Cookie</option><option value="Garena">Garena</option><option value="Facebook">Facebook</option></select>
                                 </div>
                                 <div class="col-span-2 grid grid-cols-2 gap-4 bg-orange-50 p-3 rounded-lg border border-orange-100">
-                                    <div>
-                                        <label class="block text-xs font-bold text-orange-700 uppercase mb-1">SL Kích hoạt Giảm Giá</label>
-                                        <input type="number" id="game-discount-qty" value="0" placeholder="VD: Mua từ 50 acc..." class="w-full border rounded-lg p-2 text-sm outline-none">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold text-orange-700 uppercase mb-1">% Giảm Giá</label>
-                                        <input type="number" id="game-discount-percent" value="0" placeholder="VD: Giảm 10%" class="w-full border rounded-lg p-2 text-sm outline-none">
-                                    </div>
+                                    <div><label class="block text-xs font-bold text-orange-700 uppercase mb-1">SL Kích hoạt Giảm Giá</label><input type="number" id="game-discount-qty" value="0" placeholder="VD: Mua từ 50 acc..." class="w-full border rounded-lg p-2 text-sm outline-none"></div>
+                                    <div><label class="block text-xs font-bold text-orange-700 uppercase mb-1">% Giảm Giá</label><input type="number" id="game-discount-percent" value="0" placeholder="VD: Giảm 10%" class="w-full border rounded-lg p-2 text-sm outline-none"></div>
                                 </div>
                             </div>
                             <button type="submit" id="btn-add-game" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-lg transition shadow-md">Tạo Sản Phẩm</button>
@@ -439,9 +348,7 @@
                         <form id="form-add-game-accs" class="p-5 space-y-4 h-full flex flex-col">
                             <div>
                                 <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Chọn Sản Phẩm</label>
-                                <select id="game-select" required class="w-full border rounded-lg p-2.5 text-sm outline-none">
-                                    <option value="">-- Đang tải... --</option>
-                                </select>
+                                <select id="game-select" required class="w-full border rounded-lg p-2.5 text-sm outline-none"><option value="">-- Đang tải... --</option></select>
                             </div>
                             <div class="flex-1">
                                 <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Dữ liệu Tài khoản (Mỗi dòng 1 Acc)</label>
@@ -461,14 +368,7 @@
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-sm text-left">
                             <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200">
-                                <tr>
-                                    <th class="px-6 py-4">Sản Phẩm</th>
-                                    <th class="px-6 py-4">Đơn Giá</th>
-                                    <th class="px-6 py-4">Giảm giá sỉ</th>
-                                    <th class="px-6 py-4 text-center">Tồn Kho</th>
-                                    <th class="px-6 py-4 text-center">Đã Bán</th>
-                                    <th class="px-6 py-4 text-center">Xóa</th>
-                                </tr>
+                                <tr><th class="px-6 py-4">Sản Phẩm</th><th class="px-6 py-4">Đơn Giá</th><th class="px-6 py-4">Giảm giá sỉ</th><th class="px-6 py-4 text-center">Tồn Kho</th><th class="px-6 py-4 text-center">Đã Bán</th><th class="px-6 py-4 text-center">Xóa</th></tr>
                             </thead>
                             <tbody id="admin-games-table" class="divide-y divide-slate-100"></tbody>
                         </table>
@@ -476,9 +376,7 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
             <!-- VIEW: QUẢN LÝ MÁY CHỦ SMM (SERVERS V2.0) -->
-            <!-- ============================================== -->
             <div id="view-servers" class="view-section max-w-7xl mx-auto space-y-6">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between md:items-center gap-4 bg-slate-50/50">
@@ -489,10 +387,8 @@
                             <div class="lg:col-span-1">
                                 <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Chuyên mục <span class="text-red-500">*</span></label>
                                 <select id="srv-category" required class="w-full border border-slate-300 rounded-xl p-3 text-sm focus:border-brand-500 outline-none">
-                                    <option value="Facebook - Khác">Facebook</option>
-                                    <option value="TikTok - Khác">TikTok</option>
-                                    <option value="Instagram - Khác">Instagram</option>
-                                    <option value="YouTube - Khác">YouTube</option>
+                                    <option value="Facebook - Khác">Facebook</option><option value="TikTok - Khác">TikTok</option>
+                                    <option value="Instagram - Khác">Instagram</option><option value="YouTube - Khác">YouTube</option>
                                 </select>
                             </div>
                             <div class="lg:col-span-1">
@@ -518,9 +414,7 @@
                             <div class="lg:col-span-1">
                                 <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">Trạng thái</label>
                                 <select id="srv-status" class="w-full border border-slate-300 rounded-xl p-3 text-sm outline-none">
-                                    <option value="Hoạt động">Hoạt động</option>
-                                    <option value="Tạm ngưng">Tạm ngưng</option>
-                                    <option value="Nghẽn dịch vụ">Nghẽn dịch vụ</option>
+                                    <option value="Hoạt động">Hoạt động</option><option value="Tạm ngưng">Tạm ngưng</option><option value="Nghẽn dịch vụ">Nghẽn dịch vụ</option>
                                 </select>
                             </div>
                         </div>
@@ -532,21 +426,13 @@
 
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                        <div>
-                            <h2 class="text-lg font-bold text-slate-800">Kho Dữ Liệu Máy Chủ</h2>
-                        </div>
+                        <div><h2 class="text-lg font-bold text-slate-800">Kho Dữ Liệu Máy Chủ</h2></div>
                         <div class="flex flex-wrap items-center gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200">
-                            <button onclick="bulkDeleteServers()" class="bg-white hover:bg-red-50 text-red-600 border border-slate-200 px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm">
-                                <i class="fa-solid fa-trash-can mr-2"></i> Xóa Đã Chọn
-                            </button>
+                            <button onclick="bulkDeleteServers()" class="bg-white hover:bg-red-50 text-red-600 border border-slate-200 px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm"><i class="fa-solid fa-trash-can mr-2"></i> Xóa Đã Chọn</button>
                             <div class="w-px h-6 bg-slate-300 mx-1"></div>
-                            <button onclick="smartCheckPrices()" class="bg-white hover:bg-emerald-50 text-emerald-600 border border-slate-200 px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm tooltip" title="Dò giá API gốc để cảnh báo lỗ">
-                                <i class="fa-solid fa-radar mr-2"></i> Quét Cập Nhật Giá <span class="ml-2 bg-emerald-500 text-white text-[9px] px-1.5 py-0.5 rounded-full animate-pulse">HOT</span>
-                            </button>
+                            <button onclick="smartCheckPrices()" class="bg-white hover:bg-emerald-50 text-emerald-600 border border-slate-200 px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm tooltip" title="Dò giá API gốc để cảnh báo lỗ"><i class="fa-solid fa-radar mr-2"></i> Quét Cập Nhật Giá <span class="ml-2 bg-emerald-500 text-white text-[9px] px-1.5 py-0.5 rounded-full animate-pulse">HOT</span></button>
                             <div class="w-px h-6 bg-slate-300 mx-1"></div>
-                            <button onclick="fetchServers()" class="bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 px-3 py-2 rounded-lg transition shadow-sm">
-                                <i class="fa-solid fa-rotate"></i>
-                            </button>
+                            <button onclick="fetchServers()" class="bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 px-3 py-2 rounded-lg transition shadow-sm"><i class="fa-solid fa-rotate"></i></button>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
@@ -554,12 +440,7 @@
                             <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200">
                                 <tr>
                                     <th class="px-6 py-4 w-10"><input type="checkbox" id="cb-all-servers" class="custom-checkbox" onchange="toggleAllServers(this)"></th>
-                                    <th class="px-6 py-4 font-bold">API ID</th>
-                                    <th class="px-6 py-4 font-bold min-w-[250px]">Tên Dịch Vụ</th>
-                                    <th class="px-6 py-4 font-bold text-right">Giá Bán</th>
-                                    <th class="px-6 py-4 font-bold text-center">Giới Hạn</th>
-                                    <th class="px-6 py-4 font-bold text-center">Trạng Thái</th>
-                                    <th class="px-6 py-4 font-bold text-right">Hành động</th>
+                                    <th class="px-6 py-4 font-bold">API ID</th><th class="px-6 py-4 font-bold min-w-[250px]">Tên Dịch Vụ</th><th class="px-6 py-4 font-bold text-right">Giá Bán</th><th class="px-6 py-4 font-bold text-center">Giới Hạn</th><th class="px-6 py-4 font-bold text-center">Trạng Thái</th><th class="px-6 py-4 font-bold text-right">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody id="admin-servers-table" class="divide-y divide-slate-100"></tbody>
@@ -568,9 +449,7 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- VIEW: QUẢN LÝ NGƯỜI DÙNG (USERS) -->
-            <!-- ============================================== -->
+            <!-- VIEW: QUẢN LÝ NGƯỜI DÙNG (USERS V2.0) -->
             <div id="view-users" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
@@ -579,21 +458,13 @@
                         </div>
                         <div class="flex gap-2">
                             <input type="text" id="search-user" onkeyup="filterUsersTable()" placeholder="Tìm Tên, UID, Email..." class="border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 outline-none w-full md:w-64">
-                            <button onclick="fetchUsers()" class="bg-white border border-slate-300 hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm">
-                                <i class="fa-solid fa-rotate"></i>
-                            </button>
+                            <button onclick="fetchUsers()" class="bg-white border border-slate-300 hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm"><i class="fa-solid fa-rotate"></i></button>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full text-sm text-left">
                             <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200">
-                                <tr>
-                                    <th class="px-6 py-4 font-bold">UID / Tài Khoản</th>
-                                    <th class="px-6 py-4 font-bold text-right">Số dư (VNĐ)</th>
-                                    <th class="px-6 py-4 font-bold text-center">Vai trò</th>
-                                    <th class="px-6 py-4 font-bold text-center">Trạng thái</th>
-                                    <th class="px-6 py-4 font-bold text-center">Cài Đặt</th>
-                                </tr>
+                                <tr><th class="px-6 py-4 font-bold">UID / Tài Khoản</th><th class="px-6 py-4 font-bold text-right">Số dư (VNĐ)</th><th class="px-6 py-4 font-bold text-center">Vai trò</th><th class="px-6 py-4 font-bold text-center">Trạng thái</th><th class="px-6 py-4 font-bold text-center">Cài Đặt</th></tr>
                             </thead>
                             <tbody id="admin-users-table" class="divide-y divide-slate-100"></tbody>
                         </table>
@@ -601,9 +472,7 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
             <!-- VIEW: CÀI ĐẶT HỆ THỐNG -->
-            <!-- ============================================== -->
             <div id="view-settings" class="view-section max-w-7xl mx-auto space-y-6">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 flex items-center justify-between">
                     <div class="flex items-center gap-4">
@@ -625,10 +494,6 @@
 
         </main>
     </div>
-
-    <!-- ============================================== -->
-    <!-- CÁC MODAL HỖ TRỢ BÊN NGOÀI (Nằm ngoài luồng chính) -->
-    <!-- ============================================== -->
 
     <!-- MODAL CHỈNH SỬA USER V2.2 -->
     <div id="modal-edit-user" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
@@ -777,10 +642,7 @@
         </div>
     </div>
 
-
-    <!-- ============================================== -->
     <!-- TẤT CẢ JAVASCRIPT GOM VÀO MỘT THẺ MODULE DUY NHẤT -->
-    <!-- ============================================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -946,21 +808,56 @@
         window.checkMySmmBalance = async function() {
             const icon = document.getElementById('icon-sync-balance'); 
             const display = document.getElementById('stat-mysmm-balance');
-            icon.classList.add('fa-spin'); display.innerText = "...";
+            
+            icon.classList.add('fa-spin'); 
+            display.innerText = "Đang tải...";
+            display.classList.remove('text-red-500', 'text-blue-700');
+            display.classList.add('text-gray-500');
             
             try {
-                const fd = new URLSearchParams(); 
-                fd.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668'); 
-                fd.append('action', 'balance');
+                const formData = new URLSearchParams(); 
+                formData.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668'); 
+                formData.append('action', 'balance');
                 
-                const res = await fetch('https://api.mysmm.vn/api/v2', { method: 'POST', body: fd });
-                const r = await res.json();
+                const res = await fetch('https://api.mysmm.vn/api/v2', { method: 'POST', body: formData.toString() });
+                const result = await res.json();
                 
-                if(r.balance !== undefined) {
-                    display.innerText = (r.currency === 'USD' ? '$' : r.currency + ' ') + r.balance;
+                if(result.balance !== undefined) {
+                    const currentBalance = parseFloat(result.balance);
+                    const currencySymbol = result.currency === 'USD' ? '$' : result.currency + ' ';
+                    
+                    display.innerText = `${currencySymbol}${result.balance}`;
+                    display.classList.remove('text-gray-500');
+                    
+                    // THÊM LOGIC GỬI EMAIL NẾU SỐ DƯ <= 0.1
+                    if (currentBalance <= 0.1) {
+                        display.classList.add('text-red-500');
+                        
+                        // Chặn spam, chỉ gửi 1 lần mỗi phiên làm việc
+                        if (!sessionStorage.getItem('notified_low_balance')) {
+                            // Gọi API gửi Email đi (được thiết lập trên Vercel)
+                            fetch('/api/notify-balance', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ balance: result.balance, currency: result.currency })
+                            }).catch(e => console.error("Lỗi gọi mailer:", e));
+                            
+                            sessionStorage.setItem('notified_low_balance', 'true');
+                            
+                            // Báo hiệu trực tiếp bằng Alert cho Admin đang trực web
+                            alert(`⚠️ CẢNH BÁO TÀI KHOẢN MYSMM:\nSố dư nguồn của bạn đang cạn kiệt (${result.balance} ${result.currency}).\nHệ thống đã tự động gửi email thông báo tới lenhancute1@gmail.com.`);
+                        }
+                    } else {
+                        display.classList.add('text-blue-700');
+                        sessionStorage.removeItem('notified_low_balance'); // Số dư bình thường lại thì xóa cờ
+                    }
+                } else if (result.error) {
+                    throw new Error(result.error);
                 }
             } catch (e) { 
-                display.innerText = "Lỗi!"; display.classList.add('text-red-400'); 
+                console.error(e);
+                display.innerText = "Lỗi!"; 
+                display.classList.add('text-red-400'); 
             } finally { 
                 icon.classList.remove('fa-spin'); 
             }
