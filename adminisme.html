@@ -677,7 +677,7 @@
         onAuthStateChanged(auth, async (user) => {
             if (user && !user.isAnonymous) {
                 try {
-                    // BẠN CÓ THỂ ĐIỀN EMAIL ADMIN CỦA BẠN VÀO ĐÂY ĐỂ VÀO THẲNG KHÔNG CẦN CHỈNH DATABASE
+                    // ĐÃ CẬP NHẬT EMAIL ADMIN CỦA BẠN
                     const ADMIN_EMAIL = "lenhancute1@gmail.com"; 
 
                     const userDoc = await getDoc(doc(db, "users", user.uid));
