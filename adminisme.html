@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel V2.3 - FLMMO.VN</title>
-    <!-- Favicon -->
+    <title>Admin Panel V2.4 - FLMMO.VN</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡</text></svg>">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -52,10 +50,8 @@
 </head>
 <body class="flex h-screen overflow-hidden text-slate-800 hidden" id="admin-body">
 
-    <!-- OVERLAY MOBILE -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-30 hidden md:hidden transition-opacity" onclick="toggleSidebar()"></div>
 
-    <!-- SIDEBAR ADMIN -->
     <aside id="sidebar" class="fixed md:relative inset-y-0 left-0 transform -translate-x-full md:translate-x-0 w-[260px] bg-white border-r border-slate-200 flex flex-col z-40 transition-transform duration-300 ease-in-out shadow-2xl md:shadow-none">
         <div class="h-16 flex items-center px-6 border-b border-slate-100 shrink-0">
             <div class="w-8 h-8 rounded bg-gradient-to-br from-brand-500 to-indigo-600 flex items-center justify-center text-white mr-3 shadow-md">
@@ -145,10 +141,8 @@
         </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <div class="flex-1 flex flex-col h-screen overflow-hidden">
         
-        <!-- HEADER -->
         <header class="h-16 glass-header border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-20 shrink-0">
             <div class="flex items-center gap-3">
                 <button onclick="toggleSidebar()" class="md:hidden text-slate-500 hover:text-slate-800 p-2 bg-slate-100 rounded-lg">
@@ -168,11 +162,7 @@
 
         <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6 lg:p-8 relative">
             
-            <!-- ============================================== -->
-            <!-- VIEW: DASHBOARD -->
-            <!-- ============================================== -->
             <div id="view-dashboard" class="view-section active max-w-7xl mx-auto space-y-6">
-                <!-- MySMM Balance -->
                 <div class="bg-gradient-to-br from-indigo-600 to-brand-600 rounded-2xl shadow-lg p-6 text-white flex flex-col justify-between relative overflow-hidden">
                     <div class="absolute -right-10 -top-10 text-white/10 text-9xl">
                         <i class="fa-solid fa-wallet"></i>
@@ -191,11 +181,10 @@
                     </div>
                 </div>
 
-                <!-- Thẻ thống kê 5 ô -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">
                     <div class="bg-white rounded-2xl shadow-sm p-5 border border-slate-200 hover:border-brand-300 transition">
                         <div class="flex justify-between items-start mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center text-lg border border-blue-100"><i class="fa-solid fa-users"></i></div>
+                            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-50 flex items-center justify-center text-lg border border-blue-100"><i class="fa-solid fa-users text-blue-500"></i></div>
                         </div>
                         <div class="text-2xl font-black text-slate-800 mb-1" id="stat-users">0</div>
                         <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Khách Hàng</div>
@@ -237,11 +226,7 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- VIEW: BẢNG TIN -->
-            <!-- ============================================== -->
             <div id="view-announcements" class="view-section max-w-7xl mx-auto space-y-6">
-                <!-- Thêm thông báo -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 bg-slate-50 flex items-center">
                         <h2 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-pen-to-square text-brand-500 mr-2"></i> Đăng Thông Báo Mới</h2>
@@ -268,7 +253,6 @@
                     </form>
                 </div>
                 
-                <!-- Bảng thông báo -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                         <h2 class="text-lg font-bold text-slate-800">Danh Sách Bảng Tin</h2>
@@ -291,9 +275,6 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- VIEW: DUYỆT TIỀN NẠP -->
-            <!-- ============================================== -->
             <div id="view-deposits" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -317,9 +298,6 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- VIEW: ĐƠN HÀNG SMM (Đã thêm Emoji & Link) -->
-            <!-- ============================================== -->
             <div id="view-orders" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
@@ -356,9 +334,6 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- VIEW: QUẢN LÝ TICKETS (HỖ TRỢ) -->
-            <!-- ============================================== -->
             <div id="view-tickets" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
@@ -389,9 +364,6 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- VIEW: BÁN TÀI KHOẢN GAME -->
-            <!-- ============================================== -->
             <div id="view-games" class="view-section max-w-7xl mx-auto space-y-6">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
@@ -476,13 +448,13 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- VIEW: QUẢN LÝ MÁY CHỦ SMM (SERVERS V2.0) -->
-            <!-- ============================================== -->
             <div id="view-servers" class="view-section max-w-7xl mx-auto space-y-6">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between md:items-center gap-4 bg-slate-50/50">
                         <h2 class="text-lg font-bold text-slate-800 flex items-center"><i class="fa-solid fa-server text-brand-500 mr-2"></i> Thêm Dịch Vụ SMM Mới</h2>
+                        <button onclick="openFetchApiModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md transition flex items-center">
+                            <i class="fa-solid fa-cloud-arrow-down mr-2"></i> Quét Dịch Vụ Từ Đại Lý
+                        </button>
                     </div>
                     <form id="form-add-server" class="p-6 space-y-5">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -568,9 +540,6 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- VIEW: QUẢN LÝ NGƯỜI DÙNG (USERS) -->
-            <!-- ============================================== -->
             <div id="view-users" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-50/50">
@@ -601,9 +570,6 @@
                 </div>
             </div>
 
-            <!-- ============================================== -->
-            <!-- VIEW: CÀI ĐẶT HỆ THỐNG -->
-            <!-- ============================================== -->
             <div id="view-settings" class="view-section max-w-7xl mx-auto space-y-6">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 flex items-center justify-between">
                     <div class="flex items-center gap-4">
@@ -626,11 +592,6 @@
         </main>
     </div>
 
-    <!-- ============================================== -->
-    <!-- CÁC MODAL HỖ TRỢ BÊN NGOÀI (Nằm ngoài luồng chính) -->
-    <!-- ============================================== -->
-
-    <!-- MODAL CHỈNH SỬA USER V2.2 -->
     <div id="modal-edit-user" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform scale-95 transition-transform duration-300" id="modal-edit-user-box">
             <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -691,7 +652,6 @@
         </div>
     </div>
 
-    <!-- MODAL TRẢ LỜI TICKET -->
     <div id="modal-reply-ticket" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden transform scale-95 transition-transform duration-300" id="modal-reply-ticket-box">
             <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -725,7 +685,6 @@
         </div>
     </div>
 
-    <!-- MODAL SMART SYNC PRICES -->
     <div id="modal-smart-sync" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex flex-col p-4 md:p-10 opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl mx-auto h-full flex flex-col overflow-hidden transform scale-95 transition-transform duration-300" id="modal-smart-sync-box">
             <div class="p-6 border-b border-slate-200 flex justify-between items-center bg-white shrink-0">
@@ -777,10 +736,61 @@
         </div>
     </div>
 
+    <div id="modal-fetch-api" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex flex-col p-4 md:p-10 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl mx-auto h-full flex flex-col overflow-hidden transform scale-95 transition-transform duration-300" id="modal-fetch-api-box">
+            <div class="p-6 border-b border-slate-200 flex justify-between items-center bg-white shrink-0">
+                <div>
+                    <h3 class="font-bold text-xl text-slate-800"><i class="fa-solid fa-cloud-arrow-down text-indigo-500 mr-2"></i> Nhập Dữ Liệu Máy Chủ Từ Đại Lý</h3>
+                    <p class="text-xs text-slate-500 mt-1">Hệ thống sẽ lọc ra các dịch vụ bạn chưa có để thêm vào với giá bán được tính tự động.</p>
+                </div>
+                <button onclick="closeFetchApiModal()" class="text-slate-400 hover:text-red-500 bg-slate-100 w-10 h-10 rounded-full transition text-xl flex justify-center items-center"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-4 border-b border-slate-100 bg-slate-50 flex flex-wrap items-end gap-4 shrink-0">
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tỷ giá USD</label>
+                    <input type="number" id="fetch-api-exchange" value="25500" class="border border-slate-300 rounded-lg px-3 py-2 text-sm font-bold outline-none w-28">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Biên độ LN (%)</label>
+                    <input type="number" id="fetch-api-profit" value="30" class="border border-slate-300 rounded-lg px-3 py-2 text-sm font-bold text-indigo-600 outline-none w-28">
+                </div>
+                <button onclick="executeFetchApi()" id="btn-run-fetch" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg font-bold shadow-md transition flex items-center text-sm">
+                    <i class="fa-solid fa-magnifying-glass mr-2"></i> Bắt đầu Quét
+                </button>
+            </div>
+            <div class="flex-1 overflow-auto bg-slate-50 p-4">
+                <table class="min-w-full text-sm text-left border bg-white rounded-xl shadow-sm">
+                    <thead class="text-[10px] text-slate-500 uppercase bg-slate-100 border-b border-slate-200 sticky top-0 shadow-sm z-10">
+                        <tr>
+                            <th class="p-3 w-10"><input type="checkbox" class="custom-checkbox" onchange="toggleAllFetchItems(this)"></th>
+                            <th class="p-3 font-bold">API ID</th>
+                            <th class="p-3 font-bold">Chuyên Mục</th>
+                            <th class="p-3 font-bold">Tên Dịch Vụ</th>
+                            <th class="p-3 font-bold text-center">Min/Max</th>
+                            <th class="p-3 font-bold text-right text-red-600">Giá Vốn (1 Lượt)</th>
+                            <th class="p-3 font-bold text-right text-emerald-600">Giá Bán (1 Lượt)</th>
+                            <th class="p-3 font-bold text-center">Trạng Thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fetch-api-table" class="divide-y divide-slate-100">
+                        <tr>
+                            <td colspan="8" class="text-center py-20 text-slate-400">
+                                <i class="fa-solid fa-cloud-arrow-down text-5xl mb-4 text-slate-200"></i><br>Bấm "Bắt đầu Quét" để tải danh sách từ MySMM
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-5 border-t border-slate-200 bg-white flex justify-between items-center shrink-0">
+                <div class="text-xs font-bold text-slate-600" id="fetch-api-stats"></div>
+                <button id="btn-apply-fetch" onclick="applyFetchedServices()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg transition flex items-center hidden">
+                    <i class="fa-solid fa-plus-circle mr-2"></i> Thêm Các Dịch Vụ Đã Chọn
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <!-- ============================================== -->
-    <!-- TẤT CẢ JAVASCRIPT GOM VÀO MỘT THẺ MODULE DUY NHẤT -->
-    <!-- ============================================== -->
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -807,6 +817,7 @@
         window.allLocalServers = [];
         window.smartCheckData = [];
         window.allLocalUsers = [];
+        window.fetchedApiDataCache = []; // Bộ đệm lưu dữ liệu quét từ đại lý
 
         // 3. UI & DOM HELPERS
         window.toggleSidebar = function() {
@@ -1337,11 +1348,9 @@
                         <option value="Lỗi" ${o.status === 'Lỗi' ? 'selected' : ''}>Báo Lỗi</option>
                     </select>`;
 
-                    // Xử lý tạo Link Click được
                     const safeLink = o.link.startsWith('http') ? o.link : 'https://' + o.link;
                     const linkHtml = `<a href="${safeLink}" target="_blank" class="text-brand-600 hover:text-brand-800 hover:underline truncate max-w-[200px] text-[10px] block mt-1"><i class="fa-solid fa-link mr-1"></i>${o.link}</a>`;
 
-                    // Xử lý Cảm Xúc đã chọn
                     let reactionTags = '';
                     if(o.reactions) {
                         const reactsArr = o.reactions.split(',');
@@ -1411,7 +1420,6 @@
 
                 if (activeOrders.length === 0) return;
                 
-                // Chia nhỏ chunk 100 đơn một lần để không quá tải API
                 const chunks = []; 
                 for (let i = 0; i < activeOrders.length; i += 100) {
                     chunks.push(activeOrders.slice(i, i + 100));
@@ -1783,6 +1791,156 @@
                 btn.disabled = false; 
             }
         });
+
+        // =========================================================
+        // 12. XỬ LÝ QUÉT VÀ THÊM DỊCH VỤ HÀNG LOẠT TỪ ĐẠI LÝ MYSMM
+        // =========================================================
+        
+        window.openFetchApiModal = function() {
+            const modal = document.getElementById('modal-fetch-api'); 
+            const box = document.getElementById('modal-fetch-api-box');
+            modal.classList.remove('hidden'); 
+            setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.remove('scale-95'); }, 10);
+        }
+
+        window.closeFetchApiModal = function() {
+            const modal = document.getElementById('modal-fetch-api'); 
+            const box = document.getElementById('modal-fetch-api-box');
+            modal.classList.add('opacity-0'); box.classList.add('scale-95'); 
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        window.toggleAllFetchItems = function(source) {
+            // Chỉ tick các ô không bị disabled (các dịch vụ Mới)
+            document.querySelectorAll('.fetch-item-cb:not([disabled])').forEach(cb => cb.checked = source.checked);
+        }
+
+        window.executeFetchApi = async function() {
+            const btn = document.getElementById('btn-run-fetch'); 
+            const tbody = document.getElementById('fetch-api-table');
+            const statsBox = document.getElementById('fetch-api-stats'); 
+            const applyBtn = document.getElementById('btn-apply-fetch');
+            const exRate = parseFloat(document.getElementById('fetch-api-exchange').value) || 25500;
+            const profit = parseFloat(document.getElementById('fetch-api-profit').value) || 30;
+
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang kết nối API...'; 
+            btn.disabled = true;
+            applyBtn.classList.add('hidden'); 
+            statsBox.innerText = ""; 
+            window.fetchedApiDataCache = []; // Biến tạm lưu data quét được
+            
+            try {
+                // Gọi API lấy list services
+                const formData = new URLSearchParams(); 
+                formData.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668'); 
+                formData.append('action', 'services');
+                
+                const res = await fetch('https://api.mysmm.vn/api/v2', { method: 'POST', body: formData.toString() });
+                const apiData = await res.json(); 
+                
+                if(apiData.error) throw new Error(apiData.error);
+                if(!Array.isArray(apiData)) throw new Error("Dữ liệu trả về không đúng định dạng!");
+                
+                tbody.innerHTML = ''; 
+                let newCount = 0;
+                let existCount = 0;
+                
+                apiData.forEach(remote => {
+                    // Kiểm tra xem ID dịch vụ đã có trong Data của web mình chưa
+                    const isExists = window.allLocalServers.some(local => local.code === remote.service.toString());
+                    
+                    // Tính toán giá vốn và giá bán cho 1 lượt tương tác
+                    const costPer1Vnd = (parseFloat(remote.rate) * exRate) / 1000;
+                    const sellPriceVnd = parseFloat((costPer1Vnd * (1 + profit / 100)).toFixed(2));
+
+                    let statusHtml = '';
+                    if (isExists) {
+                        statusHtml = '<span class="bg-slate-100 text-slate-500 px-2 py-1 rounded text-[10px] font-bold">Đã Có</span>';
+                        existCount++;
+                    } else {
+                        statusHtml = '<span class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-[10px] font-bold animate-pulse">Dịch Vụ Mới</span>';
+                        newCount++;
+                        // Lưu vào cache để lát nữa ấn nút Thêm
+                        window.fetchedApiDataCache.push({
+                            code: remote.service.toString(),
+                            category: remote.category,
+                            name: remote.name,
+                            rate: sellPriceVnd,
+                            minOrder: parseInt(remote.min) || 0,
+                            maxOrder: parseInt(remote.max) || 0
+                        });
+                    }
+
+                    // Render dòng HTML
+                    tbody.innerHTML += `
+                        <tr class="border-b hover:bg-slate-50 ${isExists ? 'opacity-50 grayscale' : ''}">
+                            <td class="p-3">
+                                <input type="checkbox" class="fetch-item-cb custom-checkbox" value="${remote.service}" ${isExists ? 'disabled' : 'checked'}>
+                            </td>
+                            <td class="p-3 font-mono text-xs font-bold text-slate-500">#${remote.service}</td>
+                            <td class="p-3 text-xs uppercase text-brand-600 font-bold max-w-[120px] truncate" title="${remote.category}">${remote.category}</td>
+                            <td class="p-3 text-xs font-medium text-slate-800 max-w-[250px] truncate" title="${remote.name}">${remote.name}</td>
+                            <td class="p-3 text-xs text-slate-500 text-center font-mono">${remote.min} - ${remote.max}</td>
+                            <td class="p-3 text-xs font-mono text-red-500 text-right">${costPer1Vnd.toFixed(2)}đ</td>
+                            <td class="p-3 font-black text-emerald-600 text-right text-sm bg-emerald-50/30">${isExists ? '-' : sellPriceVnd + 'đ'}</td>
+                            <td class="p-3 text-center">${statusHtml}</td>
+                        </tr>
+                    `;
+                });
+
+                statsBox.innerHTML = `Quét hoàn tất: Có <b>${newCount}</b> dịch vụ mới, bỏ qua <b>${existCount}</b> dịch vụ đã có trong hệ thống.`;
+                if(newCount > 0) applyBtn.classList.remove('hidden');
+
+            } catch(e) { 
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center py-10 text-red-500">Lỗi kết nối API: ${e.message}</td></tr>`; 
+            } finally { 
+                btn.innerHTML = '<i class="fa-solid fa-magnifying-glass mr-2"></i> Quét Lại'; 
+                btn.disabled = false; 
+            }
+        }
+
+        window.applyFetchedServices = async function() {
+            const checkboxes = document.querySelectorAll('.fetch-item-cb:checked:not([disabled])');
+            if(checkboxes.length === 0) return alert("Vui lòng chọn ít nhất 1 dịch vụ mới để thêm!");
+            
+            const selectedIds = Array.from(checkboxes).map(cb => cb.value);
+            const itemsToAdd = window.fetchedApiDataCache.filter(item => selectedIds.includes(item.code));
+
+            const applyBtn = document.getElementById('btn-apply-fetch');
+            applyBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang thêm dữ liệu...'; 
+            applyBtn.disabled = true;
+
+            try {
+                // Firebase cho phép ghi hàng loạt (Batch) tối đa 500 docs/lần
+                const batch = writeBatch(db); 
+                let count = 0;
+                
+                itemsToAdd.forEach(item => { 
+                    const newDocRef = doc(collection(db, "servers"));
+                    batch.set(newDocRef, { 
+                        category: item.category,
+                        code: item.code,
+                        name: item.name,
+                        rate: item.rate,
+                        minOrder: item.minOrder,
+                        maxOrder: item.maxOrder,
+                        status: "Hoạt động",
+                        createdAt: new Date().toISOString()
+                    }); 
+                    count++; 
+                });
+                
+                await batch.commit(); 
+                alert(`Đã thêm thành công ${count} dịch vụ mới vào kho máy chủ!`); 
+                window.closeFetchApiModal(); 
+                window.fetchServers(); // Refresh lại bảng quản lý server bên ngoài
+            } catch(e) { 
+                alert("Lỗi khi lưu vào Database: " + e.message); 
+            } finally { 
+                applyBtn.innerHTML = '<i class="fa-solid fa-plus-circle mr-2"></i> Thêm Các Dịch Vụ Đã Chọn'; 
+                applyBtn.disabled = false; 
+            }
+        }
 
         // Nút Đăng xuất
         document.getElementById('btn-logout').addEventListener('click', () => {
