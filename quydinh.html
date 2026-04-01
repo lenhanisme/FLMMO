@@ -1,96 +1,241 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quy Định Dịch Vụ - FLMMO.VN</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
-        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { brand: { 500: '#22c55e', 600: '#16a34a' } } } } }
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] }, 
+                    colors: { brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' } } 
+                } 
+            } 
+        }
     </script>
-    <style>body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }</style>
+    <style>
+        body { background-color: #f8fafc; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .nav-link.active {
+            color: #16a34a;
+            font-weight: 700;
+            border-left-color: #16a34a;
+            background-color: #f0fdf4;
+        }
+    </style>
 </head>
-<body class="flex flex-col min-h-screen text-gray-800">
+<body class="flex flex-col min-h-screen text-slate-800">
 
-    <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="home.html" class="flex items-center gap-2 cursor-pointer">
-                <div class="w-8 h-8 bg-brand-500 rounded flex items-center justify-center text-white shadow"><i class="fa-solid fa-rocket"></i></div>
-                <span class="font-bold text-xl tracking-tight">FL<span class="text-brand-600">MMO</span></span>
+            <a href="home.html" class="flex items-center gap-2 cursor-pointer group">
+                <div class="w-9 h-9 bg-gradient-to-br from-brand-500 to-emerald-600 rounded-xl flex items-center justify-center text-white shadow-md group-hover:shadow-lg transition">
+                    <i class="fa-solid fa-rocket"></i>
+                </div>
+                <span class="font-black text-xl tracking-tight text-slate-800">FL<span class="text-brand-600">MMO</span></span>
             </a>
-            <nav class="hidden md:flex gap-6">
-                <a href="home.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">Trang chủ</a>
-                <a href="faq.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">Câu Hỏi Thường Gặp</a>
-                <a href="api.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">API Đối tác</a>
+            <nav class="hidden md:flex gap-8">
+                <a href="home.html" class="text-sm font-bold text-slate-600 hover:text-brand-600 transition">Trang chủ</a>
+                <a href="quydinh.html" class="text-sm font-bold text-brand-600 transition">Quy Định</a>
+                <a href="api.html" class="text-sm font-bold text-slate-600 hover:text-brand-600 transition">API Đối tác</a>
             </nav>
-            <a href="dangnhap.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow transition">Vào Hệ Thống</a>
+            <a href="dangnhap.html" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md transition flex items-center">
+                Vào Hệ Thống <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
+            </a>
         </div>
     </header>
 
-    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 md:p-12">
-            <h1 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-4">Quy Định & Điều Khoản Sử Dụng</h1>
-            
-            <div class="space-y-8 text-sm md:text-base text-gray-600 leading-relaxed">
-                <p>Chào mừng bạn đến với FLMMO.VN. Khi bạn đăng ký tài khoản, nạp tiền và sử dụng dịch vụ tại website của chúng tôi, đồng nghĩa với việc bạn đã đọc, hiểu và đồng ý hoàn toàn với các điều khoản dưới đây.</p>
+    <div class="bg-gradient-to-b from-brand-50 to-white pt-16 pb-12 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-block bg-brand-100 text-brand-700 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-4">Terms of Service</div>
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Quy Định & Điều Khoản</h1>
+            <p class="text-slate-500 max-w-2xl mx-auto text-lg">Cập nhật lần cuối: 01/04/2026. Vui lòng đọc kỹ các quy định dưới đây trước khi sử dụng dịch vụ tại FLMMO.VN nhằm đảm bảo quyền lợi của bạn.</p>
+        </div>
+    </div>
 
-                <section>
-                    <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-user-shield text-brand-500 mr-2"></i> Điều 1: Quy định về Tài khoản</h2>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li>Khách hàng có trách nhiệm tự bảo mật thông tin tài khoản và mật khẩu của mình. Không chia sẻ tài khoản cho người khác sử dụng chung.</li>
-                        <li>Chúng tôi có quyền khóa vĩnh viễn và thu hồi số dư đối với các tài khoản có hành vi gian lận, cố tình bug lỗi hệ thống, hoặc nạp tiền bằng hình thức bất hợp pháp.</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-link text-brand-500 mr-2"></i> Điều 2: Trách nhiệm khi đặt đơn</h2>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li><b>Tuyệt đối không</b> sử dụng dịch vụ của FLMMO để tăng tương tác cho các bài viết, tài khoản có nội dung vi phạm pháp luật Việt Nam, phản động, đồi trụy. Nếu phát hiện, chúng tôi sẽ hủy đơn (không hoàn tiền) và ban tài khoản ngay lập tức.</li>
-                        <li>Khách hàng phải nhập chính xác định dạng Link/UID theo hướng dẫn của từng máy chủ. Nếu nhập sai link dẫn đến hệ thống chạy nhầm cho người khác, chúng tôi sẽ không chịu trách nhiệm hoàn tiền.</li>
-                        <li>Không đặt 2 đơn cho cùng 1 link vào cùng 1 thời điểm. Đơn cũ phải báo "Hoàn thành" mới được đặt tiếp đơn mới. Đặt trùng sẽ bị thiếu hụt số lượng và không được bù.</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-money-bill-transfer text-brand-500 mr-2"></i> Điều 3: Chính sách Nạp và Hoàn tiền</h2>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li>Vui lòng chuyển khoản đúng nội dung và số tài khoản hiển thị trên hệ thống.</li>
-                        <li>Số dư đã nạp vào tài khoản trên FLMMO <b>chỉ có thể sử dụng để mua dịch vụ</b>, không hỗ trợ rút ngược lại ra tiền mặt (Bank/Momo) dưới bất kỳ hình thức nào.</li>
-                        <li>Hệ thống chỉ hoàn tiền (Refund) lại vào số dư tài khoản FLMMO trong trường hợp: Đơn hàng bị lỗi do hệ thống, hoặc server không thể tiếp tục chạy.</li>
-                    </ul>
-                </section>
-
-                <section>
-                    <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-screwdriver-wrench text-brand-500 mr-2"></i> Điều 4: Chính sách bảo hành</h2>
-                    <p class="mb-2">Tùy vào từng loại Server bạn chọn sẽ có chính sách bảo hành khác nhau, được ghi rõ ở tên Server.</p>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li>Các server có chữ <b>Bảo Hành</b> sẽ được bù lượng tụt miễn phí trong khoảng thời gian quy định (thường là 30 ngày).</li>
-                        <li>Các server giá siêu rẻ, không ghi bảo hành đồng nghĩa với việc không hỗ trợ sau khi chạy xong. Khách hàng vui lòng cân nhắc rủi ro trước khi mua.</li>
-                    </ul>
-                </section>
-
-                <div class="mt-10 p-4 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-500 italic">
-                    * FLMMO.VN có toàn quyền thay đổi, cập nhật các điều khoản này bất cứ lúc nào mà không cần thông báo trước. Vui lòng theo dõi thường xuyên.
-                </div>
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full flex flex-col lg:flex-row gap-10">
+        
+        <aside class="hidden lg:block w-1/4 shrink-0">
+            <div class="sticky top-24">
+                <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Danh mục quy định</h3>
+                <nav class="flex flex-col border-l-2 border-slate-100">
+                    <a href="#dieu-1" class="nav-link px-4 py-2.5 text-sm font-medium text-slate-600 border-l-2 border-transparent hover:text-brand-600 hover:bg-slate-50 transition -ml-[2px]">1. Điều khoản Chung</a>
+                    <a href="#dieu-2" class="nav-link px-4 py-2.5 text-sm font-medium text-slate-600 border-l-2 border-transparent hover:text-brand-600 hover:bg-slate-50 transition -ml-[2px]">2. Tài khoản & Bảo mật</a>
+                    <a href="#dieu-3" class="nav-link px-4 py-2.5 text-sm font-medium text-slate-600 border-l-2 border-transparent hover:text-brand-600 hover:bg-slate-50 transition -ml-[2px]">3. Quy định Đặt Đơn SMM</a>
+                    <a href="#dieu-4" class="nav-link px-4 py-2.5 text-sm font-medium text-slate-600 border-l-2 border-transparent hover:text-brand-600 hover:bg-slate-50 transition -ml-[2px]">4. Giao dịch & Hoàn tiền</a>
+                    <a href="#dieu-5" class="nav-link px-4 py-2.5 text-sm font-medium text-slate-600 border-l-2 border-transparent hover:text-brand-600 hover:bg-slate-50 transition -ml-[2px]">5. Chính sách Bảo hành</a>
+                </nav>
             </div>
+        </aside>
+
+        <div class="w-full lg:w-3/4 space-y-8">
+            
+            <div class="bg-blue-50 border border-blue-100 p-5 rounded-2xl text-blue-800 text-sm leading-relaxed">
+                Bằng việc nhấp vào nút "Đăng Ký Tài Khoản" hoặc tiếp tục sử dụng website <b>FLMMO.VN</b>, bạn xác nhận rằng bạn đã đủ 18 tuổi hoặc có sự giám hộ của người lớn, và bạn đồng ý ràng buộc về mặt pháp lý với toàn bộ các Điều khoản dịch vụ này.
+            </div>
+
+            <section id="dieu-1" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="w-10 h-10 rounded-full bg-indigo-50 text-indigo-500 flex items-center justify-center text-lg"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <h2 class="text-xl font-bold text-slate-800">1. Điều khoản Chung</h2>
+                </div>
+                <ul class="space-y-4 text-slate-600 text-sm leading-relaxed">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-check text-brand-500 mt-1"></i>
+                        <span><b>Cập nhật điều khoản:</b> FLMMO.VN có toàn quyền sửa đổi, bổ sung hoặc loại bỏ các điều khoản này bất cứ lúc nào mà không cần thông báo trước. Các thay đổi sẽ có hiệu lực ngay khi được đăng tải trên trang này.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-check text-brand-500 mt-1"></i>
+                        <span><b>Giới hạn trách nhiệm:</b> Chúng tôi là đơn vị cung cấp dịch vụ Social Media Marketing trung gian. Chúng tôi không chịu trách nhiệm nếu tài khoản mạng xã hội của bạn bị khóa, xóa hoặc mất tương tác do các chính sách từ các nền tảng (Facebook, TikTok, Instagram...).</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="dieu-2" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center text-lg"><i class="fa-solid fa-user-shield"></i></div>
+                    <h2 class="text-xl font-bold text-slate-800">2. Tài khoản & Bảo mật</h2>
+                </div>
+                <ul class="space-y-4 text-slate-600 text-sm leading-relaxed">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-xmark text-rose-500 mt-1"></i>
+                        <span><b>Nghiêm cấm dùng chung:</b> Khách hàng có trách nhiệm tự bảo mật thông tin tài khoản. Việc chia sẻ tài khoản cho nhiều người sử dụng cùng lúc có thể dẫn đến việc tài khoản bị hệ thống tự động khóa vĩnh viễn.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-xmark text-rose-500 mt-1"></i>
+                        <span><b>Hành vi gian lận:</b> Mọi hành vi cố tình sử dụng Bug, khai thác lỗ hổng hệ thống, sử dụng tool/tool spam API để phá hoại, hoặc nạp tiền bằng hình thức bất hợp pháp (thẻ ăn cắp, rửa tiền) sẽ bị <b>Khóa tài khoản và thu hồi toàn bộ số dư</b> ngay lập tức không cần báo trước.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="dieu-3" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-lg"><i class="fa-solid fa-cart-arrow-down"></i></div>
+                    <h2 class="text-xl font-bold text-slate-800">3. Quy định Đặt Đơn SMM</h2>
+                </div>
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl mb-5 text-sm text-amber-800">
+                    <b>CẢNH BÁO TỐI CAO:</b> Tuyệt đối KHÔNG sử dụng dịch vụ của FLMMO để tăng tương tác cho các bài viết, tài khoản có nội dung: Phản động, chống phá Nhà nước CHXHCN Việt Nam, lừa đảo, đồi trụy. Phát hiện sẽ band vĩnh viễn.
+                </div>
+                <ul class="space-y-4 text-slate-600 text-sm leading-relaxed">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-circle-right text-slate-300 mt-1 text-[10px]"></i>
+                        <span><b>Định dạng Link:</b> Vui lòng đọc kỹ hướng dẫn định dạng Link/UID của từng Server. Nhập sai định dạng, nhập link Private (kín) dẫn đến hệ thống chạy nhầm hoặc không chạy được, chúng tôi <b>KHÔNG hỗ trợ hoàn tiền</b>.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-circle-right text-slate-300 mt-1 text-[10px]"></i>
+                        <span><b>Chống bão đơn (Overlapping):</b> KHÔNG cài 2 hay nhiều đơn cho <b>cùng 1 link</b> vào <b>cùng một thời điểm</b> trên cùng 1 server. Đơn trước phải báo "Hoàn thành" mới được cài tiếp. Cố tình nhồi đơn sẽ bị thiếu hụt số lượng và không được bù.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-circle-right text-slate-300 mt-1 text-[10px]"></i>
+                        <span>Tốc độ chạy của mỗi Server có thể thay đổi theo từng thời điểm phụ thuộc vào đợt quét của Facebook/TikTok. Vui lòng chờ đợi nếu đơn hàng bị chậm.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="dieu-4" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center text-lg"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                    <h2 class="text-xl font-bold text-slate-800">4. Giao dịch & Hoàn tiền</h2>
+                </div>
+                <ul class="space-y-4 text-slate-600 text-sm leading-relaxed">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-check text-brand-500 mt-1"></i>
+                        <span><b>Hệ thống tự động:</b> Giao dịch nạp tiền diễn ra tự động 24/7. Khách hàng bắt buộc phải điền đúng <b>Nội dung chuyển khoản</b> theo yêu cầu. Nếu sai nội dung, vui lòng gửi Ticket hỗ trợ kèm bill để Admin cộng tay.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-xmark text-rose-500 mt-1"></i>
+                        <span><b>Không rút tiền mặt:</b> Số dư đã nạp vào tài khoản FLMMO <b>CHỈ CÓ THỂ SỬ DỤNG MUA DỊCH VỤ</b> trên website. Chúng tôi từ chối mọi yêu cầu rút ngược lại ra thẻ Ngân hàng/Momo dưới mọi lý do.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-check text-brand-500 mt-1"></i>
+                        <span><b>Hoàn tiền đơn lỗi (Refund):</b> Hệ thống chỉ tự động hoàn tiền lại vào <b>Số dư tài khoản FLMMO</b> của bạn khi: Đơn hàng bị hủy do lỗi từ phía Server máy chủ, hoặc đơn chạy thiếu do máy chủ bảo trì.</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="dieu-5" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 scroll-mt-24">
+                <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                    <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center text-lg"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    <h2 class="text-xl font-bold text-slate-800">5. Chính sách Bảo hành (Refill)</h2>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">Tùy vào từng loại Máy chủ (Server) bạn chọn sẽ có chính sách bảo hành tụt khác nhau, được ghi chú rõ ở tên Server.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <h4 class="font-bold text-slate-800 flex items-center mb-2"><i class="fa-solid fa-shield-heart text-emerald-500 mr-2"></i> Server Có Bảo Hành</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">Nếu dịch vụ có chữ "Bảo Hành" (VD: Bảo hành 30 ngày). Trong thời gian đó nếu tương tác bị tụt vượt mức quy định, hệ thống sẽ tự động quét và chạy bù lượng thiếu hụt miễn phí cho bạn.</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                        <h4 class="font-bold text-slate-800 flex items-center mb-2"><i class="fa-solid fa-ban text-rose-500 mr-2"></i> Server Không Bảo Hành</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">Các máy chủ giá siêu rẻ (No Refill) sẽ KHÔNG hỗ trợ bù lại lượng tụt dưới bất kỳ hình thức nào sau khi đơn báo hoàn thành. Khách hàng vui lòng cân nhắc rủi ro trước khi mua loại này.</p>
+                    </div>
+                </div>
+            </section>
+
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-sm">
-                &copy; 2026 FLMMO.VN. Tất cả quyền được bảo lưu.
+    <footer class="bg-slate-900 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
+                <div class="text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
+                        <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-white"><i class="fa-solid fa-rocket"></i></div>
+                        <span class="font-black text-xl text-white tracking-tight">FL<span class="text-brand-500">MMO</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm max-w-sm">Hệ thống phân phối Dịch vụ Mạng Xã Hội (SMM) uy tín, giá rẻ và tự động 100% hàng đầu Việt Nam.</p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="https://fb.com/lenhanriel" target="_blank" class="w-10 h-10 rounded-xl bg-slate-800 text-slate-400 flex items-center justify-center hover:bg-blue-600 hover:text-white transition shadow-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/nh4n.vn" target="_blank" class="w-10 h-10 rounded-xl bg-slate-800 text-slate-400 flex items-center justify-center hover:bg-pink-600 hover:text-white transition shadow-sm"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="mailto:lenhancute1@gmail.com" class="w-10 h-10 rounded-xl bg-slate-800 text-slate-400 flex items-center justify-center hover:bg-red-500 hover:text-white transition shadow-sm"><i class="fa-solid fa-envelope"></i></a>
+                </div>
             </div>
-            <div class="flex space-x-4">
-                <a href="https://fb.com/lenhanriel" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://instagram.com/nh4n.vn" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
-                <a href="mailto:lenhancute1@gmail.com" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-500 hover:text-white transition"><i class="fa-solid fa-envelope"></i></a>
+            <div class="border-t border-slate-800 mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500">
+                <p>&copy; 2026 FLMMO.VN. Tất cả quyền được bảo lưu.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-brand-500 transition">Quy định</a>
+                    <a href="#" class="hover:text-brand-500 transition">Bảo mật</a>
+                    <a href="#" class="hover:text-brand-500 transition">API</a>
+                </div>
             </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    // Nếu cuộn qua 1/3 section
+                    if (scrollY >= (sectionTop - 150)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current) && current !== '') {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
