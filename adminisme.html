@@ -1835,7 +1835,7 @@
                 formData.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668'); 
                 formData.append('action', 'services');
                 
-                const res = await fetch('https://api.mysmm.vn/api/v2', { method: 'POST', body: formData.toString() });
+                const res = await fetch('https://api.mysmm.vn/api/v2', { method: 'POST', body: formData });
                 const apiData = await res.json(); 
                 
                 if(apiData.error) throw new Error(apiData.error);
