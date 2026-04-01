@@ -1,148 +1,233 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Câu Hỏi Thường Gặp - FLMMO.VN</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <title>Câu Hỏi Thường Gặp (FAQ) - FLMMO.VN</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
-        tailwind.config = {
-            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { brand: { 500: '#22c55e', 600: '#16a34a' } } } }
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] }, 
+                    colors: { brand: { 50: '#f0fdf4', 100: '#dcfce7', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' } } 
+                } 
+            } 
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        body { background-color: #f8fafc; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Hiệu ứng mượt cho Accordion */
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
-<body class="flex flex-col min-h-screen text-gray-800">
+<body class="flex flex-col min-h-screen text-slate-800">
 
-    <!-- HEADER -->
-    <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="home.html" class="flex items-center gap-2 cursor-pointer">
-                <div class="w-8 h-8 bg-brand-500 rounded flex items-center justify-center text-white shadow"><i class="fa-solid fa-rocket"></i></div>
-                <span class="font-bold text-xl tracking-tight">FL<span class="text-brand-600">MMO</span></span>
+            <a href="home.html" class="flex items-center gap-2 cursor-pointer group">
+                <div class="w-9 h-9 bg-gradient-to-br from-brand-500 to-emerald-600 rounded-xl flex items-center justify-center text-white shadow-md group-hover:shadow-lg transition">
+                    <i class="fa-solid fa-rocket"></i>
+                </div>
+                <span class="font-black text-xl tracking-tight text-slate-800">FL<span class="text-brand-600">MMO</span></span>
             </a>
-            <nav class="hidden md:flex gap-6">
-                <a href="home.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">Trang chủ</a>
-                <a href="quydinh.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">Quy định chung</a>
-                <a href="api.html" class="text-sm font-medium text-gray-600 hover:text-brand-600">API Đối tác</a>
+            <nav class="hidden md:flex gap-8">
+                <a href="home.html" class="text-sm font-bold text-slate-600 hover:text-brand-600 transition">Trang chủ</a>
+                <a href="quydinh.html" class="text-sm font-bold text-slate-600 hover:text-brand-600 transition">Quy Định</a>
+                <a href="faq.html" class="text-sm font-bold text-brand-600 transition">Câu Hỏi Thường Gặp</a>
+                <a href="api.html" class="text-sm font-bold text-slate-600 hover:text-brand-600 transition">API Đối tác</a>
             </nav>
-            <a href="dangnhap.html" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow transition">Vào Hệ Thống</a>
+            <a href="dangnhap.html" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md transition flex items-center">
+                Vào Hệ Thống <i class="fa-solid fa-arrow-right-to-bracket ml-2"></i>
+            </a>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
-        <div class="text-center mb-10">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Câu Hỏi Thường Gặp (FAQ)</h1>
-            <p class="text-gray-600">Tổng hợp các giải đáp nhanh về dịch vụ và cách sử dụng hệ thống FLMMO.</p>
+    <div class="bg-gradient-to-b from-brand-50 to-white pt-16 pb-12 border-b border-slate-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-block bg-brand-100 text-brand-700 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-4">Hỗ trợ & Giải đáp</div>
+            <h1 class="text-3xl md:text-5xl font-black text-slate-900 mb-5 tracking-tight">Câu Hỏi Thường Gặp (FAQ)</h1>
+            <p class="text-slate-500 text-base md:text-lg leading-relaxed">Bạn gặp khó khăn khi sử dụng FLMMO? Hãy xem qua các giải đáp nhanh dưới đây để hiểu rõ hơn về hệ thống Auto SMM của chúng tôi trước khi tạo Ticket hỗ trợ nhé.</p>
         </div>
+    </div>
 
+    <main class="flex-grow max-w-3xl mx-auto px-4 sm:px-6 py-12 w-full">
+        
         <div class="space-y-4">
-            <!-- FAQ 1 -->
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-gray-50 hover:bg-gray-100 transition">
-                    <span class="font-semibold text-gray-800">1. Tại sao đơn hàng của tôi bị báo "Hủy" hoặc "Lỗi"?</span>
-                    <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+            
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
+                <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none bg-white hover:bg-slate-50 transition group">
+                    <span class="font-bold text-slate-800 text-base group-hover:text-brand-600 transition pr-4">1. Tại sao tôi đã chuyển khoản mà hệ thống chưa cộng tiền?</span>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 transition-transform duration-300 icon-wrapper">
+                        <i class="fa-solid fa-chevron-down text-slate-500"></i>
+                    </div>
                 </button>
-                <div class="faq-answer bg-white px-6">
-                    <p class="py-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
-                        Đơn hàng bị hủy thường do các nguyên nhân sau:<br>
-                        - Link tài khoản/bài viết đang để ở chế độ <b>Riêng tư (Private)</b> hoặc chặn người lạ tương tác.<br>
-                        - Bạn nhập sai định dạng Link hoặc UID (hệ thống không nhận diện được).<br>
-                        - Đặt 2 đơn cùng lúc cho 1 link khi đơn trước đó chưa hoàn thành.<br>
-                        *Hệ thống sẽ tự động hoàn lại tiền (Refund) vào số dư của bạn đối với các đơn bị Hủy do lỗi.*
-                    </p>
+                <div class="faq-answer bg-slate-50/50">
+                    <div class="px-6 py-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100">
+                        <p class="mb-2">Hệ thống Auto Banking hoạt động 24/7. Nếu bạn chưa được cộng tiền, thường rơi vào 2 trường hợp sau:</p>
+                        <ul class="list-disc pl-5 space-y-1 text-rose-600 font-medium">
+                            <li>Bạn ghi <b>sai hoặc thiếu Nội dung chuyển khoản</b> (Cú pháp hệ thống yêu cầu).</li>
+                            <li>Ngân hàng bị bảo trì chéo khiến giao dịch bị kẹt (delay).</li>
+                        </ul>
+                        <p class="mt-3"><b>Cách xử lý:</b> Hãy tạo ngay một <b>Ticket Hỗ Trợ</b> trong trang quản lý hoặc nhắn tin cho Bot Telegram, đính kèm hình ảnh biên lai (Bill) chuyển khoản thành công. Admin sẽ kiểm tra và cộng tay số dư cho bạn trong vòng 5-10 phút.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- FAQ 2 -->
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-gray-50 hover:bg-gray-100 transition">
-                    <span class="font-semibold text-gray-800">2. Thời gian bắt đầu và hoàn thành đơn hàng là bao lâu?</span>
-                    <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
+                <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none bg-white hover:bg-slate-50 transition group">
+                    <span class="font-bold text-slate-800 text-base group-hover:text-brand-600 transition pr-4">2. Tại sao đơn hàng của tôi báo "Đang xử lý" quá lâu mà không tăng?</span>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 transition-transform duration-300 icon-wrapper">
+                        <i class="fa-solid fa-chevron-down text-slate-500"></i>
+                    </div>
                 </button>
-                <div class="faq-answer bg-white px-6">
-                    <p class="py-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
-                        - Đa số các server sẽ bắt đầu chạy sau <b>1 - 15 phút</b> kể từ lúc tạo đơn thành công.<br>
-                        - Tuy nhiên, trong những thời điểm bão hòa hoặc Facebook/Tiktok update quét thuật toán, đơn có thể bị delay (chậm) từ 24h - 48h. Vui lòng kiên nhẫn chờ đợi, tốc độ xử lý phụ thuộc vào tình trạng của từng Server mà bạn chọn.
-                    </p>
+                <div class="faq-answer bg-slate-50/50">
+                    <div class="px-6 py-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100">
+                        <p>Thông thường các máy chủ sẽ bắt đầu chạy sau 1 - 15 phút. Tuy nhiên, đơn hàng có thể bị chậm (delay) do:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1.5">
+                            <li><b>Bão thuật toán:</b> Các nền tảng (Facebook, TikTok) đang có đợt update AI truy quét bot. Các server buộc phải giảm tốc độ chạy để bảo vệ an toàn cho tài khoản của bạn.</li>
+                            <li><b>Quá tải (Overload):</b> Server bạn chọn đang có quá nhiều người cùng đặt đơn. Hệ thống sẽ xếp hàng (Queue) và chạy lần lượt.</li>
+                            <li><b>Tài khoản riêng tư (Private):</b> Nếu link bạn đưa đang bật chế độ bạn bè/riêng tư, hệ thống sẽ không thể tăng tương tác và sẽ tự động báo Hủy (hoàn tiền) sau 24h.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <!-- FAQ 3 -->
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-gray-50 hover:bg-gray-100 transition">
-                    <span class="font-semibold text-gray-800">3. Dịch vụ có bị tụt (Drop) sau khi tăng không? Có bảo hành không?</span>
-                    <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
+                <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none bg-white hover:bg-slate-50 transition group">
+                    <span class="font-bold text-slate-800 text-base group-hover:text-brand-600 transition pr-4">3. Tăng Follow/Like xong có bị TỤT không? Chế độ Bảo hành (Refill) là gì?</span>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 transition-transform duration-300 icon-wrapper">
+                        <i class="fa-solid fa-chevron-down text-slate-500"></i>
+                    </div>
                 </button>
-                <div class="faq-answer bg-white px-6">
-                    <p class="py-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
-                        Các nền tảng MXH luôn có cơ chế quét và xóa tài khoản ảo. Do đó, hiện tượng tụt (drop) là điều không thể tránh khỏi 100%.<br><br>
-                        - Đối với các server có chữ <b>[Bảo Hành]</b>: Nếu tụt quá số lượng cho phép trong thời gian bảo hành, hệ thống sẽ tự động bù lại cho bạn miễn phí.<br>
-                        - Đối với các server <b>[Không Bảo Hành]</b>: Giá thường rất rẻ nhưng sẽ không được hỗ trợ bù/hoàn tiền nếu xảy ra hiện tượng tụt sau khi chạy xong.
-                    </p>
+                <div class="faq-answer bg-slate-50/50">
+                    <div class="px-6 py-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100">
+                        <p class="mb-2">Bất kỳ hệ thống SMM nào trên thế giới cũng <b>không thể cam kết 100% không tụt</b>. Các mạng xã hội luôn xóa định kỳ các tài khoản rác/ảo. Để bảo vệ quyền lợi, FLMMO phân loại dịch vụ thành 2 dạng:</p>
+                        <div class="bg-white border border-slate-200 p-4 rounded-xl mt-3 space-y-3">
+                            <div>
+                                <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded">Có Bảo Hành (Refill)</span>
+                                <p class="mt-1 text-xs">Giá cao hơn một chút, chất lượng clone tốt hơn. Nếu lượng Follow/Like bị tụt quá % quy định trong thời gian bảo hành (VD: 30 ngày), hệ thống sẽ tự động quét và chạy bù lại lượng thiếu hụt hoàn toàn Miễn Phí.</p>
+                            </div>
+                            <div class="border-t border-slate-100 pt-3">
+                                <span class="bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded">Không Bảo Hành (No Refill)</span>
+                                <p class="mt-1 text-xs">Giá cực rẻ, tốc độ lên siêu tốc. Tuy nhiên, sau khi đơn chạy xong, nếu bị nền tảng quét tụt mất, chúng tôi sẽ <b>không hỗ trợ bù hay hoàn tiền</b>. Vui lòng cân nhắc rủi ro trước khi dùng.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- FAQ 4 -->
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-gray-50 hover:bg-gray-100 transition">
-                    <span class="font-semibold text-gray-800">4. Nạp tiền vào hệ thống như thế nào? Có mất phí không?</span>
-                    <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
+                <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none bg-white hover:bg-slate-50 transition group">
+                    <span class="font-bold text-slate-800 text-base group-hover:text-brand-600 transition pr-4">4. Tôi đặt nhầm 2 đơn cho cùng 1 Link cùng lúc thì sao?</span>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 transition-transform duration-300 icon-wrapper">
+                        <i class="fa-solid fa-chevron-down text-slate-500"></i>
+                    </div>
                 </button>
-                <div class="faq-answer bg-white px-6">
-                    <p class="py-4 text-gray-600 text-sm leading-relaxed border-t border-gray-100">
-                        Bạn vui lòng đăng nhập, chọn mục <b>Nạp Tiền</b> ở thanh menu bên trái. Quét mã QR Bank và chuyển khoản đúng số tiền. Tiền sẽ được Admin xét duyệt và cộng trực tiếp vào số dư của bạn. Nạp tiền qua Ngân hàng là hoàn toàn miễn phí (Tỉ lệ 1:1).
-                    </p>
+                <div class="faq-answer bg-slate-50/50">
+                    <div class="px-6 py-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100">
+                        <p class="text-rose-600 font-bold mb-1"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Đây là điều CẤM KỴ trong hệ thống SMM!</p>
+                        <p>Hệ thống ghi nhận số đếm (Start Count) từ thời điểm bạn đặt đơn. Nếu bạn nhồi 2-3 đơn cho cùng 1 link trên cùng 1 server khi đơn cũ chưa xong, các bộ đếm sẽ bị đè lên nhau, dẫn đến <b>thiếu hụt số lượng nghiêm trọng</b>.</p>
+                        <p class="mt-2">Trường hợp này do lỗi từ phía người dùng (Overlapping), FLMMO sẽ <b>từ chối hỗ trợ bù thiếu hoặc hoàn tiền</b>. Bạn bắt buộc phải đợi đơn cũ báo "Hoàn Thành" rồi mới được đặt tiếp.</p>
+                    </div>
                 </div>
             </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
+                <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none bg-white hover:bg-slate-50 transition group">
+                    <span class="font-bold text-slate-800 text-base group-hover:text-brand-600 transition pr-4">5. Việc dùng SMM có làm khóa (Ban) tài khoản chính của tôi không?</span>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0 transition-transform duration-300 icon-wrapper">
+                        <i class="fa-solid fa-chevron-down text-slate-500"></i>
+                    </div>
+                </button>
+                <div class="faq-answer bg-slate-50/50">
+                    <div class="px-6 py-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100">
+                        <p><b>Câu trả lời là KHÔNG.</b></p>
+                        <p class="mt-1">Bạn hãy thử nghĩ xem: Nếu việc bơm Follow/Like ảo có thể làm khóa tài khoản, thì người ta đã bỏ tiền ra bơm cho các tài khoản đối thủ cạnh tranh để hại họ rồi đúng không?</p>
+                        <p class="mt-2">Các nền tảng (Facebook/TikTok) chỉ phạt hoặc khóa các tài khoản <b>đi thực hiện hành vi buff</b> (tức là các nick clone ảo của hệ thống chúng tôi). Tài khoản chính của bạn chỉ là người nhận tương tác nên hoàn toàn an toàn 100%. (Trừ khi nội dung bài viết của bạn vốn dĩ đã vi phạm chính sách cộng đồng của nền tảng đó).</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
         
-        <div class="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6 text-center">
-            <h3 class="font-bold text-blue-800 mb-2">Vẫn còn thắc mắc?</h3>
-            <p class="text-sm text-blue-600 mb-4">Hãy liên hệ trực tiếp với Admin để được hỗ trợ giải quyết nhanh nhất.</p>
-            <a href="mailto:lenhancute1@gmail.com" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded shadow transition"><i class="fa-solid fa-headset mr-2"></i> Liên hệ CSKH</a>
+        <div class="mt-12 bg-gradient-to-r from-brand-600 to-emerald-600 rounded-2xl p-8 text-center text-white shadow-lg relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 text-white/10 text-9xl transform rotate-12">
+                <i class="fa-brands fa-telegram"></i>
+            </div>
+            <div class="relative z-10">
+                <h3 class="text-2xl font-black mb-2">Vẫn chưa tìm thấy câu trả lời?</h3>
+                <p class="text-brand-50 mb-6 text-sm max-w-md mx-auto">Đội ngũ Admin luôn túc trực để hỗ trợ bạn xử lý mọi vấn đề liên quan đến nạp tiền, bảo hành đơn hàng.</p>
+                <a href="https://t.me/flmmovn_bot" target="_blank" class="inline-flex items-center bg-white text-brand-600 hover:bg-slate-50 font-bold px-8 py-3.5 rounded-xl shadow-md transition transform hover:-translate-y-1">
+                    <i class="fa-brands fa-telegram text-xl mr-2"></i> Liên hệ Bot Hỗ Trợ Telegram
+                </a>
+            </div>
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-sm">
-                &copy; 2026 FLMMO.VN. Tất cả quyền được bảo lưu.
+    <footer class="bg-slate-900 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
+                <div class="text-center md:text-left">
+                    <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
+                        <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center text-white"><i class="fa-solid fa-rocket"></i></div>
+                        <span class="font-black text-xl text-white tracking-tight">FL<span class="text-brand-500">MMO</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm max-w-sm">Hệ thống phân phối Dịch vụ Mạng Xã Hội (SMM) uy tín, giá rẻ và tự động 100% hàng đầu Việt Nam.</p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="https://fb.com/lenhanriel" target="_blank" class="w-10 h-10 rounded-xl bg-slate-800 text-slate-400 flex items-center justify-center hover:bg-blue-600 hover:text-white transition shadow-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/nh4n.vn" target="_blank" class="w-10 h-10 rounded-xl bg-slate-800 text-slate-400 flex items-center justify-center hover:bg-pink-600 hover:text-white transition shadow-sm"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="mailto:lenhancute1@gmail.com" class="w-10 h-10 rounded-xl bg-slate-800 text-slate-400 flex items-center justify-center hover:bg-red-500 hover:text-white transition shadow-sm"><i class="fa-solid fa-envelope"></i></a>
+                </div>
             </div>
-            <div class="flex space-x-4">
-                <a href="https://fb.com/lenhanriel" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 hover:text-white transition" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="https://instagram.com/nh4n.vn" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-600 hover:text-white transition" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="mailto:lenhancute1@gmail.com" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-500 hover:text-white transition" title="Email"><i class="fa-solid fa-envelope"></i></a>
+            <div class="border-t border-slate-800 mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-500">
+                <p>&copy; 2026 FLMMO.VN. Tất cả quyền được bảo lưu.</p>
+                <div class="flex gap-6">
+                    <a href="quydinh.html" class="hover:text-brand-500 transition">Quy định</a>
+                    <a href="faq.html" class="hover:text-brand-500 transition">Hỗ trợ (FAQ)</a>
+                    <a href="api.html" class="hover:text-brand-500 transition">API</a>
+                </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Script điều khiển Accordion cho FAQ
+        // Script điều khiển Accordion cho FAQ siêu mượt
         document.querySelectorAll('.faq-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const answer = btn.nextElementSibling;
-                const icon = btn.querySelector('i');
+                const iconWrapper = btn.querySelector('.icon-wrapper');
+                const isCurrentlyOpen = answer.style.maxHeight;
                 
-                if (answer.style.maxHeight) {
-                    answer.style.maxHeight = null;
-                    icon.style.transform = 'rotate(0deg)';
-                } else {
-                    // Đóng tất cả cái khác
-                    document.querySelectorAll('.faq-answer').forEach(ans => ans.style.maxHeight = null);
-                    document.querySelectorAll('.faq-btn i').forEach(i => i.style.transform = 'rotate(0deg)');
-                    
-                    // Mở cái hiện tại
+                // 1. Đóng TẤT CẢ các tab khác trước
+                document.querySelectorAll('.faq-answer').forEach(ans => ans.style.maxHeight = null);
+                document.querySelectorAll('.icon-wrapper').forEach(iw => {
+                    iw.style.transform = 'rotate(0deg)';
+                    iw.classList.remove('bg-brand-100');
+                    iw.classList.add('bg-slate-100');
+                    iw.querySelector('i').classList.remove('text-brand-600');
+                    iw.querySelector('i').classList.add('text-slate-500');
+                });
+                
+                // 2. Mở tab vừa click (nếu nó chưa mở)
+                if (!isCurrentlyOpen) {
                     answer.style.maxHeight = answer.scrollHeight + "px";
-                    icon.style.transform = 'rotate(180deg)';
+                    iconWrapper.style.transform = 'rotate(180deg)';
+                    iconWrapper.classList.remove('bg-slate-100');
+                    iconWrapper.classList.add('bg-brand-100');
+                    iconWrapper.querySelector('i').classList.remove('text-slate-500');
+                    iconWrapper.querySelector('i').classList.add('text-brand-600');
                 }
             });
         });
