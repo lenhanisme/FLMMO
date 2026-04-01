@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel V2.4 - FLMMO.VN</title>
+    <title>Admin Panel V2.5 - FLMMO.VN</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡</text></svg>">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -1312,7 +1312,12 @@
             try {
                 if(newStatus === 'Chấp Nhận') { 
                     await updateDoc(doc(db, "users", uid), { coin: increment(amount) }); 
+                    // GỬI THÔNG BÁO LÊN TELEGRAM SAU KHI CỘNG TIỀN THÀNH CÔNG
+                    window.sendTelegramAlert(`✅ *ĐÃ DUYỆT TIỀN NẠP*\n\n👤 UID: \`${uid}\`\n💰 Số tiền: *+${amount.toLocaleString('vi-VN')} VNĐ*`);
+                } else if (newStatus === 'Từ Chối') {
+                    window.sendTelegramAlert(`❌ *ĐÃ TỪ CHỐI TIỀN NẠP*\n\n👤 UID: \`${uid}\`\n💰 Số tiền: *${amount.toLocaleString('vi-VN')} VNĐ*`);
                 }
+                
                 await updateDoc(doc(db, "deposits", docId), { status: newStatus }); 
                 window.fetchDeposits(); 
                 window.fetchDashboardStats();
@@ -1581,6 +1586,7 @@
                 formData.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668'); 
                 formData.append('action', 'services');
                 
+                // Đã xóa .toString() để fix lỗi "API key is required"
                 const res = await fetch('https://api.mysmm.vn/api/v2', { method: 'POST', body: formData });
                 const mySmmData = await res.json(); 
                 if(mySmmData.error) throw new Error(mySmmData.error);
@@ -1811,7 +1817,6 @@
         }
 
         window.toggleAllFetchItems = function(source) {
-            // Chỉ tick các ô không bị disabled (các dịch vụ Mới)
             document.querySelectorAll('.fetch-item-cb:not([disabled])').forEach(cb => cb.checked = source.checked);
         }
 
@@ -1827,14 +1832,14 @@
             btn.disabled = true;
             applyBtn.classList.add('hidden'); 
             statsBox.innerText = ""; 
-            window.fetchedApiDataCache = []; // Biến tạm lưu data quét được
+            window.fetchedApiDataCache = []; 
             
             try {
-                // Gọi API lấy list services
                 const formData = new URLSearchParams(); 
                 formData.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668'); 
                 formData.append('action', 'services');
                 
+                // Đã xóa .toString() để fix lỗi "API key is required"
                 const res = await fetch('https://api.mysmm.vn/api/v2', { method: 'POST', body: formData });
                 const apiData = await res.json(); 
                 
@@ -1846,10 +1851,8 @@
                 let existCount = 0;
                 
                 apiData.forEach(remote => {
-                    // Kiểm tra xem ID dịch vụ đã có trong Data của web mình chưa
                     const isExists = window.allLocalServers.some(local => local.code === remote.service.toString());
                     
-                    // Tính toán giá vốn và giá bán cho 1 lượt tương tác
                     const costPer1Vnd = (parseFloat(remote.rate) * exRate) / 1000;
                     const sellPriceVnd = parseFloat((costPer1Vnd * (1 + profit / 100)).toFixed(2));
 
@@ -1860,7 +1863,6 @@
                     } else {
                         statusHtml = '<span class="bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-[10px] font-bold animate-pulse">Dịch Vụ Mới</span>';
                         newCount++;
-                        // Lưu vào cache để lát nữa ấn nút Thêm
                         window.fetchedApiDataCache.push({
                             code: remote.service.toString(),
                             category: remote.category,
@@ -1871,7 +1873,6 @@
                         });
                     }
 
-                    // Render dòng HTML
                     tbody.innerHTML += `
                         <tr class="border-b hover:bg-slate-50 ${isExists ? 'opacity-50 grayscale' : ''}">
                             <td class="p-3">
@@ -1911,7 +1912,6 @@
             applyBtn.disabled = true;
 
             try {
-                // Firebase cho phép ghi hàng loạt (Batch) tối đa 500 docs/lần
                 const batch = writeBatch(db); 
                 let count = 0;
                 
@@ -1933,12 +1933,42 @@
                 await batch.commit(); 
                 alert(`Đã thêm thành công ${count} dịch vụ mới vào kho máy chủ!`); 
                 window.closeFetchApiModal(); 
-                window.fetchServers(); // Refresh lại bảng quản lý server bên ngoài
+                window.fetchServers(); 
             } catch(e) { 
                 alert("Lỗi khi lưu vào Database: " + e.message); 
             } finally { 
                 applyBtn.innerHTML = '<i class="fa-solid fa-plus-circle mr-2"></i> Thêm Các Dịch Vụ Đã Chọn'; 
                 applyBtn.disabled = false; 
+            }
+        }
+
+        // =========================================================
+        // 13. HỆ THỐNG GỬI THÔNG BÁO TELEGRAM CHO ADMIN
+        // =========================================================
+        window.sendTelegramAlert = async function(messageText) {
+            const BOT_TOKEN = "8693891972:AAE3S9JMXbUCjhHgP6yUy1DTY6ck3OFAjME";
+            
+            // QUAN TRỌNG: THAY ID TELEGRAM CỦA BẠN VÀO DƯỚI ĐÂY (VD: "123456789")
+            const ADMIN_CHAT_ID = "8405954014"; 
+            
+            if (ADMIN_CHAT_ID === "8405954014") {
+                console.warn("Bạn chưa cài đặt ADMIN_CHAT_ID. Thông báo Telegram sẽ bị bỏ qua.");
+                return;
+            }
+
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: ADMIN_CHAT_ID,
+                        text: messageText,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (e) {
+                console.error("Không thể gửi thông báo Telegram:", e);
             }
         }
 
