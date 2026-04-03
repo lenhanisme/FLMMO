@@ -278,7 +278,7 @@
             <div id="view-deposits" class="view-section max-w-7xl mx-auto">
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                        <h2 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-money-bill-transfer text-emerald-500 mr-2"></i> Lịch Sử Nạp Tiền</h2>
+                        <h2 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-money-bill-transfer text-emerald-500 mr-2"></i> Lịch Sử Nạp Tiền & Duyệt Thẻ</h2>
                         <button onclick="fetchDeposits()" class="bg-white border border-slate-300 hover:bg-slate-100 px-4 py-2 rounded-lg text-sm font-bold transition shadow-sm"><i class="fa-solid fa-rotate"></i></button>
                     </div>
                     <div class="overflow-x-auto">
@@ -287,9 +287,10 @@
                                 <tr>
                                     <th class="px-6 py-4">Mã GD / Ngày</th>
                                     <th class="px-6 py-4">User UID</th>
-                                    <th class="px-6 py-4 text-right">Số tiền (VNĐ)</th>
+                                    <th class="px-6 py-4">Loại GD / Chi Tiết</th>
+                                    <th class="px-6 py-4 text-right">Thực Nhận (VNĐ)</th>
                                     <th class="px-6 py-4 text-center">Trạng thái</th>
-                                    <th class="px-6 py-4 text-center">Hành động</th>
+                                    <th class="px-6 py-4 text-center">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody id="admin-deposits-table" class="divide-y divide-slate-100"></tbody>
@@ -790,6 +791,65 @@
         </div>
     </div>
 
+    <div id="modal-approve-card" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform scale-95 transition-transform duration-300" id="modal-approve-card-box">
+            <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-lg text-slate-800"><i class="fa-solid fa-microscope text-indigo-500 mr-2"></i> Kiểm Duyệt Thẻ Cào</h3>
+                <button onclick="closeCardApprovalModal()" class="text-slate-400 hover:text-red-500 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <div class="p-6 space-y-4">
+                <input type="hidden" id="approve-card-id">
+                <input type="hidden" id="approve-card-uid">
+                <input type="hidden" id="approve-card-amount">
+                
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono text-sm space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-500">Nhà mạng:</span>
+                        <strong id="disp-card-network" class="text-blue-600 text-base"></strong>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-500">Mệnh giá báo:</span>
+                        <strong id="disp-card-declared" class="text-slate-800"></strong>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-500">Thực nhận sau CK:</span>
+                        <strong id="disp-card-receive" class="text-emerald-600 text-lg"></strong>
+                    </div>
+                    <hr class="border-slate-200 my-2">
+                    <div class="flex justify-between items-center bg-white p-2 rounded border border-slate-100">
+                        <span class="text-slate-500">Mã PIN:</span>
+                        <div class="flex items-center gap-2">
+                            <strong id="disp-card-pin" class="text-slate-800 tracking-wider"></strong> 
+                            <button onclick="copyToClipboard(document.getElementById('disp-card-pin').innerText)" class="text-slate-400 hover:text-brand-500 transition"><i class="fa-regular fa-copy"></i></button>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center bg-white p-2 rounded border border-slate-100">
+                        <span class="text-slate-500">Serial:</span>
+                        <div class="flex items-center gap-2">
+                            <strong id="disp-card-serial" class="text-slate-800 tracking-wider"></strong> 
+                            <button onclick="copyToClipboard(document.getElementById('disp-card-serial').innerText)" class="text-slate-400 hover:text-brand-500 transition"><i class="fa-regular fa-copy"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reject-reason-box" class="hidden animate-fadeUp">
+                    <label class="block text-xs font-bold text-rose-500 uppercase mb-1.5"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Lý do từ chối thẻ</label>
+                    <input type="text" id="reject-card-reason" placeholder="VD: Sai mệnh giá, Thẻ đã sử dụng..." class="w-full border border-slate-300 rounded-xl p-3 text-sm outline-none focus:border-rose-500 shadow-inner">
+                </div>
+            </div>
+
+            <div class="p-5 border-t border-slate-100 flex gap-3 bg-slate-50">
+                <button onclick="processCardDeposit('Từ Chối')" class="flex-1 bg-rose-100 hover:bg-rose-500 text-rose-600 hover:text-white font-bold py-2.5 rounded-xl transition border border-rose-200 shadow-sm">
+                    <i class="fa-solid fa-ban mr-1"></i> Từ Chối Thẻ
+                </button>
+                <button onclick="processCardDeposit('Chấp Nhận')" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 rounded-xl transition shadow-md shadow-emerald-500/20">
+                    <i class="fa-solid fa-check-circle mr-1"></i> Duyệt (Cộng tiền)
+                </button>
+            </div>
+        </div>
+    </div>
+
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -819,6 +879,14 @@
         window.allLocalUsers = [];
         window.fetchedApiDataCache = []; // Bộ đệm lưu dữ liệu quét từ đại lý
 
+        // COPY HELPER
+        window.copyToClipboard = function(text) {
+            if(!text) return;
+            const tempInput = document.createElement('input'); tempInput.value = text; document.body.appendChild(tempInput);
+            tempInput.select(); document.execCommand('copy'); document.body.removeChild(tempInput);
+            alert("Đã copy: " + text);
+        }
+
         // 3. UI & DOM HELPERS
         window.toggleSidebar = function() {
             document.getElementById('sidebar').classList.toggle('-translate-x-full');
@@ -835,7 +903,7 @@
             const titles = { 
                 'dashboard': 'Tổng Quan Hệ Thống', 
                 'announcements': 'Quản Lý Bảng Tin', 
-                'deposits': 'Duyệt Tiền Nạp', 
+                'deposits': 'Duyệt Tiền Nạp & Thẻ Cào', 
                 'orders': 'Quản Lý Đơn Dịch Vụ', 
                 'games': 'Quản Lý Cửa Hàng Game', 
                 'servers': 'Quản Lý Máy Chủ (Servers)', 
@@ -1274,45 +1342,69 @@
             }
         }
 
-        // 9. XỬ LÝ TIỀN NẠP VÀ ĐƠN HÀNG SMM (TÍCH HỢP HIỂN THỊ REACTIONS VÀ LINK BẤM ĐƯỢC)
+        // 9. XỬ LÝ TIỀN NẠP VÀ ĐƠN HÀNG SMM
         window.fetchDeposits = async function() {
             const tbody = document.getElementById('admin-deposits-table'); 
             if(!tbody) return;
             
-            tbody.innerHTML = '<tr><td colspan="5" class="text-center py-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500"></i></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8"><i class="fa-solid fa-circle-notch fa-spin text-brand-500"></i></td></tr>';
             try {
                 const snapshot = await getDocs(collection(db, "deposits"));
                 let items = []; 
                 snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
                 items.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
                 
-                tbody.innerHTML = items.length === 0 ? '<tr><td colspan="5" class="text-center py-8 text-slate-500">Trống.</td></tr>' : '';
+                tbody.innerHTML = items.length === 0 ? '<tr><td colspan="6" class="text-center py-8 text-slate-500">Trống.</td></tr>' : '';
                 items.forEach(d => {
                     let statusHtml = '';
                     if (d.status === 'Chờ Duyệt') statusHtml = '<span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-[10px] font-bold">Chờ Duyệt</span>';
                     else if (d.status === 'Chấp Nhận') statusHtml = '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded text-[10px] font-bold">Thành công</span>';
-                    else statusHtml = `<span class="bg-red-100 text-red-700 px-2 py-1 rounded text-[10px] font-bold">Từ Chối</span>`;
+                    else statusHtml = `<span class="bg-rose-100 text-rose-700 px-2 py-1 rounded text-[10px] font-bold">Từ Chối</span>`;
 
-                    let actionHtml = d.status === 'Chờ Duyệt' ? `<button onclick="updateDepositStatus('${d.id}', '${d.uid}', ${d.amount}, 'Chấp Nhận')" class="bg-emerald-500 text-white px-2 py-1 rounded text-xs mr-1">Duyệt</button><button onclick="updateDepositStatus('${d.id}', '${d.uid}', ${d.amount}, 'Từ Chối')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Hủy</button>` : '-';
+                    if(d.status === 'Từ Chối' && d.rejectReason) {
+                        statusHtml += `<div class="text-[9px] text-red-500 mt-1 italic max-w-[100px] mx-auto truncate" title="${d.rejectReason}">Lỗi: ${d.rejectReason}</div>`;
+                    }
+
+                    let actionHtml = '-';
+                    let infoHtml = '';
+
+                    if (d.type === 'card') {
+                        infoHtml = `
+                            <div class="font-bold text-blue-600 uppercase text-xs mb-1"><i class="fa-solid fa-ticket"></i> Thẻ ${d.network} - Khai: ${d.declaredAmount ? Number(d.declaredAmount).toLocaleString() : '?'}đ</div>
+                            <div class="text-[10px] text-slate-500 font-mono">PIN: ${d.pin}</div>
+                            <div class="text-[10px] text-slate-500 font-mono">SERI: ${d.serial}</div>
+                        `;
+                        if (d.status === 'Chờ Duyệt') {
+                            actionHtml = `<button onclick="openCardApprovalModal('${d.id}', '${d.uid}', '${d.network}', ${d.declaredAmount || 0}, ${d.amount || 0}, '${d.pin}', '${d.serial}')" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition shadow-sm"><i class="fa-solid fa-microscope mr-1"></i> Check Thẻ</button>`;
+                        }
+                    } else {
+                        infoHtml = `
+                            <div class="font-bold text-emerald-600 uppercase text-xs mb-1"><i class="fa-solid fa-building-columns"></i> CHUYỂN KHOẢN</div>
+                            <div class="text-[10px] text-slate-500">Auto Bank / Thủ Công</div>
+                        `;
+                        if (d.status === 'Chờ Duyệt') {
+                            actionHtml = `<button onclick="updateDepositStatus('${d.id}', '${d.uid}', ${d.amount}, 'Chấp Nhận')" class="bg-emerald-500 text-white px-2 py-1 rounded text-xs mr-1 mb-1">Duyệt</button><br><button onclick="updateDepositStatus('${d.id}', '${d.uid}', ${d.amount}, 'Từ Chối')" class="bg-red-500 text-white px-2 py-1 rounded text-xs w-full">Hủy</button>`;
+                        }
+                    }
 
                     tbody.innerHTML += `
                         <tr class="border-b hover:bg-slate-50">
-                            <td class="px-6 py-4 font-mono text-xs"><div class="font-bold">${d.id.substring(0,8)}</div><div class="text-[10px] text-slate-500">${new Date(d.createdAt).toLocaleString('vi-VN')}</div></td>
-                            <td class="px-6 py-4 font-mono text-xs">${d.uid}</td>
+                            <td class="px-6 py-4 font-mono text-xs"><div class="font-bold">#${d.id.substring(0,8)}</div><div class="text-[10px] text-slate-500">${new Date(d.createdAt).toLocaleString('vi-VN')}</div></td>
+                            <td class="px-6 py-4 font-mono text-xs">${d.uid.substring(0, 10)}...</td>
+                            <td class="px-6 py-4">${infoHtml}</td>
                             <td class="px-6 py-4 font-bold text-emerald-600 text-right">${Number(d.amount).toLocaleString('en-US')}đ</td>
                             <td class="px-6 py-4 text-center">${statusHtml}</td>
                             <td class="px-6 py-4 text-center">${actionHtml}</td>
                         </tr>
                     `;
                 });
-            } catch(e) {}
+            } catch(e) { console.error(e); }
         }
 
         window.updateDepositStatus = async function(docId, uid, amount, newStatus) {
             try {
                 if(newStatus === 'Chấp Nhận') { 
                     await updateDoc(doc(db, "users", uid), { coin: increment(amount) }); 
-                    // GỬI THÔNG BÁO LÊN TELEGRAM SAU KHI CỘNG TIỀN THÀNH CÔNG
                     window.sendTelegramAlert(`✅ *ĐÃ DUYỆT TIỀN NẠP*\n\n👤 UID: \`${uid}\`\n💰 Số tiền: *+${amount.toLocaleString('vi-VN')} VNĐ*`);
                 } else if (newStatus === 'Từ Chối') {
                     window.sendTelegramAlert(`❌ *ĐÃ TỪ CHỐI TIỀN NẠP*\n\n👤 UID: \`${uid}\`\n💰 Số tiền: *${amount.toLocaleString('vi-VN')} VNĐ*`);
@@ -1323,6 +1415,74 @@
                 window.fetchDashboardStats();
             } catch(e) { alert(e.message); }
         }
+
+        // TÍNH NĂNG DUYỆT THẺ CÀO (MỚI)
+        window.openCardApprovalModal = function(id, uid, network, declared, receive, pin, serial) {
+            document.getElementById('approve-card-id').value = id;
+            document.getElementById('approve-card-uid').value = uid;
+            document.getElementById('approve-card-amount').value = receive;
+            
+            document.getElementById('disp-card-network').innerText = network;
+            document.getElementById('disp-card-declared').innerText = Number(declared).toLocaleString() + 'đ';
+            document.getElementById('disp-card-receive').innerText = Number(receive).toLocaleString() + 'đ';
+            document.getElementById('disp-card-pin').innerText = pin;
+            document.getElementById('disp-card-serial').innerText = serial;
+            
+            document.getElementById('reject-card-reason').value = '';
+            document.getElementById('reject-reason-box').classList.add('hidden');
+
+            const modal = document.getElementById('modal-approve-card');
+            const box = document.getElementById('modal-approve-card-box');
+            modal.classList.remove('hidden');
+            setTimeout(() => { modal.classList.remove('opacity-0'); box.classList.remove('scale-95'); }, 10);
+        }
+
+        window.closeCardApprovalModal = function() {
+            const modal = document.getElementById('modal-approve-card');
+            const box = document.getElementById('modal-approve-card-box');
+            modal.classList.add('opacity-0'); box.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        window.processCardDeposit = async function(action) {
+            const docId = document.getElementById('approve-card-id').value;
+            const uid = document.getElementById('approve-card-uid').value;
+            const amount = Number(document.getElementById('approve-card-amount').value);
+            const reasonBox = document.getElementById('reject-reason-box');
+            const reasonInput = document.getElementById('reject-card-reason');
+            const pin = document.getElementById('disp-card-pin').innerText;
+            const serial = document.getElementById('disp-card-serial').innerText;
+
+            if(action === 'Từ Chối' && reasonBox.classList.contains('hidden')) {
+                reasonBox.classList.remove('hidden');
+                return;
+            }
+
+            if(action === 'Từ Chối' && !reasonInput.value.trim()) {
+                return alert("Vui lòng nhập lý do từ chối (VD: Sai mệnh giá, thẻ đã nạp...)!");
+            }
+
+            try {
+                if(action === 'Chấp Nhận') {
+                    await updateDoc(doc(db, "users", uid), { coin: increment(amount) });
+                    window.sendTelegramAlert(`✅ *THẺ CÀO HỢP LỆ - ĐÃ CỘNG TIỀN*\n\n👤 UID: \`${uid}\`\n💳 PIN: \`${pin}\`\n🔢 Seri: \`${serial}\`\n💰 Nhận: *+${amount.toLocaleString('vi-VN')} VNĐ*`);
+                } else if(action === 'Từ Chối') {
+                    window.sendTelegramAlert(`❌ *THẺ CÀO BỊ TỪ CHỐI*\n\n👤 UID: \`${uid}\`\n💳 PIN: \`${pin}\`\n⚠️ Lý do: ${reasonInput.value}`);
+                }
+
+                await updateDoc(doc(db, "deposits", docId), { 
+                    status: action,
+                    rejectReason: action === 'Từ Chối' ? reasonInput.value : null
+                });
+
+                window.closeCardApprovalModal();
+                window.fetchDeposits();
+                window.fetchDashboardStats();
+            } catch(e) {
+                alert("Lỗi: " + e.message);
+            }
+        }
+
 
         window.fetchOrders = async function() {
             const tbody = document.getElementById('admin-orders-table'); 
