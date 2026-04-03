@@ -366,61 +366,140 @@
                 </div>
 
                 <div id="view-deposit" class="view-section max-w-6xl mx-auto space-y-6">
-                    <div class="mb-6 border-b border-slate-800 pb-4">
-                        <h2 class="text-2xl md:text-3xl font-bold text-white mb-1"><i class="fa-solid fa-wallet text-emerald-400 mr-2"></i> Nạp Tiền Tự Động</h2>
-                        <p class="text-slate-400 text-sm">Hệ thống xử lý gạch cước tự động trong 5-10 giây.</p>
+                    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 border-b border-slate-800 pb-4">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold text-white mb-1"><i class="fa-solid fa-wallet text-emerald-400 mr-2"></i> Nạp Tiền Tài Khoản</h2>
+                            <p class="text-slate-400 text-sm">Hệ thống xử lý gạch cước tự động nhanh chóng.</p>
+                        </div>
+                        
+                        <div class="flex gap-2 p-1 bg-slate-900 rounded-xl w-max border border-slate-800">
+                            <button onclick="switchDepositTab('bank')" id="tab-btn-bank" class="px-5 py-2.5 rounded-lg text-sm font-bold bg-slate-800 text-white transition shadow-sm flex items-center"><i class="fa-solid fa-building-columns mr-2"></i> Ngân Hàng</button>
+                            <button onclick="switchDepositTab('card')" id="tab-btn-card" class="px-5 py-2.5 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition flex items-center"><i class="fa-solid fa-ticket mr-2"></i> Thẻ Cào <span class="ml-2 bg-rose-500/20 text-rose-400 text-[9px] px-1.5 py-0.5 rounded border border-rose-500/30">-CK</span></button>
+                        </div>
                     </div>
 
-                    <div class="card-modern border-t-4 border-t-emerald-500 p-6 md:p-8 shadow-2xl relative overflow-hidden">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative z-10">
-                            <div class="space-y-6">
-                                <h3 class="text-white font-bold text-xl mb-2 flex items-center"><i class="fa-solid fa-qrcode text-emerald-400 mr-2"></i> Thông Tin Chuyển Khoản</h3>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Nhập số tiền cần nạp (VNĐ)</label>
-                                    <input type="number" id="deposit-amount-input" min="5000" step="1000" class="w-full px-5 py-4 rounded-xl input-modern text-2xl font-black text-white transition" placeholder="Tối thiểu 5000..." oninput="generateQR()">
+                    <div id="deposit-bank-section" class="block">
+                        <div class="card-modern border-t-4 border-t-emerald-500 p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative z-10">
+                                <div class="space-y-6">
+                                    <h3 class="text-white font-bold text-xl mb-2 flex items-center"><i class="fa-solid fa-qrcode text-emerald-400 mr-2"></i> Thông Tin Chuyển Khoản</h3>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Nhập số tiền cần nạp (VNĐ)</label>
+                                        <input type="number" id="deposit-amount-input" min="5000" step="1000" class="w-full px-5 py-4 rounded-xl input-modern text-2xl font-black text-white transition" placeholder="Tối thiểu 5000..." oninput="generateQR()">
+                                    </div>
+                                    
+                                    <div class="bg-slate-950 rounded-xl border border-slate-800 p-5 space-y-4 shadow-inner">
+                                        <div class="flex items-center justify-between"><span class="text-xs font-bold text-slate-500 uppercase">Ngân hàng</span><div class="text-white font-bold text-base">MBBANK</div></div>
+                                        <div class="flex items-center justify-between border-t border-slate-800 pt-4"><span class="text-xs font-bold text-slate-500 uppercase">Chủ tài khoản</span><span class="text-white font-bold text-base">LE NGOC NHAN</span></div>
+                                        <div class="flex items-center justify-between border-t border-slate-800 pt-4">
+                                            <span class="text-xs font-bold text-slate-500 uppercase">Số tài khoản</span>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-emerald-400 font-black text-lg tracking-wider">4477040408</span>
+                                                <button onclick="copyToClipboard('4477040408')" class="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 w-8 h-8 rounded-lg transition flex items-center justify-center"><i class="fa-regular fa-copy"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center justify-between border-t border-slate-800 pt-4">
+                                            <span class="text-xs font-bold text-slate-500 uppercase">Nội dung CK</span>
+                                            <div class="flex items-center gap-2 overflow-hidden">
+                                                <span class="text-brand-400 font-black text-lg truncate tracking-wider" id="transfer-content-display">...</span>
+                                                <button onclick="copyToClipboard(window.currentTransferContent)" class="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 w-8 h-8 rounded-lg shrink-0 transition flex items-center justify-center"><i class="fa-regular fa-copy"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <div class="bg-slate-950 rounded-xl border border-slate-800 p-5 space-y-4 shadow-inner">
-                                    <div class="flex items-center justify-between"><span class="text-xs font-bold text-slate-500 uppercase">Ngân hàng</span><div class="text-white font-bold text-base">MBBANK</div></div>
-                                    <div class="flex items-center justify-between border-t border-slate-800 pt-4"><span class="text-xs font-bold text-slate-500 uppercase">Chủ tài khoản</span><span class="text-white font-bold text-base">LE NGOC NHAN</span></div>
-                                    <div class="flex items-center justify-between border-t border-slate-800 pt-4">
-                                        <span class="text-xs font-bold text-slate-500 uppercase">Số tài khoản</span>
-                                        <div class="flex items-center gap-2">
-                                            <span class="text-emerald-400 font-black text-lg tracking-wider">4477040408</span>
-                                            <button onclick="copyToClipboard('4477040408')" class="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 w-8 h-8 rounded-lg transition flex items-center justify-center"><i class="fa-regular fa-copy"></i></button>
-                                        </div>
+                                <div class="flex flex-col items-center justify-center h-full bg-slate-900/50 p-6 rounded-2xl border border-slate-800">
+                                    <div class="bg-white p-4 rounded-3xl shadow-[0_0_40px_rgba(16,185,129,0.15)] mb-5 w-full max-w-[260px] aspect-square flex items-center justify-center relative">
+                                        <img id="qr-image" src="https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=5000&des=&template=compact" class="w-full h-full object-contain rounded-xl" alt="VietQR">
                                     </div>
-                                    <div class="flex items-center justify-between border-t border-slate-800 pt-4">
-                                        <span class="text-xs font-bold text-slate-500 uppercase">Nội dung CK</span>
-                                        <div class="flex items-center gap-2 overflow-hidden">
-                                            <span class="text-brand-400 font-black text-lg truncate tracking-wider" id="transfer-content-display">...</span>
-                                            <button onclick="copyToClipboard(window.currentTransferContent)" class="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 w-8 h-8 rounded-lg shrink-0 transition flex items-center justify-center"><i class="fa-regular fa-copy"></i></button>
-                                        </div>
+                                    <div class="text-center">
+                                        <p class="text-white font-bold mb-1">Mở App Ngân Hàng Quét Mã</p>
+                                        <p class="text-xs text-slate-400">Số tiền và nội dung sẽ được điền tự động.</p>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="flex flex-col items-center justify-center h-full bg-slate-900/50 p-6 rounded-2xl border border-slate-800">
-                                <div class="bg-white p-4 rounded-3xl shadow-[0_0_40px_rgba(16,185,129,0.15)] mb-5 w-full max-w-[260px] aspect-square flex items-center justify-center relative">
-                                    <img id="qr-image" src="https://qr.sepay.vn/img?acc=4477040408&bank=MBBank&amount=5000&des=&template=compact" class="w-full h-full object-contain rounded-xl" alt="VietQR">
+                        </div>
+                    </div>
+
+                    <div id="deposit-card-section" class="hidden">
+                        <div class="card-modern border-t-4 border-t-blue-500 p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                            <form id="form-deposit-card" class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                                <div class="space-y-6">
+                                    <h3 class="text-white font-bold text-xl mb-2 flex items-center"><i class="fa-solid fa-money-check-dollar text-blue-400 mr-2"></i> Thông Tin Thẻ Cào</h3>
+                                    
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Loại Thẻ <span class="text-rose-500">*</span></label>
+                                            <select id="card-network" required onchange="calcCardAmount()" class="w-full px-4 py-3.5 rounded-xl input-modern font-bold text-sm">
+                                                <option value="Viettel">Viettel</option>
+                                                <option value="Vinaphone">Vinaphone</option>
+                                                <option value="Mobifone">Mobifone</option>
+                                                <option value="Vietnamobile">Vietnamobile</option>
+                                                <option value="Zing">Zing</option>
+                                                <option value="Garena">Garena</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Mệnh Giá <span class="text-rose-500">*</span></label>
+                                            <select id="card-amount" required onchange="calcCardAmount()" class="w-full px-4 py-3.5 rounded-xl input-modern font-bold text-sm text-brand-400">
+                                                <option value="10000">10,000 đ</option>
+                                                <option value="20000">20,000 đ</option>
+                                                <option value="30000">30,000 đ</option>
+                                                <option value="50000">50,000 đ</option>
+                                                <option value="100000">100,000 đ</option>
+                                                <option value="200000">200,000 đ</option>
+                                                <option value="300000">300,000 đ</option>
+                                                <option value="500000">500,000 đ</option>
+                                                <option value="1000000">1,000,000 đ</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Mã Thẻ (PIN) <span class="text-rose-500">*</span></label>
+                                        <input type="text" id="card-pin" required placeholder="Nhập mã thẻ dưới lớp tráng bạc..." class="w-full px-4 py-3.5 rounded-xl input-modern font-mono text-sm">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Số Serial <span class="text-rose-500">*</span></label>
+                                        <input type="text" id="card-serial" required placeholder="Nhập số seri in trên thẻ..." class="w-full px-4 py-3.5 rounded-xl input-modern font-mono text-sm">
+                                    </div>
                                 </div>
-                                <div class="text-center">
-                                    <p class="text-white font-bold mb-1">Mở App Ngân Hàng Quét Mã</p>
-                                    <p class="text-xs text-slate-400">Số tiền và nội dung sẽ được điền tự động.</p>
+                                
+                                <div class="flex flex-col justify-center h-full bg-slate-900/50 p-6 md:p-8 rounded-2xl border border-slate-800">
+                                    <div class="bg-rose-500/10 border border-rose-500/20 rounded-xl p-4 text-rose-400 text-sm font-medium mb-6 flex items-start shadow-inner">
+                                        <i class="fa-solid fa-triangle-exclamation mt-0.5 mr-3 text-lg"></i> 
+                                        <span>Lưu ý: Chọn sai mệnh giá sẽ bị mất thẻ hoặc không được cộng tiền. Vui lòng kiểm tra kỹ trước khi nạp.</span>
+                                    </div>
+
+                                    <div class="space-y-4 mb-8">
+                                        <div class="flex justify-between items-center pb-4 border-b border-slate-800">
+                                            <span class="text-slate-400 font-medium">Chiết khấu nhà mạng:</span>
+                                            <span id="card-discount-rate" class="font-bold text-rose-400 bg-rose-500/10 px-2 py-1 rounded text-sm">-15%</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-slate-400 font-medium">Tiền nhận vào web:</span>
+                                            <span id="card-receive-amount" class="text-3xl font-black text-emerald-400">8,500 đ</span>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" id="btn-submit-card" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition shadow-lg shadow-blue-500/20 flex justify-center items-center text-lg">
+                                        <i class="fa-solid fa-paper-plane mr-2"></i> Gửi Thẻ Lên Hệ Thống
+                                    </button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
 
                     <div class="card-modern shadow-lg overflow-hidden mt-8">
                         <div class="px-6 py-5 border-b border-slate-800 flex justify-between items-center bg-slate-900">
-                            <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-emerald-400 mr-2"></i> Lịch Sử Nạp Tiền</h3>
+                            <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-clock-rotate-left text-emerald-400 mr-2"></i> Lịch Sử Giao Dịch</h3>
                             <button onclick="loadDepositHistory()" class="text-xs font-medium text-slate-400 hover:text-white transition bg-slate-800 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-rotate mr-1"></i> Tải lại</button>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="min-w-full text-sm text-left whitespace-nowrap">
                                 <thead class="text-xs text-slate-400 uppercase bg-slate-950 border-b border-slate-800">
-                                    <tr><th class="px-6 py-4">Mã Giao Dịch</th><th class="px-6 py-4">Số Tiền (VNĐ)</th><th class="px-6 py-4">Thời gian</th><th class="px-6 py-4 text-center">Trạng thái</th></tr>
+                                    <tr><th class="px-6 py-4">Mã GD / Thẻ</th><th class="px-6 py-4">Thực Nhận (VNĐ)</th><th class="px-6 py-4">Thời gian</th><th class="px-6 py-4 text-center">Trạng thái</th></tr>
                                 </thead>
                                 <tbody id="deposit-history-body" class="divide-y divide-slate-800"></tbody>
                             </table>
@@ -642,6 +721,17 @@
         window.allServers = []; window.currentPrice = 0; window.currentServer = null; 
         window.currentServiceCategory = ""; window.currentTransferContent = "FLMMO USER"; window.currentExchangeRate = 25500;
         window.allGameProducts = []; window.currentGamePurchase = null; window.userVipDiscount = 0; 
+        window.currentDepositAmount = 0;
+
+        // Dữ liệu chiết khấu thẻ cào theo bảng
+        const cardDiscounts = {
+            "Viettel": { "10000": 15, "20000": 15.5, "30000": 16.5, "50000": 14, "100000": 14, "200000": 14, "300000": 15, "500000": 15.5, "1000000": 15.5 },
+            "Vinaphone": { "10000": 17, "20000": 14, "30000": 14, "50000": 13.5, "100000": 12, "200000": 11.5, "300000": 11.5, "500000": 11.5, "1000000": 11.5 },
+            "Mobifone": { "10000": 19, "20000": 19, "30000": 19, "50000": 19, "100000": 18, "200000": 16, "300000": 16, "500000": 16, "1000000": 16 },
+            "Vietnamobile": { "10000": 34, "20000": 34, "30000": 34, "50000": 34, "100000": 34, "200000": 34, "300000": 34, "500000": 34, "1000000": 34 },
+            "Zing": { "default": 20 },
+            "Garena": { "default": 20 }
+        };
 
         window.showToast = function(msg, type = 'success') {
             const container = document.getElementById('toast-container');
@@ -738,6 +828,47 @@
             const tempInput = document.createElement('input'); tempInput.value = text; document.body.appendChild(tempInput);
             tempInput.select(); document.execCommand('copy'); document.body.removeChild(tempInput);
             window.showToast("Đã copy thành công!", 'success');
+        }
+
+        // TÍNH NĂNG NẠP TIỀN: TAB & THẺ CÀO
+        window.switchDepositTab = function(tabName) {
+            const btnBank = document.getElementById('tab-btn-bank');
+            const btnCard = document.getElementById('tab-btn-card');
+            const secBank = document.getElementById('deposit-bank-section');
+            const secCard = document.getElementById('deposit-card-section');
+
+            if(tabName === 'bank') {
+                btnBank.className = "px-5 py-2.5 rounded-lg text-sm font-bold bg-slate-800 text-white transition shadow-sm flex items-center";
+                btnCard.className = "px-5 py-2.5 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition flex items-center";
+                secBank.classList.remove('hidden'); secCard.classList.add('hidden');
+            } else {
+                btnCard.className = "px-5 py-2.5 rounded-lg text-sm font-bold bg-slate-800 text-white transition shadow-sm flex items-center";
+                btnBank.className = "px-5 py-2.5 rounded-lg text-sm font-bold text-slate-400 hover:text-white transition flex items-center";
+                secCard.classList.remove('hidden'); secBank.classList.add('hidden');
+                window.calcCardAmount(); // Khởi tạo tính toán ban đầu
+            }
+        }
+
+        window.calcCardAmount = function() {
+            const network = document.getElementById('card-network').value;
+            const amountStr = document.getElementById('card-amount').value;
+            const amount = parseInt(amountStr) || 0;
+            
+            let discountPercent = 20; // Mặc định
+            
+            if (cardDiscounts[network]) {
+                if (cardDiscounts[network][amountStr] !== undefined) {
+                    discountPercent = cardDiscounts[network][amountStr];
+                } else if (cardDiscounts[network]["default"] !== undefined) {
+                    discountPercent = cardDiscounts[network]["default"];
+                }
+            }
+
+            const receiveAmount = amount - (amount * (discountPercent / 100));
+            window.currentDepositAmount = receiveAmount;
+
+            document.getElementById('card-discount-rate').innerText = `-${discountPercent}%`;
+            document.getElementById('card-receive-amount').innerText = receiveAmount.toLocaleString('vi-VN') + ' đ';
         }
 
         window.generateQR = function() {
@@ -852,12 +983,10 @@
         // KHỞI TẠO USER (ÉP BUỘC ĐĂNG NHẬP)
         const initAuth = async () => {
             onAuthStateChanged(auth, async (user) => {
-                // SỬA: Nếu không có user, VĂNG RA trang đăng nhập lập tức, không cho ở trong home
                 if (!user || user.isAnonymous) {
                     window.location.href = "dangnhap.html";
                 } else { 
                     window.currentUserBalance = 0; 
-                    // Nếu pass qua được thì hiển thị UI lên
                     document.getElementById('app-body').classList.remove('hidden');
                     checkMaintenanceAndLoadUser(user); 
                 }
@@ -904,12 +1033,13 @@
 
             window.fetchAndRenderServicesMenu();
             window.loadAnnouncements();
-            calculateVIPBackground(user.uid);
+            // Hàm này bạn chưa định nghĩa trong file HTML gốc, nên mình comment lại để tránh lỗi console
+            // calculateVIPBackground(user.uid);
             
             if (typeof window.loadGameProductsUI === 'function') setTimeout(window.loadGameProductsUI, 50);
-            setTimeout(() => { loadOrderStats(user.uid).catch(console.error); }, 100);
+            setTimeout(() => { window.loadOrderHistory().catch(console.error); }, 100);
             setTimeout(() => { populateTicketOrderDropdown(user.uid).catch(console.error); }, 200);
-            setTimeout(() => { window.autoSyncUserOrders(user.uid); setInterval(() => { window.autoSyncUserOrders(user.uid); }, 60000); }, 500);
+            setTimeout(() => { window.autoSyncOrdersStatus(); setInterval(() => { window.autoSyncOrdersStatus(); }, 60000); }, 500);
         }
 
         // TẢI MENU DỊCH VỤ SMM
@@ -1324,7 +1454,57 @@
         }
 
         // ==============================================================
-        // CÁC HÀM TẢI LỊCH SỬ (SMM, Nạp, Bảng Tin) GIỮ NGUYÊN HOẶC TỐI ƯU
+        // XỬ LÝ SUBMIT NẠP THẺ CÀO (GỬI LÊN FIREBASE)
+        // ==============================================================
+        document.getElementById('form-deposit-card')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if(!user || user.isAnonymous) return window.showToast("Vui lòng đăng nhập!", "error");
+
+            const network = document.getElementById('card-network').value;
+            const amountStr = document.getElementById('card-amount').value;
+            const pin = document.getElementById('card-pin').value.trim();
+            const serial = document.getElementById('card-serial').value.trim();
+            const receiveAmount = window.currentDepositAmount; // Đã tính toán ở calcCardAmount()
+
+            if(!pin || !serial) return window.showToast("Vui lòng nhập đầy đủ Mã thẻ và Serial!", "error");
+
+            const btn = document.getElementById('btn-submit-card');
+            const origHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Đang gửi...';
+            btn.disabled = true;
+
+            try {
+                // Tạo record trong bảng deposits với type là 'card'
+                await addDoc(collection(db, "deposits"), {
+                    uid: user.uid,
+                    type: "card",
+                    network: network,
+                    amount: receiveAmount, // Ghi nhận số tiền THỰC NHẬN để admin duyệt
+                    declaredAmount: parseInt(amountStr), // Giá trị khai báo
+                    pin: pin,
+                    serial: serial,
+                    status: "Chờ Duyệt",
+                    createdAt: new Date().toISOString()
+                });
+
+                window.showToast("Gửi thẻ thành công! Vui lòng chờ Admin duyệt.", "success");
+                document.getElementById('form-deposit-card').reset();
+                window.calcCardAmount(); // Reset lại chiết khấu
+                
+                if(window.loadDepositHistory) window.loadDepositHistory();
+
+            } catch(error) {
+                window.showToast("Lỗi khi gửi thẻ: " + error.message, "error");
+            } finally {
+                btn.innerHTML = origHtml;
+                btn.disabled = false;
+            }
+        });
+
+
+        // ==============================================================
+        // CÁC HÀM TẢI LỊCH SỬ (SMM, Nạp, Bảng Tin) 
         // ==============================================================
         
         window.loadOrderHistory = async function() {
@@ -1383,7 +1563,7 @@
                 let deposits = []; snapshot.forEach(doc => deposits.push({ id: doc.id, ...doc.data() }));
                 deposits.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-                if(deposits.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="text-center py-16 text-slate-500"><i class="fa-solid fa-wallet text-4xl mb-3 text-slate-700"></i><br>Chưa có giao dịch nạp tiền</td></tr>`; return; }
+                if(deposits.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="text-center py-16 text-slate-500"><i class="fa-solid fa-wallet text-4xl mb-3 text-slate-700"></i><br>Chưa có giao dịch nạp tiền</td></tr>`; return; }
                 
                 tbody.innerHTML = '';
                 deposits.forEach(d => {
@@ -1392,17 +1572,33 @@
                     else if (d.status === 'Chấp Nhận') statusHtml = '<span class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-lg text-xs font-bold">Hoàn thành</span>';
                     else statusHtml = `<span class="bg-rose-500/10 border border-rose-500/20 text-rose-400 px-2.5 py-1 rounded-lg text-xs font-bold">Từ Chối</span>`;
 
+                    let idDisplay = '';
+                    if(d.type === 'card') {
+                        // Hiển thị dạng Thẻ cào
+                        idDisplay = `<div class="flex items-center gap-2 mb-1">
+                                        <span class="text-[10px] font-bold text-blue-400 border border-blue-500/30 bg-blue-500/10 px-1.5 py-0.5 rounded uppercase">${d.network}</span>
+                                        <span class="text-xs font-mono font-bold text-slate-300" title="Serial: ${d.serial}">${d.serial.substring(0,8)}...</span>
+                                     </div>`;
+                    } else {
+                        // Hiển thị dạng Bank
+                        idDisplay = `<div class="flex items-center gap-2 mb-1">
+                                        <span class="text-[10px] font-bold text-emerald-400 border border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0.5 rounded uppercase">BANK</span>
+                                        <span class="text-xs font-mono font-bold text-white bg-slate-900 px-1.5 py-0.5 rounded border border-slate-700" title="${d.id}">#${d.id.substring(0,6).toUpperCase()}</span>
+                                        <button onclick="copyToClipboard('${d.id}')" class="text-slate-500 hover:text-brand-400 transition"><i class="fa-regular fa-copy"></i></button>
+                                     </div>
+                                     <div class="text-[10px] text-slate-500 mt-1">Ref: ${d.transId || '-'}</div>`;
+                    }
+
                     tbody.innerHTML += `
                         <tr class="hover:bg-slate-800/50 transition border-b border-slate-800">
-                            <td class="px-6 py-4 text-xs font-mono"><div class="flex items-center gap-2 mb-1"><span class="text-xs font-mono font-bold text-white bg-slate-900 px-1.5 py-0.5 rounded border border-slate-700" title="${d.id}">#${d.id.substring(0,6).toUpperCase()}</span><button onclick="copyToClipboard('${d.id}')" class="text-slate-500 hover:text-brand-400 transition"><i class="fa-regular fa-copy"></i></button></div></td>
+                            <td class="px-6 py-4">${idDisplay}</td>
                             <td class="px-6 py-4 font-black text-emerald-400">${Number(d.amount).toLocaleString('en-US')}đ</td>
-                            <td class="px-6 py-4 text-xs font-mono text-slate-400">${d.transId || '-'}</td>
                             <td class="px-6 py-4 text-xs text-slate-500 font-medium">${new Date(d.createdAt).toLocaleString('vi-VN')}</td>
                             <td class="px-6 py-4 text-center">${statusHtml}</td>
                         </tr>
                     `;
                 });
-            } catch(e) { tbody.innerHTML = `<tr><td colspan="5" class="text-center py-6 text-rose-500">Lỗi tải lịch sử nạp: ${e.message}</td></tr>`; }
+            } catch(e) { tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-rose-500">Lỗi tải lịch sử nạp: ${e.message}</td></tr>`; }
         }
 
         // TẠO BẢNG TIN HỆ THỐNG
