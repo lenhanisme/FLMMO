@@ -1051,9 +1051,31 @@
                 window.allServers = []; snap.forEach(doc => window.allServers.push({ id: doc.id, ...doc.data() }));
                 
                 const menuTree = {};
+                
                 window.allServers.forEach(s => {
-                    const cat = s.category || "Khác - Dịch Vụ Mặc Định"; const parts = cat.split(" - "); const platform = parts[0].trim();
-                    if (!menuTree[platform]) menuTree[platform] = new Set(); menuTree[platform].add(cat);
+                    let fullCat = s.category || "Khác - Dịch Vụ Mặc Định";
+                    let platform = "Khác";
+
+                    // 1. CHUẨN HÓA TÊN MENU CHA (PLATFORM)
+                    if (fullCat.includes(" - ")) {
+                        platform = fullCat.split(" - ")[0].trim();
+                    } else {
+                        // Tự động nhận diện nếu không có dấu gạch ngang
+                        if (fullCat.toLowerCase().includes("facebook") || fullCat.toLowerCase().includes("fb")) platform = "Facebook";
+                        else if (fullCat.toLowerCase().includes("tiktok")) platform = "TikTok";
+                        else if (fullCat.toLowerCase().includes("instagram") || fullCat.toLowerCase().includes("ig")) platform = "Instagram";
+                        else if (fullCat.toLowerCase().includes("youtube") || fullCat.toLowerCase().includes("yt")) platform = "YouTube";
+                        else platform = fullCat;
+                    }
+
+                    // Dọn dẹp nếu Menu Cha bị dính chữ "Dịch vụ..."
+                    if (platform.toLowerCase() === "dịch vụ facebook") platform = "Facebook";
+                    if (platform.toLowerCase() === "dịch vụ tiktok") platform = "TikTok";
+
+                    if (!menuTree[platform]) menuTree[platform] = new Set(); 
+                    
+                    // Vẫn lưu nguyên fullCat để lúc click nó lấy đúng data gốc
+                    menuTree[platform].add(fullCat);
                 });
 
                 menuEl.innerHTML = '';
@@ -1069,7 +1091,18 @@
 
                     let subHtml = '';
                     menuTree[platform].forEach(fullCat => {
-                        const parts = fullCat.split(" - "); const subName = parts[1] ? parts[1].trim() : fullCat;
+                        let subName = fullCat;
+                        
+                        // 2. CHUẨN HÓA TÊN MENU CON (SUBNAME)
+                        if (fullCat.includes(" - ")) {
+                            // Lấy tất cả các phần sau dấu " - " làm Menu Con
+                            subName = fullCat.split(" - ").slice(1).join(" - ").trim();
+                        } else {
+                            // Tránh trùng lặp tên Menu Cha và Menu con (VD: Facebook -> Facebook)
+                            if (fullCat.toLowerCase() === "dịch vụ facebook" || fullCat.toLowerCase() === "facebook") subName = "Dịch vụ chung";
+                            else if (fullCat.toLowerCase() === "dịch vụ tiktok" || fullCat.toLowerCase() === "tiktok") subName = "Dịch vụ chung";
+                        }
+
                         subHtml += `<li><a href="#" class="block pl-10 pr-3 py-2.5 text-sm text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition" onclick="loadServiceForm('${fullCat}')"><i class="fa-solid fa-angle-right mr-2 text-[10px] text-slate-600"></i> ${subName}</a></li>`;
                     });
 
