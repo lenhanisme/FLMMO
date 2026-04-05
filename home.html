@@ -1258,7 +1258,8 @@
             const user = auth.currentUser; const btn = document.getElementById('btn-create-order');
             if(!user || user.isAnonymous) return window.showToast("Vui lòng Đăng ký Tài khoản!", 'error');
 
-            const link = document.getElementById('order-link').value; const qty = parseInt(document.getElementById('qty').value) || 0;
+            const link = document.getElementById('order-link').value; 
+            const qty = parseInt(document.getElementById('qty').value) || 0;
             const totalCost = qty * window.currentPrice;
 
             if (window.currentUserBalance < totalCost) return window.showToast(`Số dư không đủ. Vui lòng nạp thêm tiền!`, 'error');
@@ -1267,46 +1268,81 @@
             const reactionsStr = selectedReactions.length > 0 ? selectedReactions.join(',') : null;
             const orderRefStr = 'FLMMO_' + user.uid.substring(0, 5) + '_' + Date.now();
 
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang xử lý...'; btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Đang xử lý...'; 
+            btn.disabled = true;
 
             try {
-                const formData = new URLSearchParams();
-                formData.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668');
-                formData.append('action', 'add'); formData.append('service', window.currentServer.code); 
-                formData.append('link', link); formData.append('quantity', qty); formData.append('order_reference', orderRefStr);
-                if (reactionsStr) formData.append('reactions', reactionsStr);
+                // KIỂM TRA XEM ĐÂY LÀ MÁY CHỦ AUTO HAY THỦ CÔNG
+                const serverCode = window.currentServer.code.toString().toUpperCase();
+                const isManual = serverCode.startsWith('MANUAL') || serverCode.startsWith('TAY');
 
-                // FIX QUAN TRỌNG: Xóa .toString() ở body
-                const apiResponse = await fetch("https://api.mysmm.vn/api/v2", {
-                    method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData
-                });
-                
-                const apiResult = await apiResponse.json();
-                if (apiResult.error && !apiResult.order) throw new Error("Lỗi Server nguồn: " + apiResult.error);
-                
-                const remoteOrderId = apiResult.order || (apiResult.data && apiResult.data.id) || "Không xác định";
+                let remoteOrderId = "Không xác định";
 
-                const orderData = { uid: user.uid, category: window.currentServiceCategory, serverName: window.currentServer.name, serverId: window.currentServer.code, remoteOrderId: remoteOrderId, link: link, quantity: qty, price: window.currentPrice, total: totalCost, status: "Đang xử lý", order_reference: orderRefStr, createdAt: new Date().toISOString() };
+                if (isManual) {
+                    // LUỒNG 1: ĐƠN THỦ CÔNG (Không gọi API MySMM)
+                    remoteOrderId = "Đơn Thủ Công"; // Đánh dấu để Admin biết mà chạy tay
+                } else {
+                    // LUỒNG 2: ĐƠN AUTO (Gọi API MySMM bình thường)
+                    const formData = new URLSearchParams();
+                    formData.append('key', 'f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668');
+                    formData.append('action', 'add'); 
+                    formData.append('service', window.currentServer.code); 
+                    formData.append('link', link); 
+                    formData.append('quantity', qty); 
+                    formData.append('order_reference', orderRefStr);
+                    if (reactionsStr) formData.append('reactions', reactionsStr);
+
+                    const apiResponse = await fetch("https://api.mysmm.vn/api/v2", {
+                        method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: formData
+                    });
+                    
+                    const apiResult = await apiResponse.json();
+                    if (apiResult.error && !apiResult.order) throw new Error("Lỗi Server nguồn: " + apiResult.error);
+                    
+                    remoteOrderId = apiResult.order || (apiResult.data && apiResult.data.id) || "Không xác định";
+                }
+
+                // CHUNG: Lưu vào Database và trừ tiền khách
+                const orderData = { 
+                    uid: user.uid, 
+                    category: window.currentServiceCategory, 
+                    serverName: window.currentServer.name, 
+                    serverId: window.currentServer.code, 
+                    remoteOrderId: remoteOrderId, 
+                    link: link, 
+                    quantity: qty, 
+                    price: window.currentPrice, 
+                    total: totalCost, 
+                    status: isManual ? "Chờ xử lý" : "Đang xử lý", // Thủ công thì báo Chờ xử lý cho Admin duyệt
+                    order_reference: orderRefStr, 
+                    createdAt: new Date().toISOString() 
+                };
                 if (reactionsStr) orderData.reactions = reactionsStr;
 
                 await addDoc(collection(db, "orders"), orderData);
                 await updateDoc(doc(db, "users", user.uid), { coin: increment(-totalCost) });
                 
+                // Cập nhật giao diện
                 window.currentUserBalance -= totalCost;
                 document.querySelectorAll('.display-balance-vnd').forEach(el => el.innerText = window.currentUserBalance.toLocaleString('vi-VN') + ' đ');
                 document.querySelectorAll('.display-balance-usd').forEach(el => el.innerText = "$" + (window.currentUserBalance / window.currentExchangeRate).toFixed(3));
 
                 window.showToast("Tạo đơn hàng thành công!", 'success');
                 setTimeout(() => {
-                    document.getElementById('form-order').reset(); document.querySelectorAll('.reaction-btn').forEach(b => b.setAttribute('data-selected', 'false'));
-                    window.calcPrice(); window.switchView('history');
+                    document.getElementById('form-order').reset(); 
+                    document.querySelectorAll('.reaction-btn').forEach(b => b.setAttribute('data-selected', 'false'));
+                    window.calcPrice(); 
+                    window.switchView('history');
                 }, 1500);
 
-            } catch (error) { window.showToast(error.message, 'error'); } 
-            finally { btn.innerHTML = 'Xác Nhận Tạo Đơn'; btn.disabled = false; }
+            } catch (error) { 
+                window.showToast(error.message, 'error'); 
+            } finally { 
+                btn.innerHTML = 'Xác Nhận Tạo Đơn'; 
+                btn.disabled = false; 
+            }
         });
-
         // ==============================================================
         // MẢNG MUA BÁN GAME (FIX CHUẨN)
         // ==============================================================
