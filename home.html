@@ -17,7 +17,7 @@
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: { 
                         slate: { 750: '#293548', 850: '#151e2e', 900: '#0f172a', 950: '#020617' },
-                        brand: { 400: '#818CF8', 500: '#6366F1', 600: '#4F46E5' }
+                        brand: { 400: '#79dfbf', 500: '#48bb99', 600: '#25876e' }
                     }
                 }
             }
@@ -46,7 +46,47 @@
         .card-modern { background-color: #0f172a; border: 1px solid #1e293b; border-radius: 1.5rem; }
         
         .reaction-btn[data-selected="true"] { border-color: #6366F1; background-color: rgba(99, 102, 241, 0.15); color: #818CF8; }
-    </style>
+    /* FLMMO refresh: existing sections, forms and handlers remain available. */
+:root{color-scheme:dark;--accent:#5ce1b7;--panel:#101c28;--line:#213340}
+body{background:#09131d;color:#cbd5e1}
+body .bg-slate-950{background-color:#09131d}body .bg-slate-900{background-color:#101c28}
+body .border-slate-800{border-color:var(--line)}
+#sidebar{background:#0d1823;border-right-color:#213340;width:264px}
+#sidebar>a{height:92px}#sidebar .menu-item{padding-top:12px;padding-bottom:12px;border-radius:12px}
+#sidebar .menu-item.active{background:#183b38;color:#b4ffe5}#sidebar .menu-item.active::before{background:var(--accent);width:3px;top:10px;bottom:10px}
+#sidebar .menu-item.active i{color:var(--accent)}
+main{background:radial-gradient(ellipse at 95% 0%,#12303855,transparent 45%),#09131d}
+.card-modern{background:linear-gradient(145deg,#13212f,#101b27);border:1px solid #253643;border-radius:20px;box-shadow:0 12px 30px #00000012}
+.input-modern{background:#0a1520;border-color:#2b3c49;min-height:44px}.input-modern:focus{border-color:var(--accent);box-shadow:0 0 0 3px #5ce1b719}
+.menu-item,.service-radio-item,button,input,select,textarea,a{outline-offset:4px}
+:focus-visible{outline:2px solid #5ce1b7!important}
+.service-radio-item{min-height:88px;border-radius:14px;background:#101d29;transition:background .18s,border-color .18s}
+.service-radio-item .truncate{white-space:normal;overflow:visible;line-height:1.6}
+.service-radio-item:has(input:checked){background:#15362f;border-color:#5ce1b7}
+#btn-create-order:not(:disabled){background:#68e2ba;color:#092d24;box-shadow:0 8px 24px #47d7a91c}
+#btn-create-order:not(:disabled):hover{background:#97f0d1;transform:translateY(-1px)}
+#btn-create-order:disabled{opacity:.55}
+.workspace-hero{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:30px 32px;border:1px solid #2c514c;border-radius:22px;background:linear-gradient(110deg,#163b36,#122534 78%);position:relative;overflow:hidden}
+.workspace-hero:after{content:'';position:absolute;width:160px;height:160px;border:32px solid #75e9c50b;border-radius:50%;right:-40px;bottom:-85px;pointer-events:none}
+.workspace-eyebrow{font-size:10px;letter-spacing:.2em;color:#91c8b9;font-weight:800;margin-bottom:10px}
+.workspace-hero h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.04em;color:#f1fff9;font-weight:800;line-height:1.2}
+.workspace-hero p{font-size:13px;color:#a9c4c2;margin-top:12px;line-height:1.8;max-width:490px}
+.quick-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.quick-actions button,.smm-action{border:1px solid #537b703d;border-radius:9px;padding:8px 12px;color:#8cecc9;background:#5ce1b70a;font-weight:700}
+.quick-actions button:hover,.smm-action:hover{background:#5ce1b720}
+.hero-mark{width:102px;height:102px;border-radius:28px;background:#63dfb414;display:grid;place-items:center;transform:rotate(-8deg);border:1px solid #64ddba38;flex-shrink:0;color:#8deaca;font-size:42px}
+.catalog-shortcut{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end;margin:22px 0}
+.catalog-shortcut label{display:block;font-size:11px;font-weight:800;color:#97b0bc;margin-bottom:8px;letter-spacing:.04em}
+.catalog-shortcut select{width:100%;padding:13px 15px;border-radius:12px;background:#11202d;border:1px solid #2b3c49;color:#eef9f6;font-size:13px}
+.catalog-shortcut button{min-height:46px;padding:10px 16px;border-radius:12px;border:1px solid #2b3c49;background:#152737;color:#d0e3e7;font-size:12px;font-weight:700}
+.order-progress{display:flex;gap:16px;margin:0 0 22px;flex-wrap:wrap;color:#7797a5;font-size:11px;font-weight:700}.order-progress span{display:flex;align-items:center;gap:8px}.order-progress b{display:grid;place-items:center;border-radius:50%;background:#1e343d;color:#7cddc1;width:24px;height:24px}
+button:disabled{cursor:not-allowed}.smm-note{font-size:12px;line-height:1.8;color:#92b7b6}
+.smm-extra{border:1px solid #2b3c49;border-radius:12px;padding:15px}.smm-extra summary{cursor:pointer;font-size:12px;font-weight:700;color:#83d9bd}
+@media(min-width:1024px){main{padding:34px!important}#order-form-inputs{padding:24px}#view-order>.grid:first-of-type .card-modern{border-left-width:1px}}
+@media(max-width:640px){.workspace-hero{padding:24px}.hero-mark{display:none}.catalog-shortcut{grid-template-columns:1fr}.quick-actions button{flex:1}.card-modern{border-radius:16px}.card-modern.p-6{padding:18px}#order-form-inputs{padding:14px}.order-progress{gap:10px;font-size:10px}#sidebar{max-width:86vw}input,select,textarea{font-size:16px!important}table{min-width:650px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.view-section.active{opacity:1}}
+
+</style>
 </head>
 <body class="flex h-screen overflow-hidden relative selection:bg-brand-500 selection:text-white hidden" id="app-body">
 
@@ -142,7 +182,9 @@
 
             <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-6 lg:p-8 relative z-10">
                 
-                <div id="view-order" class="view-section active max-w-6xl mx-auto space-y-6">
+                <div id="view-order" class="view-section active max-w-6xl mx-auto space-y-6"><section class="workspace-hero" aria-label="Trung tâm dịch vụ">
+<div><div class="workspace-eyebrow">FLMMO / WORKSPACE</div><h2>Mọi dịch vụ. Một điểm đến.</h2><p>Chọn dịch vụ phù hợp, tạo đơn dễ dàng và theo dõi tiến độ ngay trong tài khoản của bạn.</p><div class="quick-actions"><button type="button" onclick="document.getElementById('quick-category').focus()"><i class="fa-solid fa-plus mr-2"></i>Tạo đơn mới</button><button type="button" onclick="switchView('history')"><i class="fa-solid fa-clock-rotate-left mr-2"></i>Lịch sử đơn</button><button type="button" onclick="switchView('deposit')"><i class="fa-solid fa-wallet mr-2"></i>Nạp tiền</button></div></div><div class="hero-mark" aria-hidden="true"><i class="fa-solid fa-arrow-trend-up"></i></div></section>
+<div class="catalog-shortcut"><div><label for="quick-category">BẮT ĐẦU VỚI DỊCH VỤ BẠN CẦN</label><select id="quick-category" onchange="if(this.value) loadServiceForm(this.value)"><option value="">Đang tải danh mục…</option></select></div><button type="button" onclick="fetchAndRenderServicesMenu()" id="catalog-count">Làm mới danh mục</button></div>
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
                         <div>
                             <h2 class="text-2xl md:text-3xl font-bold text-white mb-1"><span id="header-title">Chào mừng trở lại!</span> 👋</h2>
@@ -188,7 +230,7 @@
                                     <i class="fa-solid fa-cart-arrow-down mr-2 text-brand-400"></i> Chi tiết dịch vụ
                                 </h3>
                                 
-                                <form id="form-order" class="space-y-6">
+                                <form id="form-order" class="space-y-6"><div class="order-progress"><span><b>01</b> Chọn dịch vụ</span><span><b>02</b> Nhập thông tin</span><span><b>03</b> Xác nhận đơn</span></div>
                                     <div>
                                         <div class="flex flex-wrap justify-between items-end gap-2 mb-3">
                                             <label id="label-dich-vu" class="block text-xs font-bold text-slate-400 uppercase tracking-widest">Bảng Tin Hệ Thống</label>
@@ -208,7 +250,7 @@
                                             <input type="text" id="order-link" placeholder="Vd: https://facebook.com/12345..." class="w-full px-4 py-3 rounded-xl input-modern font-mono text-sm" disabled required>
                                         </div>
 
-                                        <div id="reaction-container" class="hidden border-t border-slate-800 pt-5">
+                                        <div id="mualike-options" class="hidden space-y-4"><p id="mualike-type" class="smm-note"></p><div id="ml-comments-wrap" class="hidden"><label for="ml-comments" class="block text-xs mb-2">Nội dung bình luận — mỗi dòng một bình luận</label><textarea id="ml-comments" class="w-full input-modern rounded-xl p-3" rows="4" oninput="updateMlCommentCount()" disabled></textarea></div><details class="smm-extra"><summary>Tùy chọn nâng cao / chạy lặp</summary><div class="grid grid-cols-2 gap-3 mt-4"><label class="text-xs">Số lần chạy<input id="ml-runs" type="number" min="1" max="1000" placeholder="1" class="w-full input-modern rounded-xl p-3 mt-2" oninput="calcPrice()"></label><label class="text-xs">Cách nhau (phút)<input id="ml-interval" type="number" min="1" class="w-full input-modern rounded-xl p-3 mt-2"></label></div><label for="ml-extras" class="block text-xs mt-4 mb-2">Tham số theo loại dịch vụ (JSON)</label><textarea id="ml-extras" rows="3" class="w-full input-modern rounded-xl p-3 font-mono" placeholder='{"answer_number":1}' oninput="calcPrice()"></textarea><p class="smm-note mt-2">Chỉ nhập các trường dịch vụ yêu cầu, ví dụ answer_number, username, comments. Tổng tiền bao gồm số lần chạy.</p></details></div><div id="reaction-container" class="hidden border-t border-slate-800 pt-5">
                                             <label class="block text-xs font-bold text-slate-400 uppercase mb-3">Chọn Cảm Xúc (Tùy chọn)</label>
                                             <div class="flex flex-wrap gap-2" id="reaction-options">
                                                 <button type="button" class="reaction-btn px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-sm font-medium text-slate-300 hover:border-brand-500/50 hover:bg-brand-500/10 transition-all flex items-center gap-2" data-value="like" data-selected="false">👍 Thích</button>
@@ -743,7 +785,8 @@
             else { bgColor = 'bg-brand-500/10 border-brand-500/30 text-brand-400 backdrop-blur-md'; icon = 'fa-circle-info'; }
             
             toast.className = `flex items-center p-4 rounded-xl border shadow-xl transform transition-all duration-300 translate-x-full opacity-0 ${bgColor}`;
-            toast.innerHTML = `<i class="fa-solid ${icon} mr-3 text-lg"></i> <span class="font-medium text-sm leading-tight">${msg}</span>`;
+            toast.innerHTML = `<i class="fa-solid ${icon} mr-3 text-lg"></i> <span class="font-medium text-sm leading-tight"></span>`;
+            toast.querySelector('span').textContent = String(msg);
             container.appendChild(toast);
             setTimeout(() => toast.classList.remove('translate-x-full', 'opacity-0'), 10);
             setTimeout(() => { toast.classList.add('translate-x-full', 'opacity-0'); setTimeout(() => toast.remove(), 300); }, 3500);
@@ -801,7 +844,7 @@
                 if(viewName === 'order' && !window.currentServiceCategory && typeof window.loadAnnouncements === 'function') window.loadAnnouncements().catch(e => console.log(e));
             }, 10);
             
-            if(window.innerWidth < 1024) window.toggleSidebar();
+            if(window.innerWidth < 1024) { document.getElementById('sidebar').classList.add('-translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden'); }
         }
 
         window.toggleSubMenu = function(id, btn) {
@@ -962,6 +1005,61 @@
         }
     </script>
 
+    <script>
+// Provider identity is independent of the remote service ID. Legacy records default to MySMM.
+window.SMM = {
+    provider(record = {}) {
+        const code = String(record.code ?? record.serverId ?? '');
+        if (/^(MANUAL|TAY)/i.test(code) || record.provider === 'manual') return 'manual';
+        return record.provider || 'mysmm';
+    },
+    name(record) { return ({manual:'Thủ công', mysmm:'MySMM', mualike1s:'mualike1s'})[this.provider(record)] || 'Không rõ nguồn'; },
+    escape(value) { return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); },
+    async call(action, params = {}) {
+        const user = window.smmAuth?.currentUser;
+        if (!user) throw new Error('Vui lòng đăng nhập lại.');
+        const token = await user.getIdToken();
+        const response = await fetch('/api/mualike1s', {
+            method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer ' + token},
+            body:JSON.stringify({action, ...params})
+        });
+        let result;
+        try { result = await response.json(); } catch { throw new Error('Chưa kết nối được Vercel Function /api/mualike1s. Kiểm tra triển khai.'); }
+        if (!response.ok || result.error) throw new Error(result.error || 'Không thể xử lý yêu cầu.');
+        return result;
+    },
+    status(value) {
+        return ({completed:'Hoàn thành',partial:'Hoàn thành một phần',processing:'Đang xử lý',pending:'Đang xử lý','in progress':'Đang chạy',canceled:'Hủy',cancelled:'Hủy',refunded:'Hủy'})[String(value).toLowerCase()] || null;
+    },
+    entries(result, ids) {
+        if (Array.isArray(result)) return ids.map((id, i) => [id, result.find(row => String(row.order ?? '') === String(id)) || result[i]]);
+        return ids.map(id => [id, result[id] || (ids.length === 1 && result.status ? result : null)]);
+    },
+    async action(action, id, button) {
+        if ((action === 'cancel' || action === 'refill') && !confirm(action === 'cancel' ? 'Gửi yêu cầu hủy đơn đến nhà cung cấp?' : 'Gửi yêu cầu bảo hành đơn này?')) return;
+        if(button) button.disabled = true;
+        try {
+            const result = await this.call(action, {orderId:id});
+            const message = action === 'refill_status' ? 'Bảo hành: ' + (result.status || JSON.stringify(result)) : 'Đã gửi yêu cầu. ' + (result.message || '');
+            if(window.showToast) window.showToast(message,'success'); else alert(message);
+            if(window.loadOrderHistory) await window.loadOrderHistory();
+            if(window.fetchOrders) await window.fetchOrders();
+        } catch(e) { if(window.showToast) window.showToast(e.message,'error'); else alert(e.message); }
+        finally { if(button) button.disabled = false; }
+    },
+    controls(o) {
+        if(this.provider(o) !== 'mualike1s') return '';
+        const id = encodeURIComponent(o.id);
+        let html = '<div class="flex flex-wrap gap-2 mt-2 text-xs justify-center">';
+        html += `<button type="button" class="smm-action" onclick="SMM.action('status','${id}',this)">Cập nhật</button>`;
+        if(o.refillSupported!==false) html += `<button type="button" class="smm-action" onclick="SMM.action('refill','${id}',this)">Bảo hành</button>`;
+        if(o.cancelSupported!==false) html += `<button type="button" class="smm-action" onclick="SMM.action('cancel','${id}',this)">Yêu cầu hủy</button>`;
+        if(o.refillId) html += `<button type="button" class="smm-action" onclick="SMM.action('refill_status','${id}',this)">Xem bảo hành</button>`;
+        return html + '</div>';
+    }
+};
+
+    </script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         // Bỏ signInAnonymously đi để khóa chặt quyền đăng nhập lậu
@@ -978,6 +1076,7 @@
         };
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        window.smmAuth = auth;
         const db = getFirestore(app);
 
         // KHỞI TẠO USER (ÉP BUỘC ĐĂNG NHẬP)
@@ -1103,14 +1202,14 @@
                             else if (fullCat.toLowerCase() === "dịch vụ tiktok" || fullCat.toLowerCase() === "tiktok") subName = "Dịch vụ chung";
                         }
 
-                        subHtml += `<li><a href="#" class="block pl-10 pr-3 py-2.5 text-sm text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition" onclick="loadServiceForm('${fullCat}')"><i class="fa-solid fa-angle-right mr-2 text-[10px] text-slate-600"></i> ${subName}</a></li>`;
+                        subHtml += `<li><a href="#" class="block pl-10 pr-3 py-2.5 text-sm text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition" onclick="loadServiceForm(decodeURIComponent('${encodeURIComponent(fullCat).replace(/'/g, '%27')}'))"><i class="fa-solid fa-angle-right mr-2 text-[10px] text-slate-600"></i> ${SMM.escape(subName)}</a></li>`;
                     });
 
                     const subMenuId = 'submenu-' + Math.random().toString(36).substr(2, 9);
                     menuEl.innerHTML += `
                         <li class="mb-1">
                             <button class="w-full flex items-center justify-between px-3 py-3 text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-bold transition rounded-xl ${isFirst?'bg-slate-800':''}" onclick="toggleSubMenu('${subMenuId}', this)">
-                                <span class="flex items-center"><i class="${pIcon} w-5 text-center mr-2 text-lg"></i> ${platform}</span>
+                                <span class="flex items-center"><i class="${pIcon} w-5 text-center mr-2 text-lg"></i> ${SMM.escape(platform)}</span>
                                 <i class="fa-solid fa-chevron-down text-[10px] transition-transform ${isFirst?'rotate-180':''}"></i>
                             </button>
                             <ul class="${isFirst?'':'hidden'} mt-1 space-y-1" id="${subMenuId}">${subHtml}</ul>
@@ -1164,7 +1263,8 @@
                     }
                 }
 
-                const rate1K_VND = finalRate * 1000; const oldRate1K_VND = sv.rate * 1000; const rate1K_USD = (rate1K_VND / window.currentExchangeRate).toFixed(3);
+                const displayUnits = ['Package','Custom Comments Package'].includes(sv.type) ? 1 : 1000;
+                const rate1K_VND = finalRate * displayUnits; const oldRate1K_VND = sv.rate * displayUnits; const rate1K_USD = (rate1K_VND / window.currentExchangeRate).toFixed(3);
                 const checkedClass = isChecked ? 'border-brand-500 bg-brand-500/10' : 'border-slate-800 bg-slate-950 hover:border-slate-700';
                 const cursorClass = isAvailable ? 'cursor-pointer' : 'cursor-not-allowed opacity-50 bg-slate-950 border-transparent';
                 
@@ -1172,11 +1272,11 @@
                 if(!isAvailable) statusHtml = `<span class="ml-2 text-[9px] bg-rose-500/20 text-rose-400 px-1.5 py-0.5 rounded font-bold border border-rose-500/30 uppercase">${sv.status}</span>`;
                 else if(sv.status === 'Nghẽn dịch vụ') statusHtml = `<span class="ml-2 text-[9px] bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded font-bold border border-amber-500/30 uppercase">Nghẽn</span>`;
 
-                let priceHtml = `<span class="text-slate-500">$${rate1K_USD}/1K</span><span class="text-emerald-400 font-bold">(${rate1K_VND.toLocaleString('en-US')} VNĐ/1K)</span>`;
+                let priceHtml = `<span class="text-slate-500">$${rate1K_USD}/${displayUnits === 1 ? 'gói' : '1K'}</span><span class="text-emerald-400 font-bold">(${rate1K_VND.toLocaleString('en-US')} VNĐ/${displayUnits === 1 ? 'gói' : '1K'})</span>`;
                 if(isDiscounted) priceHtml += `<span class="text-[10px] text-slate-500 line-through ml-1">${oldRate1K_VND.toLocaleString('en-US')}đ</span>`;
 
                 listEl.innerHTML += `
-                    <label class="service-radio-item flex items-center p-4 border rounded-xl relative transition ${checkedClass} ${cursorClass}" data-name="${sv.code} ${sv.name}" ${isAvailable ? `onclick="selectServer('${sv.id}', this)"` : ''}>
+                    <label class="service-radio-item flex items-center p-4 border rounded-xl relative transition ${checkedClass} ${cursorClass}" data-name="${sv.code} ${SMM.escape(sv.name)}" ${isAvailable ? `onclick="selectServer('${sv.id}', this)"` : ''}>
                         <div class="mr-4 shrink-0">
                             <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center ${isChecked ? 'border-brand-500' : 'border-slate-600'}">
                                 ${isChecked ? '<div class="w-2.5 h-2.5 bg-brand-500 rounded-full"></div>' : ''}
@@ -1184,7 +1284,7 @@
                             <input type="radio" name="server" class="hidden" ${isChecked ? 'checked' : ''} ${!isAvailable ? 'disabled' : ''}>
                         </div>
                         <div class="flex-1 overflow-hidden">
-                            <div class="text-sm font-bold text-slate-200 mb-1 flex items-center flex-wrap"><span class="text-brand-400 mr-2 shrink-0">#${sv.code}</span> <span class="truncate">${sv.name}</span>${statusHtml}</div>
+                            <div class="text-sm font-bold text-slate-200 mb-1 flex items-center flex-wrap"><span class="text-brand-400 mr-2 shrink-0">#${sv.code}</span> <span class="truncate">${SMM.escape(sv.name)}</span><small class="ml-2 text-slate-400">${SMM.name(sv)}</small>${statusHtml}</div>
                             <div class="text-xs font-medium flex flex-wrap items-center gap-2">${priceHtml}<span class="text-slate-500 text-[10px] ml-auto border border-slate-700 bg-slate-800 px-1.5 py-0.5 rounded">Min: ${sv.minOrder||0} - Max: ${sv.maxOrder||'∞'}</span></div>
                         </div>
                     </label>`;
@@ -1232,7 +1332,7 @@
 
         window.calcPrice = function() {
             const qtyInput = document.getElementById('qty'); if(!qtyInput) return;
-            const qtyStr = qtyInput.value; const qty = parseInt(qtyStr) || 0; const total = qty * window.currentPrice;
+            const qtyStr = qtyInput.value; const qty = parseInt(qtyStr) || 0; let runs=1; if(SMM.provider(window.currentServer||{})==='mualike1s') { try { runs=Number(window.getSmmExtras().runs||1); } catch {} } const total = Math.ceil(qty * window.currentPrice * runs * 100)/100;
             document.getElementById('total').innerText = total.toLocaleString('en-US');
             
             const oldBox = document.getElementById('total-original');
@@ -1242,9 +1342,10 @@
             const btn = document.getElementById('btn-create-order'); if(!btn) return;
             let isValid = true; 
             if (!window.currentServer || qty <= 0) isValid = false; 
-            else if (window.currentServer.minOrder && qty < window.currentServer.minOrder) isValid = false; 
-            else if (window.currentServer.maxOrder && qty > window.currentServer.maxOrder) isValid = false;
+            else if (!['Package','Custom Comments Package'].includes(window.currentServer.type) && window.currentServer.minOrder && qty < window.currentServer.minOrder) isValid = false; 
+            else if (!['Package','Custom Comments Package'].includes(window.currentServer.type) && window.currentServer.maxOrder && qty > window.currentServer.maxOrder) isValid = false;
 
+            if (!Number.isSafeInteger(qty) || !Number.isSafeInteger(runs) || runs < 1 || runs > 1000) isValid=false;
             if (isValid && qtyStr !== "") {
                 btn.disabled = false; btn.className = "w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-brand-500/20 text-lg transition";
             } else {
@@ -1261,6 +1362,9 @@
             const link = document.getElementById('order-link').value; 
             const qty = parseInt(document.getElementById('qty').value) || 0;
             const totalCost = qty * window.currentPrice;
+            if(btn.disabled) return;
+            if(!window.currentServer || !Number.isSafeInteger(qty) || qty < 1) return window.showToast('Chọn dịch vụ và số lượng hợp lệ.','error');
+            if(SMM.provider(window.currentServer)==='mualike1s') { try { await window.submitMualikeOrder(user,btn,link,qty); } catch(e) { window.showToast(e.message,'error'); } return; }
 
             if (window.currentUserBalance < totalCost) return window.showToast(`Số dư không đủ. Vui lòng nạp thêm tiền!`, 'error');
 
@@ -1274,7 +1378,7 @@
             try {
                 // KIỂM TRA XEM ĐÂY LÀ MÁY CHỦ AUTO HAY THỦ CÔNG
                 const serverCode = window.currentServer.code.toString().toUpperCase();
-                const isManual = serverCode.startsWith('MANUAL') || serverCode.startsWith('TAY');
+                const isManual = SMM.provider(window.currentServer) === 'manual';
 
                 let remoteOrderId = "Không xác định";
 
@@ -1305,7 +1409,8 @@
 
                 // CHUNG: Lưu vào Database và trừ tiền khách
                 const orderData = { 
-                    uid: user.uid, 
+                    uid: user.uid,
+                    provider: SMM.provider(window.currentServer),
                     category: window.currentServiceCategory, 
                     serverName: window.currentServer.name, 
                     serverId: window.currentServer.code, 
@@ -1518,7 +1623,7 @@
                     `;
                 });
             } catch(e) {
-                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-10 text-rose-500">Lỗi tải lịch sử: ${e.message}</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center py-10 text-rose-500">Lỗi tải lịch sử: ${SMM.escape(e.message)}</td></tr>`;
             }
         }
 
@@ -1585,6 +1690,8 @@
                 const snapshot = await getDocs(query(collection(db, "orders"), where("uid", "==", user.uid)));
                 let orders = []; snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
                 orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                document.getElementById('stat-pending').textContent=orders.filter(o=>['Đang xử lý','Đang chạy','Chờ xử lý','Chờ xác nhận API','Chờ đối soát'].includes(o.status)).length;
+                document.getElementById('stat-completed').textContent=orders.filter(o=>o.status==='Hoàn thành').length;
 
                 if(orders.length === 0) { tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-16 text-center text-slate-500"><i class="fa-solid fa-box-open text-4xl mb-3 text-slate-700"></i><br>Bạn chưa có đơn hàng nào</td></tr>`; return; }
 
@@ -1612,15 +1719,15 @@
                                 <div class="text-[10px] text-slate-500 font-medium">${formattedDate}</div>
                             </td>
                             <td class="px-6 py-4 text-xs font-bold text-brand-400">${o.category || '-'}</td>
-                            <td class="px-6 py-4"><span class="bg-slate-900 text-slate-300 border border-slate-700 px-2 py-1 rounded text-xs font-bold uppercase block w-max">${o.serverId || 'SV'}</span>${reactionTags}</td>
-                            <td class="px-6 py-4 text-xs max-w-[150px] truncate"><a href="${safeLink}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline transition">${o.link}</a></td>
+                            <td class="px-6 py-4"><span class="bg-slate-900 text-slate-300 border border-slate-700 px-2 py-1 rounded text-xs font-bold uppercase block w-max">${o.serverId || 'SV'}</span><small class="block mt-2 text-slate-400">${SMM.name(o)}</small>${reactionTags}</td>
+                            <td class="px-6 py-4 text-xs max-w-[150px] truncate"><a href="${SMM.escape(safeLink)}" target="_blank" class="text-blue-400 hover:text-blue-300 hover:underline transition">${SMM.escape(o.link)}</a></td>
                             <td class="px-6 py-4 font-black text-slate-200">${o.quantity.toLocaleString('en-US')}</td>
                             <td class="px-6 py-4 font-black text-white">${o.total.toLocaleString('en-US')}đ</td>
-                            <td class="px-6 py-4 text-center">${statusHtml}</td>
+                            <td class="px-6 py-4 text-center">${statusHtml}${SMM.controls(o)}</td>
                         </tr>
                     `;
                 });
-            } catch(e) { tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-rose-500">Lỗi tải lịch sử đơn: ${e.message}</td></tr>`; }
+            } catch(e) { tbody.innerHTML = `<tr><td colspan="7" class="text-center py-6 text-rose-500">Lỗi tải lịch sử đơn: ${SMM.escape(e.message)}</td></tr>`; }
         }
 
         window.loadDepositHistory = async function() {
@@ -1667,7 +1774,7 @@
                         </tr>
                     `;
                 });
-            } catch(e) { tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-rose-500">Lỗi tải lịch sử nạp: ${e.message}</td></tr>`; }
+            } catch(e) { tbody.innerHTML = `<tr><td colspan="4" class="text-center py-6 text-rose-500">Lỗi tải lịch sử nạp: ${SMM.escape(e.message)}</td></tr>`; }
         }
 
         // TẠO BẢNG TIN HỆ THỐNG
@@ -1792,6 +1899,100 @@
                 signOut(auth).then(() => { window.location.href = "dangnhap.html"; });
             });
         });
-    </script>
+    window.updateSmmFields = function() {
+    const sv=window.currentServer, isNew=SMM.provider(sv||{})==='mualike1s';
+    document.getElementById('mualike-options').classList.toggle('hidden',!isNew);
+    document.getElementById('mualike-type').textContent=isNew?'Loại dịch vụ: '+(sv.type||'Default'):'';
+    if(isNew) {
+        document.getElementById('reaction-container').classList.add('hidden');
+        const qty=document.getElementById('qty'), packageType=['Package','Custom Comments Package'].includes(sv.type);
+        qty.readOnly=packageType || /Custom Comments/.test(sv.type||'');
+        if(packageType) { qty.min=1;qty.max=1;qty.value=1; }
+        document.getElementById('ml-comments-wrap').classList.toggle('hidden',!/Custom Comments/.test(sv.type||''));
+        document.getElementById('ml-comments').required=/Custom Comments/.test(sv.type||'');
+        document.getElementById('ml-comments').disabled=!/Custom Comments/.test(sv.type||'');
+    } else { document.getElementById('qty').readOnly=false;document.getElementById('ml-comments').required=false;document.getElementById('ml-comments').disabled=true; }
+};
+window.getSmmExtras = function() {
+    let extras={};
+    const text=document.getElementById('ml-extras').value.trim();
+    if(text) { try { extras=JSON.parse(text); } catch { throw new Error('Tham số bổ sung phải đúng định dạng JSON.'); } }
+    if(!extras || typeof extras!=='object' || Array.isArray(extras)) throw new Error('Tham số bổ sung phải là một đối tượng JSON.');
+    const type=window.currentServer?.type||'';
+    if(/Custom Comments/.test(type)) extras.comments=document.getElementById('ml-comments').value;
+    const runs=document.getElementById('ml-runs').value, interval=document.getElementById('ml-interval').value;
+    if(runs) extras.runs=Number(runs); if(interval) extras.interval=Number(interval);
+    return extras;
+};
+window.updateMlCommentCount=function(){
+    if(window.currentServer?.type==='Custom Comments') document.getElementById('qty').value=document.getElementById('ml-comments').value.split('\n').filter(x=>x.trim()).length;
+    window.calcPrice();
+};
+window.refreshSmmWallet=async function(){
+    const snap=await getDoc(doc(db,'users',auth.currentUser.uid));
+    window.currentUserBalance=Number(snap.data()?.coin||0);
+    document.getElementById('ui-coin').innerText=window.currentUserBalance.toLocaleString('vi-VN');
+    document.querySelectorAll('.display-balance-vnd').forEach(el=>el.innerText=window.currentUserBalance.toLocaleString('vi-VN')+' đ');
+    document.querySelectorAll('.display-balance-usd').forEach(el=>el.innerText='$'+(window.currentUserBalance/window.currentExchangeRate).toFixed(3));
+};
+window.submitMualikeOrder=async function(user,btn,link,qty){
+    const extras=window.getSmmExtras();
+    const content=JSON.stringify({serverDocId:window.currentServer.id,link,quantity:qty,extras});
+    let saved; try { saved=JSON.parse(sessionStorage.getItem('ml1s-pending-'+user.uid)||'null'); } catch {}
+    if(!saved || saved.content!==content) saved={content,requestId:crypto.randomUUID()};
+    sessionStorage.setItem('ml1s-pending-'+user.uid,JSON.stringify(saved));
+    btn.disabled=true;btn.textContent='Đang gửi đơn...';
+    try {
+        await SMM.call('add',{...JSON.parse(content),requestId:saved.requestId});
+        sessionStorage.removeItem('ml1s-pending-'+user.uid);
+        await window.refreshSmmWallet();
+        window.showToast('Tạo đơn mualike1s thành công!','success');
+        window.switchView('history');
+    } catch(e) {
+        window.showToast(e.message,'error');
+        await window.refreshSmmWallet().catch(()=>{});
+    } finally { btn.textContent='Xác Nhận Tạo Đơn';window.calcPrice(); }
+};
+let homeSyncRunning=false;
+window.autoSyncOrdersStatus=async function(){
+    if(homeSyncRunning || !auth.currentUser || document.hidden) return;
+    homeSyncRunning=true;
+    try {
+        const snap=await getDocs(query(collection(db,'orders'),where('uid','==',auth.currentUser.uid)));
+        const orders=snap.docs.map(d=>({id:d.id,...d.data()})).filter(o=>['Đang xử lý','Đang chạy'].includes(o.status)&&/^\d+$/.test(String(o.remoteOrderId)));
+        for(const provider of ['mysmm','mualike1s']) {
+            const selected=orders.filter(o=>SMM.provider(o)===provider);
+            for(let i=0;i<selected.length;i+=100) {
+                const chunk=selected.slice(i,i+100);
+                if(provider==='mualike1s') await SMM.call('status',{orderIds:chunk.map(o=>o.id)});
+                else {
+                    const params=new URLSearchParams({key:"f5c7ac8ff393cca48e2781350757c791dcecf30cd70b7798ce8a51391452c668",action:'status',orders:chunk.map(o=>o.remoteOrderId).join(',')});
+                    const response=await fetch('https://api.mysmm.vn/api/v2',{method:'POST',body:params});
+                    const result=await response.json();if(!response.ok||result.error) throw new Error('Không đồng bộ được MySMM.');
+                    const values=SMM.entries(result,chunk.map(o=>o.remoteOrderId));
+                    for(let j=0;j<chunk.length;j++) {
+                        const d=values[j][1], mapped=d&&!d.error&&SMM.status(d.status);
+                        if(mapped) await updateDoc(doc(db,'orders',chunk[j].id),{status:mapped,updatedAt:new Date().toISOString()});
+                    }
+                }
+            }
+        }
+        if(document.getElementById('view-history').classList.contains('active')) await window.loadOrderHistory();
+    }catch(e){console.warn('Đồng bộ trạng thái:',e.message)}finally{homeSyncRunning=false}
+};
+const originalMenuLoad=window.fetchAndRenderServicesMenu;
+window.fetchAndRenderServicesMenu=async function(){
+    await originalMenuLoad();
+    const select=document.getElementById('quick-category');
+    select.replaceChildren(new Option('Chọn nền tảng / dịch vụ…',''));
+    [...new Set(window.allServers.map(s=>s.category))].sort().forEach(cat=>select.add(new Option(cat,cat)));
+    document.getElementById('catalog-count').textContent=window.allServers.length+' dịch vụ trong danh mục';
+};
+const originalServiceForm=window.loadServiceForm;
+window.loadServiceForm=function(category){originalServiceForm(category);document.getElementById('quick-category').value=category;window.updateSmmFields();window.calcPrice();if(innerWidth<768)requestAnimationFrame(()=>document.getElementById('form-order').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}))};
+const originalServerSelect=window.selectServer;
+window.selectServer=function(id,el){originalServerSelect(id,el);window.updateSmmFields();window.calcPrice()};
+
+</script>
 </body>
 </html>
