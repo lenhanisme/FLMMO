@@ -48,15 +48,15 @@
         .reaction-btn[data-selected="true"] { border-color: #6366F1; background-color: rgba(99, 102, 241, 0.15); color: #818CF8; }
     /* FLMMO refresh: existing sections, forms and handlers remain available. */
 :root{color-scheme:dark;--accent:#5ce1b7;--panel:#101c28;--line:#213340}
-body{background:#09131d;color:#cbd5e1}
+body{background:#08131c;color:#cbd5e1;letter-spacing:-.01em}
 body .bg-slate-950{background-color:#09131d}body .bg-slate-900{background-color:#101c28}
 body .border-slate-800{border-color:var(--line)}
-#sidebar{background:#0d1823;border-right-color:#213340;width:264px}
-#sidebar>a{height:92px}#sidebar .menu-item{padding-top:12px;padding-bottom:12px;border-radius:12px}
+#sidebar{background:linear-gradient(180deg,#0e1a26 0%,#0b1621 100%);border-right-color:#213340;width:276px}
+#sidebar>a{height:96px;background:linear-gradient(90deg,#102230,#0e1a26)}#sidebar .menu-item{padding-top:12px;padding-bottom:12px;border-radius:12px}
 #sidebar .menu-item.active{background:#183b38;color:#b4ffe5}#sidebar .menu-item.active::before{background:var(--accent);width:3px;top:10px;bottom:10px}
 #sidebar .menu-item.active i{color:var(--accent)}
-main{background:radial-gradient(ellipse at 95% 0%,#12303855,transparent 45%),#09131d}
-.card-modern{background:linear-gradient(145deg,#13212f,#101b27);border:1px solid #253643;border-radius:20px;box-shadow:0 12px 30px #00000012}
+main{background:radial-gradient(ellipse at 94% 0%,#12574e52,transparent 38%),radial-gradient(ellipse at 4% 96%,#0c304550,transparent 34%),#08131c}
+.card-modern{background:linear-gradient(145deg,#142331,#0f1b27);border:1px solid #263a48;border-radius:20px;box-shadow:0 12px 30px #00000012}
 .input-modern{background:#0a1520;border-color:#2b3c49;min-height:44px}.input-modern:focus{border-color:var(--accent);box-shadow:0 0 0 3px #5ce1b719}
 .menu-item,.service-radio-item,button,input,select,textarea,a{outline-offset:4px}
 :focus-visible{outline:2px solid #5ce1b7!important}
@@ -66,24 +66,29 @@ main{background:radial-gradient(ellipse at 95% 0%,#12303855,transparent 45%),#09
 #btn-create-order:not(:disabled){background:#68e2ba;color:#092d24;box-shadow:0 8px 24px #47d7a91c}
 #btn-create-order:not(:disabled):hover{background:#97f0d1;transform:translateY(-1px)}
 #btn-create-order:disabled{opacity:.55}
-.workspace-hero{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:30px 32px;border:1px solid #2c514c;border-radius:22px;background:linear-gradient(110deg,#163b36,#122534 78%);position:relative;overflow:hidden}
-.workspace-hero:after{content:'';position:absolute;width:160px;height:160px;border:32px solid #75e9c50b;border-radius:50%;right:-40px;bottom:-85px;pointer-events:none}
+.workspace-hero{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:32px;border:1px solid #31605a;border-radius:24px;background:linear-gradient(112deg,#16443d,#11293a 70%,#132233);position:relative;overflow:hidden;box-shadow:inset 0 1px #ffffff12,0 20px 40px #0000001a}
+.workspace-hero:before{content:'';position:absolute;width:540px;height:540px;border:1px solid #9cffe72b;border-radius:50%;right:-270px;top:-330px;pointer-events:none}.workspace-hero:after{content:'';position:absolute;width:160px;height:160px;border:32px solid #75e9c50b;border-radius:50%;right:-40px;bottom:-85px;pointer-events:none}
 .workspace-eyebrow{font-size:10px;letter-spacing:.2em;color:#91c8b9;font-weight:800;margin-bottom:10px}
 .workspace-hero h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.04em;color:#f1fff9;font-weight:800;line-height:1.2}
-.workspace-hero p{font-size:13px;color:#a9c4c2;margin-top:12px;line-height:1.8;max-width:490px}
+.workspace-hero p{font-size:13px;color:#b3cfcd;margin-top:12px;line-height:1.8;max-width:520px}
 .quick-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.quick-actions button,.smm-action{border:1px solid #537b703d;border-radius:9px;padding:8px 12px;color:#8cecc9;background:#5ce1b70a;font-weight:700}
+.quick-actions button,.smm-action{border:1px solid #76d5bd40;border-radius:10px;padding:9px 13px;color:#9bf6d6;background:#5ce1b70f;font-weight:700;transition:transform .2s,background .2s,border-color .2s}
 .quick-actions button:hover,.smm-action:hover{background:#5ce1b720}
-.hero-mark{width:102px;height:102px;border-radius:28px;background:#63dfb414;display:grid;place-items:center;transform:rotate(-8deg);border:1px solid #64ddba38;flex-shrink:0;color:#8deaca;font-size:42px}
+.quick-actions button:hover{transform:translateY(-1px);border-color:#81f0cf8e}.hero-mark{width:108px;height:108px;border-radius:31px;background:linear-gradient(145deg,#3bd5a324,#77a7ff26);display:grid;place-items:center;transform:rotate(-8deg);border:1px solid #82f5d35c;flex-shrink:0;color:#9af3d5;font-size:42px;box-shadow:0 16px 24px #0000001b}
+.hero-content{position:relative;z-index:1}.hero-context{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px}.hero-context span{padding:5px 9px;border:1px solid #a7e6d32b;border-radius:999px;background:#081e2945;font-size:10px;font-weight:700;color:#c4ece4}.hero-context i{color:#8ef0cf}.hero-side{z-index:1;display:flex;align-items:center;gap:14px}.hero-trust{display:flex;flex-direction:column;gap:4px;max-width:120px;font-size:10px;line-height:1.45;color:#b8d8d3}.hero-trust b{font-size:12px;color:#f0fffb}
 .catalog-shortcut{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:end;margin:22px 0}
 .catalog-shortcut label{display:block;font-size:11px;font-weight:800;color:#97b0bc;margin-bottom:8px;letter-spacing:.04em}
 .catalog-shortcut select{width:100%;padding:13px 15px;border-radius:12px;background:#11202d;border:1px solid #2b3c49;color:#eef9f6;font-size:13px}
 .catalog-shortcut button{min-height:46px;padding:10px 16px;border-radius:12px;border:1px solid #2b3c49;background:#152737;color:#d0e3e7;font-size:12px;font-weight:700}
+.catalog-shortcut button:hover{border-color:#69d6b6;color:#caffea;background:#18352f}.catalog-shortcut select:hover{border-color:#466779}
 .order-progress{display:flex;gap:16px;margin:0 0 22px;flex-wrap:wrap;color:#7797a5;font-size:11px;font-weight:700}.order-progress span{display:flex;align-items:center;gap:8px}.order-progress b{display:grid;place-items:center;border-radius:50%;background:#1e343d;color:#7cddc1;width:24px;height:24px}
 button:disabled{cursor:not-allowed}.smm-note{font-size:12px;line-height:1.8;color:#92b7b6}
 .smm-extra{border:1px solid #2b3c49;border-radius:12px;padding:15px}.smm-extra summary{cursor:pointer;font-size:12px;font-weight:700;color:#83d9bd}
+#dynamic-sidebar-menu>li{padding:2px 0}#dynamic-sidebar-menu button{border:1px solid transparent;min-height:46px}#dynamic-sidebar-menu button:hover{border-color:#315263;background:#172a37!important}#dynamic-sidebar-menu button[aria-expanded="true"]{background:#1a323d!important;border-color:#386253;color:#dbfff3!important;box-shadow:inset 3px 0 #5ce1b7}#dynamic-sidebar-menu ul{padding:5px 0 3px;margin:0!important}#dynamic-sidebar-menu ul:not(.hidden){animation:accordionDown .22s ease-out}#dynamic-sidebar-menu a.service-menu-link{position:relative;display:flex;align-items:center;padding:9px 11px 9px 39px!important;border-radius:9px;color:#9fb5c0;line-height:1.35}#dynamic-sidebar-menu a.service-menu-link:before{content:'';position:absolute;left:24px;width:5px;height:5px;border-radius:50%;background:#496472}#dynamic-sidebar-menu a.service-menu-link:hover{background:#18303a!important;color:#dcfff4!important}#dynamic-sidebar-menu a.service-menu-link.active{background:#143f36!important;color:#afffe2!important;font-weight:700}#dynamic-sidebar-menu a.service-menu-link.active:before{background:#65e9bd;box-shadow:0 0 0 4px #65e9bd1e}@keyframes accordionDown{from{opacity:.2;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+#view-order>.grid:first-of-type>div>div:first-child{min-height:100%}#server-list{scrollbar-color:#426171 transparent}.service-radio-item:hover{transform:translateY(-1px);border-color:#456474!important}.service-radio-item:has(input:checked){box-shadow:inset 3px 0 #5ce1b7,0 8px 18px #00000010}.reaction-btn{transition:transform .18s,border-color .18s,background .18s}.reaction-btn:hover{transform:translateY(-1px)}
 @media(min-width:1024px){main{padding:34px!important}#order-form-inputs{padding:24px}#view-order>.grid:first-of-type .card-modern{border-left-width:1px}}
-@media(max-width:640px){.workspace-hero{padding:24px}.hero-mark{display:none}.catalog-shortcut{grid-template-columns:1fr}.quick-actions button{flex:1}.card-modern{border-radius:16px}.card-modern.p-6{padding:18px}#order-form-inputs{padding:14px}.order-progress{gap:10px;font-size:10px}#sidebar{max-width:86vw}input,select,textarea{font-size:16px!important}table{min-width:650px}}
+@media(max-width:1023px){#sidebar{width:286px}.workspace-hero{padding:28px}.hero-trust{display:none}}
+@media(max-width:640px){.workspace-hero{padding:24px;align-items:flex-start;border-radius:20px}.hero-side{display:none}.catalog-shortcut{grid-template-columns:1fr}.quick-actions{gap:8px}.quick-actions button{flex:1;min-width:0;padding:10px 8px;font-size:11px}.card-modern{border-radius:16px}.card-modern.p-6{padding:18px}#order-form-inputs{padding:14px}.order-progress{gap:10px;font-size:10px}#sidebar{max-width:86vw}input,select,textarea{font-size:16px!important}table{min-width:650px}.workspace-hero h2{font-size:27px}.hero-context span{font-size:9px}.catalog-shortcut{margin:16px 0 20px}#dynamic-sidebar-menu button{min-height:48px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.view-section.active{opacity:1}}
 
 </style>
@@ -183,7 +188,7 @@ button:disabled{cursor:not-allowed}.smm-note{font-size:12px;line-height:1.8;colo
             <main class="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-6 lg:p-8 relative z-10">
                 
                 <div id="view-order" class="view-section active max-w-6xl mx-auto space-y-6"><section class="workspace-hero" aria-label="Trung tâm dịch vụ">
-<div><div class="workspace-eyebrow">FLMMO / WORKSPACE</div><h2>Mọi dịch vụ. Một điểm đến.</h2><p>Chọn dịch vụ phù hợp, tạo đơn dễ dàng và theo dõi tiến độ ngay trong tài khoản của bạn.</p><div class="quick-actions"><button type="button" onclick="document.getElementById('quick-category').focus()"><i class="fa-solid fa-plus mr-2"></i>Tạo đơn mới</button><button type="button" onclick="switchView('history')"><i class="fa-solid fa-clock-rotate-left mr-2"></i>Lịch sử đơn</button><button type="button" onclick="switchView('deposit')"><i class="fa-solid fa-wallet mr-2"></i>Nạp tiền</button></div></div><div class="hero-mark" aria-hidden="true"><i class="fa-solid fa-arrow-trend-up"></i></div></section>
+<div class="hero-content"><div class="workspace-eyebrow">FLMMO / WORKSPACE</div><h2>Mọi dịch vụ. Một điểm đến.</h2><p>Chọn đúng dịch vụ, tạo đơn rõ ràng và theo dõi tiến độ ngay trong tài khoản của bạn.</p><div class="hero-context"><span><i class="fa-solid fa-shield-halved mr-1"></i>Tài khoản bảo vệ</span><span><i class="fa-solid fa-bolt mr-1"></i>Xử lý tự động</span><span><i class="fa-solid fa-clock mr-1"></i>Theo dõi thời gian thực</span></div><div class="quick-actions"><button type="button" onclick="document.getElementById('quick-category').focus()"><i class="fa-solid fa-plus mr-2"></i>Tạo đơn mới</button><button type="button" onclick="switchView('history')"><i class="fa-solid fa-clock-rotate-left mr-2"></i>Lịch sử đơn</button><button type="button" onclick="switchView('deposit')"><i class="fa-solid fa-wallet mr-2"></i>Nạp tiền</button></div></div><div class="hero-side"><div class="hero-trust"><b>Trung tâm dịch vụ</b><span>Chọn dịch vụ để bắt đầu đơn mới</span></div><div class="hero-mark" aria-hidden="true"><i class="fa-solid fa-arrow-trend-up"></i></div></div></section>
 <div class="catalog-shortcut"><div><label for="quick-category">BẮT ĐẦU VỚI DỊCH VỤ BẠN CẦN</label><select id="quick-category" onchange="if(this.value) loadServiceForm(this.value)"><option value="">Đang tải danh mục…</option></select></div><button type="button" onclick="fetchAndRenderServicesMenu()" id="catalog-count">Làm mới danh mục</button></div>
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
                         <div>
@@ -1981,8 +1986,44 @@ window.autoSyncOrdersStatus=async function(){
     }catch(e){console.warn('Đồng bộ trạng thái:',e.message)}finally{homeSyncRunning=false}
 };
 const originalMenuLoad=window.fetchAndRenderServicesMenu;
+window.initServiceAccordion=function(){
+    const menu=document.getElementById('dynamic-sidebar-menu');
+    if(!menu)return;
+    const groups=[...menu.querySelectorAll(':scope > li')];
+    groups.forEach((group,index)=>{
+        const button=group.querySelector('button'), panel=group.querySelector('ul[id^="submenu-"]');
+        if(!button||!panel)return;
+        button.setAttribute('aria-controls',panel.id);
+        button.setAttribute('aria-expanded',String(!panel.classList.contains('hidden')));
+        panel.setAttribute('role','region');
+        panel.setAttribute('aria-label','Danh mục dịch vụ '+(index+1));
+        panel.querySelectorAll('a').forEach(link=>{
+            link.classList.add('service-menu-link');
+            link.addEventListener('click',()=>{
+                menu.querySelectorAll('.service-menu-link.active').forEach(item=>item.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    });
+};
+window.toggleSubMenu=function(id,button){
+    const menu=document.getElementById('dynamic-sidebar-menu');
+    const panel=document.getElementById(id);
+    if(!menu||!panel||!button)return;
+    const shouldOpen=panel.classList.contains('hidden');
+    menu.querySelectorAll('ul[id^="submenu-"]').forEach(item=>{
+        const owner=menu.querySelector(`button[aria-controls="${item.id}"]`);
+        item.classList.add('hidden');
+        if(owner){owner.setAttribute('aria-expanded','false');owner.classList.remove('bg-slate-800');const icon=owner.querySelector('.fa-chevron-down');if(icon)icon.style.transform='rotate(0deg)';}
+    });
+    if(shouldOpen){
+        panel.classList.remove('hidden');button.setAttribute('aria-expanded','true');button.classList.add('bg-slate-800');
+        const icon=button.querySelector('.fa-chevron-down');if(icon)icon.style.transform='rotate(180deg)';
+    }
+};
 window.fetchAndRenderServicesMenu=async function(){
     await originalMenuLoad();
+    window.initServiceAccordion();
     const select=document.getElementById('quick-category');
     select.replaceChildren(new Option('Chọn nền tảng / dịch vụ…',''));
     [...new Set(window.allServers.map(s=>s.category))].sort().forEach(cat=>select.add(new Option(cat,cat)));
